@@ -6,6 +6,7 @@ char *linenoise(const char *);
 int linenoiseHistoryAdd(char *);
 }
 
-class ProgramExit : std::exception {};
+class ProgramExit : std::exception {
+};
 
 std::string readCommand();

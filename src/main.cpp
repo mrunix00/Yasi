@@ -4,15 +4,15 @@
 #include <iostream>
 
 int main() {
-  std::cout << "dummyLisp 0.0.0 Interpreter\n";
+    std::cout << "dummyLisp 0.0.0 Interpreter\n";
 
-  std::string userInput;
-  while (true) {
-    try {
-      userInput = readCommand();
-    } catch (ProgramExit &exception) {
-      return EXIT_SUCCESS;
+    std::string userInput;
+    while (true) {
+        try {
+            userInput = readCommand();
+        } catch (ProgramExit &exception) {
+            return EXIT_SUCCESS;
+        }
+        std::cout << userInput << '\n';
     }
-    std::cout << userInput << '\n';
-  }
 }
