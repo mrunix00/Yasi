@@ -1,7 +1,7 @@
-#include "read.hpp"
 #include <cstdlib>
-#include <exception>
 #include <iostream>
+#include "read.hpp"
+
 
 int main() {
     std::cout << "dummyLisp 0.0.0 Interpreter\n";
