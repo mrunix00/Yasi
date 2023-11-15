@@ -3,4 +3,7 @@ project(dummyLisp)
 
 set(CMAKE_CXX_STANDARD 17)
 
-add_executable(dummyLisp src/main.cpp)
+add_library(linenoise libs/linenoise/linenoise.c)
+add_executable(dummyLisp src/main.cpp src/read.cpp)
+
+target_link_libraries(dummyLisp linenoise)
