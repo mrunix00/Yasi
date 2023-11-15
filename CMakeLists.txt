@@ -5,5 +5,5 @@ set(CMAKE_CXX_STANDARD 17)
 
 add_library(linenoise libs/linenoise/linenoise.c)
 add_executable(dummyLisp src/main.cpp src/read.cpp)
-
+add_subdirectory(tests)
 target_link_libraries(dummyLisp linenoise)

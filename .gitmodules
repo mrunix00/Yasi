@@ -1,3 +1,7 @@
 [submodule "libs/linenoise"]
 	path = libs/linenoise
 	url = https://github.com/antirez/linenoise
+[submodule "libs/googletest"]
+	path = libs/googletest
+	url = https://github.com/google/googletest
+	branch = v1.14.x
