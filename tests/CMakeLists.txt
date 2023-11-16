@@ -16,6 +16,12 @@ enable_testing()
 add_executable(
         dummy_test
         dummy_test.cpp
+        token_test.cpp
+)
+
+add_executable(
+        token_test
+        token_test.cpp
 )
 
 target_link_libraries(
@@ -23,5 +29,11 @@ target_link_libraries(
         GTest::gtest_main
 )
 
+target_link_libraries(
+        token_test
+        GTest::gtest_main
+)
+
 include(GoogleTest)
 gtest_discover_tests(dummy_test)
+gtest_discover_tests(token_test)
