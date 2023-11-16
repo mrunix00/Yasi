@@ -7,7 +7,7 @@ class Token {
 public:
     std::string symbol;
 
-    bool operator==(Token &token) const {
+    bool operator==(const Token &token) const {
         return symbol == ((Token) token).symbol;
     }
 };

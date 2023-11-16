@@ -13,9 +13,19 @@ set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
 FetchContent_MakeAvailable(googletest)
 enable_testing()
 
+add_library(
+        lexer
+        ../src/Lexer/Lexer.cpp
+)
+
 add_executable(
         token_test
         token_test.cpp
+)
+
+add_executable(
+        lex_test
+        lex_test.cpp
 )
 
 
@@ -24,5 +34,12 @@ target_link_libraries(
         GTest::gtest_main
 )
 
+target_link_libraries(
+        lex_test
+        lexer
+        GTest::gtest_main
+)
+
 include(GoogleTest)
 gtest_discover_tests(token_test)
+gtest_discover_tests(lex_test)
