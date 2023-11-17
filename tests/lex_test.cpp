@@ -52,7 +52,7 @@ TEST(lex_test, StringsToken) {
     std::vector<Token> expected = {
             Token(Token::OpenBracket, "("),
             Token(Token::Symbol, "print"),
-            Token(Token::String, "Hello World"),
+            Token(Token::String, "\"Hello World\""),
             Token(Token::ClosedBracket, ")")
     };
 

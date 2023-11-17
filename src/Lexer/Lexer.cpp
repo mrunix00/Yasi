@@ -20,7 +20,7 @@ std::vector<Token> Lexer::tokenize(const std::string &line) {
             } else if (c != '"') {
                 result.emplace_back(Token::Symbol, currentToken);
             } else {
-                currentToken.erase(currentToken.begin());
+                currentToken.append(1, '"');
                 result.emplace_back(Token::String, currentToken);
             }
         }
