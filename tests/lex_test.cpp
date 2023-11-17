@@ -2,7 +2,7 @@
 #include "../src/Tokens/Tokens.h"
 #include "../src/Lexer/Lexer.h"
 
-TEST(lex_test, ShouldParseSingleCharsIntoTokens) {
+TEST(lex_test, ShouldTokenizeSingleChars) {
     std::string sample = "(+ 1 2)";
     std::vector<Token> tokens = {
             OpenBracket(),
@@ -12,12 +12,12 @@ TEST(lex_test, ShouldParseSingleCharsIntoTokens) {
             ClosedBracket()
     };
 
-    auto result = Lexer::parse(sample);
+    auto result = Lexer::tokenizer(sample);
 
     EXPECT_EQ(tokens == result, true);
 }
 
-TEST(lex_test, ShouldParseMultipleCharsIntoTokens) {
+TEST(lex_test, ShouldTokenizeMultipleChars) {
     std::string sample = "(multiply 1 2)";
     std::vector<Token> tokens = {
             OpenBracket(),
@@ -27,12 +27,12 @@ TEST(lex_test, ShouldParseMultipleCharsIntoTokens) {
             ClosedBracket()
     };
 
-    auto result = Lexer::parse(sample);
+    auto result = Lexer::tokenizer(sample);
 
     EXPECT_EQ(tokens == result, true);
 }
 
-TEST(lex_test, ShouldParseLargeNumbersIntoTokens) {
+TEST(lex_test, ShouldTokenizeLargeNumbers) {
     std::string sample = "(+ 13 54)";
     std::vector<Token> tokens = {
             OpenBracket(),
@@ -42,7 +42,7 @@ TEST(lex_test, ShouldParseLargeNumbersIntoTokens) {
             ClosedBracket()
     };
 
-    auto result = Lexer::parse(sample);
+    auto result = Lexer::tokenizer(sample);
 
     EXPECT_EQ(tokens == result, true);
 }
