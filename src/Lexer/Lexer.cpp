@@ -5,9 +5,11 @@ std::vector<Token> Lexer::tokenize(const std::string &line) {
     std::vector<Token> result;
     std::string currentToken;
 
-    const std::string separators = "() ";
     for (auto c: line) {
-        if (separators.find(c) == std::string::npos) {
+        if (c != '(' && c != ')'
+            && (c != ' ' || currentToken[0] == '"')
+            && (c != '"' || currentToken[0] != '"')
+                ) {
             currentToken.append(1, c);
             continue;
         }
@@ -15,8 +17,11 @@ std::vector<Token> Lexer::tokenize(const std::string &line) {
         if (!currentToken.empty()) {
             if (strspn(currentToken.c_str(), "0123456789")) {
                 result.emplace_back(Token::Integer, currentToken);
-            } else {
+            } else if (c != '"') {
                 result.emplace_back(Token::Symbol, currentToken);
+            } else {
+                currentToken.erase(currentToken.begin());
+                result.emplace_back(Token::String, currentToken);
             }
         }
 

@@ -46,3 +46,17 @@ TEST(lex_test, ShouldTokenizeLargeNumbers) {
 
     EXPECT_EQ(tokens == result, true);
 }
+
+TEST(lex_test, StringsToken) {
+    std::string sample = "(print \"Hello World\")";
+    std::vector<Token> expected = {
+            Token(Token::OpenBracket, "("),
+            Token(Token::Symbol, "print"),
+            Token(Token::String, "Hello World"),
+            Token(Token::ClosedBracket, ")")
+    };
+
+    auto actual = Lexer::tokenize(sample);
+
+    EXPECT_EQ(expected == actual, true);
+}

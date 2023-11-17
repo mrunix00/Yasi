@@ -8,9 +8,10 @@ class Token {
 public:
     enum TokenType {
         OpenBracket,
+        ClosedBracket,
         Symbol,
         Integer,
-        ClosedBracket
+        String
     };
 
     TokenType type;
