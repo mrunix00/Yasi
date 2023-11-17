@@ -12,7 +12,7 @@ TEST(lex_test, ShouldTokenizeSingleChars) {
             ClosedBracket()
     };
 
-    auto result = Lexer::tokenizer(sample);
+    auto result = Lexer::tokenize(sample);
 
     EXPECT_EQ(tokens == result, true);
 }
@@ -27,7 +27,7 @@ TEST(lex_test, ShouldTokenizeMultipleChars) {
             ClosedBracket()
     };
 
-    auto result = Lexer::tokenizer(sample);
+    auto result = Lexer::tokenize(sample);
 
     EXPECT_EQ(tokens == result, true);
 }
@@ -42,7 +42,7 @@ TEST(lex_test, ShouldTokenizeLargeNumbers) {
             ClosedBracket()
     };
 
-    auto result = Lexer::tokenizer(sample);
+    auto result = Lexer::tokenize(sample);
 
     EXPECT_EQ(tokens == result, true);
 }

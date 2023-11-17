@@ -1,7 +1,7 @@
 #include <cstring>
 #include "Lexer.h"
 
-std::vector<Token> Lexer::tokenizer(const std::string &line) {
+std::vector<Token> Lexer::tokenize(const std::string &line) {
     std::vector<Token> result;
     std::string currentToken;
 

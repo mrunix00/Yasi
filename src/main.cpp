@@ -1,6 +1,7 @@
 #include <cstdlib>
 #include <iostream>
 #include "read.hpp"
+#include "Lexer/Lexer.h"
 
 
 int main() {
@@ -13,6 +14,14 @@ int main() {
         } catch (ProgramExit &exception) {
             return EXIT_SUCCESS;
         }
-        std::cout << userInput << '\n';
+
+        if (!userInput.empty()) {
+            auto tokens =  Lexer::tokenize(userInput);
+            std::cout << '[';
+            for (const auto& token : tokens) {
+                std::cout << " '" << token.symbol << "', ";
+            }
+            std::cout << "\b\b ]\n";
+        }
     }
 }
