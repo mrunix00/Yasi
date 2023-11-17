@@ -6,6 +6,8 @@
 
 class Token {
 public:
+    Token() = default;
+
     enum TokenType {
         OpenBracket,
         ClosedBracket,
