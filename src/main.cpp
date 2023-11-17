@@ -16,10 +16,10 @@ int main() {
         }
 
         if (!userInput.empty()) {
-            auto tokens =  Lexer::tokenize(userInput);
+            auto tokens = Lexer::tokenize(userInput);
             std::cout << '[';
-            for (const auto& token : tokens) {
-                std::cout << " '" << token.symbol << "', ";
+            for (const auto &token: tokens) {
+                std::cout << " '" << token.token << "', ";
             }
             std::cout << "\b\b ]\n";
         }

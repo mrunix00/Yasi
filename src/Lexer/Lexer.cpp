@@ -14,15 +14,17 @@ std::vector<Token> Lexer::tokenize(const std::string &line) {
 
         if (!currentToken.empty()) {
             if (strspn(currentToken.c_str(), "0123456789")) {
-                result.push_back(Integer(std::stoi(currentToken)));
+                result.emplace_back(Token::Integer, currentToken);
             } else {
-                result.push_back(Symbol(currentToken));
+                result.emplace_back(Token::Symbol, currentToken);
             }
         }
 
         currentToken = "";
-        if (c == '(') result.push_back(OpenBracket());
-        else if (c == ')') result.push_back(ClosedBracket());
+        if (c == '(')
+            result.emplace_back(Token::OpenBracket, "(");
+        else if (c == ')')
+            result.emplace_back(Token::ClosedBracket, ")");
     }
 
     return result;

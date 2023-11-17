@@ -1,9 +1,8 @@
 #ifndef DUMMYLISP_LEXER_H
 #define DUMMYLISP_LEXER_H
 
-#include "../Tokens/Tokens.h"
+#include "../Tokens/Token.h"
 #include <vector>
-
 
 class Lexer {
 public:

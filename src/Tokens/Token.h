@@ -2,13 +2,26 @@
 #define DUMMYLISP_TOKEN_H
 
 #include <iostream>
+#include <utility>
 
 class Token {
 public:
-    std::string symbol;
+    enum TokenType {
+        OpenBracket,
+        Symbol,
+        Integer,
+        ClosedBracket
+    };
 
-    bool operator==(const Token &token) const {
-        return symbol == ((Token) token).symbol;
+    TokenType type;
+    std::string token;
+
+    Token(TokenType type, std::string token)
+            : type(type),
+              token(std::move(token)) {}
+
+    bool operator==(const Token &object) const {
+        return token == ((Token) object).token;
     }
 };
 
