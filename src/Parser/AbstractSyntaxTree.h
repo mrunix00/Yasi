@@ -2,18 +2,9 @@
 #define DUMMYLISP_ABSTRACTSYNTAXTREE_H
 
 #include "../Tokens/Token.h"
+#include "Argument.h"
 #include <utility>
 #include <vector>
-
-class Argument {
-    Token token;
-public:
-    explicit Argument(Token token) : token(std::move(token)) {};
-
-    bool operator==(const Argument &argument) const {
-        return argument.token == token;
-    }
-};
 
 class AbstractSyntaxTree {
 public:

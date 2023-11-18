@@ -33,8 +33,39 @@ TEST(parse_test, ParseSimpleOperationWithStringArgument) {
     auto expected = AbstractSyntaxTree(
             Token(Token::Symbol, "print"),
             {
-                    Argument(Token(Token::String, "\"Hello World\"")
+                    Argument(Token(Token::String, "\"Hello World\"")),
+            }
+    );
+
+    auto actual = parse(sample);
+
+    EXPECT_EQ(actual == expected, true);
+}
+
+TEST(parse_test, ParseNestedOperation) {
+    auto sample = {
+            Token(Token::OpenBracket, "("),
+            Token(Token::Symbol, "+"),
+            Token(Token::OpenBracket, "("),
+            Token(Token::Symbol, "+"),
+            Token(Token::Integer, "1"),
+            Token(Token::Integer, "3"),
+            Token(Token::ClosedBracket, ")"),
+            Token(Token::Integer, "2"),
+            Token(Token::ClosedBracket, ")"),
+    };
+
+    auto expected = AbstractSyntaxTree(
+            Token(Token::Symbol, "+"),
+            {
+                    Argument(
+                            Token(Token::Symbol, "+"),
+                            {
+                                    Argument(Token(Token::Integer, "1")),
+                                    Argument(Token(Token::Integer, "3"))
+                            }
                     ),
+                    Argument(Token(Token::Integer, "2"))
             }
     );
 
