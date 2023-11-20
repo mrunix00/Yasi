@@ -1,8 +1,8 @@
 #ifndef DUMMYLISP_PARSE_H
 #define DUMMYLISP_PARSE_H
 
-#include "AbstractSyntaxTree.h"
+#include "SyntaxTreeNode.h"
 
-AbstractSyntaxTree parse(const std::vector<Token> &tokens);
+SyntaxTreeNode parse(const std::vector<Token> &tokens);
 
 #endif //DUMMYLISP_PARSE_H

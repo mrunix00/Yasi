@@ -6,25 +6,26 @@
 
 class Token {
 public:
-    Token() = default;
-
     enum TokenType {
         OpenBracket,
         ClosedBracket,
         Symbol,
         Integer,
-        String
+        String,
+        Invalid
     };
 
     TokenType type;
     std::string token;
+
+    Token() : type(Token::Invalid) {}
 
     Token(TokenType type, std::string token)
             : type(type),
               token(std::move(token)) {}
 
     bool operator==(const Token &object) const {
-        return token == ((Token) object).token;
+        return token == object.token;
     }
 };
 

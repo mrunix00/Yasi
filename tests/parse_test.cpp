@@ -1,8 +1,8 @@
 #include <gtest/gtest.h>
-#include "../src/Parser/AbstractSyntaxTree.h"
 #include "../src/Parser/parse.h"
 
 TEST(parse_test, ParseSimpleOperation) {
+    // ( + 1 2 )
     auto sample = {
             Token(Token::OpenBracket, "("),
             Token(Token::Symbol, "+"),
@@ -10,11 +10,11 @@ TEST(parse_test, ParseSimpleOperation) {
             Token(Token::Integer, "2"),
             Token(Token::ClosedBracket, ")"),
     };
-    auto expected = AbstractSyntaxTree(
+    auto expected = SyntaxTreeNode(
             Token(Token::Symbol, "+"),
             {
-                    Argument(Token(Token::Integer, "1")),
-                    Argument(Token(Token::Integer, "2"))
+                    SyntaxTreeNode(Token(Token::Integer, "1")),
+                    SyntaxTreeNode(Token(Token::Integer, "2"))
             }
     );
 
@@ -24,16 +24,17 @@ TEST(parse_test, ParseSimpleOperation) {
 }
 
 TEST(parse_test, ParseSimpleOperationWithStringArgument) {
+    // ( print "Hello World )
     auto sample = {
             Token(Token::OpenBracket, "("),
             Token(Token::Symbol, "print"),
             Token(Token::String, "\"Hello World\""),
             Token(Token::ClosedBracket, ")"),
     };
-    auto expected = AbstractSyntaxTree(
+    auto expected = SyntaxTreeNode(
             Token(Token::Symbol, "print"),
             {
-                    Argument(Token(Token::String, "\"Hello World\"")),
+                    SyntaxTreeNode(Token(Token::String, "\"Hello World\"")),
             }
     );
 
@@ -43,6 +44,7 @@ TEST(parse_test, ParseSimpleOperationWithStringArgument) {
 }
 
 TEST(parse_test, ParseNestedOperation) {
+    // ( + ( + 1 3 ) 2 )
     auto sample = {
             Token(Token::OpenBracket, "("),
             Token(Token::Symbol, "+"),
@@ -55,17 +57,17 @@ TEST(parse_test, ParseNestedOperation) {
             Token(Token::ClosedBracket, ")"),
     };
 
-    auto expected = AbstractSyntaxTree(
+    auto expected = SyntaxTreeNode(
             Token(Token::Symbol, "+"),
             {
-                    Argument(
+                    SyntaxTreeNode(
                             Token(Token::Symbol, "+"),
                             {
-                                    Argument(Token(Token::Integer, "1")),
-                                    Argument(Token(Token::Integer, "3"))
+                                    SyntaxTreeNode(Token(Token::Integer, "1")),
+                                    SyntaxTreeNode(Token(Token::Integer, "3"))
                             }
                     ),
-                    Argument(Token(Token::Integer, "2"))
+                    SyntaxTreeNode(Token(Token::Integer, "2"))
             }
     );
 

@@ -1,10 +1,11 @@
 #include <stack>
 #include <queue>
 #include "parse.h"
+#include "SyntaxTreeNode.h"
 
-AbstractSyntaxTree parse(const std::vector<Token> &tokens) {
+SyntaxTreeNode parse(const std::vector<Token> &tokens) {
     Token operation;
-    std::vector<Argument> arguments;
+    std::vector<SyntaxTreeNode> arguments;
 
     std::stack<Token> brackets_stack;
     std::vector<Token> current_expression;
@@ -16,7 +17,7 @@ AbstractSyntaxTree parse(const std::vector<Token> &tokens) {
         } else if (token.type == Token::ClosedBracket) {
             if (brackets_stack.size() > 1) {
                 auto l = parse(current_expression);
-                arguments.emplace_back(l.operation, l.arguments);
+                arguments.emplace_back(l.token, l.children);
             }
             brackets_stack.pop();
         } else if (token.type == Token::Symbol) {
@@ -27,5 +28,5 @@ AbstractSyntaxTree parse(const std::vector<Token> &tokens) {
         current_expression.push_back(token);
     }
 
-    return AbstractSyntaxTree(operation, arguments);
+    return {operation, arguments};
 }
