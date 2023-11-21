@@ -1,0 +1,23 @@
+name: C/C++ CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: install tools
+      run: sudo apt install cmake
+    - name: fetch submodules
+      run: git submodule init && git submodule update
+    - name: build the app
+      run: mkdir build && cd build && cmake .. && cmake --build .
+    - name: run the tests
+      run: ctest --test-dir build/tests -V
