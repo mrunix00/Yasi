@@ -77,7 +77,7 @@ TEST(parse_test, ParseNestedOperation) {
 }
 
 TEST(parse_test, ParseDeeplyNestedOperation) {
-    // ( + ( * 2 3 ) ( + ( * 1 2 ) 4 ) 7 ) )
+    // ( + ( * 2 3 ) ( + ( * 1 2 ) 4 ) 7 )
     auto sample = {
             Token(Token::OpenBracket, "("),
             Token(Token::Symbol, "+"),

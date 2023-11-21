@@ -1,6 +1,5 @@
 #include <stack>
 #include <queue>
-#include <map>
 #include "parse.h"
 #include "SyntaxTreeNode.h"
 
@@ -14,9 +13,7 @@ SyntaxTreeNode parse(const std::vector<Token> &tokens) {
             || operators_stack.top().type == Token::OpenBracket) {
             if (token.type == Token::OpenBracket) nodes_stack.emplace();
             operators_stack.push(token);
-        } else if (token.type != Token::ClosedBracket) {
-            nodes_stack.top().emplace_back(token);
-        } else {
+        } else if (token.type == Token::ClosedBracket) {
             auto args = nodes_stack.top();
             nodes_stack.pop();
             if (nodes_stack.empty()) nodes_stack.emplace();
@@ -26,6 +23,8 @@ SyntaxTreeNode parse(const std::vector<Token> &tokens) {
             );
             operators_stack.pop();
             operators_stack.pop();
+        } else {
+            nodes_stack.top().emplace_back(token);
         }
     }
 

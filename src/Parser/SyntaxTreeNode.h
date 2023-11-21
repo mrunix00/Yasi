@@ -18,9 +18,9 @@ public:
 
     explicit SyntaxTreeNode(Token token) : token(std::move(token)) {}
 
-    bool operator==(const SyntaxTreeNode &argument) const {
-        return token == argument.token && children == argument.children;
+    bool operator==(const SyntaxTreeNode &node) const {
+        return token == node.token && children == node.children;
     }
 };
 
-#endif //DUMMYLISP_SYNTAXTREENODE_H
+#endif

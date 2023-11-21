@@ -5,4 +5,4 @@
 
 SyntaxTreeNode parse(const std::vector<Token> &tokens);
 
-#endif //DUMMYLISP_PARSE_H
+#endif
