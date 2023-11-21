@@ -38,6 +38,19 @@ add_executable(
         parse_test.cpp
 )
 
+add_executable(
+        all_tests
+        parse_test.cpp
+        lex_test.cpp
+        token_test.cpp
+)
+
+target_link_libraries(
+        all_tests
+        parser
+        lexer
+        GTest::gtest_main
+)
 
 target_link_libraries(
         token_test
