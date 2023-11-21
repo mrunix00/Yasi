@@ -75,3 +75,58 @@ TEST(parse_test, ParseNestedOperation) {
 
     EXPECT_EQ(actual == expected, true);
 }
+
+TEST(parse_test, ParseDeeplyNestedOperation) {
+    // ( + ( * 2 3 ) ( + ( * 1 2 ) 4 ) 7 ) )
+    auto sample = {
+            Token(Token::OpenBracket, "("),
+            Token(Token::Symbol, "+"),
+            Token(Token::OpenBracket, "("),
+            Token(Token::Symbol, "*"),
+            Token(Token::Integer, "2"),
+            Token(Token::Integer, "3"),
+            Token(Token::ClosedBracket, ")"),
+            Token(Token::OpenBracket, "("),
+            Token(Token::Symbol, "+"),
+            Token(Token::OpenBracket, "("),
+            Token(Token::Symbol, "*"),
+            Token(Token::Integer, "1"),
+            Token(Token::Integer, "2"),
+            Token(Token::ClosedBracket, ")"),
+            Token(Token::Integer, "4"),
+            Token(Token::ClosedBracket, ")"),
+            Token(Token::Integer, "7"),
+            Token(Token::ClosedBracket, ")"),
+    };
+
+    auto expected = SyntaxTreeNode(
+            Token(Token::Symbol, "+"),
+            {
+                    SyntaxTreeNode(
+                            Token(Token::Symbol, "*"),
+                            {
+                                    SyntaxTreeNode(Token(Token::Integer, "2")),
+                                    SyntaxTreeNode(Token(Token::Integer, "3"))
+                            }
+                    ),
+                    SyntaxTreeNode(
+                            Token(Token::Symbol, "+"),
+                            {
+                                    SyntaxTreeNode(
+                                            Token(Token::Symbol, "*"),
+                                            {
+                                                    SyntaxTreeNode(Token(Token::Integer, "1")),
+                                                    SyntaxTreeNode(Token(Token::Integer, "2"))
+                                            }
+                                    ),
+                                    SyntaxTreeNode(Token(Token::Integer,"4"))
+                            }
+                    ),
+                    SyntaxTreeNode(Token(Token::Integer, "7")),
+            }
+    );
+
+    auto actual = parse(sample);
+
+    EXPECT_EQ(actual == expected, true);
+}
