@@ -15,12 +15,12 @@ enable_testing()
 
 add_library(
         lexer
-        ../src/Lexer/Lexer.cpp
+        ../src/lexer/Lexer.cpp
 )
 
 add_library(
         parser
-        ../src/Parser/parse.cpp
+        ../src/parser/Parser.cpp
 )
 
 add_executable(

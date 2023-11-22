@@ -1,6 +1,6 @@
 #include <gtest/gtest.h>
-#include "../src/Tokens/Token.h"
-#include "../src/Lexer/Lexer.h"
+#include "../src/tokens/Token.h"
+#include "../src/lexer/Lexer.h"
 
 TEST(lex_test, ShouldTokenizeSingleChars) {
     std::string sample = "(+ 1 2)";

@@ -1,5 +1,5 @@
 #include <gtest/gtest.h>
-#include "../src/Parser/parse.h"
+#include "../src/parser/Parser.h"
 
 TEST(parse_test, ParseSimpleOperation) {
     // ( + 1 2 )
@@ -18,7 +18,7 @@ TEST(parse_test, ParseSimpleOperation) {
             }
     );
 
-    auto actual = parse(sample);
+    auto actual = Parser::parse(sample);
 
     EXPECT_EQ(actual == expected, true);
 }
@@ -38,7 +38,7 @@ TEST(parse_test, ParseSimpleOperationWithStringArgument) {
             }
     );
 
-    auto actual = parse(sample);
+    auto actual = Parser::parse(sample);
 
     EXPECT_EQ(actual == expected, true);
 }
@@ -71,7 +71,7 @@ TEST(parse_test, ParseNestedOperation) {
             }
     );
 
-    auto actual = parse(sample);
+    auto actual = Parser::parse(sample);
 
     EXPECT_EQ(actual == expected, true);
 }
@@ -126,7 +126,7 @@ TEST(parse_test, ParseDeeplyNestedOperation) {
             }
     );
 
-    auto actual = parse(sample);
+    auto actual = Parser::parse(sample);
 
     EXPECT_EQ(actual == expected, true);
 }

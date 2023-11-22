@@ -3,7 +3,7 @@
 
 #include <utility>
 #include <vector>
-#include "../Tokens/Token.h"
+#include "../tokens/Token.h"
 
 class SyntaxTreeNode {
 public:

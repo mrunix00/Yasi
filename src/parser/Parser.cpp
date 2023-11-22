@@ -1,9 +1,7 @@
 #include <stack>
-#include <queue>
-#include "parse.h"
-#include "SyntaxTreeNode.h"
+#include "Parser.h"
 
-SyntaxTreeNode parse(const std::vector<Token> &tokens) {
+SyntaxTreeNode Parser::parse(const std::vector<Token> &tokens) {
     std::stack<Token> operators_stack;
     std::stack<std::vector<SyntaxTreeNode>> nodes_stack;
 
