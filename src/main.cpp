@@ -1,7 +1,7 @@
 #include <cstdlib>
 #include <iostream>
 #include "read.hpp"
-#include "Lexer/Lexer.h"
+#include "lexer/Lexer.h"
 
 
 int main() {
