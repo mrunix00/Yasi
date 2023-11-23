@@ -23,6 +23,11 @@ add_library(
         ../src/parser/Parser.cpp
 )
 
+add_library(
+        evaluate
+        ../src/eval/eval.cpp
+)
+
 add_executable(
         token_test
         token_test.cpp
@@ -39,21 +44,33 @@ add_executable(
 )
 
 add_executable(
+        eval_test
+        eval_test.cpp
+)
+
+add_executable(
         all_tests
         parse_test.cpp
         lex_test.cpp
         token_test.cpp
+        eval_test.cpp
 )
 
 target_link_libraries(
         all_tests
         parser
         lexer
+        evaluate
         GTest::gtest_main
 )
 
 target_link_libraries(
         token_test
+        GTest::gtest_main
+)
+
+target_link_libraries(
+        eval_test
         GTest::gtest_main
 )
 
@@ -73,3 +90,4 @@ include(GoogleTest)
 gtest_discover_tests(token_test)
 gtest_discover_tests(lex_test)
 gtest_discover_tests(parse_test)
+gtest_discover_tests(eval_test)
