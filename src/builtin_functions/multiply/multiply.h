@@ -2,7 +2,7 @@
 #define DUMMYLISP_MULTIPLY_H
 
 #include "../../parser/SyntaxTreeNode.h"
-#include "builtin_functions/Function.h"
+#include "../Function.h"
 
 class Multiply : public Function {
 public:

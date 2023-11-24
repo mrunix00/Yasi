@@ -1,10 +1,6 @@
 #ifndef DUMMYLISP_FUNCTION_H
 #define DUMMYLISP_FUNCTION_H
 
-#include <utility>
-#include <vector>
-#include "parser/SyntaxTreeNode.h"
-
 class Function {
 protected:
     std::vector<SyntaxTreeNode> args;
