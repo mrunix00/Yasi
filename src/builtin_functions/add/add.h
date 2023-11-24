@@ -1,14 +1,16 @@
-//
-// Created by mrunix on 11/24/23.
-//
-
 #ifndef DUMMYLISP_ADD_H
 #define DUMMYLISP_ADD_H
 
+#include "../../parser/SyntaxTreeNode.h"
+#include "builtin_functions/Function.h"
 
-class add {
+class Add : public Function {
+public:
+    explicit Add(const std::vector<SyntaxTreeNode> &args)
+            : Function(args) {
+    }
 
+    SyntaxTreeNode evaluate() override;
 };
 
-
-#endif //DUMMYLISP_ADD_H
+#endif

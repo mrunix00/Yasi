@@ -1,8 +1,16 @@
-//
-// Created by mrunix on 11/24/23.
-//
-
 #ifndef DUMMYLISP_MULTIPLY_H
 #define DUMMYLISP_MULTIPLY_H
 
-#endif //DUMMYLISP_MULTIPLY_H
+#include "../../parser/SyntaxTreeNode.h"
+#include "builtin_functions/Function.h"
+
+class Multiply : public Function {
+public:
+    explicit Multiply(const std::vector<SyntaxTreeNode> &args)
+            : Function(args) {
+    }
+
+    SyntaxTreeNode evaluate() override;
+};
+
+#endif

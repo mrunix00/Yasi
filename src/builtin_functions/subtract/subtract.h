@@ -1,14 +1,16 @@
-//
-// Created by mrunix on 11/24/23.
-//
-
 #ifndef DUMMYLISP_SUBTRACT_H
 #define DUMMYLISP_SUBTRACT_H
 
+#include "../../parser/SyntaxTreeNode.h"
+#include "builtin_functions/Function.h"
 
-class subtract {
+class Subtract : public Function {
+public:
+    explicit Subtract(const std::vector<SyntaxTreeNode> &args)
+            : Function(args) {
+    }
 
+    SyntaxTreeNode evaluate() override;
 };
 
-
-#endif //DUMMYLISP_SUBTRACT_H
+#endif
