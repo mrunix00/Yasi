@@ -12,6 +12,7 @@ file(
         src/*
 )
 add_executable(dummyLisp ${SRCS}
-        src/exceptions/SyntaxError.h)
+        src/exceptions/SyntaxError.h
+        src/builtin_functions/divide/Divide.h)
 add_subdirectory(tests)
 target_link_libraries(dummyLisp linenoise)

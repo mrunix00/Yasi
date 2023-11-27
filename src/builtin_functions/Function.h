@@ -3,7 +3,6 @@
 
 class Function {
 public:
-
     virtual ~Function()= default;
     virtual SyntaxTreeNode evaluate(const std::vector<SyntaxTreeNode>& args) = 0;
 };
