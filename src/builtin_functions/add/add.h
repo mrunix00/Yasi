@@ -6,11 +6,7 @@
 
 class Add : public Function {
 public:
-    explicit Add(const std::vector<SyntaxTreeNode> &args)
-            : Function(args) {
-    }
-
-    SyntaxTreeNode evaluate() override;
+    SyntaxTreeNode evaluate(const std::vector<SyntaxTreeNode>& args) override;
 };
 
 #endif

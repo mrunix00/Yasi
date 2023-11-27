@@ -1,6 +1,6 @@
 #include "subtract.h"
 
-SyntaxTreeNode Subtract::evaluate() {
+SyntaxTreeNode Subtract::evaluate(const std::vector<SyntaxTreeNode> &args) {
     int result = std::stoi(args[0].token.token);
 
     for (int i = 1; i < args.size(); i++) {

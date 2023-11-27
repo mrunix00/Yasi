@@ -1,6 +1,6 @@
 #include "multiply.h"
 
-SyntaxTreeNode Multiply::evaluate() {
+SyntaxTreeNode Multiply::evaluate(const std::vector<SyntaxTreeNode> &args) {
     int result = 1;
 
     for (const auto &arg: args) {

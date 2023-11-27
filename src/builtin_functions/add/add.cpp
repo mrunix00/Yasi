@@ -1,6 +1,6 @@
 #include "add.h"
 
-SyntaxTreeNode Add::evaluate() {
+SyntaxTreeNode Add::evaluate(const std::vector<SyntaxTreeNode> &args) {
     int result = 0;
 
     for (const auto &arg: args) {

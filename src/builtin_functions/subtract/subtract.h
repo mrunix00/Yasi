@@ -6,11 +6,7 @@
 
 class Subtract : public Function {
 public:
-    explicit Subtract(const std::vector<SyntaxTreeNode> &args)
-            : Function(args) {
-    }
-
-    SyntaxTreeNode evaluate() override;
+    SyntaxTreeNode evaluate(const std::vector<SyntaxTreeNode>& args) override;
 };
 
 #endif
