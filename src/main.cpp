@@ -2,7 +2,9 @@
 #include <iostream>
 #include "read.hpp"
 #include "lexer/Lexer.h"
-
+#include "eval/eval.h"
+#include "parser/Parser.h"
+#include "exceptions/SyntaxError.h"
 
 int main() {
     std::cout << "dummyLisp 0.0.0 Interpreter\n";
@@ -15,13 +17,12 @@ int main() {
             return EXIT_SUCCESS;
         }
 
-        if (!userInput.empty()) {
-            auto tokens = Lexer::tokenize(userInput);
-            std::cout << '[';
-            for (const auto &token: tokens) {
-                std::cout << " '" << token.token << "', ";
-            }
-            std::cout << "\b\b ]\n";
+        try {
+            auto result = evaluate(Parser::parse(Lexer::tokenize(userInput)));
+            std::cout << result.token.token << '\n';
+        } catch (SyntaxError& error) {
+            std::cout << error.message << '\n';
         }
+
     }
 }

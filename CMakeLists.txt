@@ -11,6 +11,7 @@ file(
         SRCS
         src/*
 )
-add_executable(dummyLisp ${SRCS})
+add_executable(dummyLisp ${SRCS}
+        src/exceptions/SyntaxError.h)
 add_subdirectory(tests)
 target_link_libraries(dummyLisp linenoise)
