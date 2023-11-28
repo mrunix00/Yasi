@@ -6,13 +6,16 @@
 #include "exceptions/SyntaxError.h"
 #include "builtin_functions/divide/Divide.h"
 
-SyntaxTreeNode evaluate(const SyntaxTreeNode &tree) {
+SyntaxTreeNode Evaluate::evaluate(const SyntaxTreeNode &tree) {
     static std::unordered_map<std::string, Function *> builtin = {
             {"+", dynamic_cast<Function *>(new Add())},
             {"-", dynamic_cast<Function *>(new Subtract())},
             {"*", dynamic_cast<Function *>(new Multiply())},
             {"/", dynamic_cast<Function *>(new Divide())}
     };
+    if (tree.children.empty()) {
+        return SyntaxTreeNode(tree.token);
+    }
     if (builtin.find(tree.token.token) != builtin.end()) {
         return builtin.at(tree.token.token)->evaluate(tree.children);
     } else {

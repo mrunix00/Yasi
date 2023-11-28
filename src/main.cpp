@@ -18,9 +18,11 @@ int main() {
         }
 
         try {
-            auto result = evaluate(Parser::parse(Lexer::tokenize(userInput)));
+            auto result = Evaluate::evaluate(
+                    Parser::parse(Lexer::tokenize(userInput))
+            );
             std::cout << result.token.token << '\n';
-        } catch (SyntaxError& error) {
+        } catch (SyntaxError &error) {
             std::cout << error.message << '\n';
         }
 

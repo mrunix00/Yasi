@@ -15,7 +15,7 @@ TEST(eval_test, ShouldEvaluateSimpleSumExpression) {
             Token(Token::Integer, "3")
     );
 
-    auto actualResult = evaluate(expression);
+    auto actualResult = Evaluate::evaluate(expression);
 
     EXPECT_EQ(expectedResult == actualResult, true);
 }
@@ -33,7 +33,7 @@ TEST(eval_test, ShouldEvaluateSimpleMultiplication) {
             Token(Token::Integer, "6")
     );
 
-    auto actualResult = evaluate(expression);
+    auto actualResult = Evaluate::evaluate(expression);
 
     EXPECT_EQ(expectedResult == actualResult, true);
 }
@@ -51,7 +51,29 @@ TEST(eval_test, ShouldEvaluateSimpleSubtraction) {
             Token(Token::Integer, "68")
     );
 
-    auto actualResult = evaluate(expression);
+    auto actualResult = Evaluate::evaluate(expression);
 
+    EXPECT_EQ(expectedResult == actualResult, true);
+}
+
+TEST(eval_test, ShouldEvaluateNestedExpression) {
+    auto expression = SyntaxTreeNode(
+            Token(Token::Symbol, "+"),
+            {
+                    SyntaxTreeNode(
+                            Token(Token::Symbol, "-"),
+                            {
+                                    SyntaxTreeNode(Token(Token::Integer, "32")),
+                                    SyntaxTreeNode(Token(Token::Integer, "2"))
+                            }
+                    ),
+                    SyntaxTreeNode(Token(Token::Integer, "7"))
+            }
+    );
+
+    auto expectedResult = SyntaxTreeNode(
+            Token(Token::Integer, "37")
+    );
+    auto actualResult = Evaluate::evaluate(expression);
     EXPECT_EQ(expectedResult == actualResult, true);
 }
