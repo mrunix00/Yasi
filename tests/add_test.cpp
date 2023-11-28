@@ -14,7 +14,7 @@ TEST(add_test, ShouldAddTwoNumbers) {
     EXPECT_EQ(expectedResult == actual, true);
 }
 
-TEST(add_test, ShouldEvaluateNestedExpression) {
+TEST(add_test, ShouldEvaluateNestedAddition) {
     auto expression = {
             SyntaxTreeNode(Token(Token::Integer, "1")),
             SyntaxTreeNode(
