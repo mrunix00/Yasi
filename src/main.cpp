@@ -7,7 +7,7 @@
 #include "exceptions/SyntaxError.h"
 
 int main() {
-    std::cout << "dummyLisp 0.0.0 Interpreter\n";
+    std::cout << "Yasi v0.0.0\n";
 
     std::string userInput;
     while (true) {
