@@ -1,5 +1,5 @@
-#ifndef DUMMYLISP_DIVIDE_H
-#define DUMMYLISP_DIVIDE_H
+#ifndef YASI_DIVIDE_H
+#define YASI_DIVIDE_H
 
 #include "../../parser/SyntaxTreeNode.h"
 #include "../Function.h"

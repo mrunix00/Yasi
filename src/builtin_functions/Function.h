@@ -1,5 +1,5 @@
-#ifndef DUMMYLISP_FUNCTION_H
-#define DUMMYLISP_FUNCTION_H
+#ifndef YASI_FUNCTION_H
+#define YASI_FUNCTION_H
 
 class Function {
 public:

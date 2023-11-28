@@ -1,5 +1,5 @@
-#ifndef DUMMYLISP_SYNTAXERROR_H
-#define DUMMYLISP_SYNTAXERROR_H
+#ifndef YASI_SYNTAXERROR_H
+#define YASI_SYNTAXERROR_H
 
 #include <exception>
 #include <string>

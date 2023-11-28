@@ -1,5 +1,5 @@
-#ifndef DUMMYLISP_SUBTRACT_H
-#define DUMMYLISP_SUBTRACT_H
+#ifndef YASI_SUBTRACT_H
+#define YASI_SUBTRACT_H
 
 #include "../../parser/SyntaxTreeNode.h"
 #include "../Function.h"

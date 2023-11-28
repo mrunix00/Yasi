@@ -1,5 +1,5 @@
-#ifndef DUMMYLISP_TOKEN_H
-#define DUMMYLISP_TOKEN_H
+#ifndef YASI_TOKEN_H
+#define YASI_TOKEN_H
 
 #include <iostream>
 #include <utility>

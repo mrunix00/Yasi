@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.25)
-project(dummyLisp)
+project(Yasi)
 
 set(CMAKE_CXX_STANDARD 17)
 
@@ -11,8 +11,8 @@ file(
         SRCS
         src/*
 )
-add_executable(dummyLisp ${SRCS}
+add_executable(Yasi ${SRCS}
         src/exceptions/SyntaxError.h
         src/builtin_functions/divide/Divide.h)
 add_subdirectory(tests)
-target_link_libraries(dummyLisp linenoise)
+target_link_libraries(Yasi linenoise)

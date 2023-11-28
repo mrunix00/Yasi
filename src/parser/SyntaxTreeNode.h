@@ -1,5 +1,5 @@
-#ifndef DUMMYLISP_SYNTAXTREENODE_H
-#define DUMMYLISP_SYNTAXTREENODE_H
+#ifndef YASI_SYNTAXTREENODE_H
+#define YASI_SYNTAXTREENODE_H
 
 #include <utility>
 #include <vector>

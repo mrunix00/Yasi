@@ -1,5 +1,5 @@
-#ifndef DUMMYLISP_MULTIPLY_H
-#define DUMMYLISP_MULTIPLY_H
+#ifndef YASI_MULTIPLY_H
+#define YASI_MULTIPLY_H
 
 #include "../../parser/SyntaxTreeNode.h"
 #include "../Function.h"

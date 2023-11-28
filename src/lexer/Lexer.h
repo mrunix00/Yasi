@@ -1,5 +1,5 @@
-#ifndef DUMMYLISP_LEXER_H
-#define DUMMYLISP_LEXER_H
+#ifndef YASI_LEXER_H
+#define YASI_LEXER_H
 
 #include "../tokens/Token.h"
 #include <vector>

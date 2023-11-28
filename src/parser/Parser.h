@@ -1,5 +1,5 @@
-#ifndef DUMMYLISP_PARSER_H
-#define DUMMYLISP_PARSER_H
+#ifndef YASI_PARSER_H
+#define YASI_PARSER_H
 
 #include "SyntaxTreeNode.h"
 
