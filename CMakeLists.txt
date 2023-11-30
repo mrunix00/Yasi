@@ -11,8 +11,6 @@ file(
         SRCS
         src/*
 )
-add_executable(Yasi ${SRCS}
-        src/exceptions/SyntaxError.h
-        src/builtin_functions/divide/Divide.h)
+add_executable(Yasi ${SRCS})
 add_subdirectory(tests)
 target_link_libraries(Yasi linenoise)
