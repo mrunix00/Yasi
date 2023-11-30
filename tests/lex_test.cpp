@@ -1,5 +1,4 @@
 #include <gtest/gtest.h>
-#include "../src/tokens/Token.h"
 #include "../src/lexer/Lexer.h"
 
 TEST(lex_test, ShouldTokenizeSingleChars) {
