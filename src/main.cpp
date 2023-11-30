@@ -1,10 +1,10 @@
+#include "eval/eval.h"
+#include "exceptions/SyntaxError.h"
+#include "lexer/Lexer.h"
+#include "parser/Parser.h"
+#include "read.hpp"
 #include <cstdlib>
 #include <iostream>
-#include "read.hpp"
-#include "lexer/Lexer.h"
-#include "eval/eval.h"
-#include "parser/Parser.h"
-#include "exceptions/SyntaxError.h"
 
 int main() {
     std::cout << "Yasi v0.0.0\n";
@@ -18,13 +18,11 @@ int main() {
         }
 
         try {
-            auto result = Evaluate::evaluate(
-                    Parser::parse(Lexer::tokenize(userInput))
-            );
+            auto result =
+                    Evaluate::evaluate(Parser::parse(Lexer::tokenize(userInput)));
             std::cout << result.token.token << '\n';
         } catch (SyntaxError &error) {
             std::cout << error.message << '\n';
         }
-
     }
 }

@@ -1,5 +1,5 @@
-#include <stack>
 #include "Parser.h"
+#include <stack>
 
 SyntaxTreeNode Parser::parse(const std::vector<Token> &tokens) {
     std::stack<Token> operators_stack;
@@ -14,13 +14,11 @@ SyntaxTreeNode Parser::parse(const std::vector<Token> &tokens) {
         } else if (token.type == Token::ClosedBracket) {
             auto args = nodes_stack.top();
             nodes_stack.pop();
-            if (nodes_stack.empty()) nodes_stack.emplace();
-            nodes_stack.top().emplace_back(
-                    operators_stack.top(),
-                    args
-            );
-            operators_stack.pop(); // pop the operator
-            operators_stack.pop(); // pop the bracket
+            if (nodes_stack.empty())
+                nodes_stack.emplace();
+            nodes_stack.top().emplace_back(operators_stack.top(), args);
+            operators_stack.pop();// pop the operator
+            operators_stack.pop();// pop the bracket
         } else {
             nodes_stack.top().emplace_back(token);
         }

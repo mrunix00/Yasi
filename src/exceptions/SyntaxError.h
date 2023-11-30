@@ -9,8 +9,7 @@ class SyntaxError : public std::exception {
 public:
     std::string message;
 
-    explicit SyntaxError(std::string message)
-            : message(std::move(message)) {}
+    explicit SyntaxError(std::string message) : message(std::move(message)) {}
 };
 
 #endif

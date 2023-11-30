@@ -1,12 +1,10 @@
-#include <gtest/gtest.h>
-#include "parser/SyntaxTreeNode.h"
 #include "builtin_functions/divide/Divide.h"
+#include "parser/SyntaxTreeNode.h"
+#include <gtest/gtest.h>
 
 TEST(add_test, ShouldDivideNumbers) {
-    auto expression = {
-            SyntaxTreeNode(Token(Token::Integer, "8")),
-            SyntaxTreeNode(Token(Token::Integer, "2"))
-    };
+    auto expression = {SyntaxTreeNode(Token(Token::Integer, "8")),
+                       SyntaxTreeNode(Token(Token::Integer, "2"))};
 
     auto expectedResult = SyntaxTreeNode(Token(Token::Integer, "4"));
     auto actual = Divide().evaluate(expression);
@@ -17,14 +15,9 @@ TEST(add_test, ShouldDivideNumbers) {
 TEST(add_test, ShouldEvaluateNestedDivision) {
     auto expression = {
             SyntaxTreeNode(Token(Token::Integer, "18")),
-            SyntaxTreeNode(
-                    Token(Token::Integer, "/"),
-                    {
-                            SyntaxTreeNode(Token(Token::Integer, "4")),
-                            SyntaxTreeNode(Token(Token::Integer, "2"))
-                    }
-            )
-    };
+            SyntaxTreeNode(Token(Token::Integer, "/"),
+                           {SyntaxTreeNode(Token(Token::Integer, "4")),
+                            SyntaxTreeNode(Token(Token::Integer, "2"))})};
 
     auto expectedResult = SyntaxTreeNode(Token(Token::Integer, "9"));
     auto actual = Divide().evaluate(expression);

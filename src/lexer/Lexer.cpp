@@ -1,15 +1,13 @@
-#include <cstring>
 #include "Lexer.h"
+#include <cstring>
 
 std::vector<Token> Lexer::tokenize(const std::string &line) {
     std::vector<Token> result;
     std::string currentToken;
 
     for (auto c: line) {
-        if (c != '(' && c != ')'
-            && (c != ' ' || currentToken[0] == '"')
-            && (c != '"' || currentToken[0] != '"')
-                ) {
+        if (c != '(' && c != ')' && (c != ' ' || currentToken[0] == '"') &&
+            (c != '"' || currentToken[0] != '"')) {
             currentToken.append(1, c);
             continue;
         }

@@ -9,10 +9,5 @@ SyntaxTreeNode Multiply::evaluate(const std::vector<SyntaxTreeNode> &args) {
         result *= std::stoi(evArg.token);
     }
 
-    return SyntaxTreeNode(
-            Token(
-                    Token::Integer,
-                    std::to_string(result)
-            )
-    );
+    return SyntaxTreeNode(Token(Token::Integer, std::to_string(result)));
 }

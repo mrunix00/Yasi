@@ -1,8 +1,8 @@
 #ifndef YASI_LEXER_H
 #define YASI_LEXER_H
 
-#include <utility>
 #include <iostream>
+#include <utility>
 #include <vector>
 
 class Token {
@@ -22,14 +22,10 @@ public:
     Token() : type(Token::Invalid) {}
 
     Token(TokenType type, std::string token)
-            : type(type),
-              token(std::move(token)) {}
+        : type(type), token(std::move(token)) {}
 
-    bool operator==(const Token &object) const {
-        return token == object.token;
-    }
+    bool operator==(const Token &object) const { return token == object.token; }
 };
-
 
 class Lexer {
 public:

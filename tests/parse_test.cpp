@@ -1,5 +1,5 @@
-#include <gtest/gtest.h>
 #include "../src/parser/Parser.h"
+#include <gtest/gtest.h>
 
 TEST(parse_test, ParseSimpleOperation) {
     // ( + 1 2 )
@@ -10,13 +10,10 @@ TEST(parse_test, ParseSimpleOperation) {
             Token(Token::Integer, "2"),
             Token(Token::ClosedBracket, ")"),
     };
-    auto expected = SyntaxTreeNode(
-            Token(Token::Symbol, "+"),
-            {
-                    SyntaxTreeNode(Token(Token::Integer, "1")),
-                    SyntaxTreeNode(Token(Token::Integer, "2"))
-            }
-    );
+    auto expected =
+            SyntaxTreeNode(Token(Token::Symbol, "+"),
+                           {SyntaxTreeNode(Token(Token::Integer, "1")),
+                            SyntaxTreeNode(Token(Token::Integer, "2"))});
 
     auto actual = Parser::parse(sample);
 
@@ -35,8 +32,7 @@ TEST(parse_test, ParseSimpleOperationWithStringArgument) {
             Token(Token::Symbol, "print"),
             {
                     SyntaxTreeNode(Token(Token::String, "\"Hello World\"")),
-            }
-    );
+            });
 
     auto actual = Parser::parse(sample);
 
@@ -59,17 +55,10 @@ TEST(parse_test, ParseNestedOperation) {
 
     auto expected = SyntaxTreeNode(
             Token(Token::Symbol, "+"),
-            {
-                    SyntaxTreeNode(
-                            Token(Token::Symbol, "+"),
-                            {
-                                    SyntaxTreeNode(Token(Token::Integer, "1")),
-                                    SyntaxTreeNode(Token(Token::Integer, "3"))
-                            }
-                    ),
-                    SyntaxTreeNode(Token(Token::Integer, "2"))
-            }
-    );
+            {SyntaxTreeNode(Token(Token::Symbol, "+"),
+                            {SyntaxTreeNode(Token(Token::Integer, "1")),
+                             SyntaxTreeNode(Token(Token::Integer, "3"))}),
+             SyntaxTreeNode(Token(Token::Integer, "2"))});
 
     auto actual = Parser::parse(sample);
 
@@ -102,29 +91,17 @@ TEST(parse_test, ParseDeeplyNestedOperation) {
     auto expected = SyntaxTreeNode(
             Token(Token::Symbol, "+"),
             {
-                    SyntaxTreeNode(
-                            Token(Token::Symbol, "*"),
-                            {
-                                    SyntaxTreeNode(Token(Token::Integer, "2")),
-                                    SyntaxTreeNode(Token(Token::Integer, "3"))
-                            }
-                    ),
+                    SyntaxTreeNode(Token(Token::Symbol, "*"),
+                                   {SyntaxTreeNode(Token(Token::Integer, "2")),
+                                    SyntaxTreeNode(Token(Token::Integer, "3"))}),
                     SyntaxTreeNode(
                             Token(Token::Symbol, "+"),
-                            {
-                                    SyntaxTreeNode(
-                                            Token(Token::Symbol, "*"),
-                                            {
-                                                    SyntaxTreeNode(Token(Token::Integer, "1")),
-                                                    SyntaxTreeNode(Token(Token::Integer, "2"))
-                                            }
-                                    ),
-                                    SyntaxTreeNode(Token(Token::Integer,"4"))
-                            }
-                    ),
+                            {SyntaxTreeNode(Token(Token::Symbol, "*"),
+                                            {SyntaxTreeNode(Token(Token::Integer, "1")),
+                                             SyntaxTreeNode(Token(Token::Integer, "2"))}),
+                             SyntaxTreeNode(Token(Token::Integer, "4"))}),
                     SyntaxTreeNode(Token(Token::Integer, "7")),
-            }
-    );
+            });
 
     auto actual = Parser::parse(sample);
 

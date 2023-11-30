@@ -1,5 +1,5 @@
-#include <gtest/gtest.h>
 #include "lexer/Lexer.h"
+#include <gtest/gtest.h>
 
 TEST(token_test, TokensEqualityCheck) {
     auto token1 = Token(Token::OpenBracket, "(");
