@@ -1,1 +1,28 @@
 # Yasi (Yet (Another (Scheme (Interpreter))))
+
+### ⚠️ Warning
+This project is written for educational purposes and it sucks so much you wouldn't use it for any practical or serious projects.
+
+## Build instructions
+
+### Perquisites
+
+You need to have the following installed on your system:
+- CMake 3.25+
+- Any C++ Compiler (only tested with g++)
+- Git
+
+### Cloning the repo
+```shell
+git clone https://github.com/mrunix00/Yasi.git
+cd Yasi/
+git submodule init && git submodule update
+```
+
+### Build
+
+``` shell
+mkdir build && cd build/
+cmake .. && cmake --build .
+./Yasi
+```
