@@ -48,3 +48,43 @@ TEST(lex_test, StringsToken) {
 
     EXPECT_EQ(expected == actual, true);
 }
+
+TEST(lex_test, ShouldLocateTokens) {
+    std::string sample = "(+ 12 54)";
+    auto tokens = Lexer::tokenize(sample);
+
+    EXPECT_EQ(tokens[0].line == 1, true);
+    EXPECT_EQ(tokens[0].column, true);
+
+    EXPECT_EQ(tokens[1].line == 1, true);
+    EXPECT_EQ(tokens[1].column == 2, true);
+
+    EXPECT_EQ(tokens[2].line == 1, true);
+    EXPECT_EQ(tokens[2].column == 4, true);
+
+    EXPECT_EQ(tokens[3].line == 1, true);
+    EXPECT_EQ(tokens[3].column == 7, true);
+
+    EXPECT_EQ(tokens[4].line == 1, true);
+    EXPECT_EQ(tokens[4].column == 9, true);
+}
+
+TEST(lex_test, ShouldLocateTokensOnMultiLineExpressions) {
+    std::string sample = "(+\n1 2\n)";
+    auto tokens = Lexer::tokenize(sample);
+
+    EXPECT_EQ(tokens[0].line == 1, true);
+    EXPECT_EQ(tokens[0].column == 1, true);
+
+    EXPECT_EQ(tokens[1].line == 1, true);
+    EXPECT_EQ(tokens[1].column == 2, true);
+
+    EXPECT_EQ(tokens[2].line == 2, true);
+    EXPECT_EQ(tokens[2].column == 1, true);
+
+    EXPECT_EQ(tokens[3].line == 2, true);
+    EXPECT_EQ(tokens[3].column == 3, true);
+
+    EXPECT_EQ(tokens[4].line == 3, true);
+    EXPECT_EQ(tokens[4].column == 1, true);
+}
