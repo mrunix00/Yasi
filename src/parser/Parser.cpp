@@ -1,4 +1,5 @@
 #include "Parser.h"
+#include "exceptions/SyntaxError.h"
 #include <stack>
 
 SyntaxTreeNode Parser::parse(const std::vector<Token> &tokens) {
@@ -9,9 +10,13 @@ SyntaxTreeNode Parser::parse(const std::vector<Token> &tokens) {
         if (token.type == Token::OpenBracket) {
             nodes_stack.emplace();
             operators_stack.push(token);
-        } else if (operators_stack.top().type == Token::OpenBracket) {
+        } else if (!operators_stack.empty() &&
+                   operators_stack.top().type == Token::OpenBracket) {
             operators_stack.push(token);
         } else if (token.type == Token::ClosedBracket) {
+            if (operators_stack.empty()) {
+                throw SyntaxError("Unexpected parenthesis -> ')'");
+            }
             auto args = nodes_stack.top();
             nodes_stack.pop();
             if (nodes_stack.empty())

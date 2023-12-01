@@ -1,4 +1,5 @@
 #include "../src/parser/Parser.h"
+#include "exceptions/SyntaxError.h"
 #include <gtest/gtest.h>
 
 TEST(parse_test, ParseSimpleOperation) {
@@ -106,4 +107,28 @@ TEST(parse_test, ParseDeeplyNestedOperation) {
     auto actual = Parser::parse(sample);
 
     EXPECT_EQ(actual == expected, true);
+}
+
+TEST(parse_test, ShouldThrowExceptionsOnExtraParenthesis) {
+    auto exceptionCaught = false;
+    auto expectedErrorMessage = "Unexpected parenthesis -> ')'";
+    std::string actualErrorMessage;
+
+    auto sample = {
+            Token(Token::OpenBracket, "("),
+            Token(Token::Symbol, "+"),
+            Token(Token::Integer, "1"),
+            Token(Token::Integer, "2"),
+            Token(Token::ClosedBracket, ")"),
+            Token(Token::ClosedBracket, ")")};
+
+    try {
+        Parser::parse(sample);
+    } catch (SyntaxError &error) {
+        exceptionCaught = true;
+        actualErrorMessage = error.message;
+    }
+
+    EXPECT_EQ(exceptionCaught, true);
+    EXPECT_EQ(expectedErrorMessage == actualErrorMessage, true);
 }
