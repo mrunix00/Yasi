@@ -1,5 +1,5 @@
 #include <exception>
-#include <iostream>
+#include <string>
 
 extern "C" {
 char *linenoise(const char *);
