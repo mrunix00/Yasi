@@ -139,3 +139,60 @@ TEST(parse_test, ShouldThrowExceptionsOnExtraParenthesis) {
     EXPECT_EQ(extraParenthesisLine == sample[5].line, true);
     EXPECT_EQ(extraParenthesisColumn == sample[5].column, true);
 }
+
+TEST(parse_test, ShouldThrowExceptionsOnMissingOperator) {
+    bool exceptionCaught = false;
+    std::string errorMessage;
+    int line = 0;
+    int column = 0;
+    // ((+ 1 2))
+    const std::vector<Token> sample = {
+            Token(Token::OpenBracket, "(", 1, 1),
+            Token(Token::OpenBracket, "(", 1, 2),
+            Token(Token::Symbol, "+", 1, 3),
+            Token(Token::Integer, "1", 1, 5),
+            Token(Token::Integer, "2", 1, 7),
+            Token(Token::ClosedBracket, ")", 1, 8),
+            Token(Token::ClosedBracket, ")", 1, 9),
+    };
+
+    try {
+        Parser::parse(sample);
+    } catch (SyntaxError &error) {
+        exceptionCaught = true;
+        errorMessage = error.message;
+        line = error.line;
+        column = error.column;
+    }
+
+    EXPECT_EQ(exceptionCaught, true);
+    EXPECT_EQ(errorMessage == "An atom was expected after the opening parenthesis but not found", true);
+    EXPECT_EQ(line == sample[0].line, true);
+    EXPECT_EQ(column == sample[0].column, true);
+}
+
+TEST(parse_test, ShouldThrowExceptionsOnEmptyParenthesis) {
+    bool exceptionCaught = false;
+    std::string errorMessage;
+    int line = 0;
+    int column = 0;
+    // ((+ 1 2))
+    const std::vector<Token> sample = {
+            Token(Token::OpenBracket, "(", 1, 1),
+            Token(Token::ClosedBracket, ")", 1, 2),
+    };
+
+    try {
+        Parser::parse(sample);
+    } catch (SyntaxError &error) {
+        exceptionCaught = true;
+        errorMessage = error.message;
+        line = error.line;
+        column = error.column;
+    }
+
+    EXPECT_EQ(exceptionCaught, true);
+    EXPECT_EQ(errorMessage == "An atom was expected after the opening parenthesis but not found", true);
+    EXPECT_EQ(line == sample[0].line, true);
+    EXPECT_EQ(column == sample[0].column, true);
+}

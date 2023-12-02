@@ -12,6 +12,13 @@ SyntaxTreeNode Parser::parse(const std::vector<Token> &tokens) {
             operators_stack.push(token);
         } else if (!operators_stack.empty() &&
                    operators_stack.top().type == Token::OpenBracket) {
+            if (token.type == Token::ClosedBracket) {
+                throw SyntaxError(
+                        "An atom was expected after the opening "
+                        "parenthesis but not found",
+                        operators_stack.top().line,
+                        operators_stack.top().column);
+            }
             operators_stack.push(token);
         } else if (token.type == Token::ClosedBracket) {
             if (operators_stack.empty()) {
