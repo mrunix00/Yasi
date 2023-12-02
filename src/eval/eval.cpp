@@ -3,15 +3,18 @@
 #include "../builtin_functions/multiply/multiply.h"
 #include "../builtin_functions/subtract/subtract.h"
 #include "builtin_functions/divide/Divide.h"
+#include "builtin_functions/print/print.h"
 #include "exceptions/SyntaxError.h"
 #include <unordered_map>
 
 SyntaxTreeNode Evaluate::evaluate(const SyntaxTreeNode &tree) {
     static std::unordered_map<std::string, Function *> builtin = {
-            {"+", dynamic_cast<Function *>(new Add())},
-            {"-", dynamic_cast<Function *>(new Subtract())},
-            {"*", dynamic_cast<Function *>(new Multiply())},
-            {"/", dynamic_cast<Function *>(new Divide())}};
+            {"+", (Function *) (new Add())},
+            {"-", (Function *) (new Subtract())},
+            {"*", (Function *) (new Multiply())},
+            {"/", (Function *) (new Divide())},
+            {"print", (Function *) (new Print())},
+    };
     if (tree.children.empty()) {
         return SyntaxTreeNode(tree.token);
     }
