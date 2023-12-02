@@ -23,7 +23,7 @@ int checkParenthesis(std::string input) {
 std::string readCommand() {
     auto command = readLine(true);
     while (checkParenthesis(command) > 0) {
-        command = command + readLine(false);
+        command = command + '\n' + readLine(false);
     }
     return command;
 }

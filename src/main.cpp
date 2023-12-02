@@ -22,7 +22,9 @@ int main() {
                     Evaluate::evaluate(Parser::parse(Lexer::tokenize(userInput)));
             std::cout << result.token.token << '\n';
         } catch (SyntaxError &error) {
-            std::cout << error.message << '\n';
+            std::cout << "SyntaxError (" << error.line
+                      << ':' << error.column << "): "
+                      << error.message << '\n';
         }
     }
 }

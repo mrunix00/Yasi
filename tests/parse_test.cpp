@@ -113,22 +113,29 @@ TEST(parse_test, ShouldThrowExceptionsOnExtraParenthesis) {
     auto exceptionCaught = false;
     auto expectedErrorMessage = "Unexpected parenthesis -> ')'";
     std::string actualErrorMessage;
+    int extraParenthesisLine;
+    int extraParenthesisColumn;
 
-    auto sample = {
-            Token(Token::OpenBracket, "("),
-            Token(Token::Symbol, "+"),
-            Token(Token::Integer, "1"),
-            Token(Token::Integer, "2"),
-            Token(Token::ClosedBracket, ")"),
-            Token(Token::ClosedBracket, ")")};
+    // (+ 1 2 ))
+    const std::vector<Token> sample = {
+            Token(Token::OpenBracket, "(", 1, 1),
+            Token(Token::Symbol, "+", 1, 2),
+            Token(Token::Integer, "1", 1, 4),
+            Token(Token::Integer, "2", 1, 6),
+            Token(Token::ClosedBracket, ")", 1, 8),
+            Token(Token::ClosedBracket, ")", 1, 9)};
 
     try {
         Parser::parse(sample);
     } catch (SyntaxError &error) {
         exceptionCaught = true;
         actualErrorMessage = error.message;
+        extraParenthesisLine = error.line;
+        extraParenthesisColumn = error.column;
     }
 
     EXPECT_EQ(exceptionCaught, true);
     EXPECT_EQ(expectedErrorMessage == actualErrorMessage, true);
+    EXPECT_EQ(extraParenthesisLine == sample[5].line, true);
+    EXPECT_EQ(extraParenthesisColumn == sample[5].column, true);
 }

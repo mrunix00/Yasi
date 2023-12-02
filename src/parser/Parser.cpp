@@ -15,7 +15,8 @@ SyntaxTreeNode Parser::parse(const std::vector<Token> &tokens) {
             operators_stack.push(token);
         } else if (token.type == Token::ClosedBracket) {
             if (operators_stack.empty()) {
-                throw SyntaxError("Unexpected parenthesis -> ')'");
+                throw SyntaxError("Unexpected parenthesis -> ')'",
+                                  token.line, token.column);
             }
             auto args = nodes_stack.top();
             nodes_stack.pop();

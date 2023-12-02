@@ -19,7 +19,7 @@ SyntaxTreeNode Evaluate::evaluate(const SyntaxTreeNode &tree) {
         return builtin.at(tree.token.token)->evaluate(tree.children);
     } else {
         auto errorMessage =
-                "Syntax error: name `" + tree.token.token + "` is not defined";
-        throw SyntaxError(errorMessage);
+                "name `" + tree.token.token + "` is not defined";
+        throw SyntaxError(errorMessage, tree.token.line, tree.token.column);
     }
 }
