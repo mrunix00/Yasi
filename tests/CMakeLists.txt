@@ -28,7 +28,7 @@ file(
 
 add_executable(all_tests ${SRCS})
 
-target_link_libraries(all_tests GTest::gtest_main)
+target_link_libraries(all_tests GTest::gtest_main GTest::gmock_main)
 
 include(GoogleTest)
 
