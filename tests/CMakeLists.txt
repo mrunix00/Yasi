@@ -23,6 +23,7 @@ file(
         ../src/lexer/*.cpp
         ../src/parser/*.cpp
         ../src/tokens/*.cpp
+        ../src/utils/*.cpp
         ./*.cpp
 )
 
