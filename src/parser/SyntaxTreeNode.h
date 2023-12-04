@@ -10,6 +10,7 @@ public:
     Token token;
     std::vector<SyntaxTreeNode> children;
 
+    SyntaxTreeNode() {};
     SyntaxTreeNode(Token token, const std::vector<SyntaxTreeNode> &children)
         : token(std::move(token)), children(children) {}
 

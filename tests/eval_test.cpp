@@ -1,5 +1,7 @@
 #include "../src/eval/eval.h"
 #include "../src/parser/SyntaxTreeNode.h"
+#include "exceptions/SyntaxError.h"
+#include "lexer/Lexer.h"
 #include <gtest/gtest.h>
 
 TEST(eval_test, ShouldEvaluateSimpleSumExpression) {
@@ -56,10 +58,23 @@ TEST(eval_test, ShouldEvaluateNestedExpression) {
 
 TEST(eval_test, ShouldCallFunctionWithNoArguments) {
     auto expression = SyntaxTreeNode(
-        Token(Token::Symbol, "+")
-    );
+            Token(Token::Symbol, "+"));
 
     auto expectedResult = SyntaxTreeNode(Token(Token::Integer, "0"));
     auto actualResult = Evaluate::evaluate(expression);
     EXPECT_EQ(expectedResult == actualResult, true);
+}
+
+TEST(eval_test, ShouldThrowExceptionWithFunctionTokenLocation) {
+    int line, column;
+    auto expression = SyntaxTreeNode(Token(Token::Symbol, "/", 1, 2));
+    try {
+        Evaluate::evaluate(expression);
+    } catch (SyntaxError &error) {
+        line = error.line;
+        column = error.column;
+    }
+
+    EXPECT_EQ(line == expression.token.line, true);
+    EXPECT_EQ(column == expression.token.column, true);
 }
