@@ -33,8 +33,8 @@ TEST(divide_test, ThrowExceptionOnDivisionWithInvalidArguments) {
     int column = 0;
 
     const std::vector<SyntaxTreeNode> expression = {
-        SyntaxTreeNode(Token(Token::Integer, "1")),
-        SyntaxTreeNode(Token(Token::String, "\"Hello World\"", 2, 3)),
+            SyntaxTreeNode(Token(Token::Integer, "1")),
+            SyntaxTreeNode(Token(Token::String, "\"Hello World\"", 2, 3)),
     };
 
     try {
@@ -66,3 +66,27 @@ TEST(divide_test, ThrowExceptionOnZeroArguments) {
     EXPECT_EQ(isCaught, true);
     EXPECT_EQ(errorMessage == "At least 1 argument was expected but none were found", true);
 }
+
+TEST(divide_test, ThrowExceptionOnDivisionByZero) {
+    bool isCaught = false;
+    std::string errorMessage;
+    int line, column;
+
+    try {
+        Divide().evaluate({
+            SyntaxTreeNode(Token(Token::Integer, "1")),
+            SyntaxTreeNode(Token(Token::Integer, "0", 6, 9))
+        });
+    } catch (SyntaxError &error) {
+        isCaught = true;
+        errorMessage = error.message;
+        line = error.line;
+        column = error.column;
+    }
+
+    EXPECT_EQ(isCaught, true);
+    EXPECT_EQ(errorMessage == "Division by zero", true);
+    EXPECT_EQ(line == 6, true);
+    EXPECT_EQ(column == 9, true);
+}
+
