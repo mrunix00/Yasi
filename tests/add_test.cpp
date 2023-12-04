@@ -59,3 +59,9 @@ TEST(add_test, ThrowExceptionOnInvalidArguments) {
     EXPECT_EQ(line == expression[1].token.line, true);
     EXPECT_EQ(column == expression[1].token.column, true);
 }
+
+TEST(add_test, ShouldReturnZeroWhenNoArgumentsAreFound) {
+    auto expectedResult = SyntaxTreeNode(Token(Token::Integer, "0"));
+    auto actualResult = Add().evaluate({});
+    EXPECT_EQ(actualResult == expectedResult, true);
+}

@@ -3,7 +3,7 @@
 #include "parser/SyntaxTreeNode.h"
 #include <gtest/gtest.h>
 
-TEST(add_test, ShouldDivideNumbers) {
+TEST(divide_test, ShouldDivideNumbers) {
     auto expression = {SyntaxTreeNode(Token(Token::Integer, "8")),
                        SyntaxTreeNode(Token(Token::Integer, "2"))};
 
@@ -13,7 +13,7 @@ TEST(add_test, ShouldDivideNumbers) {
     EXPECT_EQ(expectedResult == actual, true);
 }
 
-TEST(add_test, ShouldEvaluateNestedDivision) {
+TEST(divide_test, ShouldEvaluateNestedDivision) {
     auto expression = {
             SyntaxTreeNode(Token(Token::Integer, "18")),
             SyntaxTreeNode(Token(Token::Integer, "/"),
@@ -26,7 +26,7 @@ TEST(add_test, ShouldEvaluateNestedDivision) {
     EXPECT_EQ(expectedResult == actual, true);
 }
 
-TEST(add_test, ThrowExceptionOnDivisionWithInvalidArguments) {
+TEST(divide_test, ThrowExceptionOnDivisionWithInvalidArguments) {
     bool isCaught = false;
     std::string errorMessage;
     int line = 0;
@@ -52,3 +52,17 @@ TEST(add_test, ThrowExceptionOnDivisionWithInvalidArguments) {
     EXPECT_EQ(column == expression[1].token.column, true);
 }
 
+TEST(divide_test, ThrowExceptionOnZeroArguments) {
+    bool isCaught = false;
+    std::string errorMessage;
+
+    try {
+        Divide().evaluate({});
+    } catch (SyntaxError &error) {
+        isCaught = true;
+        errorMessage = error.message;
+    }
+
+    EXPECT_EQ(isCaught, true);
+    EXPECT_EQ(errorMessage == "At least 1 argument was expected but none were found", true);
+}

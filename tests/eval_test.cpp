@@ -53,3 +53,13 @@ TEST(eval_test, ShouldEvaluateNestedExpression) {
     auto actualResult = Evaluate::evaluate(expression);
     EXPECT_EQ(expectedResult == actualResult, true);
 }
+
+TEST(eval_test, ShouldCallFunctionWithNoArguments) {
+    auto expression = SyntaxTreeNode(
+        Token(Token::Symbol, "+")
+    );
+
+    auto expectedResult = SyntaxTreeNode(Token(Token::Integer, "0"));
+    auto actualResult = Evaluate::evaluate(expression);
+    EXPECT_EQ(expectedResult == actualResult, true);
+}

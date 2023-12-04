@@ -3,6 +3,9 @@
 #include "exceptions/SyntaxError.h"
 
 SyntaxTreeNode Subtract::evaluate(const std::vector<SyntaxTreeNode> &args) {
+    if (args.empty()) {
+        throw SyntaxError("At least 1 argument was expected but none were found");
+    }
     int result = std::stoi(Evaluate::evaluate(args[0]).token.token);
 
     for (int i = 1; i < args.size(); i++) {

@@ -15,7 +15,7 @@ SyntaxTreeNode Evaluate::evaluate(const SyntaxTreeNode &tree) {
             {"/", (Function *) (new Divide())},
             {"print", (Function *) (new Print())},
     };
-    if (tree.children.empty()) {
+    if (tree.children.empty() && tree.token.type != Token::Symbol) {
         return SyntaxTreeNode(tree.token);
     }
     if (builtin.find(tree.token.token) != builtin.end()) {

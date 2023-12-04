@@ -3,10 +3,9 @@
 #include "lexer/Lexer.h"
 #include "parser/Parser.h"
 #include "read.hpp"
-#include "utils/printTokens.h"
 #include "utils/StdOut.h"
+#include "utils/printTokens.h"
 #include <bits/getopt_core.h>
-#include <cstdio>
 #include <cstdlib>
 #include <iostream>
 

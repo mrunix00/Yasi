@@ -3,7 +3,7 @@
 #include "parser/SyntaxTreeNode.h"
 #include <gtest/gtest.h>
 
-TEST(add_test, ShouldSubtractNumbers) {
+TEST(subtract_test, ShouldSubtractNumbers) {
     auto expression = {SyntaxTreeNode(Token(Token::Integer, "5")),
                        SyntaxTreeNode(Token(Token::Integer, "2"))};
 
@@ -13,7 +13,7 @@ TEST(add_test, ShouldSubtractNumbers) {
     EXPECT_EQ(expectedResult == actual, true);
 }
 
-TEST(add_test, ShouldEvaluateNestedSubtraction) {
+TEST(subtract_test, ShouldEvaluateNestedSubtraction) {
     auto expression = {
             SyntaxTreeNode(Token(Token::Integer, "9")),
             SyntaxTreeNode(Token(Token::Integer, "-"),
@@ -26,7 +26,7 @@ TEST(add_test, ShouldEvaluateNestedSubtraction) {
     EXPECT_EQ(expectedResult == actual, true);
 }
 
-TEST(add_test, ThrowExceptionOnInvalidArgumentsInSubtraction) {
+TEST(subtract_test, ThrowExceptionOnInvalidArgumentsInSubtraction) {
     bool isCaught = false;
     std::string errorMessage;
     int line = 0;
@@ -50,4 +50,19 @@ TEST(add_test, ThrowExceptionOnInvalidArgumentsInSubtraction) {
     EXPECT_EQ(errorMessage == "\"Hello World\" is not a number", true);
     EXPECT_EQ(line == expression[1].token.line, true);
     EXPECT_EQ(column == expression[1].token.column, true);
+}
+
+TEST(subtract_test, ThrowExceptionOnZeroArguments) {
+    bool isCaught = false;
+    std::string errorMessage;
+
+    try {
+        Subtract().evaluate({});
+    } catch (SyntaxError &error) {
+        isCaught = true;
+        errorMessage = error.message;
+    }
+
+    EXPECT_EQ(isCaught, true);
+    EXPECT_EQ(errorMessage == "At least 1 argument was expected but none were found", true);
 }

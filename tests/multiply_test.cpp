@@ -3,7 +3,7 @@
 #include "parser/SyntaxTreeNode.h"
 #include <gtest/gtest.h>
 
-TEST(add_test, ShouldMultiplyNumbers) {
+TEST(multiply_test, ShouldMultiplyNumbers) {
     auto expression = {SyntaxTreeNode(Token(Token::Integer, "2")),
                        SyntaxTreeNode(Token(Token::Integer, "2"))};
 
@@ -26,7 +26,7 @@ TEST(add_test, ShouldEvaluateNestedMultiplication) {
     EXPECT_EQ(expectedResult == actual, true);
 }
 
-TEST(add_test, ThrowExceptionOnMultiplyWithInvalidArguments) {
+TEST(multiply_test, ThrowExceptionOnMultiplyWithInvalidArguments) {
     bool isCaught = false;
     std::string errorMessage;
     int line = 0;
@@ -50,4 +50,10 @@ TEST(add_test, ThrowExceptionOnMultiplyWithInvalidArguments) {
     EXPECT_EQ(errorMessage == "\"Hello World\" is not a number", true);
     EXPECT_EQ(line == expression[1].token.line, true);
     EXPECT_EQ(column == expression[1].token.column, true);
+}
+
+TEST(multiply_test, ShouldReturnZeroWhenNoArgumentsAreFound) {
+    auto expectedResult = SyntaxTreeNode(Token(Token::Integer, "1"));
+    auto actualResult = Multiply().evaluate({});
+    EXPECT_EQ(actualResult == expectedResult, true);
 }
