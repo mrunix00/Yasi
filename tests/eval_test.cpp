@@ -65,7 +65,26 @@ TEST(eval_test, ShouldCallFunctionWithNoArguments) {
     EXPECT_EQ(expectedResult == actualResult, true);
 }
 
-TEST(eval_test, ShouldThrowExceptionWithFunctionTokenLocation) {
+TEST(eval_test, ShouldThrowExceptionWhenTheExpressionIsInvalid) {
+    int line, column;
+    auto expression = SyntaxTreeNode(
+            Token(Token::Symbol, "+", 1, 2),
+            {
+                    SyntaxTreeNode(Token(Token::Integer, "1", 1, 4)),
+                    SyntaxTreeNode(Token(Token::String, "\"Hello\"", 1, 6)),
+            });
+    try {
+        Evaluate::evaluate(expression);
+    } catch (SyntaxError &error) {
+        line = error.line;
+        column = error.column;
+    }
+
+    EXPECT_EQ(line == expression.children[1].token.line, true);
+    EXPECT_EQ(column == expression.children[1].token.column, true);
+}
+
+TEST(eval_test, ShouldThrowExceptionWhenErrorLocationIsNotFoundInArguments) {
     int line, column;
     auto expression = SyntaxTreeNode(Token(Token::Symbol, "/", 1, 2));
     try {

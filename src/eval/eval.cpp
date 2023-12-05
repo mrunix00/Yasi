@@ -26,6 +26,8 @@ SyntaxTreeNode Evaluate::evaluate(const SyntaxTreeNode &tree) {
             if (error.line == 0 && error.column == 0) {
                 throw SyntaxError(error.message, tree.token.line,
                                   tree.token.column);
+            } else {
+                throw error;
             }
         }
         return result;
