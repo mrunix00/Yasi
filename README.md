@@ -9,7 +9,7 @@ This project is written for educational purposes and it sucks so much you wouldn
 
 You need to have the following installed on your system:
 - CMake 3.25+
-- Any C++ Compiler (only tested with g++)
+- Any C++ Compiler (tested with GCC and Clang)
 - Git
 
 ### Cloning the repo
