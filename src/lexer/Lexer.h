@@ -31,7 +31,9 @@ public:
         : type(type), token(std::move(token)),
           line(line), column(column) {}
 
-    bool operator==(const Token &object) const { return token == object.token; }
+    bool operator==(const Token &object) const {
+        return token == object.token && type == object.type;
+    }
 };
 
 class Lexer {

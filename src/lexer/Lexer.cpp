@@ -19,7 +19,7 @@ std::vector<Token> Lexer::tokenize(const std::string &line) {
         currentColumn++;
 
         if (!currentToken.empty()) {
-            if (strspn(currentToken.c_str(), "0123456789")) {
+            if (strspn(currentToken.c_str(), "-0123456789")) {
                 result.emplace_back(Token::Integer, currentToken,
                                     currentLine, currentColumn);
             } else if (c != '"') {

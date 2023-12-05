@@ -28,9 +28,27 @@ TEST(lex_test, ShouldTokenizeMultipleChars) {
 TEST(lex_test, ShouldTokenizeLargeNumbers) {
     std::string sample = "(+ 13 54)";
     std::vector<Token> tokens = {
-            Token(Token::OpenBracket, "("), Token(Token::Symbol, "+"),
-            Token(Token::Integer, "13"), Token(Token::Integer, "54"),
-            Token(Token::ClosedBracket, ")")};
+            Token(Token::OpenBracket, "("),
+            Token(Token::Symbol, "+"),
+            Token(Token::Integer, "13"),
+            Token(Token::Integer, "54"),
+            Token(Token::ClosedBracket, ")"),
+    };
+
+    auto result = Lexer::tokenize(sample);
+
+    EXPECT_EQ(tokens == result, true);
+}
+
+TEST(lex_test, ShouldTokenizeNegativeNumbers) {
+    std::string sample = "(+ 1 -1)";
+    std::vector<Token> tokens = {
+            Token(Token::OpenBracket, "("),
+            Token(Token::Symbol, "+"),
+            Token(Token::Integer, "1"),
+            Token(Token::Integer, "-1"),
+            Token(Token::ClosedBracket, ")"),
+    };
 
     auto result = Lexer::tokenize(sample);
 
