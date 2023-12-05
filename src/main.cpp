@@ -5,8 +5,7 @@
 #include "read.hpp"
 #include "utils/StdOut.h"
 #include "utils/printTokens.h"
-#include <bits/getopt_core.h>
-#include <cstdlib>
+#include <getopt.h>
 #include <iostream>
 
 int main(int argc, char *argv[]) {
