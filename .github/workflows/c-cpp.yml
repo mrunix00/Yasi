@@ -7,17 +7,30 @@ on:
     branches: [ "main" ]
 
 jobs:
-  build:
+  build-gcc:
 
     runs-on: ubuntu-latest
 
     steps:
     - uses: actions/checkout@v3
-    - name: install tools
-      run: sudo apt install cmake
     - name: fetch submodules
       run: git submodule init && git submodule update
     - name: build the app
       run: mkdir build && cd build && cmake .. && cmake --build .
     - name: run the tests
       run: ctest --test-dir build/tests -V
+
+  build-clang:
+
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: install packages
+        run: sudo apt-get install -y clang-12 clang++-12
+      - name: fetch submodules
+        run: git submodule init && git submodule update
+      - name: build the app
+        run: mkdir build && cd build && export CXX=clang++-12 && export CC=clang-12 && cmake .. && cmake --build .
+      - name: run the tests
+        run: ctest --test-dir build/tests -V
+
