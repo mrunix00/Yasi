@@ -12,6 +12,7 @@ public:
         ClosedBracket,
         Symbol,
         Integer,
+        Decimal,
         String,
         Invalid
     };

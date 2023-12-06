@@ -14,8 +14,12 @@ std::string parse_ast(SyntaxTreeNode ast, int level) {
     } else {
         std::string type;
         if (ast.token.type == Token::Integer) type = "Integer";
-        else if (ast.token.type == Token::String) type = "String";
-        else type = "Symbol";
+        else if (ast.token.type == Token::Decimal)
+            type = "Decimal";
+        else if (ast.token.type == Token::String)
+            type = "String";
+        else
+            type = "Symbol";
         return tabs + type + " (" + ast.token.token + ")\n";
     }
 

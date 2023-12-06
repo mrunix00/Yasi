@@ -1,5 +1,6 @@
 #include "../src/lexer/Lexer.h"
 #include <gtest/gtest.h>
+#include <vector>
 
 TEST(lex_test, ShouldTokenizeSingleChars) {
     std::string sample = "(+ 1 2)";
@@ -57,10 +58,27 @@ TEST(lex_test, ShouldTokenizeNegativeNumbers) {
 
 TEST(lex_test, StringsToken) {
     std::string sample = "(print \"Hello World\")";
-    std::vector<Token> expected = {Token(Token::OpenBracket, "("),
-                                   Token(Token::Symbol, "print"),
-                                   Token(Token::String, "\"Hello World\""),
-                                   Token(Token::ClosedBracket, ")")};
+    std::vector<Token> expected = {
+            Token(Token::OpenBracket, "("),
+            Token(Token::Symbol, "print"),
+            Token(Token::String, "\"Hello World\""),
+            Token(Token::ClosedBracket, ")"),
+    };
+
+    auto actual = Lexer::tokenize(sample);
+
+    EXPECT_EQ(expected == actual, true);
+}
+
+TEST(lex_test, DecimalTokens) {
+    const std::string sample = "(+ 1.2 3)";
+    const std::vector<Token> expected = {
+        Token(Token::OpenBracket, "("),
+        Token(Token::Symbol, "+"),
+        Token(Token::Decimal, "1.2"),
+        Token(Token::Integer, "3"),
+        Token(Token::ClosedBracket, ")"),
+    };
 
     auto actual = Lexer::tokenize(sample);
 
