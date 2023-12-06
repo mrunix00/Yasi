@@ -16,6 +16,20 @@ TEST(add_test, ShouldAddTwoNumbers) {
     EXPECT_EQ(expectedResult == actual, true);
 }
 
+TEST(add_test, ShouldAddDecimalNumbers) {
+    // (+ 1 2)
+    auto expression = {
+            SyntaxTreeNode(Token(Token::Decimal, "1.2")),
+            SyntaxTreeNode(Token(Token::Integer, "2")),
+    };
+
+    auto expectedResult = SyntaxTreeNode(Token(Token::Decimal, "3.2"));
+    auto actual = Add().evaluate(expression);
+
+    EXPECT_EQ(expectedResult == actual, true);
+}
+
+
 TEST(add_test, ShouldEvaluateNestedAddition) {
     // (+ 1 (+ 2 3))
     auto expression = {
