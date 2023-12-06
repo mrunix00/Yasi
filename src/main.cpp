@@ -4,6 +4,7 @@
 #include "parser/Parser.h"
 #include "read.hpp"
 #include "utils/StdOut.h"
+#include "utils/printAST.h"
 #include "utils/printTokens.h"
 #include <getopt.h>
 #include <iostream>
@@ -12,16 +13,23 @@ int main(int argc, char *argv[]) {
     std::cout << "Yasi v0.0.0\n";
 
     bool displayTokens = false;
+    bool displayAST = false;
     StdOut *stdOut;
 
     int opt;
-    while ((opt = getopt(argc, argv, "t")) != -1) {
+    while ((opt = getopt(argc, argv, "at")) != -1) {
         switch (opt) {
             case 't':
                 displayTokens = true;
-                stdOut = new StdOut;
+                break;
+            case 'a':
+                displayAST = true;
                 break;
         }
+    }
+
+    if (displayTokens || displayAST) {
+        stdOut = new StdOut;
     }
 
     std::string userInput;
@@ -38,7 +46,13 @@ int main(int argc, char *argv[]) {
             if (displayTokens) {
                 printTokens(stdOut, tokens);
             }
-            auto result = Evaluate::evaluate(Parser::parse(tokens));
+
+            auto ast = Parser::parse(tokens);
+            if (displayAST) {
+                print_ast(stdOut, ast);
+            }
+
+            auto result = Evaluate::evaluate(ast);
             std::cout << result.token.token << '\n';
         } catch (SyntaxError &error) {
             std::cout << "SyntaxError (" << error.line
