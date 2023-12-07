@@ -17,7 +17,7 @@ TEST(add_test, ShouldAddTwoNumbers) {
 }
 
 TEST(add_test, ShouldAddDecimalNumbers) {
-    // (+ 1 2)
+    // (+ 1.2 2)
     auto expression = {
             SyntaxTreeNode(Token(Token::Decimal, "1.2")),
             SyntaxTreeNode(Token(Token::Integer, "2")),
