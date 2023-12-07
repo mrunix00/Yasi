@@ -24,11 +24,8 @@ SyntaxTreeNode Subtract::evaluate(const std::vector<SyntaxTreeNode> &args) {
         }
     }
 
-    int floor = int(result);
-    if (floor != result) {
-        std::stringstream s;
-        s << result;
-        return SyntaxTreeNode(Token(Token::Decimal, s.str()));
-    }
-    return SyntaxTreeNode(Token(Token::Integer, std::to_string(floor)));
+    std::stringstream s;
+    s << result;
+    if (int(result) != result) return Token(Token::Decimal, s.str());
+    return Token(Token::Integer, s.str());
 }
