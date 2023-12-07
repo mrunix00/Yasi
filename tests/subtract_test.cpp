@@ -13,6 +13,17 @@ TEST(subtract_test, ShouldSubtractNumbers) {
     EXPECT_EQ(expectedResult == actual, true);
 }
 
+TEST(subtract_test, ShouldSubtractDecimalNumbers) {
+    auto expression = {SyntaxTreeNode(Token(Token::Decimal, "5.2")),
+                       SyntaxTreeNode(Token(Token::Integer, "2"))};
+
+    auto expectedResult = SyntaxTreeNode(Token(Token::Decimal, "3.2"));
+    auto actual = Subtract().evaluate(expression);
+
+    EXPECT_EQ(expectedResult == actual, true);
+}
+
+
 TEST(subtract_test, ShouldEvaluateNestedSubtraction) {
     auto expression = {
             SyntaxTreeNode(Token(Token::Integer, "9")),
