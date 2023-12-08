@@ -6,6 +6,7 @@
 
 class Add : public Function {
 public:
+    std::string getName() override { return "+"; };
     SyntaxTreeNode evaluate(const std::vector<SyntaxTreeNode> &args) override;
 };
 

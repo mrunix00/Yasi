@@ -3,8 +3,9 @@
 
 #include "../parser/SyntaxTreeNode.h"
 
-namespace Evaluate {
-    SyntaxTreeNode evaluate(const SyntaxTreeNode &tree);
-}
+class Evaluate {
+public:
+    static SyntaxTreeNode evaluate(const SyntaxTreeNode &tree);
+};
 
 #endif
