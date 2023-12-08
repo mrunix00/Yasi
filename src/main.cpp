@@ -53,7 +53,8 @@ int main(int argc, char *argv[]) {
             }
 
             auto result = Evaluate::evaluate(ast);
-            std::cout << result.token.token << '\n';
+            if (result.token.type != Token::Invalid)
+                std::cout << result.token.token << '\n';
         } catch (SyntaxError &error) {
             std::cout << "SyntaxError (" << error.line
                       << ':' << error.column << "): "
