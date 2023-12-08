@@ -1,4 +1,5 @@
 #include "builtin_functions/Function.h"
+#include "eval/eval.h"
 #include "parser/SyntaxTreeNode.h"
 
 class Variable : public Function {
@@ -10,7 +11,7 @@ public:
         : name(name), value(value) {}
     std::string getName() override { return name; }
     SyntaxTreeNode evaluate(const std::vector<SyntaxTreeNode> &args)
-            override { return value; };
+            override { return Evaluate::evaluate(value); };
 };
 
 class Define : public Function {
