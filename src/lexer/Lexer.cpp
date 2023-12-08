@@ -8,7 +8,7 @@ std::vector<Token> Lexer::tokenize(const std::string &line) {
     int currentLineChar = 0;
     int currentColumn = 0;
 
-    for (auto c: line) {
+    for (auto c: line + "\n") {
         currentLineChar++;
 
         if (c != '(' && c != ')' && (c != ' ' || currentToken[0] == '"') &&

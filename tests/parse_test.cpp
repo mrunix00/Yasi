@@ -2,6 +2,15 @@
 #include "exceptions/SyntaxError.h"
 #include <gtest/gtest.h>
 
+TEST(parse_test, ParseSingleToken) {
+    auto sample = {Token(Token::Integer, "2")};
+
+    auto expected = SyntaxTreeNode(Token(Token::Integer, "2"));
+    auto actual = Parser::parse(sample);
+
+    EXPECT_EQ(expected == actual, true);
+}
+
 TEST(parse_test, ParseSimpleOperation) {
     // ( + 1 2 )
     auto sample = {

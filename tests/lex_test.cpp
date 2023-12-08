@@ -2,6 +2,13 @@
 #include <gtest/gtest.h>
 #include <vector>
 
+TEST(lex_test, ShouldTokenizeSingleToken) {
+    std::string sample = "32";
+    std::vector<Token> expected = {Token(Token::Integer, "32")};
+    auto actual = Lexer::tokenize(sample);
+    EXPECT_EQ(expected == actual, true);
+}
+
 TEST(lex_test, ShouldTokenizeSingleChars) {
     std::string sample = "(+ 1 2)";
     std::vector<Token> tokens = {

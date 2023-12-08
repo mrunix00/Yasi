@@ -6,6 +6,8 @@ SyntaxTreeNode Parser::parse(const std::vector<Token> &tokens) {
     std::stack<Token> operators_stack;
     std::stack<std::vector<SyntaxTreeNode>> nodes_stack;
 
+    if (tokens.size() == 1) return {tokens[0]};
+
     for (const auto &token: tokens) {
         if (token.type == Token::OpenBracket) {
             nodes_stack.emplace();
