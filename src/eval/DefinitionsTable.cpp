@@ -4,6 +4,7 @@
 #include "builtin_functions/multiply/multiply.h"
 #include "builtin_functions/print/print.h"
 #include "builtin_functions/subtract/subtract.h"
+#include "builtin_functions/define/define.h"
 #include <unordered_map>
 
 std::unordered_map<std::string, Function *> *DefinitionsTable::table = nullptr;
@@ -16,9 +17,10 @@ void DefinitionsTable::initialize() {
             new Multiply,
             new Divide,
             new Print,
+            new Define,
     };
 
-    for (const auto &function: builtin_functions) 
+    for (const auto &function: builtin_functions)
         (*table)[function->getName()] = function;
 }
 
@@ -26,4 +28,9 @@ Function *DefinitionsTable::find(const std::string &name) {
     if (table == nullptr) initialize();
     if (table->find(name) == table->end()) return nullptr;
     return table->at(name);
+}
+
+void DefinitionsTable::define(Function *newFunction) {
+    if (table == nullptr) initialize();
+    (*table)[newFunction->getName()] = newFunction;
 }

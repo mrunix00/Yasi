@@ -8,4 +8,5 @@ protected:
 
 public:
     static Function *find(const std::string &name);
+    static void define(Function *);
 };
