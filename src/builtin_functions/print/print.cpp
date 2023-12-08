@@ -9,7 +9,7 @@ SyntaxTreeNode Print::evaluate(const std::vector<SyntaxTreeNode> &args) {
         const auto evArg = Evaluate::evaluate(arg).token;
         if (evArg.type == Token::String) {
             result += evArg.token.substr(1, evArg.token.size() - 2);
-        } else if (evArg.type == Token::Integer) {
+        } else {
             result += evArg.token;
         }
     }
