@@ -11,7 +11,11 @@ public:
         : name(name), value(value) {}
     std::string getName() override { return name; }
     SyntaxTreeNode evaluate(const std::vector<SyntaxTreeNode> &args)
-            override { return Evaluate::evaluate(value); };
+            override {
+        auto result = Evaluate::evaluate(value);
+        value = result;
+        return value;
+    };
 };
 
 class Define : public Function {
