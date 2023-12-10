@@ -18,6 +18,23 @@ public:
     };
 };
 
+class DefinedFunction : public Function {
+    std::string name;
+    SyntaxTreeNode definition;
+    std::vector<SyntaxTreeNode> arguments;
+
+public:
+    DefinedFunction(
+            std::string name,
+            std::vector<SyntaxTreeNode> args,
+            SyntaxTreeNode definition)
+        : name(name),
+          arguments(args),
+          definition(definition) {}
+    std::string getName() override { return name; }
+    SyntaxTreeNode evaluate(const std::vector<SyntaxTreeNode> &args) override;
+};
+
 class Define : public Function {
 public:
     std::string getName() override { return "define"; };

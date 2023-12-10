@@ -38,3 +38,32 @@ TEST(define_test, ShouldDefineAVariableWithAnExpression) {
 
     EXPECT_EQ(actual_result == expected_result, true);
 }
+
+TEST(define_test, ShouldDefineASimpleFunction) {
+    Define().evaluate({
+            SyntaxTreeNode(
+                    Token(Token::Symbol, "square"),
+                    {
+                            SyntaxTreeNode(Token(Token::Symbol, "x")),
+                    }),
+            SyntaxTreeNode(
+                    Token(Token::Symbol, "*"),
+                    {
+                            Token(Token::Symbol, "x"),
+                            Token(Token::Symbol, "x"),
+                    }),
+    });
+
+    auto expression = SyntaxTreeNode(
+            Token(Token::Symbol, "square"),
+            {
+                    SyntaxTreeNode(Token(Token::Integer, "10")),
+            });
+
+    auto expected_result = SyntaxTreeNode(Token(Token::Integer, "100"));
+    
+    auto actual_result = Evaluate::evaluate(expression);
+
+    EXPECT_EQ(actual_result == expected_result, true);
+}
+
