@@ -21,11 +21,13 @@ SyntaxTreeNode Define::evaluate(const std::vector<SyntaxTreeNode> &args) {
 
 SyntaxTreeNode DefinedFunction::evaluate(const std::vector<SyntaxTreeNode> &args) {
     assert(args.size() == arguments.size());
+    DefinitionsTable::enterNewScope();
     for (int i = 0; i < args.size(); i++) {
         DefinitionsTable::define(new Variable(
-                        arguments[i].token.token,
-                        args[i]));
+                arguments[i].token.token,
+                args[i]));
     }
-
-    return Evaluate::evaluate(definition);
+    auto result = Evaluate::evaluate(definition);
+    DefinitionsTable::exitCurrentScope();
+    return result;
 }
