@@ -33,7 +33,7 @@ TEST(greater_than_test, CompareMoreThanTwoArguments) {
 TEST(greater_than_test, CompareIntegersAndDecimals) {
     auto expected_result = SyntaxTreeNode(Token(Token::Boolean, "#t"));
     auto actual_result = GreaterThan().evaluate({
-            SyntaxTreeNode(Token(Token::Integer, "30.5")),
+            SyntaxTreeNode(Token(Token::Decimal, "30.5")),
             SyntaxTreeNode(Token(Token::Integer, "30")),
     });
     EXPECT_EQ(expected_result == actual_result, true);

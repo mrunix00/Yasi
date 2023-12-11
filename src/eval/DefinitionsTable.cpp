@@ -3,6 +3,7 @@
 #include "builtin_functions/add/add.h"
 #include "builtin_functions/define/define.h"
 #include "builtin_functions/divide/Divide.h"
+#include "builtin_functions/equals/equals.h"
 #include "builtin_functions/greater_than/greater_than.h"
 #include "builtin_functions/less_than/less_than.h"
 #include "builtin_functions/multiply/multiply.h"
@@ -25,6 +26,7 @@ void DefinitionsTable::initialize() {
             new Define,
             new GreaterThan,
             new LessThan,
+            new Equals,
     };
 
     for (const auto &function: builtin_functions)
