@@ -4,6 +4,7 @@
 #include "builtin_functions/define/define.h"
 #include "builtin_functions/divide/Divide.h"
 #include "builtin_functions/greater_than/greater_than.h"
+#include "builtin_functions/less_than/less_than.h"
 #include "builtin_functions/multiply/multiply.h"
 #include "builtin_functions/print/print.h"
 #include "builtin_functions/subtract/subtract.h"
@@ -23,6 +24,7 @@ void DefinitionsTable::initialize() {
             new Print,
             new Define,
             new GreaterThan,
+            new LessThan,
     };
 
     for (const auto &function: builtin_functions)
