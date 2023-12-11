@@ -14,6 +14,7 @@ public:
         Integer,
         Decimal,
         String,
+        Boolean,
         Invalid
     };
 
