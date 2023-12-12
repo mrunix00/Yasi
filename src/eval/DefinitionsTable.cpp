@@ -14,7 +14,7 @@
 #include <string>
 #include <unordered_map>
 
-std::stack<std::unordered_map<std::string, Function *>> DefinitionsTable::scope_stack;
+static std::vector<std::unordered_map<std::string, Function *>> scope_stack;
 
 void DefinitionsTable::initialize() {
     std::unordered_map<std::string, Function *> current_scope;
@@ -33,29 +33,26 @@ void DefinitionsTable::initialize() {
 
     for (const auto &function: builtin_functions)
         current_scope[function->getName()] = function;
-    scope_stack.push(current_scope);
+    scope_stack.push_back(current_scope);
 }
 
-// This function is very inefficient, I should improve it later
 Function *DefinitionsTable::find(const std::string &name) {
     if (scope_stack.empty()) initialize();
-    auto temp_stack = scope_stack;
 
-    while (!temp_stack.empty()) {
-        if (temp_stack.top().find(name) != temp_stack.top().end()) {
-            return temp_stack.top().at(name);
-        } else {
-            temp_stack.pop();
+    for (auto i = scope_stack.size(); i > 0; i--) {
+        if (scope_stack[i - 1].find(name) != scope_stack[i - 1].end()) {
+            return scope_stack[i - 1].at(name);
         }
     }
+
     return nullptr;
 }
 
 void DefinitionsTable::define(Function *newFunction) {
     if (scope_stack.empty()) initialize();
-    scope_stack.top()[newFunction->getName()] = newFunction;
+    scope_stack.back()[newFunction->getName()] = newFunction;
 }
 
-void DefinitionsTable::enterNewScope() { scope_stack.emplace(); }
+void DefinitionsTable::enterNewScope() { scope_stack.emplace_back(); }
 
-void DefinitionsTable::exitCurrentScope() { scope_stack.pop(); }
+void DefinitionsTable::exitCurrentScope() { scope_stack.pop_back(); }

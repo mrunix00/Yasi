@@ -4,7 +4,6 @@
 
 class DefinitionsTable {
 protected:
-    static std::stack<std::unordered_map<std::string, Function *>> scope_stack;
     static void initialize();
 
 public:
