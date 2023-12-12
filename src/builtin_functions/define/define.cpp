@@ -25,7 +25,7 @@ SyntaxTreeNode DefinedFunction::evaluate(const std::vector<SyntaxTreeNode> &args
     for (int i = 0; i < args.size(); i++) {
         DefinitionsTable::define(new Variable(
                 arguments[i].token.token,
-                args[i]));
+                Evaluate::evaluate(args[i])));
     }
     auto result = Evaluate::evaluate(definition);
     DefinitionsTable::exitCurrentScope();
