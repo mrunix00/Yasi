@@ -6,7 +6,7 @@
 
 class Function {
 public:
-    virtual std::string getName() = 0;
+    virtual const std::string& getName() = 0;
     virtual ~Function() = default;
     virtual SyntaxTreeNode evaluate(
             const std::vector<SyntaxTreeNode> &args) = 0;

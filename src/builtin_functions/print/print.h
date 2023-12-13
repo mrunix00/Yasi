@@ -3,6 +3,9 @@
 
 class Print : public Function {
 public:
-    std::string getName() override { return "print"; };
+    const std::string &getName() override {
+        static const std::string name = "print" ;
+        return name;
+    };
     SyntaxTreeNode evaluate(const std::vector<SyntaxTreeNode> &args) override;
 };

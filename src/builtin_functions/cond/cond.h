@@ -5,7 +5,10 @@
 
 class Cond : public Function {
 public:
-    std::string getName() override { return "cond"; }
+    const std::string &getName() override {
+        static const std::string name = "cond" ;
+        return name;
+    };
     SyntaxTreeNode evaluate(const std::vector<SyntaxTreeNode> &args) override;
 };
 

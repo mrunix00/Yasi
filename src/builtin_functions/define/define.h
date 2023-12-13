@@ -1,3 +1,5 @@
+#include <utility>
+
 #include "builtin_functions/Function.h"
 #include "eval/eval.h"
 #include "parser/SyntaxTreeNode.h"
@@ -7,9 +9,11 @@ class Variable : public Function {
     SyntaxTreeNode value;
 
 public:
-    Variable(std::string name, SyntaxTreeNode value)
-        : name(name), value(value) {}
-    std::string getName() override { return name; }
+    Variable(std::string name,
+             SyntaxTreeNode value)
+        : name(std::move(name)),
+          value(std::move(value)) {}
+    const std::string &getName() override { return name; }
     SyntaxTreeNode evaluate(const std::vector<SyntaxTreeNode> &args)
             override {
         auto result = Evaluate::evaluate(value);
@@ -28,15 +32,18 @@ public:
             std::string name,
             std::vector<SyntaxTreeNode> args,
             SyntaxTreeNode definition)
-        : name(name),
-          arguments(args),
-          definition(definition) {}
-    std::string getName() override { return name; }
+        : name(std::move(name)),
+          arguments(std::move(args)),
+          definition(std::move(definition)) {}
+    const std::string &getName() override { return name; }
     SyntaxTreeNode evaluate(const std::vector<SyntaxTreeNode> &args) override;
 };
 
 class Define : public Function {
 public:
-    std::string getName() override { return "define"; };
+    const std::string &getName() override {
+        static const std::string name = "define";
+        return name;
+    };
     SyntaxTreeNode evaluate(const std::vector<SyntaxTreeNode> &args) override;
 };

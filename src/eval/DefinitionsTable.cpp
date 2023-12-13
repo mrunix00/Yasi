@@ -12,7 +12,6 @@
 #include "builtin_functions/subtract/subtract.h"
 #include <stack>
 #include <string>
-#include <unordered_map>
 
 static std::vector<Function *> scope_stack;
 static std::stack<size_t> scopes_sizes;
