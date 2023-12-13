@@ -1,6 +1,8 @@
 #include "subtract.h"
 #include "eval/eval.h"
 #include "exceptions/SyntaxError.h"
+#include <cmath>
+#include <iostream>
 #include <sstream>
 #include <string>
 
@@ -24,8 +26,11 @@ SyntaxTreeNode Subtract::evaluate(const std::vector<SyntaxTreeNode> &args) {
         }
     }
 
-    std::stringstream s;
-    s << result;
-    if (int(result) != result) return Token(Token::Decimal, s.str());
-    return Token(Token::Integer, s.str());
+    if ((int) result == result) {
+        return Token(Token::Integer, std::to_string((int) result));
+    } else {
+        std::stringstream s;
+        s << result;
+        return Token(Token::Decimal, s.str());
+    }
 }
