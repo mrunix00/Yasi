@@ -5,8 +5,10 @@
 #include <gtest/gtest.h>
 
 TEST(define_test, ShouldDefineAVariable) {
-    Define().evaluate({SyntaxTreeNode(Token(Token::Symbol, "x")),
-                       SyntaxTreeNode(Token(Token::Integer, "15"))});
+    Define().evaluate({
+            SyntaxTreeNode(Token(Token::Symbol, "x")),
+            SyntaxTreeNode(Token(Token::Integer, "15")),
+    });
 
     auto expression = SyntaxTreeNode(Token(Token::Symbol, "+"),
                                      {

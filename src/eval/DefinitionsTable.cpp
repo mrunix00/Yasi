@@ -14,11 +14,10 @@
 #include <string>
 #include <unordered_map>
 
-static std::vector<std::unordered_map<std::string, Function *>> scope_stack;
+static std::vector<std::vector<Function *>> scope_stack;
 
 void DefinitionsTable::initialize() {
-    std::unordered_map<std::string, Function *> current_scope;
-    const std::vector<Function *> builtin_functions = {
+    scope_stack.push_back({
             new Add,
             new Subtract,
             new Multiply,
@@ -29,19 +28,17 @@ void DefinitionsTable::initialize() {
             new LessThan,
             new Equals,
             new Cond,
-    };
-
-    for (const auto &function: builtin_functions)
-        current_scope[function->getName()] = function;
-    scope_stack.push_back(current_scope);
+    });
 }
 
 Function *DefinitionsTable::find(const std::string &name) {
     if (scope_stack.empty()) initialize();
 
     for (auto i = scope_stack.size(); i > 0; i--) {
-        if (scope_stack[i - 1].find(name) != scope_stack[i - 1].end()) {
-            return scope_stack[i - 1].at(name);
+        for (auto j = scope_stack[i-1].size(); j > 0; j--) {
+            auto func = scope_stack[i-1][j-1];
+            if (func->getName() == name)
+                return func;
         }
     }
 
@@ -50,7 +47,7 @@ Function *DefinitionsTable::find(const std::string &name) {
 
 void DefinitionsTable::define(Function *newFunction) {
     if (scope_stack.empty()) initialize();
-    scope_stack.back()[newFunction->getName()] = newFunction;
+    scope_stack.back().push_back(newFunction);
 }
 
 void DefinitionsTable::enterNewScope() { scope_stack.emplace_back(); }
