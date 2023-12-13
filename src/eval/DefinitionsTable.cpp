@@ -14,10 +14,11 @@
 #include <string>
 #include <unordered_map>
 
-static std::vector<std::vector<Function *>> scope_stack;
+static std::vector<Function *> scope_stack;
+static std::stack<size_t> scopes_sizes;
 
 void DefinitionsTable::initialize() {
-    scope_stack.push_back({
+    scope_stack = {
             new Add,
             new Subtract,
             new Multiply,
@@ -28,18 +29,17 @@ void DefinitionsTable::initialize() {
             new LessThan,
             new Equals,
             new Cond,
-    });
+    };
+    scopes_sizes.push(scope_stack.size());
 }
 
 Function *DefinitionsTable::find(const std::string &name) {
     if (scope_stack.empty()) initialize();
 
     for (auto i = scope_stack.size(); i > 0; i--) {
-        for (auto j = scope_stack[i-1].size(); j > 0; j--) {
-            auto func = scope_stack[i-1][j-1];
-            if (func->getName() == name)
-                return func;
-        }
+        auto func = scope_stack[i - 1];
+        if (func->getName() == name)
+            return func;
     }
 
     return nullptr;
@@ -47,9 +47,18 @@ Function *DefinitionsTable::find(const std::string &name) {
 
 void DefinitionsTable::define(Function *newFunction) {
     if (scope_stack.empty()) initialize();
-    scope_stack.back().push_back(newFunction);
+    scope_stack.push_back(newFunction);
+    scopes_sizes.top()++;
 }
 
-void DefinitionsTable::enterNewScope() { scope_stack.emplace_back(); }
+void DefinitionsTable::enterNewScope() {
+    scopes_sizes.push(0);
+}
 
-void DefinitionsTable::exitCurrentScope() { scope_stack.pop_back(); }
+void DefinitionsTable::exitCurrentScope() {
+    auto initial_size = scope_stack.size();
+    for (auto i = initial_size; i > initial_size - scopes_sizes.top(); i--) {
+        scope_stack.pop_back();
+    }
+    scopes_sizes.pop();
+}
