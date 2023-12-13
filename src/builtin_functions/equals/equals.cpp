@@ -2,10 +2,7 @@
 #include "eval/eval.h"
 
 inline bool equals(Token token1, Token token2) {
-    if (token1.type == Token::Decimal || token2.type == Token::Decimal)
-        return std::stof(token1.token) == std::stof(token2.token);
-    else
-        return std::stoi(token1.token) == std::stoi(token2.token);
+    return token1.asDecimal() == token2.asDecimal();
 }
 
 SyntaxTreeNode Equals::evaluate(const std::vector<SyntaxTreeNode> &args) {

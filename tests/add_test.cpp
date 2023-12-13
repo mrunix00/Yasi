@@ -35,7 +35,7 @@ TEST(add_test, ShouldEvaluateNestedAddition) {
     auto expression = {
             SyntaxTreeNode(Token(Token::Integer, "1")),
             SyntaxTreeNode(
-                    Token(Token::Integer, "+"),
+                    Token(Token::Symbol, "+"),
                     {
                             SyntaxTreeNode(Token(Token::Integer, "2")),
                             SyntaxTreeNode(Token(Token::Integer, "3")),

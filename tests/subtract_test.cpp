@@ -14,8 +14,10 @@ TEST(subtract_test, ShouldSubtractNumbers) {
 }
 
 TEST(subtract_test, ShouldSubtractDecimalNumbers) {
-    auto expression = {SyntaxTreeNode(Token(Token::Decimal, "5.2")),
-                       SyntaxTreeNode(Token(Token::Integer, "2"))};
+    auto expression = {
+            SyntaxTreeNode(Token(Token::Decimal, "5.2")),
+            SyntaxTreeNode(Token(Token::Integer, "2")),
+    };
 
     auto expectedResult = SyntaxTreeNode(Token(Token::Decimal, "3.2"));
     auto actual = Subtract().evaluate(expression);
@@ -27,9 +29,12 @@ TEST(subtract_test, ShouldSubtractDecimalNumbers) {
 TEST(subtract_test, ShouldEvaluateNestedSubtraction) {
     auto expression = {
             SyntaxTreeNode(Token(Token::Integer, "9")),
-            SyntaxTreeNode(Token(Token::Integer, "-"),
-                           {SyntaxTreeNode(Token(Token::Integer, "3")),
-                            SyntaxTreeNode(Token(Token::Integer, "2"))})};
+            SyntaxTreeNode(Token(Token::Symbol, "-"),
+                           {
+                                   SyntaxTreeNode(Token(Token::Integer, "3")),
+                                   SyntaxTreeNode(Token(Token::Integer, "2")),
+                           }),
+    };
 
     auto expectedResult = SyntaxTreeNode(Token(Token::Integer, "8"));
     auto actual = Subtract().evaluate(expression);

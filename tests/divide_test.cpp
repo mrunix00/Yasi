@@ -16,7 +16,7 @@ TEST(divide_test, ShouldDivideNumbers) {
 TEST(divide_test, ShouldEvaluateNestedDivision) {
     auto expression = {
             SyntaxTreeNode(Token(Token::Integer, "18")),
-            SyntaxTreeNode(Token(Token::Integer, "/"),
+            SyntaxTreeNode(Token(Token::Symbol, "/"),
                            {SyntaxTreeNode(Token(Token::Integer, "4")),
                             SyntaxTreeNode(Token(Token::Integer, "2"))})};
 

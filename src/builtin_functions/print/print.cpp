@@ -6,12 +6,12 @@
 SyntaxTreeNode Print::evaluate(const std::vector<SyntaxTreeNode> &args) {
     std::string result;
     for (const SyntaxTreeNode &arg: args) {
-        const auto evArg = Evaluate::evaluate(arg).token;
+        auto evArg = Evaluate::evaluate(arg).token;
         if (evArg.type == Token::String) {
             result += evArg.token.substr(1, evArg.token.size() - 2);
         } else {
-            result += evArg.token;
+            result += evArg.asString();
         }
     }
-    return SyntaxTreeNode(Token(Token::String, result));
+    return {Token(Token::String, result)};
 }

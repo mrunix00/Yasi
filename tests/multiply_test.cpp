@@ -16,11 +16,12 @@ TEST(multiply_test, ShouldMultiplyNumbers) {
 TEST(add_test, ShouldEvaluateNestedMultiplication) {
     auto expression = {
             SyntaxTreeNode(Token(Token::Integer, "2")),
-            SyntaxTreeNode(Token(Token::Integer, "*"),
-                           {
-                                   SyntaxTreeNode(Token(Token::Integer, "3")),
-                                   SyntaxTreeNode(Token(Token::Integer, "3")),
-                           }),
+            SyntaxTreeNode(
+                    Token(Token::Symbol, "*"),
+                    {
+                            SyntaxTreeNode(Token(Token::Integer, "3")),
+                            SyntaxTreeNode(Token(Token::Integer, "3")),
+                    }),
     };
 
     auto expectedResult = SyntaxTreeNode(Token(Token::Integer, "18"));
