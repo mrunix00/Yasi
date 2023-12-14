@@ -1,11 +1,13 @@
-#include "builtin_functions/subtract/subtract.h"
+#include "evaluation/builtin_functions/subtract/Subtract.h"
 #include "exceptions/SyntaxError.h"
 #include "parser/SyntaxTreeNode.h"
 #include <gtest/gtest.h>
 
 TEST(subtract_test, ShouldSubtractNumbers) {
-    auto expression = {SyntaxTreeNode(Token(Token::Integer, "5")),
-                       SyntaxTreeNode(Token(Token::Integer, "2"))};
+    auto expression = {
+            SyntaxTreeNode(Token(Token::Integer, "5")),
+            SyntaxTreeNode(Token(Token::Integer, "2")),
+    };
 
     auto expectedResult = SyntaxTreeNode(Token(Token::Integer, "3"));
     auto actual = Subtract().evaluate(expression);

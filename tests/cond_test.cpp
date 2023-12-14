@@ -1,4 +1,4 @@
-#include "builtin_functions/cond/cond.h"
+#include "evaluation/builtin_functions/cond/Cond.h"
 #include "parser/SyntaxTreeNode.h"
 #include <gtest/gtest.h>
 
@@ -89,7 +89,6 @@ TEST(cond_test, ShouldEvaluateDefaultResultIfNoConditionsAreMet) {
 
     auto default_result = SyntaxTreeNode(Token(Token::Integer, "2"));
 
-    auto expected_result = default_result;
     auto actual_result = Cond().evaluate({
             condition1,
             result1,
@@ -98,5 +97,5 @@ TEST(cond_test, ShouldEvaluateDefaultResultIfNoConditionsAreMet) {
             default_result,
     });
 
-    EXPECT_EQ(expected_result == actual_result, true);
+    EXPECT_EQ(actual_result == default_result, true);
 }

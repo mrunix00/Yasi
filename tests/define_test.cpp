@@ -1,5 +1,4 @@
-#include "builtin_functions/define/define.h"
-#include "eval/eval.h"
+#include "evaluation/builtin_functions/define/Define.h"
 #include "exceptions/SyntaxError.h"
 #include "parser/SyntaxTreeNode.h"
 #include <gtest/gtest.h>

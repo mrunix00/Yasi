@@ -1,5 +1,5 @@
-#include "../src/eval/eval.h"
 #include "../src/parser/SyntaxTreeNode.h"
+#include "evaluation/Evaluate.h"
 #include "exceptions/SyntaxError.h"
 #include "lexer/Lexer.h"
 #include <gtest/gtest.h>

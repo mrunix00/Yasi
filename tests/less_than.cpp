@@ -1,4 +1,4 @@
-#include "builtin_functions/less_than/less_than.h"
+#include "evaluation/builtin_functions/less_than/LessThan.h"
 #include "lexer/Lexer.h"
 #include "parser/SyntaxTreeNode.h"
 #include <gtest/gtest.h>

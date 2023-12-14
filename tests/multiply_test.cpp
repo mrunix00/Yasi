@@ -1,11 +1,13 @@
-#include "builtin_functions/multiply/multiply.h"
+#include "evaluation/builtin_functions/multiply/Multiply.h"
 #include "exceptions/SyntaxError.h"
 #include "parser/SyntaxTreeNode.h"
 #include <gtest/gtest.h>
 
 TEST(multiply_test, ShouldMultiplyNumbers) {
-    auto expression = {SyntaxTreeNode(Token(Token::Integer, "2")),
-                       SyntaxTreeNode(Token(Token::Integer, "2"))};
+    auto expression = {
+            SyntaxTreeNode(Token(Token::Integer, "2")),
+            SyntaxTreeNode(Token(Token::Integer, "2")),
+    };
 
     auto expectedResult = SyntaxTreeNode(Token(Token::Integer, "4"));
     auto actual = Multiply().evaluate(expression);

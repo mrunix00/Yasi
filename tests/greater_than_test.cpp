@@ -1,4 +1,4 @@
-#include "builtin_functions/greater_than/greater_than.h"
+#include "evaluation/builtin_functions/greater_than/GreaterThan.h"
 #include "parser/SyntaxTreeNode.h"
 #include <gtest/gtest.h>
 

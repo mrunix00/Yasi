@@ -1,4 +1,4 @@
-#include "eval/eval.h"
+#include "evaluation/Evaluate.h"
 #include "exceptions/SyntaxError.h"
 #include "lexer/Lexer.h"
 #include "parser/Parser.h"
@@ -24,6 +24,8 @@ int main(int argc, char *argv[]) {
                 break;
             case 'a':
                 displayAST = true;
+                break;
+            default:
                 break;
         }
     }
