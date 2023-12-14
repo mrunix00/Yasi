@@ -21,7 +21,7 @@ TEST(subtract_test, ShouldSubtractDecimalNumbers) {
             SyntaxTreeNode(Token(Token::Integer, "2")),
     };
 
-    auto expectedResult = SyntaxTreeNode(Token(Token::Decimal, "3.2"));
+    auto expectedResult = SyntaxTreeNode(Token((float) 3.2));
     auto actual = Subtract().evaluate(expression);
 
     EXPECT_EQ(expectedResult == actual, true);
