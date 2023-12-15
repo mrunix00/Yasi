@@ -20,18 +20,18 @@ std::vector<Token*> Lexer::tokenize(const std::string &line) {
 
         if (!currentToken.empty()) {
             if (std::regex_match(currentToken, std::regex("[+-]?[0-9]+"))) {
-                result.emplace_back(new Token(Token::Integer, currentToken,
+                result.emplace_back(new Token(Token::Integer, new std::string(currentToken),
                                               currentLine, currentColumn));
             } else if (std::regex_match(currentToken,
                                         std::regex("-?[0-9]+([\\.][0-9]+)?"))) {
-                result.emplace_back(new Token(Token::Decimal, currentToken,
+                result.emplace_back(new Token(Token::Decimal, new std::string(currentToken),
                                               currentLine, currentColumn));
             } else if (c != '"') {
-                result.emplace_back(new Token(Token::Symbol, currentToken,
+                result.emplace_back(new Token(Token::Symbol, new std::string(currentToken),
                                               currentLine, currentColumn));
             } else {
                 currentToken.append(1, '"');
-                result.emplace_back(new Token(Token::String, currentToken,
+                result.emplace_back(new Token(Token::String, new std::string(currentToken),
                                               currentLine, currentColumn));
             }
             if (c == '\n') {
@@ -43,10 +43,10 @@ std::vector<Token*> Lexer::tokenize(const std::string &line) {
 
         currentToken.clear();
         if (c == '(')
-            result.emplace_back(new Token(Token::OpenBracket, "(",
+            result.emplace_back(new Token(Token::OpenBracket, new std::string("("),
                                           currentLine, currentColumn));
         else if (c == ')')
-            result.emplace_back(new Token(Token::ClosedBracket, ")",
+            result.emplace_back(new Token(Token::ClosedBracket, new std::string(")"),
                                           currentLine, currentColumn));
     }
 

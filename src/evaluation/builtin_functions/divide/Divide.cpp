@@ -12,7 +12,7 @@ SyntaxTreeNode* Divide::evaluate(const std::vector<SyntaxTreeNode*> &args) {
     for (int i = 1; i < args.size(); i++) {
         auto arg = (*Evaluate::evaluate(args[i])->token);
         if (arg.type != Token::Integer) {
-            throw SyntaxError((*args[i]->token).asString() + " is not a number",
+            throw SyntaxError(*args[i]->token->asString() + " is not a number",
                               (*args[i]->token).line, (*args[i]->token).column);
         }
 

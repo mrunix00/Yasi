@@ -9,7 +9,7 @@ TEST(print_test, ShouldPrintStringArgument) {
 
     const auto actual = Print().evaluate(args);
 
-    EXPECT_EQ(actual->token->token == "Hello World", true);
+    EXPECT_EQ(*actual->token->token == "Hello World", true);
 }
 
 TEST(print_test, ShouldPrintMultipleStringArguments) {

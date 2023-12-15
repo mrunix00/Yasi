@@ -7,10 +7,10 @@ void printTokens(OutputSource *outputSource,
         switch (token->type) {
             case Token::String:
             case Token::Integer:
-                output += token->token + ", ";
+                output += *token->token + ", ";
                 break;
             default:
-                output += "'" + token->token + "', ";
+                output += "'" + *token->token + "', ";
         }
     }
     output.erase(output.size() - 2, 2);

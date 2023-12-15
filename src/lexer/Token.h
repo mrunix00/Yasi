@@ -21,15 +21,16 @@ public:
     };
 
     TokenType type;
-    std::string token;
+    std::string *token{};
     int line = 0;
     int column = 0;
 
     Token() : type(Token::Invalid) {}
 
+    Token(TokenType type, std::string *token);
     Token(TokenType type, const std::string &token);
 
-    Token(TokenType type, const std::string &token,
+    Token(TokenType type, std::string *token,
           int line, int column);
 
     explicit Token(int token)
@@ -40,9 +41,10 @@ public:
 
     int asInteger() const;
     float asDecimal() const;
-    std::string asString();
+    std::string *asString();
 
     bool operator==(const Token &object) const;
+    Token(TokenType type, const std::string &token, int line, int column);
 };
 
 #endif

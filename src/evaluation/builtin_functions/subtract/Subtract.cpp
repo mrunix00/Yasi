@@ -18,7 +18,7 @@ SyntaxTreeNode *Subtract::evaluate(const std::vector<SyntaxTreeNode *> &args) {
         if (arg.type == Token::Integer || arg.type == Token::Decimal) {
             result -= arg.asDecimal();
         } else {
-            throw SyntaxError((*args[i]->token).token + " is not a number",
+            throw SyntaxError(*args[i]->token->token + " is not a number",
                               (*args[i]->token).line, (*args[i]->token).column);
         }
     }

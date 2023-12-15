@@ -13,7 +13,7 @@ SyntaxTreeNode *Add::evaluate(const std::vector<SyntaxTreeNode *> &args) {
         if (evArg.type == Token::Integer || evArg.type == Token::Decimal) {
             result += evArg.asDecimal();
         } else {
-            throw SyntaxError(arg->token->token + " is not a number",
+            throw SyntaxError(*arg->token->token + " is not a number",
                               arg->token->line, arg->token->column);
         }
     }

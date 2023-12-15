@@ -7,23 +7,23 @@ SyntaxTreeNode* Evaluate::evaluate(const SyntaxTreeNode *tree) {
     if (tree->children.empty() && tree->token->type != Token::Symbol) {
         return const_cast<SyntaxTreeNode *>(tree);
     }
-    Function *function = DefinitionsTable::find(tree->token->token);
-    if (function != nullptr) {
-        SyntaxTreeNode* result;
-        try {
-            result = function->evaluate(tree->children);
-        } catch (const SyntaxError &error) {
-            if (error.line == 0 && error.column == 0)
-                throw SyntaxError(
-                        error.message,
-                        tree->token->line,
-                        tree->token->column);
-            throw;
-        }
-        return result;
-    } else {
+
+    Function *function = DefinitionsTable::find(*tree->token->token);
+
+    if (function == nullptr) {
         auto errorMessage =
-                "name `" + tree->token->token + "` is not defined";
+                "name `" + *tree->token->token + "` is not defined";
         throw SyntaxError(errorMessage, tree->token->line, tree->token->column);
+    }
+
+    try {
+        return function->evaluate(tree->children);
+    } catch (const SyntaxError &error) {
+        if (error.line == 0 && error.column == 0)
+            throw SyntaxError(
+                    error.message,
+                    tree->token->line,
+                    tree->token->column);
+        throw;
     }
 }

@@ -1,8 +1,8 @@
 #include "LessThan.h"
 #include "evaluation/Evaluate.h"
 
-static SyntaxTreeNode *False = new SyntaxTreeNode(new Token(Token::Boolean, "#f"));
-static SyntaxTreeNode *True = new SyntaxTreeNode(new Token(Token::Boolean, "#t"));
+static SyntaxTreeNode *False = new SyntaxTreeNode(new Token(Token::Boolean, new std::string("#f")));
+static SyntaxTreeNode *True = new SyntaxTreeNode(new Token(Token::Boolean, new std::string("#t")));
 
 SyntaxTreeNode *LessThan::evaluate(const std::vector<SyntaxTreeNode *> &args) {
     for (int i = 1; i < args.size(); i++) {

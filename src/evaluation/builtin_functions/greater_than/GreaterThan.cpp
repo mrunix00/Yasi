@@ -3,8 +3,8 @@
 #include "parser/SyntaxTreeNode.h"
 #include <vector>
 
-static SyntaxTreeNode *False = new SyntaxTreeNode(new Token(Token::Boolean, "#f"));
-static SyntaxTreeNode *True = new SyntaxTreeNode(new Token(Token::Boolean, "#t"));
+static SyntaxTreeNode *False = new SyntaxTreeNode(new Token(Token::Boolean, new std::string("#f")));
+static SyntaxTreeNode *True = new SyntaxTreeNode(new Token(Token::Boolean, new std::string("#t")));
 
 SyntaxTreeNode* GreaterThan::evaluate(const std::vector<SyntaxTreeNode*> &args) {
     for (int i = 1; i < args.size(); i++) {

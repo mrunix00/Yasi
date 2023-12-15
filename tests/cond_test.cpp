@@ -87,14 +87,14 @@ TEST(cond_test, ShouldEvaluateDefaultResultIfNoConditionsAreMet) {
             });
     auto result2 = new SyntaxTreeNode(new Token(Token::Integer, "1"));
 
-    auto default_result = new SyntaxTreeNode(new Token(Token::Integer, "2"));
+    auto default_result = SyntaxTreeNode(new Token(Token::Integer, "2"));
 
-    auto actual_result = Cond().evaluate({
+    auto actual_result = *Cond().evaluate({
             condition1,
             result1,
             condition2,
             result2,
-            default_result,
+            &default_result,
     });
 
     EXPECT_EQ(actual_result == default_result, true);
