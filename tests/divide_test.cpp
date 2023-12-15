@@ -4,24 +4,30 @@
 #include <gtest/gtest.h>
 
 TEST(divide_test, ShouldDivideNumbers) {
-    auto expression = {SyntaxTreeNode(Token(Token::Integer, "8")),
-                       SyntaxTreeNode(Token(Token::Integer, "2"))};
+    auto expression = {
+            new SyntaxTreeNode(new Token(Token::Integer, "8")),
+            new SyntaxTreeNode(new Token(Token::Integer, "2")),
+    };
 
-    auto expectedResult = SyntaxTreeNode(Token(Token::Integer, "4"));
-    auto actual = Divide().evaluate(expression);
+    auto expectedResult = SyntaxTreeNode(new Token(Token::Integer, "4"));
+    auto actual = *Divide().evaluate(expression);
 
     EXPECT_EQ(expectedResult == actual, true);
 }
 
 TEST(divide_test, ShouldEvaluateNestedDivision) {
     auto expression = {
-            SyntaxTreeNode(Token(Token::Integer, "18")),
-            SyntaxTreeNode(Token(Token::Symbol, "/"),
-                           {SyntaxTreeNode(Token(Token::Integer, "4")),
-                            SyntaxTreeNode(Token(Token::Integer, "2"))})};
+            new SyntaxTreeNode(new Token(Token::Integer, "18")),
+            new SyntaxTreeNode(
+                    new Token(Token::Symbol, "/"),
+                    {
+                            new SyntaxTreeNode(new Token(Token::Integer, "4")),
+                            new SyntaxTreeNode(new Token(Token::Integer, "2")),
+                    }),
+    };
 
-    auto expectedResult = SyntaxTreeNode(Token(Token::Integer, "9"));
-    auto actual = Divide().evaluate(expression);
+    auto expectedResult = SyntaxTreeNode(new Token(Token::Integer, "9"));
+    auto actual = *Divide().evaluate(expression);
 
     EXPECT_EQ(expectedResult == actual, true);
 }
@@ -32,9 +38,9 @@ TEST(divide_test, ThrowExceptionOnDivisionWithInvalidArguments) {
     int line = 0;
     int column = 0;
 
-    const std::vector<SyntaxTreeNode> expression = {
-            SyntaxTreeNode(Token(Token::Integer, "1")),
-            SyntaxTreeNode(Token(Token::String, "\"Hello World\"", 2, 3)),
+    const std::vector<SyntaxTreeNode *> expression = {
+            new SyntaxTreeNode(new Token(Token::Integer, "1")),
+            new SyntaxTreeNode(new Token(Token::String, "\"Hello World\"", 2, 3)),
     };
 
     try {
@@ -48,8 +54,8 @@ TEST(divide_test, ThrowExceptionOnDivisionWithInvalidArguments) {
 
     EXPECT_EQ(isCaught, true);
     EXPECT_EQ(errorMessage == "\"Hello World\" is not a number", true);
-    EXPECT_EQ(line == expression[1].token.line, true);
-    EXPECT_EQ(column == expression[1].token.column, true);
+    EXPECT_EQ(line == expression[1]->token->line, true);
+    EXPECT_EQ(column == expression[1]->token->column, true);
 }
 
 TEST(divide_test, ThrowExceptionOnZeroArguments) {
@@ -74,8 +80,8 @@ TEST(divide_test, ThrowExceptionOnDivisionByZero) {
 
     try {
         Divide().evaluate({
-            SyntaxTreeNode(Token(Token::Integer, "1")),
-            SyntaxTreeNode(Token(Token::Integer, "0", 6, 9))
+                new SyntaxTreeNode(new Token(Token::Integer, "1")),
+                new SyntaxTreeNode(new Token(Token::Integer, "0", 6, 9)),
         });
     } catch (SyntaxError &error) {
         isCaught = true;
@@ -89,4 +95,3 @@ TEST(divide_test, ThrowExceptionOnDivisionByZero) {
     EXPECT_EQ(line == 6, true);
     EXPECT_EQ(column == 9, true);
 }
-

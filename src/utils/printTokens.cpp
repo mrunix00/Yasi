@@ -1,16 +1,16 @@
 #include "printTokens.h"
 
 void printTokens(OutputSource *outputSource,
-                 const std::vector<Token> &tokens) {
+                 const std::vector<Token*> &tokens) {
     std::string output = "[";
     for (const auto &token: tokens) {
-        switch (token.type) {
+        switch (token->type) {
             case Token::String:
             case Token::Integer:
-                output = output + token.token + ", ";
+                output += token->token + ", ";
                 break;
             default:
-                output = output + "'" + token.token + "', ";
+                output += "'" + token->token + "', ";
         }
     }
     output.erase(output.size() - 2, 2);

@@ -9,7 +9,7 @@
 
 class Lexer {
 public:
-    static std::vector<Token> tokenize(const std::string &line);
+    static std::vector<Token*> tokenize(const std::string &line);
 };
 
 #endif

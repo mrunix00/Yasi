@@ -5,29 +5,29 @@
 
 TEST(multiply_test, ShouldMultiplyNumbers) {
     auto expression = {
-            SyntaxTreeNode(Token(Token::Integer, "2")),
-            SyntaxTreeNode(Token(Token::Integer, "2")),
+            new SyntaxTreeNode(new Token(Token::Integer, "2")),
+            new SyntaxTreeNode(new Token(Token::Integer, "2")),
     };
 
-    auto expectedResult = SyntaxTreeNode(Token(Token::Integer, "4"));
-    auto actual = Multiply().evaluate(expression);
+    auto expectedResult = SyntaxTreeNode(new Token(Token::Integer, "4"));
+    auto actual = *Multiply().evaluate(expression);
 
     EXPECT_EQ(expectedResult == actual, true);
 }
 
 TEST(add_test, ShouldEvaluateNestedMultiplication) {
     auto expression = {
-            SyntaxTreeNode(Token(Token::Integer, "2")),
-            SyntaxTreeNode(
-                    Token(Token::Symbol, "*"),
+            new SyntaxTreeNode(new Token(Token::Integer, "2")),
+            new SyntaxTreeNode(
+                    new Token(Token::Symbol, "*"),
                     {
-                            SyntaxTreeNode(Token(Token::Integer, "3")),
-                            SyntaxTreeNode(Token(Token::Integer, "3")),
+                            new SyntaxTreeNode(new Token(Token::Integer, "3")),
+                            new SyntaxTreeNode(new Token(Token::Integer, "3")),
                     }),
     };
 
-    auto expectedResult = SyntaxTreeNode(Token(Token::Integer, "18"));
-    auto actual = Multiply().evaluate(expression);
+    auto expectedResult = SyntaxTreeNode(new Token(Token::Integer, "18"));
+    auto actual = *Multiply().evaluate(expression);
 
     EXPECT_EQ(expectedResult == actual, true);
 }
@@ -35,12 +35,12 @@ TEST(add_test, ShouldEvaluateNestedMultiplication) {
 TEST(multiply_test, ShouldMultiplyDecimalNumbers) {
     // (* 1.2 2)
     auto expression = {
-            SyntaxTreeNode(Token(Token::Decimal, "1.2")),
-            SyntaxTreeNode(Token(Token::Integer, "2")),
+            new SyntaxTreeNode(new Token(Token::Decimal, "1.2")),
+            new SyntaxTreeNode(new Token(Token::Integer, "2")),
     };
 
-    auto expectedResult = SyntaxTreeNode(Token(Token::Decimal, "2.4"));
-    auto actual = Multiply().evaluate(expression);
+    auto expectedResult = SyntaxTreeNode(new Token(Token::Decimal, "2.4"));
+    auto actual = *Multiply().evaluate(expression);
 
     EXPECT_EQ(expectedResult == actual, true);
 }
@@ -51,9 +51,9 @@ TEST(multiply_test, ThrowExceptionOnMultiplyWithInvalidArguments) {
     int line = 0;
     int column = 0;
 
-    const std::vector<SyntaxTreeNode> expression = {
-            SyntaxTreeNode(Token(Token::Integer, "1")),
-            SyntaxTreeNode(Token(Token::String, "\"Hello World\"", 2, 3)),
+    const std::vector<SyntaxTreeNode *> expression = {
+            new SyntaxTreeNode(new Token(Token::Integer, "1")),
+            new SyntaxTreeNode(new Token(Token::String, "\"Hello World\"", 2, 3)),
     };
 
     try {
@@ -67,12 +67,12 @@ TEST(multiply_test, ThrowExceptionOnMultiplyWithInvalidArguments) {
 
     EXPECT_EQ(isCaught, true);
     EXPECT_EQ(errorMessage == "\"Hello World\" is not a number", true);
-    EXPECT_EQ(line == expression[1].token.line, true);
-    EXPECT_EQ(column == expression[1].token.column, true);
+    EXPECT_EQ(line == expression[1]->token->line, true);
+    EXPECT_EQ(column == expression[1]->token->column, true);
 }
 
 TEST(multiply_test, ShouldReturnZeroWhenNoArgumentsAreFound) {
-    auto expectedResult = SyntaxTreeNode(Token(Token::Integer, "1"));
-    auto actualResult = Multiply().evaluate({});
+    auto expectedResult = SyntaxTreeNode(new Token(Token::Integer, "1"));
+    auto actualResult = *Multiply().evaluate({});
     EXPECT_EQ(actualResult == expectedResult, true);
 }

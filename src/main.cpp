@@ -51,12 +51,12 @@ int main(int argc, char *argv[]) {
 
             auto ast = Parser::parse(tokens);
             if (displayAST) {
-                print_ast(stdOut, ast);
+                print_ast(stdOut, *ast);
             }
 
-            auto result = Evaluate::evaluate(ast);
-            if (result.token.type != Token::Invalid)
-                std::cout << result.token.asString() << '\n';
+            auto result = *Evaluate::evaluate(ast);
+            if (result.token->type != Token::Invalid)
+                std::cout << result.token->asString() << '\n';
         } catch (SyntaxError &error) {
             std::cout << "SyntaxError (" << error.line
                       << ':' << error.column << "): "

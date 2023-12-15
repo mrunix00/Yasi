@@ -3,64 +3,64 @@
 #include <gtest/gtest.h>
 
 TEST(cond_test, ShouldEvaluateExpressionIfConditionIsMet) {
-    auto condition = SyntaxTreeNode(
-            Token(Token::Symbol, "="),
+    auto condition = new SyntaxTreeNode(
+            new Token(Token::Symbol, "="),
             {
-                    SyntaxTreeNode(Token(Token::Integer, "1")),
-                    SyntaxTreeNode(Token(Token::Integer, "1")),
+                    new SyntaxTreeNode(new Token(Token::Integer, "1")),
+                    new SyntaxTreeNode(new Token(Token::Integer, "1")),
             });
-    auto result = SyntaxTreeNode(
-            Token(Token::Symbol, "+"),
+    auto result = new SyntaxTreeNode(
+            new Token(Token::Symbol, "+"),
             {
-                    SyntaxTreeNode(Token(Token::Integer, "1")),
-                    SyntaxTreeNode(Token(Token::Integer, "2")),
+                    new SyntaxTreeNode(new Token(Token::Integer, "1")),
+                    new SyntaxTreeNode(new Token(Token::Integer, "2")),
             });
 
-    auto expected_result = SyntaxTreeNode(Token(Token::Integer, "3"));
-    auto actual_result = Cond().evaluate({condition, result});
+    auto expected_result = SyntaxTreeNode(new Token(Token::Integer, "3"));
+    auto actual_result = *Cond().evaluate({condition, result});
 
     EXPECT_EQ(expected_result == actual_result, true);
 }
 
 TEST(cond_test, ShouldNotEvaluateExpressionIfConditionIsNotMet) {
-    auto condition = SyntaxTreeNode(
-            Token(Token::Symbol, "="),
+    auto condition = new SyntaxTreeNode(
+            new Token(Token::Symbol, "="),
             {
-                    SyntaxTreeNode(Token(Token::Integer, "0")),
-                    SyntaxTreeNode(Token(Token::Integer, "1")),
+                    new SyntaxTreeNode(new Token(Token::Integer, "0")),
+                    new SyntaxTreeNode(new Token(Token::Integer, "1")),
             });
-    auto result = SyntaxTreeNode(
-            Token(Token::Symbol, "+"),
+    auto result = new SyntaxTreeNode(
+            new Token(Token::Symbol, "+"),
             {
-                    SyntaxTreeNode(Token(Token::Integer, "1")),
-                    SyntaxTreeNode(Token(Token::Integer, "2")),
+                    new SyntaxTreeNode(new Token(Token::Integer, "1")),
+                    new SyntaxTreeNode(new Token(Token::Integer, "2")),
             });
 
     auto expected_result = SyntaxTreeNode();
-    auto actual_result = Cond().evaluate({condition, result});
+    auto actual_result = *Cond().evaluate({condition, result});
 
     EXPECT_EQ(expected_result == actual_result, true);
 }
 
 TEST(cond_test, ShouldEvaluateMultipleConditions) {
-    auto condition1 = SyntaxTreeNode(
-            Token(Token::Symbol, "="),
+    auto condition1 = new SyntaxTreeNode(
+            new Token(Token::Symbol, "="),
             {
-                    SyntaxTreeNode(Token(Token::Integer, "1")),
-                    SyntaxTreeNode(Token(Token::Integer, "0")),
+                    new SyntaxTreeNode(new Token(Token::Integer, "1")),
+                    new SyntaxTreeNode(new Token(Token::Integer, "0")),
             });
-    auto result1 = SyntaxTreeNode(Token(Token::Integer, "0"));
+    auto result1 = new SyntaxTreeNode(new Token(Token::Integer, "0"));
 
-    auto condition2 = SyntaxTreeNode(
-            Token(Token::Symbol, "="),
+    auto condition2 = new SyntaxTreeNode(
+            new Token(Token::Symbol, "="),
             {
-                    SyntaxTreeNode(Token(Token::Integer, "1")),
-                    SyntaxTreeNode(Token(Token::Integer, "1")),
+                    new SyntaxTreeNode(new Token(Token::Integer, "1")),
+                    new SyntaxTreeNode(new Token(Token::Integer, "1")),
             });
-    auto result2 = SyntaxTreeNode(Token(Token::Integer, "1"));
+    auto result2 = new SyntaxTreeNode(new Token(Token::Integer, "1"));
 
-    auto expected_result = SyntaxTreeNode(Token(Token::Integer, "1"));
-    auto actual_result = Cond().evaluate({
+    auto expected_result = SyntaxTreeNode(new Token(Token::Integer, "1"));
+    auto actual_result = *Cond().evaluate({
             condition1,
             result1,
             condition2,
@@ -71,23 +71,23 @@ TEST(cond_test, ShouldEvaluateMultipleConditions) {
 }
 
 TEST(cond_test, ShouldEvaluateDefaultResultIfNoConditionsAreMet) {
-    auto condition1 = SyntaxTreeNode(
-            Token(Token::Symbol, "="),
+    auto condition1 = new SyntaxTreeNode(
+            new Token(Token::Symbol, "="),
             {
-                    SyntaxTreeNode(Token(Token::Integer, "1")),
-                    SyntaxTreeNode(Token(Token::Integer, "0")),
+                    new SyntaxTreeNode(new Token(Token::Integer, "1")),
+                    new SyntaxTreeNode(new Token(Token::Integer, "0")),
             });
-    auto result1 = SyntaxTreeNode(Token(Token::Integer, "0"));
+    auto result1 = new SyntaxTreeNode(new Token(Token::Integer, "0"));
 
-    auto condition2 = SyntaxTreeNode(
-            Token(Token::Symbol, "="),
+    auto condition2 = new SyntaxTreeNode(
+            new Token(Token::Symbol, "="),
             {
-                    SyntaxTreeNode(Token(Token::Integer, "0")),
-                    SyntaxTreeNode(Token(Token::Integer, "1")),
+                    new SyntaxTreeNode(new Token(Token::Integer, "0")),
+                    new SyntaxTreeNode(new Token(Token::Integer, "1")),
             });
-    auto result2 = SyntaxTreeNode(Token(Token::Integer, "1"));
+    auto result2 = new SyntaxTreeNode(new Token(Token::Integer, "1"));
 
-    auto default_result = SyntaxTreeNode(Token(Token::Integer, "2"));
+    auto default_result = new SyntaxTreeNode(new Token(Token::Integer, "2"));
 
     auto actual_result = Cond().evaluate({
             condition1,

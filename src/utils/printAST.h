@@ -4,7 +4,7 @@
 #include "parser/SyntaxTreeNode.h"
 #include "utils/OutputSource.h"
 
-void print_ast(OutputSource *outputSource, SyntaxTreeNode ast);
+void print_ast(OutputSource *outputSource, const SyntaxTreeNode &ast);
 
 #endif
 

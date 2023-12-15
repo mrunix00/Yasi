@@ -6,15 +6,15 @@
 
 class Variable : public Function {
     std::string name;
-    SyntaxTreeNode value;
+    SyntaxTreeNode *value;
 
 public:
     Variable(std::string name,
-             SyntaxTreeNode value)
+             SyntaxTreeNode *value)
         : name(std::move(name)),
-          value(std::move(value)) {}
+          value(value) {}
     const std::string &getName() override { return name; }
-    SyntaxTreeNode evaluate(const std::vector<SyntaxTreeNode> &args)
+    SyntaxTreeNode *evaluate(const std::vector<SyntaxTreeNode *> &args)
             override {
         auto result = Evaluate::evaluate(value);
         value = result;
@@ -24,19 +24,19 @@ public:
 
 class DefinedFunction : public Function {
     std::string name;
-    SyntaxTreeNode definition;
-    std::vector<SyntaxTreeNode> arguments;
+    SyntaxTreeNode *definition;
+    std::vector<SyntaxTreeNode *> arguments;
 
 public:
     DefinedFunction(
             std::string name,
-            std::vector<SyntaxTreeNode> args,
-            SyntaxTreeNode definition)
+            std::vector<SyntaxTreeNode *> args,
+            SyntaxTreeNode *definition)
         : name(std::move(name)),
           arguments(std::move(args)),
-          definition(std::move(definition)) {}
+          definition(definition) {}
     const std::string &getName() override { return name; }
-    SyntaxTreeNode evaluate(const std::vector<SyntaxTreeNode> &args) override;
+    SyntaxTreeNode *evaluate(const std::vector<SyntaxTreeNode *> &args) override;
 };
 
 class Define : public Function {
@@ -45,5 +45,5 @@ public:
         static const std::string name = "define";
         return name;
     };
-    SyntaxTreeNode evaluate(const std::vector<SyntaxTreeNode> &args) override;
+    SyntaxTreeNode *evaluate(const std::vector<SyntaxTreeNode *> &args) override;
 };

@@ -8,8 +8,8 @@ class Function {
 public:
     virtual const std::string& getName() = 0;
     virtual ~Function() = default;
-    virtual SyntaxTreeNode evaluate(
-            const std::vector<SyntaxTreeNode> &args) = 0;
+    virtual SyntaxTreeNode* evaluate(
+            const std::vector<SyntaxTreeNode*> &args) = 0;
 };
 
 #endif

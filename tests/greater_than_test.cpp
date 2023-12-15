@@ -3,39 +3,38 @@
 #include <gtest/gtest.h>
 
 TEST(greater_than_test, ShouldReturnTrueIfGreater) {
-    auto expected_result = SyntaxTreeNode(Token(Token::Boolean, "#t"));
-    auto actual_result = GreaterThan().evaluate({
-            SyntaxTreeNode(Token(Token::Integer, "20")),
-            SyntaxTreeNode(Token(Token::Integer, "10")),
+    auto expected_result = SyntaxTreeNode(new Token(Token::Boolean, "#t"));
+    auto actual_result = *GreaterThan().evaluate({
+            new SyntaxTreeNode(new Token(Token::Integer, "20")),
+            new SyntaxTreeNode(new Token(Token::Integer, "10")),
     });
     EXPECT_EQ(expected_result == actual_result, true);
 }
 
 TEST(greater_than_test, ShouldReturnFalseIfNotGreater) {
-    auto expected_result = SyntaxTreeNode(Token(Token::Boolean, "#f"));
-    auto actual_result = GreaterThan().evaluate({
-            SyntaxTreeNode(Token(Token::Integer, "10")),
-            SyntaxTreeNode(Token(Token::Integer, "20")),
+    auto expected_result = SyntaxTreeNode(new Token(Token::Boolean, "#f"));
+    auto actual_result = *GreaterThan().evaluate({
+            new SyntaxTreeNode(new Token(Token::Integer, "10")),
+            new SyntaxTreeNode(new Token(Token::Integer, "20")),
     });
     EXPECT_EQ(expected_result == actual_result, true);
 }
 
 TEST(greater_than_test, CompareMoreThanTwoArguments) {
-    auto expected_result = SyntaxTreeNode(Token(Token::Boolean, "#f"));
-    auto actual_result = GreaterThan().evaluate({
-            SyntaxTreeNode(Token(Token::Integer, "30")),
-            SyntaxTreeNode(Token(Token::Integer, "20")),
-            SyntaxTreeNode(Token(Token::Integer, "30")),
+    auto expected_result = SyntaxTreeNode(new Token(Token::Boolean, "#f"));
+    auto actual_result = *GreaterThan().evaluate({
+            new SyntaxTreeNode(new Token(Token::Integer, "30")),
+            new SyntaxTreeNode(new Token(Token::Integer, "20")),
+            new SyntaxTreeNode(new Token(Token::Integer, "30")),
     });
     EXPECT_EQ(expected_result == actual_result, true);
 }
 
 TEST(greater_than_test, CompareIntegersAndDecimals) {
-    auto expected_result = SyntaxTreeNode(Token(Token::Boolean, "#t"));
-    auto actual_result = GreaterThan().evaluate({
-            SyntaxTreeNode(Token(Token::Decimal, "30.5")),
-            SyntaxTreeNode(Token(Token::Integer, "30")),
+    auto expected_result = SyntaxTreeNode(new Token(Token::Boolean, "#t"));
+    auto actual_result = *GreaterThan().evaluate({
+            new SyntaxTreeNode(new Token(Token::Decimal, "30.5")),
+            new SyntaxTreeNode(new Token(Token::Integer, "30")),
     });
     EXPECT_EQ(expected_result == actual_result, true);
 }
-

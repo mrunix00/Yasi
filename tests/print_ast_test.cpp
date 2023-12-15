@@ -14,32 +14,32 @@ public:
 
 TEST(print_ast_test, ShouldPrintSimpleAST) {
     // (+ 1 2)
-    const SyntaxTreeNode ast = SyntaxTreeNode(
-            Token(Token::Symbol, "+"),
+    const auto ast = new SyntaxTreeNode(
+            new Token(Token::Symbol, "+"),
             {
-                    SyntaxTreeNode(Token(Token::Integer, "1")),
-                    SyntaxTreeNode(Token(Token::Integer, "2")),
+                    new SyntaxTreeNode(new Token(Token::Integer, "1")),
+                    new SyntaxTreeNode(new Token(Token::Integer, "2")),
             });
     std::shared_ptr<MockOutputSource> mockOutputSource(new MockOutputSource);
 
     EXPECT_CALL(*mockOutputSource, out("-> Node (+)\n"
                                        "\t-> Integer (1)\n"
                                        "\t-> Integer (2)\n"));
-    print_ast(mockOutputSource.get(), ast);
+    print_ast(mockOutputSource.get(), *ast);
 }
 
 TEST(print_ast_test, ShouldPrintNestedAST) {
     // (+ (* 5 2) 4)
-    const SyntaxTreeNode ast = SyntaxTreeNode(
-            Token(Token::Symbol, "+"),
+    const auto ast = new SyntaxTreeNode(
+            new Token(Token::Symbol, "+"),
             {
-                    SyntaxTreeNode(
-                            Token(Token::Symbol, "*"),
+                    new SyntaxTreeNode(
+                            new Token(Token::Symbol, "*"),
                             {
-                                    SyntaxTreeNode(Token(Token::Integer, "5")),
-                                    SyntaxTreeNode(Token(Token::Integer, "2")),
+                                    new SyntaxTreeNode(new Token(Token::Integer, "5")),
+                                    new SyntaxTreeNode(new Token(Token::Integer, "2")),
                             }),
-                    SyntaxTreeNode(Token(Token::Integer, "4")),
+                    new SyntaxTreeNode(new Token(Token::Integer, "4")),
             });
     const std::string expectedOutput = "-> Node (+)\n"
                                        "\t-> Node (*)\n"
@@ -50,5 +50,5 @@ TEST(print_ast_test, ShouldPrintNestedAST) {
     std::shared_ptr<MockOutputSource> mockOutputSource(new MockOutputSource);
 
     EXPECT_CALL(*mockOutputSource, out(expectedOutput));
-    print_ast(mockOutputSource.get(), ast);
+    print_ast(mockOutputSource.get(), *ast);
 }

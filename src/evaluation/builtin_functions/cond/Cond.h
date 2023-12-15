@@ -9,7 +9,7 @@ public:
         static const std::string name = "cond";
         return name;
     };
-    SyntaxTreeNode evaluate(const std::vector<SyntaxTreeNode> &args) override;
+    SyntaxTreeNode *evaluate(const std::vector<SyntaxTreeNode *> &args) override;
 };
 
 #endif

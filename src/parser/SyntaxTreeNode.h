@@ -7,17 +7,29 @@
 
 class SyntaxTreeNode {
 public:
-    Token token;
-    std::vector<SyntaxTreeNode> children;
+    Token *token;
+    std::vector<SyntaxTreeNode*> children;
 
-    SyntaxTreeNode() {};
-    SyntaxTreeNode(Token token, const std::vector<SyntaxTreeNode> &children)
-        : token(std::move(token)), children(children) {}
+    SyntaxTreeNode() : token(new Token()) {};
+    SyntaxTreeNode(Token* token, const std::vector<SyntaxTreeNode*> &children)
+        : token(token), children(children) {}
 
-    SyntaxTreeNode(Token token) : token(std::move(token)) {}
+    explicit SyntaxTreeNode(Token *token) : token(token) {}
 
     bool operator==(const SyntaxTreeNode &node) const {
-        return token == node.token && children == node.children;
+        if (*token == *node.token) {
+            for (auto i = 0; i < children.size(); i++) {
+                auto child1 = *node.children[i];
+                auto child2 = *children[i];
+                if (!(child1 == child2)) return false;
+            }
+            return true;
+        }
+        return false;
+    }
+
+    bool operator!=(const SyntaxTreeNode &node) const {
+        return !operator==(node);
     }
 };
 

@@ -5,7 +5,7 @@
 
 class Evaluate {
 public:
-    static SyntaxTreeNode evaluate(const SyntaxTreeNode &tree);
+    static SyntaxTreeNode* evaluate(const SyntaxTreeNode *tree);
 };
 
 #endif

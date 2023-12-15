@@ -3,28 +3,25 @@
 #include "exceptions/SyntaxError.h"
 #include <string>
 
-SyntaxTreeNode Divide::evaluate(const std::vector<SyntaxTreeNode> &args) {
+SyntaxTreeNode* Divide::evaluate(const std::vector<SyntaxTreeNode*> &args) {
     if (args.empty()) {
         throw SyntaxError("At least 1 argument was expected but none were found");
     }
-    int result = std::stoi(Evaluate::evaluate(args[0]).token.token);
+    int result = (*Evaluate::evaluate(args[0])->token).asInteger();
 
     for (int i = 1; i < args.size(); i++) {
-        auto arg = Evaluate::evaluate(args[i]).token;
+        auto arg = (*Evaluate::evaluate(args[i])->token);
         if (arg.type != Token::Integer) {
-            throw SyntaxError(args[i].token.token + " is not a number",
-                              args[i].token.line, args[i].token.column);
+            throw SyntaxError((*args[i]->token).asString() + " is not a number",
+                              (*args[i]->token).line, (*args[i]->token).column);
         }
 
-        auto operand = std::stoi(arg.token);
+        auto operand = arg.asInteger();
         if (operand == 0) {
             throw SyntaxError("Division by zero", arg.line, arg.column);
         }
         result /= operand;
     }
 
-    return {
-            Token(Token::Integer,
-                  std::to_string(result)),
-    };
+    return new SyntaxTreeNode(new Token(result));
 }

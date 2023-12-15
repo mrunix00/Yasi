@@ -5,24 +5,24 @@
 
 TEST(subtract_test, ShouldSubtractNumbers) {
     auto expression = {
-            SyntaxTreeNode(Token(Token::Integer, "5")),
-            SyntaxTreeNode(Token(Token::Integer, "2")),
+            new SyntaxTreeNode(new Token(Token::Integer, "5")),
+            new SyntaxTreeNode(new Token(Token::Integer, "2")),
     };
 
-    auto expectedResult = SyntaxTreeNode(Token(Token::Integer, "3"));
-    auto actual = Subtract().evaluate(expression);
+    auto expectedResult = SyntaxTreeNode(new Token(Token::Integer, "3"));
+    auto actual = *Subtract().evaluate(expression);
 
     EXPECT_EQ(expectedResult == actual, true);
 }
 
 TEST(subtract_test, ShouldSubtractDecimalNumbers) {
     auto expression = {
-            SyntaxTreeNode(Token(Token::Decimal, "5.2")),
-            SyntaxTreeNode(Token(Token::Integer, "2")),
+            new SyntaxTreeNode(new Token(Token::Decimal, "5.2")),
+            new SyntaxTreeNode(new Token(Token::Integer, "2")),
     };
 
-    auto expectedResult = SyntaxTreeNode(Token((float) 3.2));
-    auto actual = Subtract().evaluate(expression);
+    auto expectedResult = SyntaxTreeNode(new Token((float) 3.2));
+    auto actual = *Subtract().evaluate(expression);
 
     EXPECT_EQ(expectedResult == actual, true);
 }
@@ -30,16 +30,17 @@ TEST(subtract_test, ShouldSubtractDecimalNumbers) {
 
 TEST(subtract_test, ShouldEvaluateNestedSubtraction) {
     auto expression = {
-            SyntaxTreeNode(Token(Token::Integer, "9")),
-            SyntaxTreeNode(Token(Token::Symbol, "-"),
-                           {
-                                   SyntaxTreeNode(Token(Token::Integer, "3")),
-                                   SyntaxTreeNode(Token(Token::Integer, "2")),
-                           }),
+            new SyntaxTreeNode(new Token(Token::Integer, "9")),
+            new SyntaxTreeNode(
+                    new Token(Token::Symbol, "-"),
+                    {
+                            new SyntaxTreeNode(new Token(Token::Integer, "3")),
+                            new SyntaxTreeNode(new Token(Token::Integer, "2")),
+                    }),
     };
 
-    auto expectedResult = SyntaxTreeNode(Token(Token::Integer, "8"));
-    auto actual = Subtract().evaluate(expression);
+    auto expectedResult = SyntaxTreeNode(new Token(Token::Integer, "8"));
+    auto actual = *Subtract().evaluate(expression);
 
     EXPECT_EQ(expectedResult == actual, true);
 }
@@ -50,9 +51,9 @@ TEST(subtract_test, ThrowExceptionOnInvalidArgumentsInSubtraction) {
     int line = 0;
     int column = 0;
 
-    const std::vector<SyntaxTreeNode> expression = {
-            SyntaxTreeNode(Token(Token::Integer, "1")),
-            SyntaxTreeNode(Token(Token::String, "\"Hello World\"", 2, 3)),
+    const std::vector<SyntaxTreeNode *> expression = {
+            new SyntaxTreeNode(new Token(Token::Integer, "1")),
+            new SyntaxTreeNode(new Token(Token::String, "\"Hello World\"", 2, 3)),
     };
 
     try {
@@ -66,8 +67,8 @@ TEST(subtract_test, ThrowExceptionOnInvalidArgumentsInSubtraction) {
 
     EXPECT_EQ(isCaught, true);
     EXPECT_EQ(errorMessage == "\"Hello World\" is not a number", true);
-    EXPECT_EQ(line == expression[1].token.line, true);
-    EXPECT_EQ(column == expression[1].token.column, true);
+    EXPECT_EQ(line == expression[1]->token->line, true);
+    EXPECT_EQ(column == expression[1]->token->column, true);
 }
 
 TEST(subtract_test, ThrowExceptionOnZeroArguments) {

@@ -10,7 +10,7 @@ public:
         static const std::string name = "-";
         return name;
     };
-    SyntaxTreeNode evaluate(const std::vector<SyntaxTreeNode> &args) override;
+    SyntaxTreeNode* evaluate(const std::vector<SyntaxTreeNode*> &args) override;
 };
 
 #endif
