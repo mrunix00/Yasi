@@ -1,5 +1,5 @@
 #include "../src/parser/SyntaxTreeNode.h"
-#include "evaluation/Evaluate.h"
+#include "recursive_evaluation/Evaluate.h"
 #include "exceptions/SyntaxError.h"
 #include "lexer/Lexer.h"
 #include <gtest/gtest.h>

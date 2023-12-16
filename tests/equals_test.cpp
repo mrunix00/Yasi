@@ -1,4 +1,4 @@
-#include "evaluation/builtin_functions/equals/Equals.h"
+#include "recursive_evaluation/builtin_functions/equals/Equals.h"
 #include "lexer/Lexer.h"
 #include "parser/SyntaxTreeNode.h"
 #include <gtest/gtest.h>

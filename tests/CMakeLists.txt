@@ -18,8 +18,8 @@ include_directories(../src)
 file(
         GLOB_RECURSE
         SRCS
-        ../src/evaluation/builtin_functions/*.cpp
-        ../src/evaluation/*.cpp
+        ../src/recursive_evaluation/builtin_functions/*.cpp
+        ../src/recursive_evaluation/*.cpp
         ../src/lexer/*.cpp
         ../src/parser/*.cpp
         ../src/tokens/*.cpp
