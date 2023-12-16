@@ -1,5 +1,5 @@
-#include "recursive_evaluation/builtin_functions/print/Print.h"
 #include "parser/SyntaxTreeNode.h"
+#include "recursive_evaluation/builtin_functions/print/Print.h"
 #include <gtest/gtest.h>
 
 TEST(print_test, ShouldPrintStringArgument) {
@@ -7,7 +7,7 @@ TEST(print_test, ShouldPrintStringArgument) {
             new SyntaxTreeNode(new Token(Token::String, "\"Hello World\"")),
     };
 
-    const auto actual = Print().evaluate(args);
+    const auto actual = RecursiveEvaluation::Print().evaluate(args);
 
     EXPECT_EQ(*actual->token->token == "Hello World", true);
 }
@@ -19,7 +19,7 @@ TEST(print_test, ShouldPrintMultipleStringArguments) {
     };
 
     const auto expected = SyntaxTreeNode(new Token(Token::String, "Hello World"));
-    const auto actual = *Print().evaluate(args);
+    const auto actual = *RecursiveEvaluation::Print().evaluate(args);
 
     EXPECT_EQ(actual == expected, true);
 }
@@ -31,7 +31,7 @@ TEST(print_test, ShouldPrintIntegers) {
     };
 
     const auto expected = SyntaxTreeNode(new Token(Token::String, "12"));
-    const auto actual = *Print().evaluate(args);
+    const auto actual = *RecursiveEvaluation::Print().evaluate(args);
 
     EXPECT_EQ(actual == expected, true);
 }
@@ -48,7 +48,7 @@ TEST(print_test, ShouldEvaluateOperandsBeforePrinting) {
     };
 
     const auto expected = SyntaxTreeNode(new Token(Token::String, "The result is: 3"));
-    const auto actual = *Print().evaluate(args);
+    const auto actual = *RecursiveEvaluation::Print().evaluate(args);
 
     EXPECT_EQ(actual == expected, true);
 }

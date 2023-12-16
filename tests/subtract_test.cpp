@@ -1,6 +1,6 @@
-#include "recursive_evaluation/builtin_functions/subtract/Subtract.h"
 #include "exceptions/SyntaxError.h"
 #include "parser/SyntaxTreeNode.h"
+#include "recursive_evaluation/builtin_functions/subtract/Subtract.h"
 #include <gtest/gtest.h>
 
 TEST(subtract_test, ShouldSubtractNumbers) {
@@ -10,7 +10,7 @@ TEST(subtract_test, ShouldSubtractNumbers) {
     };
 
     auto expectedResult = SyntaxTreeNode(new Token(Token::Integer, "3"));
-    auto actual = *Subtract().evaluate(expression);
+    auto actual = *RecursiveEvaluation::Subtract().evaluate(expression);
 
     EXPECT_EQ(expectedResult == actual, true);
 }
@@ -22,7 +22,7 @@ TEST(subtract_test, ShouldSubtractDecimalNumbers) {
     };
 
     auto expectedResult = SyntaxTreeNode(new Token((float) 3.2));
-    auto actual = *Subtract().evaluate(expression);
+    auto actual = *RecursiveEvaluation::Subtract().evaluate(expression);
 
     EXPECT_EQ(expectedResult == actual, true);
 }
@@ -40,7 +40,7 @@ TEST(subtract_test, ShouldEvaluateNestedSubtraction) {
     };
 
     auto expectedResult = SyntaxTreeNode(new Token(Token::Integer, "8"));
-    auto actual = *Subtract().evaluate(expression);
+    auto actual = *RecursiveEvaluation::Subtract().evaluate(expression);
 
     EXPECT_EQ(expectedResult == actual, true);
 }
@@ -57,7 +57,7 @@ TEST(subtract_test, ThrowExceptionOnInvalidArgumentsInSubtraction) {
     };
 
     try {
-        Subtract().evaluate(expression);
+        RecursiveEvaluation::Subtract().evaluate(expression);
     } catch (SyntaxError &error) {
         isCaught = true;
         errorMessage = error.message;
@@ -76,7 +76,7 @@ TEST(subtract_test, ThrowExceptionOnZeroArguments) {
     std::string errorMessage;
 
     try {
-        Subtract().evaluate({});
+        RecursiveEvaluation::Subtract().evaluate({});
     } catch (SyntaxError &error) {
         isCaught = true;
         errorMessage = error.message;

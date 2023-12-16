@@ -1,7 +1,7 @@
 #include "../src/parser/SyntaxTreeNode.h"
-#include "recursive_evaluation/Evaluate.h"
 #include "exceptions/SyntaxError.h"
 #include "lexer/Lexer.h"
+#include "recursive_evaluation/RecursiveEvaluation.h"
 #include <gtest/gtest.h>
 
 TEST(eval_test, ShouldEvaluateSimpleSumExpression) {
@@ -13,7 +13,7 @@ TEST(eval_test, ShouldEvaluateSimpleSumExpression) {
             });
 
     auto expectedResult = SyntaxTreeNode(new Token(Token::Integer, "3"));
-    auto actualResult = *Evaluate::evaluate(expression);
+    auto actualResult = *RecursiveEvaluation::evaluate(expression);
 
     EXPECT_EQ(expectedResult == actualResult, true);
 }
@@ -27,7 +27,7 @@ TEST(eval_test, ShouldEvaluateSimpleMultiplication) {
             });
 
     auto expectedResult = SyntaxTreeNode(new Token(Token::Integer, "6"));
-    auto actualResult = *Evaluate::evaluate(expression);
+    auto actualResult = *RecursiveEvaluation::evaluate(expression);
 
     EXPECT_EQ(expectedResult == actualResult, true);
 }
@@ -41,7 +41,7 @@ TEST(eval_test, ShouldEvaluateSimpleSubtraction) {
             });
 
     auto expectedResult = SyntaxTreeNode(new Token(Token::Integer, "68"));
-    auto actualResult = *Evaluate::evaluate(expression);
+    auto actualResult = *RecursiveEvaluation::evaluate(expression);
 
     EXPECT_EQ(expectedResult == actualResult, true);
 }
@@ -60,7 +60,7 @@ TEST(eval_test, ShouldEvaluateNestedExpression) {
             });
 
     auto expectedResult = SyntaxTreeNode(new Token(Token::Integer, "37"));
-    auto actualResult = *Evaluate::evaluate(expression);
+    auto actualResult = *RecursiveEvaluation::evaluate(expression);
     EXPECT_EQ(expectedResult == actualResult, true);
 }
 
@@ -68,7 +68,7 @@ TEST(eval_test, ShouldCallFunctionWithNoArguments) {
     auto expression = new SyntaxTreeNode(new Token(Token::Symbol, "+"));
 
     auto expectedResult = SyntaxTreeNode(new Token(Token::Integer, "0"));
-    auto actualResult = *Evaluate::evaluate(expression);
+    auto actualResult = *RecursiveEvaluation::evaluate(expression);
     EXPECT_EQ(expectedResult == actualResult, true);
 }
 
@@ -81,7 +81,7 @@ TEST(eval_test, ShouldThrowExceptionWhenTheExpressionIsInvalid) {
                     new SyntaxTreeNode(new Token(Token::String, "\"Hello\"", 1, 6)),
             });
     try {
-        Evaluate::evaluate(expression);
+        RecursiveEvaluation::evaluate(expression);
     } catch (SyntaxError &error) {
         line = error.line;
         column = error.column;
@@ -95,7 +95,7 @@ TEST(eval_test, ShouldThrowExceptionWhenErrorLocationIsNotFoundInArguments) {
     int line, column;
     auto expression = new SyntaxTreeNode(new Token(Token::Symbol, "/", 1, 2));
     try {
-        Evaluate::evaluate(expression);
+        RecursiveEvaluation::evaluate(expression);
     } catch (SyntaxError &error) {
         line = error.line;
         column = error.column;

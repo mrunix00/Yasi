@@ -1,8 +1,8 @@
-#include "recursive_evaluation/Evaluate.h"
 #include "exceptions/SyntaxError.h"
 #include "lexer/Lexer.h"
 #include "parser/Parser.h"
 #include "read.hpp"
+#include "recursive_evaluation/RecursiveEvaluation.h"
 #include "utils/StdOut.h"
 #include "utils/printAST.h"
 #include "utils/printTokens.h"
@@ -54,7 +54,7 @@ int main(int argc, char *argv[]) {
                 print_ast(stdOut, *ast);
             }
 
-            auto result = *Evaluate::evaluate(ast);
+            auto result = *RecursiveEvaluation::evaluate(ast);
             if (result.token->type != Token::Invalid)
                 std::cout << *result.token->asString() << '\n';
         } catch (SyntaxError &error) {

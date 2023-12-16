@@ -2,13 +2,15 @@
 #include <stack>
 #include <unordered_map>
 
-class DefinitionsTable {
-protected:
-    static void initialize();
+namespace RecursiveEvaluation {
+    class DefinitionsTable {
+    protected:
+        static void initialize();
 
-public:
-    static Function *find(const std::string &name);
-    static void define(Function *);
-    static void enterNewScope();
-    static void exitCurrentScope();
-};
+    public:
+        static Function *find(const std::string &name);
+        static void define(Function *);
+        static void enterNewScope();
+        static void exitCurrentScope();
+    };
+}

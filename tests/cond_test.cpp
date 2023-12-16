@@ -1,5 +1,5 @@
-#include "recursive_evaluation/builtin_functions/cond/Cond.h"
 #include "parser/SyntaxTreeNode.h"
+#include "recursive_evaluation/builtin_functions/cond/Cond.h"
 #include <gtest/gtest.h>
 
 TEST(cond_test, ShouldEvaluateExpressionIfConditionIsMet) {
@@ -17,7 +17,7 @@ TEST(cond_test, ShouldEvaluateExpressionIfConditionIsMet) {
             });
 
     auto expected_result = SyntaxTreeNode(new Token(Token::Integer, "3"));
-    auto actual_result = *Cond().evaluate({condition, result});
+    auto actual_result = *RecursiveEvaluation::Cond().evaluate({condition, result});
 
     EXPECT_EQ(expected_result == actual_result, true);
 }
@@ -37,7 +37,7 @@ TEST(cond_test, ShouldNotEvaluateExpressionIfConditionIsNotMet) {
             });
 
     auto expected_result = SyntaxTreeNode();
-    auto actual_result = *Cond().evaluate({condition, result});
+    auto actual_result = *RecursiveEvaluation::Cond().evaluate({condition, result});
 
     EXPECT_EQ(expected_result == actual_result, true);
 }
@@ -60,7 +60,7 @@ TEST(cond_test, ShouldEvaluateMultipleConditions) {
     auto result2 = new SyntaxTreeNode(new Token(Token::Integer, "1"));
 
     auto expected_result = SyntaxTreeNode(new Token(Token::Integer, "1"));
-    auto actual_result = *Cond().evaluate({
+    auto actual_result = *RecursiveEvaluation::Cond().evaluate({
             condition1,
             result1,
             condition2,
@@ -89,7 +89,7 @@ TEST(cond_test, ShouldEvaluateDefaultResultIfNoConditionsAreMet) {
 
     auto default_result = SyntaxTreeNode(new Token(Token::Integer, "2"));
 
-    auto actual_result = *Cond().evaluate({
+    auto actual_result = *RecursiveEvaluation::Cond().evaluate({
             condition1,
             result1,
             condition2,

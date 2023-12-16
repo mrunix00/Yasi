@@ -1,15 +1,15 @@
 #include "Add.h"
-#include "recursive_evaluation/Evaluate.h"
 #include "exceptions/SyntaxError.h"
 #include "lexer/Lexer.h"
+#include "recursive_evaluation/RecursiveEvaluation.h"
 
 #include <string>
 
-SyntaxTreeNode *Add::evaluate(const std::vector<SyntaxTreeNode *> &args) {
+SyntaxTreeNode *RecursiveEvaluation::Add::evaluate(const std::vector<SyntaxTreeNode *> &args) {
     float result = 0;
 
     for (const auto &arg: args) {
-        auto evArg = *Evaluate::evaluate(arg)->token;
+        auto evArg = *RecursiveEvaluation::evaluate(arg)->token;
         if (evArg.type == Token::Integer || evArg.type == Token::Decimal) {
             result += evArg.asDecimal();
         } else {

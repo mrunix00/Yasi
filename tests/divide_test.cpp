@@ -1,6 +1,6 @@
-#include "recursive_evaluation/builtin_functions/divide/Divide.h"
 #include "exceptions/SyntaxError.h"
 #include "parser/SyntaxTreeNode.h"
+#include "recursive_evaluation/builtin_functions/divide/Divide.h"
 #include <gtest/gtest.h>
 
 TEST(divide_test, ShouldDivideNumbers) {
@@ -10,7 +10,7 @@ TEST(divide_test, ShouldDivideNumbers) {
     };
 
     auto expectedResult = SyntaxTreeNode(new Token(Token::Integer, "4"));
-    auto actual = *Divide().evaluate(expression);
+    auto actual = *RecursiveEvaluation::Divide().evaluate(expression);
 
     EXPECT_EQ(expectedResult == actual, true);
 }
@@ -27,7 +27,7 @@ TEST(divide_test, ShouldEvaluateNestedDivision) {
     };
 
     auto expectedResult = SyntaxTreeNode(new Token(Token::Integer, "9"));
-    auto actual = *Divide().evaluate(expression);
+    auto actual = *RecursiveEvaluation::Divide().evaluate(expression);
 
     EXPECT_EQ(expectedResult == actual, true);
 }
@@ -44,7 +44,7 @@ TEST(divide_test, ThrowExceptionOnDivisionWithInvalidArguments) {
     };
 
     try {
-        Divide().evaluate(expression);
+        RecursiveEvaluation::Divide().evaluate(expression);
     } catch (SyntaxError &error) {
         isCaught = true;
         errorMessage = error.message;
@@ -63,7 +63,7 @@ TEST(divide_test, ThrowExceptionOnZeroArguments) {
     std::string errorMessage;
 
     try {
-        Divide().evaluate({});
+        RecursiveEvaluation::Divide().evaluate({});
     } catch (SyntaxError &error) {
         isCaught = true;
         errorMessage = error.message;
@@ -79,7 +79,7 @@ TEST(divide_test, ThrowExceptionOnDivisionByZero) {
     int line, column;
 
     try {
-        Divide().evaluate({
+        RecursiveEvaluation::Divide().evaluate({
                 new SyntaxTreeNode(new Token(Token::Integer, "1")),
                 new SyntaxTreeNode(new Token(Token::Integer, "0", 6, 9)),
         });

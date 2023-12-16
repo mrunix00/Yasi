@@ -1,10 +1,10 @@
-#include "recursive_evaluation/builtin_functions/define/Define.h"
 #include "exceptions/SyntaxError.h"
 #include "parser/SyntaxTreeNode.h"
+#include "recursive_evaluation/builtin_functions/define/Define.h"
 #include <gtest/gtest.h>
 
 TEST(define_test, ShouldDefineAVariable) {
-    Define().evaluate({
+    RecursiveEvaluation::Define().evaluate({
             new SyntaxTreeNode(new Token(Token::Symbol, "x")),
             new SyntaxTreeNode(new Token(Token::Integer, "15")),
     });
@@ -16,13 +16,13 @@ TEST(define_test, ShouldDefineAVariable) {
                     new SyntaxTreeNode(new Token(Token::Symbol, "x")),
             });
     auto expected_result = SyntaxTreeNode(new Token(Token::Integer, "20"));
-    auto actual_result = *Evaluate::evaluate(expression);
+    auto actual_result = *RecursiveEvaluation::evaluate(expression);
 
     EXPECT_EQ(actual_result == expected_result, true);
 }
 
 TEST(define_test, ShouldDefineAVariableWithAnExpression) {
-    Define().evaluate({
+    RecursiveEvaluation::Define().evaluate({
             new SyntaxTreeNode(new Token(Token::Symbol, "x")),
             new SyntaxTreeNode(
                     new Token(Token::Symbol, "+"),
@@ -39,13 +39,13 @@ TEST(define_test, ShouldDefineAVariableWithAnExpression) {
                     new SyntaxTreeNode(new Token(Token::Symbol, "x")),
             });
     auto expected_result = SyntaxTreeNode(new Token(Token::Integer, "8"));
-    auto actual_result = *Evaluate::evaluate(expression);
+    auto actual_result = *RecursiveEvaluation::evaluate(expression);
 
     EXPECT_EQ(actual_result == expected_result, true);
 }
 
 TEST(define_test, ShouldDefineASimpleFunction) {
-    Define().evaluate({
+    RecursiveEvaluation::Define().evaluate({
             new SyntaxTreeNode(
                     new Token(Token::Symbol, "square"),
                     {
@@ -66,13 +66,13 @@ TEST(define_test, ShouldDefineASimpleFunction) {
             });
 
     auto expected_result = SyntaxTreeNode(new Token(Token::Integer, "100"));
-    auto actual_result = *Evaluate::evaluate(expression);
+    auto actual_result = *RecursiveEvaluation::evaluate(expression);
 
     EXPECT_EQ(actual_result == expected_result, true);
 }
 
 TEST(define_test, ShouldHaveScopedFunctionArguments) {
-    Define().evaluate({
+    RecursiveEvaluation::Define().evaluate({
             new SyntaxTreeNode(
                     new Token(Token::Symbol, "square"),
                     {
@@ -86,7 +86,7 @@ TEST(define_test, ShouldHaveScopedFunctionArguments) {
                     }),
     });
 
-    Evaluate::evaluate(
+    RecursiveEvaluation::evaluate(
             new SyntaxTreeNode(
                     new Token(Token::Symbol, "square"),
                     {
@@ -95,7 +95,7 @@ TEST(define_test, ShouldHaveScopedFunctionArguments) {
 
     bool isCaught = false;
     try {
-        Evaluate::evaluate(new SyntaxTreeNode(new Token(Token::Symbol, "y")));
+        RecursiveEvaluation::evaluate(new SyntaxTreeNode(new Token(Token::Symbol, "y")));
     } catch (SyntaxError &error) {
         isCaught = true;
     }

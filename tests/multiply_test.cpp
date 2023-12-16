@@ -1,6 +1,6 @@
-#include "recursive_evaluation/builtin_functions/multiply/Multiply.h"
 #include "exceptions/SyntaxError.h"
 #include "parser/SyntaxTreeNode.h"
+#include "recursive_evaluation/builtin_functions/multiply/Multiply.h"
 #include <gtest/gtest.h>
 
 TEST(multiply_test, ShouldMultiplyNumbers) {
@@ -10,7 +10,7 @@ TEST(multiply_test, ShouldMultiplyNumbers) {
     };
 
     auto expectedResult = SyntaxTreeNode(new Token(Token::Integer, "4"));
-    auto actual = *Multiply().evaluate(expression);
+    auto actual = *RecursiveEvaluation::Multiply().evaluate(expression);
 
     EXPECT_EQ(expectedResult == actual, true);
 }
@@ -27,7 +27,7 @@ TEST(add_test, ShouldEvaluateNestedMultiplication) {
     };
 
     auto expectedResult = SyntaxTreeNode(new Token(Token::Integer, "18"));
-    auto actual = *Multiply().evaluate(expression);
+    auto actual = *RecursiveEvaluation::Multiply().evaluate(expression);
 
     EXPECT_EQ(expectedResult == actual, true);
 }
@@ -40,7 +40,7 @@ TEST(multiply_test, ShouldMultiplyDecimalNumbers) {
     };
 
     auto expectedResult = SyntaxTreeNode(new Token(Token::Decimal, "2.4"));
-    auto actual = *Multiply().evaluate(expression);
+    auto actual = *RecursiveEvaluation::Multiply().evaluate(expression);
 
     EXPECT_EQ(expectedResult == actual, true);
 }
@@ -57,7 +57,7 @@ TEST(multiply_test, ThrowExceptionOnMultiplyWithInvalidArguments) {
     };
 
     try {
-        Multiply().evaluate(expression);
+        RecursiveEvaluation::Multiply().evaluate(expression);
     } catch (SyntaxError &error) {
         isCaught = true;
         errorMessage = error.message;
@@ -73,6 +73,6 @@ TEST(multiply_test, ThrowExceptionOnMultiplyWithInvalidArguments) {
 
 TEST(multiply_test, ShouldReturnZeroWhenNoArgumentsAreFound) {
     auto expectedResult = SyntaxTreeNode(new Token(Token::Integer, "1"));
-    auto actualResult = *Multiply().evaluate({});
+    auto actualResult = *RecursiveEvaluation::Multiply().evaluate({});
     EXPECT_EQ(actualResult == expectedResult, true);
 }

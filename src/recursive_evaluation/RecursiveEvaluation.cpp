@@ -1,9 +1,9 @@
-#include "Evaluate.h"
+#include "RecursiveEvaluation.h"
 #include "DefinitionsTable.h"
 #include "builtin_functions/print/Print.h"
 #include "exceptions/SyntaxError.h"
 
-SyntaxTreeNode* Evaluate::evaluate(const SyntaxTreeNode *tree) {
+SyntaxTreeNode*RecursiveEvaluation::evaluate(const SyntaxTreeNode *tree) {
     if (tree->children.empty() && tree->token->type != Token::Symbol) {
         return const_cast<SyntaxTreeNode *>(tree);
     }

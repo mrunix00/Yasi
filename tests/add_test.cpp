@@ -1,6 +1,6 @@
-#include "recursive_evaluation/builtin_functions/add/Add.h"
 #include "exceptions/SyntaxError.h"
 #include "parser/SyntaxTreeNode.h"
+#include "recursive_evaluation/builtin_functions/add/Add.h"
 #include <gtest/gtest.h>
 
 TEST(add_test, ShouldAddTwoNumbers) {
@@ -11,7 +11,7 @@ TEST(add_test, ShouldAddTwoNumbers) {
     };
 
     auto expectedResult = SyntaxTreeNode(new Token(Token::Integer, "3"));
-    auto actual = *Add().evaluate(expression);
+    auto actual = *RecursiveEvaluation::Add().evaluate(expression);
 
     EXPECT_EQ(expectedResult == actual, true);
 }
@@ -24,7 +24,7 @@ TEST(add_test, ShouldAddDecimalNumbers) {
     };
 
     auto expectedResult = SyntaxTreeNode(new Token(Token::Decimal, "3.2"));
-    auto actual = *Add().evaluate(expression);
+    auto actual = *RecursiveEvaluation::Add().evaluate(expression);
 
     EXPECT_EQ(expectedResult == actual, true);
 }
@@ -43,7 +43,7 @@ TEST(add_test, ShouldEvaluateNestedAddition) {
     };
 
     auto expectedResult = SyntaxTreeNode(new Token(Token::Integer, "6"));
-    auto actual = *Add().evaluate(expression);
+    auto actual = *RecursiveEvaluation::Add().evaluate(expression);
 
     EXPECT_EQ(expectedResult == actual, true);
 }
@@ -60,7 +60,7 @@ TEST(add_test, ThrowExceptionOnInvalidArguments) {
     };
 
     try {
-        Add().evaluate(expression);
+        RecursiveEvaluation::Add().evaluate(expression);
     } catch (SyntaxError &error) {
         isCaught = true;
         errorMessage = error.message;
@@ -76,6 +76,6 @@ TEST(add_test, ThrowExceptionOnInvalidArguments) {
 
 TEST(add_test, ShouldReturnZeroWhenNoArgumentsAreFound) {
     auto expectedResult = SyntaxTreeNode(new Token(Token::Integer, "0"));
-    auto actualResult = *Add().evaluate({});
+    auto actualResult = *RecursiveEvaluation::Add().evaluate({});
     EXPECT_EQ(actualResult == expectedResult, true);
 }

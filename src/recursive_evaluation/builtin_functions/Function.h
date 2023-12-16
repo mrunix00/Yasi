@@ -4,12 +4,14 @@
 #include "parser/SyntaxTreeNode.h"
 #include <string>
 
-class Function {
-public:
-    virtual const std::string& getName() = 0;
-    virtual ~Function() = default;
-    virtual SyntaxTreeNode* evaluate(
-            const std::vector<SyntaxTreeNode*> &args) = 0;
-};
+namespace RecursiveEvaluation {
+    class Function {
+    public:
+        virtual const std::string& getName() = 0;
+        virtual ~Function() = default;
+        virtual SyntaxTreeNode* evaluate(
+                const std::vector<SyntaxTreeNode*> &args) = 0;
+    };
+}
 
 #endif
