@@ -6,12 +6,11 @@
 #include "utils/StdOut.h"
 #include "utils/printAST.h"
 #include "utils/printTokens.h"
+#include <fstream>
 #include <getopt.h>
 #include <iostream>
 
 int main(int argc, char *argv[]) {
-    std::cout << "Yasi v0.0.0\n";
-
     bool displayTokens = false;
     bool displayAST = false;
     StdOut *stdOut;
@@ -28,6 +27,7 @@ int main(int argc, char *argv[]) {
             default:
                 break;
         }
+        argc--;
     }
 
     if (displayTokens || displayAST) {
@@ -35,15 +35,14 @@ int main(int argc, char *argv[]) {
     }
 
     std::string userInput;
-    while (true) {
-        try {
-            userInput = readCommand();
-        } catch (ProgramExit &exception) {
-            return EXIT_SUCCESS;
-        }
+
+    if (argc > 1) {
+        std::ifstream file_stream(argv[1]);
+        std::string line;
+        while (std::getline(file_stream, line))
+            userInput += line;
 
         auto tokens = Lexer::tokenize(userInput);
-
         try {
             if (displayTokens) {
                 printTokens(stdOut, tokens);
@@ -55,12 +54,42 @@ int main(int argc, char *argv[]) {
             }
 
             auto result = RecursiveEvaluation::evaluate(ast);
-            if (result != nullptr && (*result).token->type != Token::Invalid)
-                std::cout << (*result).token->asString() << '\n';
+            if (result != nullptr && result->token->type != Token::Invalid)
+                std::cout << *result->token->asString() << '\n';
         } catch (SyntaxError &error) {
             std::cout << "SyntaxError (" << error.line
                       << ':' << error.column << "): "
                       << error.message << '\n';
+        }
+    } else {
+        std::cout << "Yasi v0.0.0\n";
+        while (true) {
+            try {
+                userInput = readCommand();
+            } catch (ProgramExit &exception) {
+                return EXIT_SUCCESS;
+            }
+
+            auto tokens = Lexer::tokenize(userInput);
+
+            try {
+                if (displayTokens) {
+                    printTokens(stdOut, tokens);
+                }
+
+                auto ast = Parser::parse(tokens);
+                if (displayAST && ast != nullptr) {
+                    print_ast(stdOut, *ast);
+                }
+
+                auto result = RecursiveEvaluation::evaluate(ast);
+                if (result != nullptr && (*result).token->type != Token::Invalid)
+                    std::cout << *result->token->asString() << '\n';
+            } catch (SyntaxError &error) {
+                std::cout << "SyntaxError (" << error.line
+                          << ':' << error.column << "): "
+                          << error.message << '\n';
+            }
         }
     }
 }
