@@ -50,13 +50,13 @@ int main(int argc, char *argv[]) {
             }
 
             auto ast = Parser::parse(tokens);
-            if (displayAST) {
+            if (displayAST && ast != nullptr) {
                 print_ast(stdOut, *ast);
             }
 
-            auto result = *RecursiveEvaluation::evaluate(ast);
-            if (result.token->type != Token::Invalid)
-                std::cout << *result.token->asString() << '\n';
+            auto result = RecursiveEvaluation::evaluate(ast);
+            if (result != nullptr && (*result).token->type != Token::Invalid)
+                std::cout << (*result).token->asString() << '\n';
         } catch (SyntaxError &error) {
             std::cout << "SyntaxError (" << error.line
                       << ':' << error.column << "): "

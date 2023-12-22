@@ -4,6 +4,11 @@
 #include "recursive_evaluation/RecursiveEvaluation.h"
 #include <gtest/gtest.h>
 
+TEST(eval_test, ShouldReturnNullWhenGivenNull) {
+    auto actualResult = RecursiveEvaluation::evaluate({});
+    EXPECT_EQ(actualResult == nullptr, true);
+}
+
 TEST(eval_test, ShouldEvaluateSimpleSumExpression) {
     auto expression = new SyntaxTreeNode(
             new Token(Token::Symbol, "+"),

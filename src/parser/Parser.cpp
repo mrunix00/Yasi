@@ -40,5 +40,6 @@ SyntaxTreeNode *Parser::parse(const std::vector<Token *> &tokens) {
         }
     }
 
+    if (nodes_stack.empty()) return nullptr;
     return nodes_stack.top().front();
 }

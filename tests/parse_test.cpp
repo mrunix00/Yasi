@@ -2,6 +2,11 @@
 #include "exceptions/SyntaxError.h"
 #include <gtest/gtest.h>
 
+TEST(parse_test, ReturnNullWhenGivenNoTokens) {
+    auto actual = Parser::parse({});
+    EXPECT_EQ(actual == nullptr, true);
+}
+
 TEST(parse_test, ParseSingleToken) {
     auto sample = {new Token(Token::Integer, "2")};
 
