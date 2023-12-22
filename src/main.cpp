@@ -4,6 +4,7 @@
 #include "read.hpp"
 #include "recursive_evaluation/RecursiveEvaluation.h"
 #include "utils/StdOut.h"
+#include "utils/break_lines.h"
 #include "utils/printAST.h"
 #include "utils/printTokens.h"
 #include <fstream>
@@ -42,24 +43,28 @@ int main(int argc, char *argv[]) {
         while (std::getline(file_stream, line))
             userInput += line;
 
-        auto tokens = Lexer::tokenize(userInput);
-        try {
-            if (displayTokens) {
-                printTokens(stdOut, tokens);
-            }
+        auto expressions = break_lines(userInput);
 
-            auto ast = Parser::parse(tokens);
-            if (displayAST && ast != nullptr) {
-                print_ast(stdOut, *ast);
-            }
+        for (auto expression: expressions) {
+            auto tokens = Lexer::tokenize(userInput);
+            try {
+                if (displayTokens) {
+                    printTokens(stdOut, tokens);
+                }
 
-            auto result = RecursiveEvaluation::evaluate(ast);
-            if (result != nullptr && result->token->type != Token::Invalid)
-                std::cout << *result->token->asString() << '\n';
-        } catch (SyntaxError &error) {
-            std::cout << "SyntaxError (" << error.line
-                      << ':' << error.column << "): "
-                      << error.message << '\n';
+                auto ast = Parser::parse(tokens);
+                if (displayAST && ast != nullptr) {
+                    print_ast(stdOut, *ast);
+                }
+
+                auto result = RecursiveEvaluation::evaluate(ast);
+                if (result != nullptr && result->token->type != Token::Invalid)
+                    std::cout << *result->token->asString() << '\n';
+            } catch (SyntaxError &error) {
+                std::cout << "SyntaxError (" << error.line
+                          << ':' << error.column << "): "
+                          << error.message << '\n';
+            }
         }
     } else {
         std::cout << "Yasi v0.0.0\n";
