@@ -45,8 +45,8 @@ int main(int argc, char *argv[]) {
 
         auto expressions = break_lines(userInput);
 
-        for (auto expression: expressions) {
-            auto tokens = Lexer::tokenize(userInput);
+        for (const auto& expression: expressions) {
+            auto tokens = Lexer::tokenize(expression);
             try {
                 if (displayTokens) {
                     printTokens(stdOut, tokens);
@@ -58,7 +58,7 @@ int main(int argc, char *argv[]) {
                 }
 
                 auto result = RecursiveEvaluation::evaluate(ast);
-                if (result != nullptr && result->token->type != Token::Invalid)
+                if (result != nullptr && (*result).token->type != Token::Invalid)
                     std::cout << *result->token->asString() << '\n';
             } catch (SyntaxError &error) {
                 std::cout << "SyntaxError (" << error.line
