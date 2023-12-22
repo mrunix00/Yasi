@@ -1,8 +1,8 @@
 #include "Lexer.h"
 #include <regex>
 
-std::vector<Token*> Lexer::tokenize(const std::string &line) {
-    std::vector<Token*> result;
+std::vector<Token *> Lexer::tokenize(const std::string &line) {
+    std::vector<Token *> result;
     std::string currentToken;
     int currentLine = 1;
     int currentLineChar = 0;
@@ -11,8 +11,9 @@ std::vector<Token*> Lexer::tokenize(const std::string &line) {
     for (auto c: line + "\n") {
         currentLineChar++;
 
-        if (c != '(' && c != ')' && (c != ' ' || currentToken[0] == '"') &&
-            (c != '"' || currentToken[0] != '"') && c != '\n') {
+        if (((c == '(' || c == ')') && currentToken[0] == '"') ||
+            (c != '(' && c != ')' && (c != ' ' || currentToken[0] == '"') &&
+                    (c != '"' || currentToken[0] != '"') && c != '\n')) {
             currentToken.append(1, c);
             continue;
         }

@@ -155,3 +155,20 @@ TEST(lex_test, ShouldLocateTokensOnMultiLineExpressions) {
     EXPECT_EQ(tokens[4]->line == 3, true);
     EXPECT_EQ(tokens[4]->column == 1, true);
 }
+
+TEST(lex_test, ShouldTokenizeAStringWithParenthesis) {
+    std::string sample = "(print \"fib(10)\")";
+
+    std::vector<Token*> expected = {
+            new Token(Token::OpenBracket, "("),
+            new Token(Token::Symbol, "print"),
+            new Token(Token::String, "\"fib(10)\""),
+            new Token(Token::ClosedBracket, ")"),
+    };
+    auto actual = Lexer::tokenize(sample);
+
+    EXPECT_EQ(expected.size() == actual.size(), true);
+    for (int i = 0; i < expected.size(); i++) {
+        EXPECT_EQ(*expected[i] == *actual[i], true);
+    }
+}
