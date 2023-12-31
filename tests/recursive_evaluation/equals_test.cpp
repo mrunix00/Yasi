@@ -3,7 +3,7 @@
 #include "recursive_evaluation/builtin_functions/equals/Equals.h"
 #include <gtest/gtest.h>
 
-TEST(equals_test, ShouldReturnTrueIfEquals) {
+TEST(recursive_evaluation_equals_test, ShouldReturnTrueIfEquals) {
     auto expected_result = SyntaxTreeNode(new Token(Token::Boolean, "#t"));
     auto actual_result = *RecursiveEvaluation::Equals().evaluate({
             new SyntaxTreeNode(new Token(Token::Integer, "10")),
@@ -12,7 +12,7 @@ TEST(equals_test, ShouldReturnTrueIfEquals) {
     EXPECT_EQ(expected_result == actual_result, true);
 }
 
-TEST(equals_test, ShouldReturnFalseIfNotEquals) {
+TEST(recursive_evaluation_equals_test, ShouldReturnFalseIfNotEquals) {
     auto expected_result = SyntaxTreeNode(new Token(Token::Boolean, "#f"));
     auto actual_result = *RecursiveEvaluation::Equals().evaluate({
             new SyntaxTreeNode(new Token(Token::Integer, "30")),
@@ -21,7 +21,7 @@ TEST(equals_test, ShouldReturnFalseIfNotEquals) {
     EXPECT_EQ(expected_result == actual_result, true);
 }
 
-TEST(equals_test, CompareMoreThanTwoArguments) {
+TEST(recursive_evaluation_equals_test, CompareMoreThanTwoArguments) {
     auto expected_result = SyntaxTreeNode(new Token(Token::Boolean, "#f"));
     auto actual_result = *RecursiveEvaluation::Equals().evaluate({
             new SyntaxTreeNode(new Token(Token::Integer, "10")),
@@ -31,7 +31,7 @@ TEST(equals_test, CompareMoreThanTwoArguments) {
     EXPECT_EQ(expected_result == actual_result, true);
 }
 
-TEST(equals_test, CompareIntegersAndDecimals) {
+TEST(recursive_evaluation_equals_test, CompareIntegersAndDecimals) {
     auto expected_result = SyntaxTreeNode(new Token(Token::Boolean, "#t"));
     auto actual_result = *RecursiveEvaluation::Equals().evaluate({
             new SyntaxTreeNode(new Token(Token::Decimal, "30.0")),

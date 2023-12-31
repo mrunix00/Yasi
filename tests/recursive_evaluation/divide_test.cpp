@@ -3,7 +3,7 @@
 #include "recursive_evaluation/builtin_functions/divide/Divide.h"
 #include <gtest/gtest.h>
 
-TEST(divide_test, ShouldDivideNumbers) {
+TEST(recursive_evaluation_divide_test, ShouldDivideNumbers) {
     auto expression = {
             new SyntaxTreeNode(new Token(Token::Integer, "8")),
             new SyntaxTreeNode(new Token(Token::Integer, "2")),
@@ -15,7 +15,7 @@ TEST(divide_test, ShouldDivideNumbers) {
     EXPECT_EQ(expectedResult == actual, true);
 }
 
-TEST(divide_test, ShouldEvaluateNestedDivision) {
+TEST(recursive_evaluation_divide_test, ShouldEvaluateNestedDivision) {
     auto expression = {
             new SyntaxTreeNode(new Token(Token::Integer, "18")),
             new SyntaxTreeNode(
@@ -32,7 +32,7 @@ TEST(divide_test, ShouldEvaluateNestedDivision) {
     EXPECT_EQ(expectedResult == actual, true);
 }
 
-TEST(divide_test, ThrowExceptionOnDivisionWithInvalidArguments) {
+TEST(recursive_evaluation_divide_test, ThrowExceptionOnDivisionWithInvalidArguments) {
     bool isCaught = false;
     std::string errorMessage;
     int line = 0;
@@ -58,7 +58,7 @@ TEST(divide_test, ThrowExceptionOnDivisionWithInvalidArguments) {
     EXPECT_EQ(column == expression[1]->token->column, true);
 }
 
-TEST(divide_test, ThrowExceptionOnZeroArguments) {
+TEST(recursive_evaluation_divide_test, ThrowExceptionOnZeroArguments) {
     bool isCaught = false;
     std::string errorMessage;
 
@@ -73,7 +73,7 @@ TEST(divide_test, ThrowExceptionOnZeroArguments) {
     EXPECT_EQ(errorMessage == "At least 1 argument was expected but none were found", true);
 }
 
-TEST(divide_test, ThrowExceptionOnDivisionByZero) {
+TEST(recursive_evaluation_divide_test, ThrowExceptionOnDivisionByZero) {
     bool isCaught = false;
     std::string errorMessage;
     int line, column;

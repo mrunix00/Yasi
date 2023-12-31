@@ -3,7 +3,7 @@
 #include "recursive_evaluation/builtin_functions/add/Add.h"
 #include <gtest/gtest.h>
 
-TEST(add_test, ShouldAddTwoNumbers) {
+TEST(recursive_evaluation_add_test, ShouldAddTwoNumbers) {
     // (+ 1 2)
     auto expression = {
             new SyntaxTreeNode(new Token(Token::Integer, "1")),
@@ -16,7 +16,7 @@ TEST(add_test, ShouldAddTwoNumbers) {
     EXPECT_EQ(expectedResult == actual, true);
 }
 
-TEST(add_test, ShouldAddDecimalNumbers) {
+TEST(recursive_evaluation_add_test, ShouldAddDecimalNumbers) {
     // (+ 1.2 2)
     auto expression = {
             new SyntaxTreeNode(new Token(Token::Decimal, "1.2")),
@@ -30,7 +30,7 @@ TEST(add_test, ShouldAddDecimalNumbers) {
 }
 
 
-TEST(add_test, ShouldEvaluateNestedAddition) {
+TEST(recursive_evaluation_add_test, ShouldEvaluateNestedAddition) {
     // (+ 1 (+ 2 3))
     auto expression = {
             new SyntaxTreeNode(new Token(Token::Integer, "1")),
@@ -48,7 +48,7 @@ TEST(add_test, ShouldEvaluateNestedAddition) {
     EXPECT_EQ(expectedResult == actual, true);
 }
 
-TEST(add_test, ThrowExceptionOnInvalidArguments) {
+TEST(recursive_evaluation_add_test, ThrowExceptionOnInvalidArguments) {
     bool isCaught = false;
     std::string errorMessage;
     int line = 0;
@@ -74,7 +74,7 @@ TEST(add_test, ThrowExceptionOnInvalidArguments) {
     EXPECT_EQ(column == expression[1]->token->column, true);
 }
 
-TEST(add_test, ShouldReturnZeroWhenNoArgumentsAreFound) {
+TEST(recursive_evaluation_add_test, ShouldReturnZeroWhenNoArgumentsAreFound) {
     auto expectedResult = SyntaxTreeNode(new Token(Token::Integer, "0"));
     auto actualResult = *RecursiveEvaluation::Add().evaluate({});
     EXPECT_EQ(actualResult == expectedResult, true);

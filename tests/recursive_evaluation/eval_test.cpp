@@ -1,15 +1,15 @@
-#include "../src/parser/SyntaxTreeNode.h"
 #include "exceptions/SyntaxError.h"
 #include "lexer/Lexer.h"
+#include "parser/SyntaxTreeNode.h"
 #include "recursive_evaluation/RecursiveEvaluation.h"
 #include <gtest/gtest.h>
 
-TEST(eval_test, ShouldReturnNullWhenGivenNull) {
+TEST(recursive_evaluation_eval_test, ShouldReturnNullWhenGivenNull) {
     auto actualResult = RecursiveEvaluation::evaluate({});
     EXPECT_EQ(actualResult == nullptr, true);
 }
 
-TEST(eval_test, ShouldEvaluateSimpleSumExpression) {
+TEST(recursive_evaluation_eval_test, ShouldEvaluateSimpleSumExpression) {
     auto expression = new SyntaxTreeNode(
             new Token(Token::Symbol, "+"),
             {
@@ -23,7 +23,7 @@ TEST(eval_test, ShouldEvaluateSimpleSumExpression) {
     EXPECT_EQ(expectedResult == actualResult, true);
 }
 
-TEST(eval_test, ShouldEvaluateSimpleMultiplication) {
+TEST(recursive_evaluation_eval_test, ShouldEvaluateSimpleMultiplication) {
     auto expression = new SyntaxTreeNode(
             new Token(Token::Symbol, "*"),
             {
@@ -37,7 +37,7 @@ TEST(eval_test, ShouldEvaluateSimpleMultiplication) {
     EXPECT_EQ(expectedResult == actualResult, true);
 }
 
-TEST(eval_test, ShouldEvaluateSimpleSubtraction) {
+TEST(recursive_evaluation_eval_test, ShouldEvaluateSimpleSubtraction) {
     auto expression = new SyntaxTreeNode(
             new Token(Token::Symbol, "-"),
             {
@@ -51,7 +51,7 @@ TEST(eval_test, ShouldEvaluateSimpleSubtraction) {
     EXPECT_EQ(expectedResult == actualResult, true);
 }
 
-TEST(eval_test, ShouldEvaluateNestedExpression) {
+TEST(recursive_evaluation_eval_test, ShouldEvaluateNestedExpression) {
     auto expression = new SyntaxTreeNode(
             new Token(Token::Symbol, "+"),
             {
@@ -69,7 +69,7 @@ TEST(eval_test, ShouldEvaluateNestedExpression) {
     EXPECT_EQ(expectedResult == actualResult, true);
 }
 
-TEST(eval_test, ShouldCallFunctionWithNoArguments) {
+TEST(recursive_evaluation_eval_test, ShouldCallFunctionWithNoArguments) {
     auto expression = new SyntaxTreeNode(new Token(Token::Symbol, "+"));
 
     auto expectedResult = SyntaxTreeNode(new Token(Token::Integer, "0"));
@@ -77,7 +77,7 @@ TEST(eval_test, ShouldCallFunctionWithNoArguments) {
     EXPECT_EQ(expectedResult == actualResult, true);
 }
 
-TEST(eval_test, ShouldThrowExceptionWhenTheExpressionIsInvalid) {
+TEST(recursive_evaluation_eval_test, ShouldThrowExceptionWhenTheExpressionIsInvalid) {
     int line, column;
     auto expression = new SyntaxTreeNode(
             new Token(Token::Symbol, "+", 1, 2),
@@ -96,7 +96,7 @@ TEST(eval_test, ShouldThrowExceptionWhenTheExpressionIsInvalid) {
     EXPECT_EQ(column == expression->children[1]->token->column, true);
 }
 
-TEST(eval_test, ShouldThrowExceptionWhenErrorLocationIsNotFoundInArguments) {
+TEST(recursive_evaluation_eval_test, ShouldThrowExceptionWhenErrorLocationIsNotFoundInArguments) {
     int line, column;
     auto expression = new SyntaxTreeNode(new Token(Token::Symbol, "/", 1, 2));
     try {

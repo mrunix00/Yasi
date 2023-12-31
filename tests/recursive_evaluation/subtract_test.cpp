@@ -3,7 +3,7 @@
 #include "recursive_evaluation/builtin_functions/subtract/Subtract.h"
 #include <gtest/gtest.h>
 
-TEST(subtract_test, ShouldSubtractNumbers) {
+TEST(recursive_evaluation_subtract_test, ShouldSubtractNumbers) {
     auto expression = {
             new SyntaxTreeNode(new Token(Token::Integer, "5")),
             new SyntaxTreeNode(new Token(Token::Integer, "2")),
@@ -15,7 +15,7 @@ TEST(subtract_test, ShouldSubtractNumbers) {
     EXPECT_EQ(expectedResult == actual, true);
 }
 
-TEST(subtract_test, ShouldSubtractDecimalNumbers) {
+TEST(recursive_evaluation_subtract_test, ShouldSubtractDecimalNumbers) {
     auto expression = {
             new SyntaxTreeNode(new Token(Token::Decimal, "5.2")),
             new SyntaxTreeNode(new Token(Token::Integer, "2")),
@@ -28,7 +28,7 @@ TEST(subtract_test, ShouldSubtractDecimalNumbers) {
 }
 
 
-TEST(subtract_test, ShouldEvaluateNestedSubtraction) {
+TEST(recursive_evaluation_subtract_test, ShouldEvaluateNestedSubtraction) {
     auto expression = {
             new SyntaxTreeNode(new Token(Token::Integer, "9")),
             new SyntaxTreeNode(
@@ -45,7 +45,7 @@ TEST(subtract_test, ShouldEvaluateNestedSubtraction) {
     EXPECT_EQ(expectedResult == actual, true);
 }
 
-TEST(subtract_test, ThrowExceptionOnInvalidArgumentsInSubtraction) {
+TEST(recursive_evaluation_subtract_test, ThrowExceptionOnInvalidArgumentsInSubtraction) {
     bool isCaught = false;
     std::string errorMessage;
     int line = 0;
@@ -71,7 +71,7 @@ TEST(subtract_test, ThrowExceptionOnInvalidArgumentsInSubtraction) {
     EXPECT_EQ(column == expression[1]->token->column, true);
 }
 
-TEST(subtract_test, ThrowExceptionOnZeroArguments) {
+TEST(recursive_evaluation_subtract_test, ThrowExceptionOnZeroArguments) {
     bool isCaught = false;
     std::string errorMessage;
 

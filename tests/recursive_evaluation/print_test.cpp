@@ -2,7 +2,7 @@
 #include "recursive_evaluation/builtin_functions/print/Print.h"
 #include <gtest/gtest.h>
 
-TEST(print_test, ShouldPrintStringArgument) {
+TEST(recursive_evaluation_print_test, ShouldPrintStringArgument) {
     const std::vector<SyntaxTreeNode *> args = {
             new SyntaxTreeNode(new Token(Token::String, "\"Hello World\"")),
     };
@@ -12,7 +12,7 @@ TEST(print_test, ShouldPrintStringArgument) {
     EXPECT_EQ(*actual->token->token == "Hello World", true);
 }
 
-TEST(print_test, ShouldPrintMultipleStringArguments) {
+TEST(recursive_evaluation_print_test, ShouldPrintMultipleStringArguments) {
     const std::vector<SyntaxTreeNode *> args = {
             new SyntaxTreeNode(new Token(Token::String, "\"Hello\"")),
             new SyntaxTreeNode(new Token(Token::String, "\" World\"")),
@@ -24,7 +24,7 @@ TEST(print_test, ShouldPrintMultipleStringArguments) {
     EXPECT_EQ(actual == expected, true);
 }
 
-TEST(print_test, ShouldPrintIntegers) {
+TEST(recursive_evaluation_print_test, ShouldPrintIntegers) {
     const std::vector<SyntaxTreeNode *> args = {
             new SyntaxTreeNode(new Token(Token::Integer, "1")),
             new SyntaxTreeNode(new Token(Token::Integer, "2")),
@@ -36,7 +36,7 @@ TEST(print_test, ShouldPrintIntegers) {
     EXPECT_EQ(actual == expected, true);
 }
 
-TEST(print_test, ShouldEvaluateOperandsBeforePrinting) {
+TEST(recursive_evaluation_print_test, ShouldEvaluateOperandsBeforePrinting) {
     const std::vector<SyntaxTreeNode *> args = {
             new SyntaxTreeNode(new Token(Token::String, "\"The result is: \"")),
             new SyntaxTreeNode(

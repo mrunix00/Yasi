@@ -2,7 +2,7 @@
 #include "recursive_evaluation/builtin_functions/cond/Cond.h"
 #include <gtest/gtest.h>
 
-TEST(cond_test, ShouldEvaluateExpressionIfConditionIsMet) {
+TEST(recursive_evaluation_cond_test, ShouldEvaluateExpressionIfConditionIsMet) {
     auto condition = new SyntaxTreeNode(
             new Token(Token::Symbol, "="),
             {
@@ -22,7 +22,7 @@ TEST(cond_test, ShouldEvaluateExpressionIfConditionIsMet) {
     EXPECT_EQ(expected_result == actual_result, true);
 }
 
-TEST(cond_test, ShouldNotEvaluateExpressionIfConditionIsNotMet) {
+TEST(recursive_evaluation_cond_test, ShouldNotEvaluateExpressionIfConditionIsNotMet) {
     auto condition = new SyntaxTreeNode(
             new Token(Token::Symbol, "="),
             {
@@ -42,7 +42,7 @@ TEST(cond_test, ShouldNotEvaluateExpressionIfConditionIsNotMet) {
     EXPECT_EQ(expected_result == actual_result, true);
 }
 
-TEST(cond_test, ShouldEvaluateMultipleConditions) {
+TEST(recursive_evaluation_cond_test, ShouldEvaluateMultipleConditions) {
     auto condition1 = new SyntaxTreeNode(
             new Token(Token::Symbol, "="),
             {
@@ -70,7 +70,7 @@ TEST(cond_test, ShouldEvaluateMultipleConditions) {
     EXPECT_EQ(expected_result == actual_result, true);
 }
 
-TEST(cond_test, ShouldEvaluateDefaultResultIfNoConditionsAreMet) {
+TEST(recursive_evaluation_cond_test, ShouldEvaluateDefaultResultIfNoConditionsAreMet) {
     auto condition1 = new SyntaxTreeNode(
             new Token(Token::Symbol, "="),
             {

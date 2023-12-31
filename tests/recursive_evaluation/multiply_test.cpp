@@ -3,7 +3,7 @@
 #include "recursive_evaluation/builtin_functions/multiply/Multiply.h"
 #include <gtest/gtest.h>
 
-TEST(multiply_test, ShouldMultiplyNumbers) {
+TEST(recursive_evaluation_multiply_test, ShouldMultiplyNumbers) {
     auto expression = {
             new SyntaxTreeNode(new Token(Token::Integer, "2")),
             new SyntaxTreeNode(new Token(Token::Integer, "2")),
@@ -32,7 +32,7 @@ TEST(add_test, ShouldEvaluateNestedMultiplication) {
     EXPECT_EQ(expectedResult == actual, true);
 }
 
-TEST(multiply_test, ShouldMultiplyDecimalNumbers) {
+TEST(recursive_evaluation_multiply_test, ShouldMultiplyDecimalNumbers) {
     // (* 1.2 2)
     auto expression = {
             new SyntaxTreeNode(new Token(Token::Decimal, "1.2")),
@@ -45,7 +45,7 @@ TEST(multiply_test, ShouldMultiplyDecimalNumbers) {
     EXPECT_EQ(expectedResult == actual, true);
 }
 
-TEST(multiply_test, ThrowExceptionOnMultiplyWithInvalidArguments) {
+TEST(recursive_evaluation_multiply_test, ThrowExceptionOnMultiplyWithInvalidArguments) {
     bool isCaught = false;
     std::string errorMessage;
     int line = 0;
@@ -71,7 +71,7 @@ TEST(multiply_test, ThrowExceptionOnMultiplyWithInvalidArguments) {
     EXPECT_EQ(column == expression[1]->token->column, true);
 }
 
-TEST(multiply_test, ShouldReturnZeroWhenNoArgumentsAreFound) {
+TEST(recursive_evaluation_multiply_test, ShouldReturnZeroWhenNoArgumentsAreFound) {
     auto expectedResult = SyntaxTreeNode(new Token(Token::Integer, "1"));
     auto actualResult = *RecursiveEvaluation::Multiply().evaluate({});
     EXPECT_EQ(actualResult == expectedResult, true);
