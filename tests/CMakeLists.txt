@@ -20,6 +20,7 @@ file(
         SRCS
         ../src/recursive_evaluation/builtin_functions/*.cpp
         ../src/recursive_evaluation/*.cpp
+        ../src/bytecode/compiler/*.cpp
         ../src/lexer/*.cpp
         ../src/parser/*.cpp
         ../src/tokens/*.cpp
