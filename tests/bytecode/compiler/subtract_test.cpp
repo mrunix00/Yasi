@@ -31,7 +31,7 @@ TEST(compiler_subtract, CompileSimpleSubtraction) {
     }
 }
 
-TEST(compiler_add, CompileLongSubtraction) {
+TEST(compiler_subtract, CompileLongSubtraction) {
     // (- 120 60 39)
     const auto expression = SyntaxTreeNode(
             new Token(Token::Symbol, "-"),
@@ -57,7 +57,7 @@ TEST(compiler_add, CompileLongSubtraction) {
     }
 }
 
-TEST(compiler_add, CompileNestedSubtraction) {
+TEST(compiler_subtract, CompileNestedSubtraction) {
     // (- (- 153 74) 43)
     const auto expression = SyntaxTreeNode(
             new Token(Token::Symbol, "-"),
