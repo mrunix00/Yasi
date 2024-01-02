@@ -6,7 +6,10 @@
 namespace Bytecode {
     class Subtract final : public Instruction {
     public:
-        Subtract() { type = InstructionType::Add; };
+        Subtract() { type = InstructionType::Subtract; };
+        bool operator==(const Instruction &instruction) const override {
+            return getType() == type;
+        }
     };
 }// namespace Bytecode
 

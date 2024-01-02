@@ -7,6 +7,9 @@ namespace Bytecode {
     class Add final : public Instruction {
     public:
         Add() { type = InstructionType::Add; };
+        bool operator==(const Instruction &instruction) const override {
+            return getType() == type;
+        }
     };
 }// namespace Bytecode
 

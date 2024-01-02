@@ -22,12 +22,12 @@ TEST(compiler_subtract, CompileSimpleSubtraction) {
             new Subtract(),
     };
 
-    std::vector<Instruction> actual_result;
-    Compiler::compile(expression, actual_result);
+    std::vector<Instruction *> actual_result;
+    Compiler().compile(expression, actual_result);
 
     EXPECT_EQ(expected_result.size(), actual_result.size());
     for (int i = 0; i < actual_result.size(); i++) {
-        EXPECT_EQ(actual_result[i], *expected_result[i]);
+        EXPECT_EQ(*actual_result[i], *expected_result[i]);
     }
 }
 
@@ -48,12 +48,12 @@ TEST(compiler_subtract, CompileLongSubtraction) {
             new Subtract(),
     };
 
-    std::vector<Instruction> actual_result;
-    Compiler::compile(expression, actual_result);
+    std::vector<Instruction *> actual_result;
+    Compiler().compile(expression, actual_result);
 
     EXPECT_EQ(expected_result.size(), actual_result.size());
     for (int i = 0; i < actual_result.size(); i++) {
-        EXPECT_EQ(actual_result[i], *expected_result[i]);
+        EXPECT_EQ(*actual_result[i], *expected_result[i]);
     }
 }
 
@@ -78,11 +78,11 @@ TEST(compiler_subtract, CompileNestedSubtraction) {
             new Subtract(),
     };
 
-    std::vector<Instruction> actual_result;
-    Compiler::compile(expression, actual_result);
+    std::vector<Instruction *> actual_result;
+    Compiler().compile(expression, actual_result);
 
     EXPECT_EQ(expected_result.size(), actual_result.size());
     for (int i = 0; i < actual_result.size(); i++) {
-        EXPECT_EQ(actual_result[i], *expected_result[i]);
+        EXPECT_EQ(*actual_result[i], *expected_result[i]);
     }
 }

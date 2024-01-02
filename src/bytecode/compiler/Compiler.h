@@ -3,11 +3,16 @@
 
 #include "bytecode/instructions/Instruction.h"
 #include "parser/SyntaxTreeNode.h"
+#include <unordered_map>
 
 namespace Bytecode {
     class Compiler {
+        std::unordered_map<std::string, size_t> definitions_table;
+        size_t counter;
+
     public:
-        static void compile(const SyntaxTreeNode &, std::vector<Instruction> &);
+        Compiler() : counter(0){};
+        void compile(const SyntaxTreeNode &, std::vector<Instruction *> &);
     };
-}
+}// namespace Bytecode
 #endif

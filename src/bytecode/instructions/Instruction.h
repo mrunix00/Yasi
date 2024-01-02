@@ -3,9 +3,12 @@
 
 namespace Bytecode {
     enum class InstructionType {
-        LoadLiteral,
-        Add,
         Unknown,
+        LoadLiteral,
+        Load,
+        Add,
+        Subtract,
+        Store,
     };
 
     class Instruction {
@@ -15,9 +18,7 @@ namespace Bytecode {
     public:
         Instruction() : type(InstructionType::Unknown){};
         [[nodiscard]] InstructionType getType() const { return type; };
-        virtual bool operator==(const Instruction &instruction) const {
-            return type == instruction.type;
-        }
+        virtual bool operator==(const Instruction &instruction) const = 0;
     };
 }// namespace Bytecode
 #endif
