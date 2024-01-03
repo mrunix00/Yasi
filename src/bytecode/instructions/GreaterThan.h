@@ -6,7 +6,7 @@
 namespace Bytecode {
     class GreaterThan final : public Instruction {
     public:
-        GreaterThan() { type = InstructionType::Equals; };
+        GreaterThan() { type = InstructionType::GreaterThan; };
         [[nodiscard]] std::string toString() const override { return "GreaterThan"; }
         bool operator==(const Instruction &instruction) const override {
             return getType() == type;

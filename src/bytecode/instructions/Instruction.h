@@ -11,6 +11,8 @@ namespace Bytecode {
         Subtract,
         Store,
         Equals,
+        GreaterThan,
+        LessThan,
     };
 
     class Instruction {

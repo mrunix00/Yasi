@@ -1,6 +1,7 @@
 #include "bytecode/instructions/Add.h"
 #include "bytecode/instructions/Equals.h"
 #include "bytecode/instructions/GreaterThan.h"
+#include "bytecode/instructions/LessThan.h"
 #include "bytecode/instructions/Load.h"
 #include "bytecode/instructions/LoadLiteral.h"
 #include "bytecode/instructions/Store.h"
@@ -54,6 +55,13 @@ TEST(instruction_to_string, equals) {
 TEST(instruction_to_string, greater) {
     const auto instruction = GreaterThan();
     const auto expected_result = "GreaterThan";
+    const auto actual_result = instruction.toString();
+    EXPECT_EQ(expected_result, actual_result);
+}
+
+TEST(instruction_to_string, less) {
+    const auto instruction = LessThan();
+    const auto expected_result = "LessThan";
     const auto actual_result = instruction.toString();
     EXPECT_EQ(expected_result, actual_result);
 }

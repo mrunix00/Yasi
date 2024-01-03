@@ -2,6 +2,7 @@
 #include "bytecode/instructions/Add.h"
 #include "bytecode/instructions/Equals.h"
 #include "bytecode/instructions/GreaterThan.h"
+#include "bytecode/instructions/LessThan.h"
 #include "bytecode/instructions/Load.h"
 #include "bytecode/instructions/LoadLiteral.h"
 #include "bytecode/instructions/Store.h"
@@ -49,6 +50,12 @@ void Bytecode::Compiler::compile(
                 }
             } else if (*tree.token->token == ">") {
                 result.push_back(new GreaterThan());
+                for (int i = 2; i < tree.children.size(); i++) {
+                    compile(*tree.children[i], result);
+                    result.push_back(new GreaterThan());
+                }
+            } else if (*tree.token->token == "<") {
+                result.push_back(new LessThan());
                 for (int i = 2; i < tree.children.size(); i++) {
                     compile(*tree.children[i], result);
                     result.push_back(new GreaterThan());
