@@ -5,6 +5,7 @@
 #include "bytecode/instructions/LessThan.h"
 #include "bytecode/instructions/Load.h"
 #include "bytecode/instructions/LoadLiteral.h"
+#include "bytecode/instructions/Multiply.h"
 #include "bytecode/instructions/Store.h"
 #include "bytecode/instructions/Subtract.h"
 
@@ -35,6 +36,12 @@ void Bytecode::Compiler::compile(
                 for (int i = 2; i < tree.children.size(); i++) {
                     compile(*tree.children[i], result);
                     result.push_back(new Add());
+                }
+            } else if (*tree.token->token == "*") {
+                result.push_back(new Add());
+                for (int i = 2; i < tree.children.size(); i++) {
+                    compile(*tree.children[i], result);
+                    result.push_back(new Multiply());
                 }
             } else if (*tree.token->token == "-") {
                 result.push_back(new Subtract());

@@ -4,6 +4,7 @@
 #include "bytecode/instructions/LessThan.h"
 #include "bytecode/instructions/Load.h"
 #include "bytecode/instructions/LoadLiteral.h"
+#include "bytecode/instructions/Multiply.h"
 #include "bytecode/instructions/Store.h"
 #include "bytecode/instructions/Subtract.h"
 #include <gtest/gtest.h>
@@ -20,6 +21,13 @@ TEST(instruction_to_string, add) {
 TEST(instruction_to_string, subtract) {
     const auto instruction = Subtract();
     const auto expected_result = "Subtract";
+    const auto actual_result = instruction.toString();
+    EXPECT_EQ(expected_result, actual_result);
+}
+
+TEST(instruction_to_string, multiply) {
+    const auto instruction = Multiply();
+    const auto expected_result = "Multiply";
     const auto actual_result = instruction.toString();
     EXPECT_EQ(expected_result, actual_result);
 }

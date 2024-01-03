@@ -13,6 +13,7 @@ namespace Bytecode {
         Equals,
         GreaterThan,
         LessThan,
+        Multiply,
     };
 
     class Instruction {
