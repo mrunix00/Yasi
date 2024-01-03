@@ -4,7 +4,7 @@
 #include "Instruction.h"
 
 namespace Bytecode {
-    class Equals : public Instruction {
+    class Equals final : public Instruction {
     public:
         Equals() { type = InstructionType::Equals; };
         [[nodiscard]] std::string toString() const override { return "Equals"; }
