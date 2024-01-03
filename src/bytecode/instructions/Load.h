@@ -10,6 +10,9 @@ namespace Bytecode {
 
     public:
         explicit Load(size_t reg) : reg(reg) { type = InstructionType::Load; };
+        [[nodiscard]] std::string toString() const override {
+            return "Load $r" + std::to_string(reg);
+        }
         bool operator==(const Instruction &instruction) const override {
             return getType() == type && ((Load *) &instruction)->reg == reg;
         }

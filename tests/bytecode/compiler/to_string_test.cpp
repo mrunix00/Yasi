@@ -1,0 +1,43 @@
+#include "bytecode/instructions/Add.h"
+#include "bytecode/instructions/Load.h"
+#include "bytecode/instructions/LoadLiteral.h"
+#include "bytecode/instructions/Store.h"
+#include "bytecode/instructions/Subtract.h"
+#include <gtest/gtest.h>
+
+using namespace Bytecode;
+
+TEST(instruction_to_string, add) {
+    const auto instruction = Add();
+    const auto expected_result = "Add";
+    const auto actual_result = instruction.toString();
+    EXPECT_EQ(expected_result, actual_result);
+}
+
+TEST(instruction_to_string, subtract) {
+    const auto instruction = Subtract();
+    const auto expected_result = "Subtract";
+    const auto actual_result = instruction.toString();
+    EXPECT_EQ(expected_result, actual_result);
+}
+
+TEST(instruction_to_string, load) {
+    const auto instruction = Load(1);
+    const auto expected_result = "Load $r1";
+    const auto actual_result = instruction.toString();
+    EXPECT_EQ(expected_result, actual_result);
+}
+
+TEST(instruction_to_string, load_literal) {
+    const auto instruction = LoadLiteral(69);
+    const auto expected_result = "LoadLiteral d69";
+    const auto actual_result = instruction.toString();
+    EXPECT_EQ(expected_result, actual_result);
+}
+
+TEST(instruction_to_string, store) {
+    const auto instruction = Store(12);
+    const auto expected_result = "Store $r12";
+    const auto actual_result = instruction.toString();
+    EXPECT_EQ(expected_result, actual_result);
+}
