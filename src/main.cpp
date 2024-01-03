@@ -1,3 +1,5 @@
+#include "bytecode/compiler/Compiler.h"
+#include "bytecode/instructions/Instruction.h"
 #include "exceptions/SyntaxError.h"
 #include "lexer/Lexer.h"
 #include "parser/Parser.h"
@@ -14,13 +16,14 @@
 struct options {
     bool displayTokens = false;
     bool displayAST = false;
+    bool dumpBytecode = false;
 };
 
 void exec_program(const std::string &program, struct options opts) {
     static auto *stdOut = new StdOut;
     auto expressions = break_lines(program);
 
-    for (const auto& expression: expressions) {
+    for (const auto &expression: expressions) {
         auto tokens = Lexer::tokenize(expression);
         try {
             if (opts.displayTokens) {
@@ -32,9 +35,18 @@ void exec_program(const std::string &program, struct options opts) {
                 print_ast(stdOut, *ast);
             }
 
-            auto result = RecursiveEvaluation::evaluate(ast);
-            if (result != nullptr && (*result).token->type != Token::Invalid)
-                std::cout << *result->token->asString() << '\n';
+            if (opts.dumpBytecode && ast != nullptr) {
+                std::vector<Bytecode::Instruction *> instructions;
+                static Bytecode::Compiler compiler;
+                compiler.compile(*ast, instructions);
+                for (auto instruction: instructions) {
+                    std::cout << instruction->toString() << '\n';
+                }
+            } else {
+                auto result = RecursiveEvaluation::evaluate(ast);
+                if (result != nullptr && (*result).token->type != Token::Invalid)
+                    std::cout << *result->token->asString() << '\n';
+            }
         } catch (SyntaxError &error) {
             std::cout << "SyntaxError (" << error.line
                       << ':' << error.column << "): "
@@ -47,7 +59,7 @@ int main(int argc, char *argv[]) {
     struct options opts;
 
     int opt;
-    while ((opt = getopt(argc, argv, "at")) != -1) {
+    while ((opt = getopt(argc, argv, "atd")) != -1) {
         switch (opt) {
             case 't':
                 opts.displayTokens = true;
@@ -55,11 +67,15 @@ int main(int argc, char *argv[]) {
             case 'a':
                 opts.displayAST = true;
                 break;
+            case 'd':
+                opts.dumpBytecode = true;
+                break;
             default:
                 break;
         }
-        argc--;
     }
+    argc -= optind;
+    argv += optind;
 
     std::string userInput;
 
