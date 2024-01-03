@@ -1,5 +1,6 @@
 #include "Compiler.h"
 #include "bytecode/instructions/Add.h"
+#include "bytecode/instructions/DIvide.h"
 #include "bytecode/instructions/Equals.h"
 #include "bytecode/instructions/GreaterThan.h"
 #include "bytecode/instructions/LessThan.h"
@@ -48,6 +49,12 @@ void Bytecode::Compiler::compile(
                 for (int i = 2; i < tree.children.size(); i++) {
                     compile(*tree.children[i], result);
                     result.push_back(new Subtract());
+                }
+            } else if (*tree.token->token == "/") {
+                result.push_back(new Divide());
+                for (int i = 2; i < tree.children.size(); i++) {
+                    compile(*tree.children[i], result);
+                    result.push_back(new Divide());
                 }
             } else if (*tree.token->token == "=") {
                 result.push_back(new Equals());

@@ -1,4 +1,5 @@
 #include "bytecode/instructions/Add.h"
+#include "bytecode/instructions/DIvide.h"
 #include "bytecode/instructions/Equals.h"
 #include "bytecode/instructions/GreaterThan.h"
 #include "bytecode/instructions/LessThan.h"
@@ -28,6 +29,13 @@ TEST(instruction_to_string, subtract) {
 TEST(instruction_to_string, multiply) {
     const auto instruction = Multiply();
     const auto expected_result = "Multiply";
+    const auto actual_result = instruction.toString();
+    EXPECT_EQ(expected_result, actual_result);
+}
+
+TEST(instruction_to_string, divide) {
+    const auto instruction = Divide();
+    const auto expected_result = "Divide";
     const auto actual_result = instruction.toString();
     EXPECT_EQ(expected_result, actual_result);
 }

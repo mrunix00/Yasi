@@ -9,11 +9,12 @@ namespace Bytecode {
         Load,
         Add,
         Subtract,
+        Divide,
+        Multiply,
         Store,
         Equals,
         GreaterThan,
         LessThan,
-        Multiply,
     };
 
     class Instruction {
