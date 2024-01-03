@@ -1,5 +1,6 @@
 #include "Compiler.h"
 #include "bytecode/instructions/Add.h"
+#include "bytecode/instructions/Equals.h"
 #include "bytecode/instructions/Load.h"
 #include "bytecode/instructions/LoadLiteral.h"
 #include "bytecode/instructions/Store.h"
@@ -38,6 +39,12 @@ void Bytecode::Compiler::compile(
                 for (int i = 2; i < tree.children.size(); i++) {
                     compile(*tree.children[i], result);
                     result.push_back(new Subtract());
+                }
+            } else if (*tree.token->token == "=") {
+                result.push_back(new Equals());
+                for (int i = 2; i < tree.children.size(); i++) {
+                    compile(*tree.children[i], result);
+                    result.push_back(new Equals());
                 }
             }
             break;

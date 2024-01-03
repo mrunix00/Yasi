@@ -1,4 +1,5 @@
 #include "bytecode/instructions/Add.h"
+#include "bytecode/instructions/Equals.h"
 #include "bytecode/instructions/Load.h"
 #include "bytecode/instructions/LoadLiteral.h"
 #include "bytecode/instructions/Store.h"
@@ -38,6 +39,13 @@ TEST(instruction_to_string, load_literal) {
 TEST(instruction_to_string, store) {
     const auto instruction = Store(12);
     const auto expected_result = "Store $r12";
+    const auto actual_result = instruction.toString();
+    EXPECT_EQ(expected_result, actual_result);
+}
+
+TEST(instruction_to_string, equals) {
+    const auto instruction = Equals();
+    const auto expected_result = "Equals";
     const auto actual_result = instruction.toString();
     EXPECT_EQ(expected_result, actual_result);
 }

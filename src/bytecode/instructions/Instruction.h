@@ -10,6 +10,7 @@ namespace Bytecode {
         Add,
         Subtract,
         Store,
+        Equals,
     };
 
     class Instruction {
