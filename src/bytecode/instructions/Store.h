@@ -16,7 +16,7 @@ namespace Bytecode {
             return "Store $r" + std::to_string(reg);
         }
         bool operator==(const Instruction &instruction) const override {
-            return getType() == type && ((Store *) &instruction)->reg == reg;
+            return instruction.type == type && ((Store *) &instruction)->reg == reg;
         }
     };
 }// namespace Bytecode

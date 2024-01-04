@@ -9,7 +9,7 @@ namespace Bytecode {
         LessThan() { type = InstructionType::LessThan; };
         [[nodiscard]] std::string toString() const override { return "LessThan"; }
         bool operator==(const Instruction &instruction) const override {
-            return getType() == type;
+            return instruction.type == type;
         }
     };
 }

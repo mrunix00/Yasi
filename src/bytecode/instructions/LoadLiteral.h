@@ -16,7 +16,7 @@ namespace Bytecode {
             return "LoadLiteral d" + std::to_string(value);
         }
         bool operator==(const Instruction &instruction) const override {
-            return getType() == type && ((LoadLiteral *) &instruction)->value == value;
+            return instruction.type == type && ((LoadLiteral *) &instruction)->value == value;
         }
     };
 }// namespace Bytecode

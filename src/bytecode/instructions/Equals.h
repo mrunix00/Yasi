@@ -9,7 +9,7 @@ namespace Bytecode {
         Equals() { type = InstructionType::Equals; };
         [[nodiscard]] std::string toString() const override { return "Equals"; }
         bool operator==(const Instruction &instruction) const override {
-            return getType() == type;
+            return instruction.type == type;
         }
     };
 }

@@ -18,12 +18,9 @@ namespace Bytecode {
     };
 
     class Instruction {
-    protected:
-        InstructionType type;
-
     public:
+        InstructionType type;
         Instruction() : type(InstructionType::Unknown){};
-        [[nodiscard]] InstructionType getType() const { return type; };
         [[nodiscard]] virtual std::string toString() const = 0;
         virtual bool operator==(const Instruction &instruction) const = 0;
     };
