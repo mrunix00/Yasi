@@ -39,7 +39,7 @@ void Bytecode::Compiler::compile(
                     result.push_back(new Add());
                 }
             } else if (*tree.token->token == "*") {
-                result.push_back(new Add());
+                result.push_back(new Multiply());
                 for (int i = 2; i < tree.children.size(); i++) {
                     compile(*tree.children[i], result);
                     result.push_back(new Multiply());
@@ -72,7 +72,7 @@ void Bytecode::Compiler::compile(
                 result.push_back(new LessThan());
                 for (int i = 2; i < tree.children.size(); i++) {
                     compile(*tree.children[i], result);
-                    result.push_back(new GreaterThan());
+                    result.push_back(new LessThan());
                 }
             }
             break;
