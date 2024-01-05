@@ -2,6 +2,7 @@
 #define YASI_INSTRUCTION_H
 
 #include <string>
+
 namespace Bytecode {
     enum class InstructionType {
         Unknown,

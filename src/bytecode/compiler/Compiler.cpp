@@ -13,6 +13,16 @@
 void Bytecode::Compiler::compile(
         const SyntaxTreeNode &tree,
         std::vector<Instruction *> &result) {
+    std::unordered_map<std::string, Compilable *> builtin_instructions = {
+            {"+", new Add},
+            {"*", new Multiply},
+            {"/", new Divide},
+            {"-", new Subtract},
+            {"=", new Equals},
+            {"<", new LessThan},
+            {">", new GreaterThan},
+    };
+
     switch (tree.token->type) {
         case Token::Integer:
             result.push_back(new LoadLiteral(tree.token->asInteger()));
@@ -29,51 +39,11 @@ void Bytecode::Compiler::compile(
                 return;
             }
 
-            compile(*tree.children[0], result);
-            compile(*tree.children[1], result);
-
-            if (*tree.token->token == "+") {
-                result.push_back(new Add());
-                for (int i = 2; i < tree.children.size(); i++) {
-                    compile(*tree.children[i], result);
-                    result.push_back(new Add());
-                }
-            } else if (*tree.token->token == "*") {
-                result.push_back(new Multiply());
-                for (int i = 2; i < tree.children.size(); i++) {
-                    compile(*tree.children[i], result);
-                    result.push_back(new Multiply());
-                }
-            } else if (*tree.token->token == "-") {
-                result.push_back(new Subtract());
-                for (int i = 2; i < tree.children.size(); i++) {
-                    compile(*tree.children[i], result);
-                    result.push_back(new Subtract());
-                }
-            } else if (*tree.token->token == "/") {
-                result.push_back(new Divide());
-                for (int i = 2; i < tree.children.size(); i++) {
-                    compile(*tree.children[i], result);
-                    result.push_back(new Divide());
-                }
-            } else if (*tree.token->token == "=") {
-                result.push_back(new Equals());
-                for (int i = 2; i < tree.children.size(); i++) {
-                    compile(*tree.children[i], result);
-                    result.push_back(new Equals());
-                }
-            } else if (*tree.token->token == ">") {
-                result.push_back(new GreaterThan());
-                for (int i = 2; i < tree.children.size(); i++) {
-                    compile(*tree.children[i], result);
-                    result.push_back(new GreaterThan());
-                }
-            } else if (*tree.token->token == "<") {
-                result.push_back(new LessThan());
-                for (int i = 2; i < tree.children.size(); i++) {
-                    compile(*tree.children[i], result);
-                    result.push_back(new LessThan());
-                }
+            if (builtin_instructions.find(*tree.token->token) != builtin_instructions.end()) {
+                builtin_instructions[*tree.token->token]->compile(
+                        tree.children,
+                        *this,
+                        result);
             }
             break;
         default:
