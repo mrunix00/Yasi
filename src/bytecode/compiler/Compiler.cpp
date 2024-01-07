@@ -48,3 +48,11 @@ void Bytecode::Compiler::compile(
             break;
     }
 }
+
+void Bytecode::Compiler::declare(const std::string& name) {
+    definitions_table[name] = counter++;
+}
+
+size_t Bytecode::Compiler::find(const std::string& name) {
+    return definitions_table[name];
+}
