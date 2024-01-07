@@ -1,5 +1,6 @@
 #include "Compiler.h"
 #include "bytecode/builtin_functions/AddFunction.h"
+#include "bytecode/builtin_functions/DefineFunction.h"
 #include "bytecode/builtin_functions/DivideFunction.h"
 #include "bytecode/builtin_functions/EqualsFunction.h"
 #include "bytecode/builtin_functions/Function.h"
@@ -23,6 +24,7 @@ void Bytecode::Compiler::compile(
             {"=", new BuiltinFunctions::Equals},
             {"<", new BuiltinFunctions::LessThan},
             {">", new BuiltinFunctions::GreaterThan},
+            {"define", new BuiltinFunctions::Define},
     };
 
     switch (tree.token->type) {
@@ -32,12 +34,6 @@ void Bytecode::Compiler::compile(
         case Token::Symbol:
             if (definitions_table.find(*tree.token->token) != definitions_table.end()) {
                 result.push_back(new Load(definitions_table[*tree.token->token]));
-                return;
-            }
-            if (*tree.token->token == "define") {
-                compile(*tree.children[1], result);
-                definitions_table[*tree.children[0]->token->token] = counter;
-                result.push_back(new Store(counter++));
                 return;
             }
 

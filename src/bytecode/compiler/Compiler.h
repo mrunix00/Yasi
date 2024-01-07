@@ -7,12 +7,12 @@
 
 namespace Bytecode {
     class Compiler {
-        std::unordered_map<std::string, size_t> definitions_table;
-        size_t counter;
 
     public:
         Compiler() : counter(0){};
         void compile(const SyntaxTreeNode &, std::vector<Instruction *> &);
+        std::unordered_map<std::string, size_t> definitions_table;
+        size_t counter;
     };
 }// namespace Bytecode
 #endif
