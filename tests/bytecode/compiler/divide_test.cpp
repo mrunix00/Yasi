@@ -1,5 +1,5 @@
 #include "bytecode/compiler/Compiler.h"
-#include "bytecode/instructions/DIvide.h"
+#include "bytecode/instructions/Divide.h"
 #include "bytecode/instructions/Instruction.h"
 #include "bytecode/instructions/LoadLiteral.h"
 #include "parser/SyntaxTreeNode.h"

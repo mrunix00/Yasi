@@ -1,5 +1,5 @@
 #include "bytecode/instructions/Add.h"
-#include "bytecode/instructions/DIvide.h"
+#include "bytecode/instructions/Divide.h"
 #include "bytecode/instructions/Equals.h"
 #include "bytecode/instructions/GreaterThan.h"
 #include "bytecode/instructions/LessThan.h"

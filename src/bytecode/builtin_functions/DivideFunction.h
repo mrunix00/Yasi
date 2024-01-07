@@ -2,7 +2,7 @@
 #define YASI_DIVIDE_FUNCTION_H
 
 #include "Function.h"
-#include "bytecode/instructions/DIvide.h"
+#include "bytecode/instructions/Divide.h"
 
 namespace Bytecode::BuiltinFunctions {
     class Divide : public Function {
