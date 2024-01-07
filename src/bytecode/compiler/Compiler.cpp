@@ -1,26 +1,28 @@
 #include "Compiler.h"
+#include "bytecode/builtin_functions/AddFunction.h"
+#include "bytecode/builtin_functions/DivideFunction.h"
+#include "bytecode/builtin_functions/EqualsFunction.h"
+#include "bytecode/builtin_functions/Function.h"
+#include "bytecode/builtin_functions/GreaterThanFunction.h"
+#include "bytecode/builtin_functions/LessThanFunction.h"
+#include "bytecode/builtin_functions/MultiplyFunction.h"
+#include "bytecode/builtin_functions/SubtractFunction.h"
 #include "bytecode/instructions/Add.h"
-#include "bytecode/instructions/DIvide.h"
-#include "bytecode/instructions/Equals.h"
-#include "bytecode/instructions/GreaterThan.h"
-#include "bytecode/instructions/LessThan.h"
 #include "bytecode/instructions/Load.h"
 #include "bytecode/instructions/LoadLiteral.h"
-#include "bytecode/instructions/Multiply.h"
 #include "bytecode/instructions/Store.h"
-#include "bytecode/instructions/Subtract.h"
 
 void Bytecode::Compiler::compile(
         const SyntaxTreeNode &tree,
         std::vector<Instruction *> &result) {
-    std::unordered_map<std::string, Compilable *> builtin_instructions = {
-            {"+", new Add},
-            {"*", new Multiply},
-            {"/", new Divide},
-            {"-", new Subtract},
-            {"=", new Equals},
-            {"<", new LessThan},
-            {">", new GreaterThan},
+    std::unordered_map<std::string, BuiltinFunctions::Function *> builtin_instructions = {
+            {"+", new BuiltinFunctions::Add},
+            {"*", new BuiltinFunctions::Multiply},
+            {"/", new BuiltinFunctions::Divide},
+            {"-", new BuiltinFunctions::Subtract},
+            {"=", new BuiltinFunctions::Equals},
+            {"<", new BuiltinFunctions::LessThan},
+            {">", new BuiltinFunctions::GreaterThan},
     };
 
     switch (tree.token->type) {

@@ -1,4 +1,4 @@
-#ifndef YASI_ADD_H
+#ifndef YASI_ADD_FUNCTION_H
 #define YASI_ADD_H
 
 #include "parser/SyntaxTreeNode.h"

@@ -14,12 +14,5 @@ namespace Bytecode {
         Compiler() : counter(0){};
         void compile(const SyntaxTreeNode &, std::vector<Instruction *> &);
     };
-
-    class Compilable {
-    public:
-        virtual void compile(const std::vector<SyntaxTreeNode *> &args,
-                     Compiler &compiler,
-                     std::vector<Instruction *> &result) = 0;
-    };
 }// namespace Bytecode
 #endif

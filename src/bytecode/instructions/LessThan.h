@@ -6,24 +6,12 @@
 #include "parser/SyntaxTreeNode.h"
 
 namespace Bytecode {
-    class LessThan final : public Instruction, public Compilable {
+    class LessThan final : public Instruction {
     public:
         LessThan() { type = InstructionType::LessThan; };
         [[nodiscard]] std::string toString() const override { return "LessThan"; }
         bool operator==(const Instruction &instruction) const override {
             return instruction.type == type;
-        }
-        void compile(
-                const std::vector<SyntaxTreeNode *> &args,
-                Compiler &compiler,
-                std::vector<Instruction *> &result) override {
-            compiler.compile(*args[0], result);
-            compiler.compile(*args[1], result);
-            result.push_back(new LessThan());
-            for (int i = 2; i < args.size(); i++) {
-                compiler.compile(*args[i], result);
-                result.push_back(new LessThan());
-            }
         }
     };
 }// namespace Bytecode
