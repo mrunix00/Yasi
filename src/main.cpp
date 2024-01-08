@@ -79,8 +79,8 @@ int main(int argc, char *argv[]) {
 
     std::string userInput;
 
-    if (argc > 1) {
-        std::ifstream file_stream(argv[1]);
+    if (argc > 0) {
+        std::ifstream file_stream(argv[0]);
         std::string line;
         while (std::getline(file_stream, line))
             userInput += line;
