@@ -38,5 +38,5 @@ cmake .. && cmake --build .
 * [x] Conditional statements
 * [x] Functions
 * [ ] Lambda Functions
-* [ ] Compilation to Bytecode
+* [ ] Compilation to Bytecode (WIP)
 * [ ] Garbage Collection
