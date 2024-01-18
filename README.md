@@ -26,3 +26,17 @@ mkdir build && cd build/
 cmake .. && cmake --build .
 ./Yasi
 ```
+
+## Roadmap
+
+* [x] REPL Loop
+* [x] File inputs
+* [x] Basic arithmetic operations (+-*/)
+* [x] Print statement
+* [ ] Input Statement
+* [x] Variables
+* [x] Conditional statements
+* [x] Functions
+* [ ] Lambda Functions
+* [ ] Compilation to Bytecode
+* [ ] Garbage Collection
