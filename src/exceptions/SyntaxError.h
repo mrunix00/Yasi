@@ -11,9 +11,9 @@ public:
     int column = 0;
     std::string message;
 
-    SyntaxError(std::string message) : message(std::move(message)) {}
+    explicit SyntaxError(std::string message) : message(std::move(message)) {}
     SyntaxError(std::string message, int line, int column)
-        : message(message), line(line), column(column) {}
+        : message(std::move(message)), line(line), column(column) {}
 };
 
 #endif
