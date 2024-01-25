@@ -16,6 +16,7 @@ namespace Bytecode {
         Equals,
         GreaterThan,
         LessThan,
+        Call,
     };
 
     class Instruction {

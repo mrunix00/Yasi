@@ -9,14 +9,15 @@
 namespace Bytecode {
     class Compiler {
         std::unordered_map<std::string, size_t> definitions_table;
-        size_t counter;
+        std::unordered_map<std::string, size_t> segments_table;
 
     public:
         std::vector<Segment *> program_segments;
-        Compiler() : counter(0) { program_segments.push_back(new Segment({})); };
+        Compiler() { program_segments.push_back(new Segment({})); };
         void compile(const SyntaxTreeNode &, std::vector<Instruction *> &);
         void compile(const SyntaxTreeNode &);
-        void declare(const std::string &);
+        void declare_variable(const std::string &);
+        void declare_function(const std::string &);
         size_t find(const std::string &);
     };
 }// namespace Bytecode
