@@ -49,6 +49,10 @@ void Bytecode::Compiler::compile(
     }
 }
 
+void Bytecode::Compiler::compile(const SyntaxTreeNode &tree) {
+    compile(tree, program_segments[0]->instructions);
+}
+
 void Bytecode::Compiler::declare(const std::string& name) {
     definitions_table[name] = counter++;
 }
@@ -56,3 +60,4 @@ void Bytecode::Compiler::declare(const std::string& name) {
 size_t Bytecode::Compiler::find(const std::string& name) {
     return definitions_table[name];
 }
+
