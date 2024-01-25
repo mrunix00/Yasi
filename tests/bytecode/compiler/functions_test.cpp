@@ -27,22 +27,22 @@ TEST(compiler_functions, SimpleFunctionDefinition) {
                             }),
             });
 
-    std::vector<Segment *> expected_result = {
-            new Segment({}),
-            new Segment({
-                    new Load(0),
-                    new Load(0),
-                    new Multiply(),
-            }),
-    };
+    auto expected_result = Program(
+            {{"square", 1}},
+            {{"x", 0}},
+            {
+                    new Segment({}),
+                    new Segment({
+                            new Load(0),
+                            new Load(0),
+                            new Multiply(),
+                    }),
+            });
 
     Compiler compiler = Compiler();
     compiler.compile(expression);
 
-    EXPECT_EQ(expected_result.size(), compiler.program_segments.size());
-    for (int i = 0; i < compiler.program_segments.size(); i++) {
-        EXPECT_EQ(*compiler.program_segments[i], *expected_result[i]);
-    }
+    EXPECT_EQ(expected_result == compiler.program, true);
 }
 
 TEST(compiler_functions, FunctionDefinitionWithMultipleArgs) {
@@ -64,22 +64,22 @@ TEST(compiler_functions, FunctionDefinitionWithMultipleArgs) {
                             }),
             });
 
-    std::vector<Segment *> expected_result = {
-            new Segment({}),
-            new Segment({
-                    new Load(0),
-                    new Load(1),
-                    new Add(),
-            }),
-    };
+    auto expected_result = Program(
+            {{"add", 1}},
+            {{"x", 0}, {"y", 1}},
+            {
+                    new Segment({}),
+                    new Segment({
+                            new Load(0),
+                            new Load(1),
+                            new Add(),
+                    }),
+            });
 
     Compiler compiler = Compiler();
     compiler.compile(expression);
 
-    EXPECT_EQ(expected_result.size(), compiler.program_segments.size());
-    for (int i = 0; i < compiler.program_segments.size(); i++) {
-        EXPECT_EQ(*compiler.program_segments[i], *expected_result[i]);
-    }
+    EXPECT_EQ(expected_result == compiler.program, true);
 }
 
 TEST(compiler_functions, SimpleFunctionCall) {
@@ -107,24 +107,24 @@ TEST(compiler_functions, SimpleFunctionCall) {
                     new SyntaxTreeNode(new Token(Token::Integer, "15")),
             });
 
-    std::vector<Segment *> expected_result = {
-            new Segment({
-                    new LoadLiteral(15),
-                    new Call(1),
-            }),
-            new Segment({
-                    new Load(0),
-                    new Load(0),
-                    new Multiply(),
-            }),
-    };
+    auto expected_result = Program(
+            {{"square", 1}},
+            {{"x", 0}},
+            {
+                    new Segment({
+                            new LoadLiteral(15),
+                            new Call(1),
+                    }),
+                    new Segment({
+                            new Load(0),
+                            new Load(0),
+                            new Multiply(),
+                    }),
+            });
 
     Compiler compiler = Compiler();
     compiler.compile(function_definition);
     compiler.compile(function_call);
 
-    EXPECT_EQ(expected_result.size(), compiler.program_segments.size());
-    for (int i = 0; i < compiler.program_segments.size(); i++) {
-        EXPECT_EQ(*compiler.program_segments[i], *expected_result[i]);
-    }
+    EXPECT_EQ(expected_result == compiler.program, true);
 }

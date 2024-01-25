@@ -34,15 +34,15 @@ void Bytecode::Compiler::compile(
             break;
         case Token::Symbol:
             if (tree.children.empty()) {
-                if (definitions_table.find(*tree.token->token) != definitions_table.end()) {
-                    result.push_back(new Load(definitions_table[*tree.token->token]));
+                if (program.find_variable(*tree.token->token) != -1) {
+                    result.push_back(new Load(program.find_variable(*tree.token->asString())));
                     return;
                 }
             } else {
-                if (segments_table.find(*tree.token->asString()) != segments_table.end()) {
+                if (program.find_function(*tree.token->token) != -1) {
                     for (const auto &argument: tree.children)
                         compile(*argument, result);
-                    result.push_back(new Call(segments_table[*tree.token->asString()]));
+                    result.push_back(new Call(program.find_function(*tree.token->asString())));
                     return;
                 }
             }
@@ -61,17 +61,5 @@ void Bytecode::Compiler::compile(
 }
 
 void Bytecode::Compiler::compile(const SyntaxTreeNode &tree) {
-    compile(tree, program_segments[0]->instructions);
-}
-
-void Bytecode::Compiler::declare_variable(const std::string &name) {
-    definitions_table[name] = definitions_table.size();
-}
-
-size_t Bytecode::Compiler::find(const std::string &name) {
-    return definitions_table[name];
-}
-
-void Bytecode::Compiler::declare_function(const std::string &name) {
-    segments_table[name] = segments_table.size() + 1;
+    Bytecode::Compiler::compile(tree, program.segments[0]->instructions);
 }
