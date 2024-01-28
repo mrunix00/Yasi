@@ -17,6 +17,8 @@ namespace Bytecode {
         GreaterThan,
         LessThan,
         Call,
+        CondJumpIfNot,
+        Jump,
     };
 
     class Instruction {

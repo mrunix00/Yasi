@@ -5,6 +5,7 @@
 #include "bytecode/builtin_functions/EqualsFunction.h"
 #include "bytecode/builtin_functions/Function.h"
 #include "bytecode/builtin_functions/GreaterThanFunction.h"
+#include "bytecode/builtin_functions/IfFunction.h"
 #include "bytecode/builtin_functions/LessThanFunction.h"
 #include "bytecode/builtin_functions/MultiplyFunction.h"
 #include "bytecode/builtin_functions/SubtractFunction.h"
@@ -27,6 +28,7 @@ namespace Bytecode {
                 {"<", new BuiltinFunctions::LessThan},
                 {">", new BuiltinFunctions::GreaterThan},
                 {"define", new BuiltinFunctions::Define},
+                {"if", new BuiltinFunctions::If},
         };
 
         switch (tree.token->type) {
