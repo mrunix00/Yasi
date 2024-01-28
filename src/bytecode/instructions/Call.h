@@ -9,7 +9,7 @@ namespace Bytecode {
     public:
         explicit Call(size_t segment) : segment(segment) { type = InstructionType::Call; }
         [[nodiscard]] std::string toString() const override {
-            return "Call" + std::to_string(segment);
+            return "Call :" + std::to_string(segment);
         }
         bool operator==(const Instruction &instruction) const override {
             return instruction.type == type && ((Call *) &instruction)->segment == segment;
