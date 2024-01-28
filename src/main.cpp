@@ -36,11 +36,13 @@ void exec_program(const std::string &program, struct options opts) {
             }
 
             if (opts.dumpBytecode && ast != nullptr) {
-                std::vector<Bytecode::Instruction *> instructions;
                 static Bytecode::Compiler compiler;
-                compiler.compile(*ast, instructions);
-                for (auto instruction: instructions) {
-                    std::cout << instruction->toString() << '\n';
+                compiler.compile(*ast);
+                for (size_t i = 0; i < compiler.program.segments.size(); i++) {
+                    std::cout << ':' << i << '\n';
+                    for (auto instruction: compiler.program.segments[i]->instructions)
+                        std::cout << instruction->toString() << '\n';
+                    std::cout << '\n';
                 }
             } else {
                 auto result = RecursiveEvaluation::evaluate(ast);
