@@ -16,16 +16,18 @@ namespace Bytecode::BuiltinFunctions {
             compiler.compile(*args[0], result);
 
             compiler.compile(*args[1], condition_success);
-            if (args.size() == 3)
-                compiler.compile(*args[2], condition_failure);
-            result.push_back(new CondJumpIfNot(result.size() + condition_failure.size() + condition_success.size() + 1));
+            if (args.size() == 3) compiler.compile(*args[2], condition_failure);
 
-            for (const auto instruction: condition_failure)
+            result.push_back(
+                    new CondJumpIfNot(
+                            result.size() + condition_success.size() +
+                            (condition_failure.empty() ? 1 : 2)));
+            for (const auto instruction: condition_success)
                 result.push_back(instruction);
             if (!condition_failure.empty())
                 result.push_back(new Jump(result.size() + condition_failure.size() + 1));
 
-            for (const auto instruction: condition_success)
+            for (const auto instruction: condition_failure)
                 result.push_back(instruction);
         }
     };
