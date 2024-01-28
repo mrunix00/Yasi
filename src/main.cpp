@@ -40,8 +40,8 @@ void exec_program(const std::string &program, struct options opts) {
                 compiler.compile(*ast);
                 for (size_t i = 0; i < compiler.program.segments.size(); i++) {
                     std::cout << ':' << i << '\n';
-                    for (auto instruction: compiler.program.segments[i]->instructions)
-                        std::cout << instruction->toString() << '\n';
+                    for (size_t j = 0; j < compiler.program.segments[i]->instructions.size(); j++)
+                        std::cout << j << '\t' << compiler.program.segments[i]->instructions[j]->toString() << '\n';
                     std::cout << '\n';
                 }
             } else {
