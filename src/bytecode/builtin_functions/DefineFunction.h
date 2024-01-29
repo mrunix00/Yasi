@@ -16,10 +16,11 @@ namespace Bytecode::BuiltinFunctions {
                 result.push_back(new Store(reg));
             } else {
                 auto segment = new Segment({});
+                compiler.program.declare_function(*args[0]->token->asString(), segment);
                 for (auto argument: args[0]->children)
                     compiler.program.declare_variable(*argument->token->asString());
                 compiler.compile(*args[1], segment->instructions);
-                compiler.program.declare_function(*args[0]->token->asString(), segment);
+
             }
         }
     };
