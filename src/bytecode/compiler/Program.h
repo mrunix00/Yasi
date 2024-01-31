@@ -16,18 +16,13 @@ namespace Bytecode {
         std::vector<Segment *> segments;
 
         Program() : segments({new Segment({})}){};
+        explicit Program(const std::vector<Segment *> &segments) : segments(segments) {};
         Program(const std::unordered_map<std::string, size_t> &segments_table,
                 const std::unordered_map<std::string, size_t> &globals_table,
                 const std::unordered_map<std::string, size_t> &variables_table,
                 const std::vector<Segment *> &segments)
             : segments_table(segments_table),
               globals_table(globals_table),
-              variables_table(variables_table),
-              segments(segments){};
-        Program(const std::unordered_map<std::string, size_t> &segments_table,
-                const std::unordered_map<std::string, size_t> &variables_table,
-                const std::vector<Segment *> &segments)
-            : segments_table(segments_table),
               variables_table(variables_table),
               segments(segments){};
 

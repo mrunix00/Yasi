@@ -33,6 +33,7 @@ TEST(compiler_functions, SimpleFunctionDefinition) {
 
     auto expected_result = Program(
             {{"square", 1}},
+            {},
             {{"x", 0}},
             {
                     new Segment({}),
@@ -70,6 +71,7 @@ TEST(compiler_functions, FunctionDefinitionWithMultipleArgs) {
 
     auto expected_result = Program(
             {{"add", 1}},
+            {},
             {{"x", 0}, {"y", 1}},
             {
                     new Segment({}),
@@ -113,6 +115,7 @@ TEST(compiler_functions, SimpleFunctionCall) {
 
     auto expected_result = Program(
             {{"square", 1}},
+            {},
             {{"x", 0}},
             {
                     new Segment({
@@ -173,6 +176,7 @@ TEST(compiler_functions, RecursiveFunction) {
 
     auto expected_result = Program(
             {{"sum", 1}},
+            {},
             {{"n", 0}},
             {
                     new Segment({}),

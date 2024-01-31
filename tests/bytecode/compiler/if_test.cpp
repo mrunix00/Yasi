@@ -24,8 +24,6 @@ TEST(compiler_if, SimpleConditionalStatement) {
             });
 
     auto expected_result = Program(
-            {},
-            {},
             {
                     new Segment({
                             new LoadLiteral(20),
@@ -58,8 +56,6 @@ TEST(compiler_if, SimpleConditionWithElseClause) {
             });
 
     auto expected_result = Program(
-            {},
-            {},
             {
                     new Segment({
                             new LoadLiteral(20),
@@ -98,8 +94,6 @@ TEST(compiler_if, LongCondition) {
             });
 
     auto expected_result = Program(
-            {},
-            {},
             {
                     new Segment({
                             new LoadLiteral(20),
@@ -144,8 +138,6 @@ TEST(compiler_if, LongConditionWithElseClause) {
             });
 
     auto expected_result = Program(
-            {},
-            {},
             {
                     new Segment({
                             new LoadLiteral(20),
