@@ -17,18 +17,17 @@ TEST(compiler_variables, GlobalVariableDefinition) {
                     new SyntaxTreeNode(new Token(10)),
             });
 
-    const std::vector<Instruction *> expected_result = {
-            new LoadLiteral(10),
-            new StoreGlobal(0),
-    };
+    auto expected_result = Program({
+            new Segment({
+                    new LoadLiteral(10),
+                    new StoreGlobal(0),
+            }),
+    });
 
-    std::vector<Instruction *> actual_result;
-    Compiler().compile(expression, actual_result);
+    Compiler compiler = Compiler();
+    compiler.compile(expression);
 
-    EXPECT_EQ(expected_result.size(), actual_result.size());
-    for (int i = 0; i < actual_result.size(); i++) {
-        EXPECT_EQ(*actual_result[i], *expected_result[i]);
-    }
+    EXPECT_EQ(expected_result == compiler.program, true);
 }
 
 TEST(compiler_variables, MultipleGlobalVariablesDefinitions) {
@@ -46,22 +45,20 @@ TEST(compiler_variables, MultipleGlobalVariablesDefinitions) {
                     new SyntaxTreeNode(new Token(15)),
             });
 
-    const std::vector<Instruction *> expected_result = {
-            new LoadLiteral(10),
-            new StoreGlobal(0),
-            new LoadLiteral(15),
-            new StoreGlobal(1),
-    };
+    auto expected_result = Program({
+            new Segment({
+                    new LoadLiteral(10),
+                    new StoreGlobal(0),
+                    new LoadLiteral(15),
+                    new StoreGlobal(1),
+            }),
+    });
 
-    std::vector<Instruction *> actual_result;
-    Compiler compiler;
-    compiler.compile(first_expression, actual_result);
-    compiler.compile(second_expression, actual_result);
+    Compiler compiler = Compiler();
+    compiler.compile(first_expression);
+    compiler.compile(second_expression);
 
-    EXPECT_EQ(expected_result.size(), actual_result.size());
-    for (int i = 0; i < actual_result.size(); i++) {
-        EXPECT_EQ(*actual_result[i], *expected_result[i]);
-    }
+    EXPECT_EQ(expected_result == compiler.program, true);
 }
 
 TEST(compiler_variables, UseGlobalVariableInAnExpression) {
@@ -75,19 +72,17 @@ TEST(compiler_variables, UseGlobalVariableInAnExpression) {
     const auto second_expression = SyntaxTreeNode(
             new Token(Token::Symbol, "x"));
 
-    const std::vector<Instruction *> expected_result = {
-            new LoadLiteral(10),
-            new StoreGlobal(0),
-            new LoadGlobal(0),
-    };
+    auto expected_result = Program({
+            new Segment({
+                    new LoadLiteral(10),
+                    new StoreGlobal(0),
+                    new LoadGlobal(0),
+            }),
+    });
 
-    std::vector<Instruction *> actual_result;
-    Compiler compiler;
-    compiler.compile(first_expression, actual_result);
-    compiler.compile(second_expression, actual_result);
+    Compiler compiler = Compiler();
+    compiler.compile(first_expression);
+    compiler.compile(second_expression);
 
-    EXPECT_EQ(expected_result.size(), actual_result.size());
-    for (int i = 0; i < actual_result.size(); i++) {
-        EXPECT_EQ(*actual_result[i], *expected_result[i]);
-    }
+    EXPECT_EQ(expected_result == compiler.program, true);
 }

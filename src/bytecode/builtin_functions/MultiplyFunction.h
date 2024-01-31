@@ -9,13 +9,14 @@ namespace Bytecode::BuiltinFunctions {
          void compile(
                 const std::vector<SyntaxTreeNode *> &args,
                 Bytecode::Compiler &compiler,
-                std::vector<Bytecode::Instruction *> &result) override {
-             compiler.compile(*args[0], result);
-             compiler.compile(*args[1], result);
-             result.push_back(new Bytecode::Multiply());
+                std::vector<Instruction *> &instructions,
+                Segment *result) override {
+             compiler.compile(*args[0], result, instructions);
+             compiler.compile(*args[1], result, instructions);
+             instructions.push_back(new Bytecode::Multiply());
              for (int i = 2; i < args.size(); i++) {
-                 compiler.compile(*args[i], result);
-                 result.push_back(new Bytecode::Multiply());
+                 compiler.compile(*args[i], result, instructions);
+                 instructions.push_back(new Bytecode::Multiply());
              }
          }
     };

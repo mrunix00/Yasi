@@ -32,9 +32,6 @@ TEST(compiler_functions, SimpleFunctionDefinition) {
             });
 
     auto expected_result = Program(
-            {{"square", 1}},
-            {},
-            {{"x", 0}},
             {
                     new Segment({}),
                     new Segment({
@@ -70,9 +67,6 @@ TEST(compiler_functions, FunctionDefinitionWithMultipleArgs) {
             });
 
     auto expected_result = Program(
-            {{"add", 1}},
-            {},
-            {{"x", 0}, {"y", 1}},
             {
                     new Segment({}),
                     new Segment({
@@ -114,9 +108,6 @@ TEST(compiler_functions, SimpleFunctionCall) {
             });
 
     auto expected_result = Program(
-            {{"square", 1}},
-            {},
-            {{"x", 0}},
             {
                     new Segment({
                             new LoadLiteral(15),
@@ -175,9 +166,6 @@ TEST(compiler_functions, RecursiveFunction) {
             });
 
     auto expected_result = Program(
-            {{"sum", 1}},
-            {},
-            {{"n", 0}},
             {
                     new Segment({}),
                     new Segment({
@@ -198,6 +186,60 @@ TEST(compiler_functions, RecursiveFunction) {
 
     Compiler compiler = Compiler();
     compiler.compile(expression);
+
+    EXPECT_EQ(expected_result == compiler.program, true);
+}
+
+TEST(compiler_functions, MultipleFunctionsDefinitions) {
+    const auto first_function = SyntaxTreeNode(
+            new Token(Token::Symbol, "define"),
+            {
+                    new SyntaxTreeNode(
+                            new Token(Token::Symbol, "square-area"),
+                            {new SyntaxTreeNode(new Token(Token::Symbol, "x"))}),
+                    new SyntaxTreeNode(
+                            new Token(Token::Symbol, "*"),
+                            {
+                                    new SyntaxTreeNode(new Token(Token::Symbol, "x")),
+                                    new SyntaxTreeNode(new Token(Token::Symbol, "x")),
+                            }),
+            });
+
+    const auto second_function = SyntaxTreeNode(
+            new Token(Token::Symbol, "define"),
+            {
+                    new SyntaxTreeNode(
+                            new Token(Token::Symbol, "rect-area"),
+                            {
+                                    new SyntaxTreeNode(new Token(Token::Symbol, "x")),
+                                    new SyntaxTreeNode(new Token(Token::Symbol, "y")),
+                            }),
+                    new SyntaxTreeNode(
+                            new Token(Token::Symbol, "*"),
+                            {
+                                    new SyntaxTreeNode(new Token(Token::Symbol, "x")),
+                                    new SyntaxTreeNode(new Token(Token::Symbol, "y")),
+                            }),
+            });
+
+    auto expected_result = Program(
+            {
+                    new Segment({}),
+                    new Segment({
+                            new Load(0),
+                            new Load(0),
+                            new Multiply(),
+                    }),
+                    new Segment({
+                            new Load(0),
+                            new Load(1),
+                            new Multiply(),
+                    }),
+            });
+
+    Compiler compiler = Compiler();
+    compiler.compile(first_function);
+    compiler.compile(second_function);
 
     EXPECT_EQ(expected_result == compiler.program, true);
 }

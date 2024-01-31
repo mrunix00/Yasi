@@ -17,9 +17,17 @@
 #include "bytecode/instructions/Store.h"
 
 namespace Bytecode {
-    void Compiler::compile(
-            const SyntaxTreeNode &tree,
-            std::vector<Instruction *> &result) {
+    void Compiler::compile(const SyntaxTreeNode &tree) {
+        Compiler::compile(tree, program.segments[0]);
+    }
+
+    void Compiler::compile(const SyntaxTreeNode &tree, Segment *segment) {
+        Compiler::compile(tree, segment, segment->instructions);
+    }
+
+    void Compiler::compile(const SyntaxTreeNode &tree,
+                           Segment *segment,
+                           std::vector<Instruction *> &instructions) {
         std::unordered_map<std::string, BuiltinFunctions::Function *> builtin_instructions = {
                 {"+", new BuiltinFunctions::Add},
                 {"*", new BuiltinFunctions::Multiply},
@@ -34,41 +42,37 @@ namespace Bytecode {
 
         switch (tree.token->type) {
             case Token::Integer:
-                result.push_back(new LoadLiteral(tree.token->asInteger()));
+                instructions.push_back(new LoadLiteral(tree.token->asInteger()));
                 break;
             case Token::Symbol:
                 if (tree.children.empty()) {
-                    if (program.find_variable(*tree.token->token) != -1) {
-                        result.push_back(new Load(program.find_variable(*tree.token->asString())));
+                    if (segment->find_variable(*tree.token->token) != -1) {
+                        instructions.push_back(new Load(segment->find_variable(*tree.token->asString())));
                         return;
                     }
                     if (program.find_global(*tree.token->token) != -1) {
-                        result.push_back(new LoadGlobal(program.find_global(*tree.token->asString())));
+                        instructions.push_back(new LoadGlobal(program.find_global(*tree.token->asString())));
                         return;
                     }
                 } else {
                     if (program.find_function(*tree.token->token) != -1) {
                         for (const auto &argument: tree.children)
-                            compile(*argument, result);
-                        result.push_back(new Call(program.find_function(*tree.token->asString())));
+                            compile(*argument, segment, instructions);
+                        instructions.push_back(new Call(program.find_function(*tree.token->asString())));
                         return;
                     }
                 }
-
 
                 if (builtin_instructions.find(*tree.token->token) != builtin_instructions.end()) {
                     builtin_instructions[*tree.token->token]->compile(
                             tree.children,
                             *this,
-                            result);
+                            instructions,
+                            segment);
                 }
                 break;
             default:
                 break;
         }
     }
-
-    void Compiler::compile(const SyntaxTreeNode &tree) {
-        Compiler::compile(tree, program.segments[0]->instructions);
-    }
-}
+}// namespace Bytecode

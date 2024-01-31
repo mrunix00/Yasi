@@ -1,5 +1,4 @@
 #include "bytecode/compiler/Compiler.h"
-#include "bytecode/instructions/Add.h"
 #include "bytecode/instructions/Equals.h"
 #include "bytecode/instructions/Instruction.h"
 #include "bytecode/instructions/LoadLiteral.h"
@@ -17,18 +16,18 @@ TEST(compiler_equals, CompileSimpleEqualityCheck) {
                     new SyntaxTreeNode(new Token(74)),
             });
 
-    const std::vector<Instruction *> expected_result = {
-            new LoadLiteral(12),
-            new LoadLiteral(74),
-            new Equals(),
-    };
-    std::vector<Instruction *> actual_result;
-    Compiler().compile(expression, actual_result);
+    auto expected_result = Program({
+            new Segment({
+                    new LoadLiteral(12),
+                    new LoadLiteral(74),
+                    new Equals(),
+            }),
+    });
 
-    EXPECT_EQ(expected_result.size(), actual_result.size());
-    for (int i = 0; i < actual_result.size(); i++) {
-        EXPECT_EQ(*actual_result[i], *expected_result[i]);
-    }
+    Compiler compiler;
+    compiler.compile(expression);
+
+    EXPECT_EQ(expected_result == compiler.program, true);
 }
 
 TEST(compiler_equals, CompileLongEqualityCheck) {
@@ -41,18 +40,18 @@ TEST(compiler_equals, CompileLongEqualityCheck) {
                     new SyntaxTreeNode(new Token(74)),
             });
 
-    const std::vector<Instruction *> expected_result = {
-            new LoadLiteral(12),
-            new LoadLiteral(12),
-            new Equals(),
-            new LoadLiteral(74),
-            new Equals(),
-    };
-    std::vector<Instruction *> actual_result;
-    Compiler().compile(expression, actual_result);
+    auto expected_result = Program({
+            new Segment({
+                    new LoadLiteral(12),
+                    new LoadLiteral(12),
+                    new Equals(),
+                    new LoadLiteral(74),
+                    new Equals(),
+            }),
+    });
 
-    EXPECT_EQ(expected_result.size(), actual_result.size());
-    for (int i = 0; i < actual_result.size(); i++) {
-        EXPECT_EQ(*actual_result[i], *expected_result[i]);
-    }
+    Compiler compiler;
+    compiler.compile(expression);
+
+    EXPECT_EQ(expected_result == compiler.program, true);
 }

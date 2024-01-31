@@ -11,7 +11,9 @@ namespace Bytecode::BuiltinFunctions {
         virtual void compile(
                 const std::vector<SyntaxTreeNode *> &args,
                 Bytecode::Compiler &compiler,
-                std::vector<Bytecode::Instruction *> &result) = 0;
+                std::vector<Instruction *> &instructions,
+                Segment *) = 0;
+
     };
 }// namespace Bytecode::BuiltinFunctions
 #endif//YASI_FUNCTION_H

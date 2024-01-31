@@ -16,18 +16,18 @@ TEST(compiler_less, CompileSimpleLessThanCheck) {
                     new SyntaxTreeNode(new Token(74)),
             });
 
-    const std::vector<Instruction *> expected_result = {
-            new LoadLiteral(12),
-            new LoadLiteral(74),
-            new LessThan(),
-    };
-    std::vector<Instruction *> actual_result;
-    Compiler().compile(expression, actual_result);
+    auto expected_result = Program({
+            new Segment({
+                    new LoadLiteral(12),
+                    new LoadLiteral(74),
+                    new LessThan(),
+            }),
+    });
 
-    EXPECT_EQ(expected_result.size(), actual_result.size());
-    for (int i = 0; i < actual_result.size(); i++) {
-        EXPECT_EQ(*actual_result[i], *expected_result[i]);
-    }
+    Compiler compiler = Compiler();
+    compiler.compile(expression);
+
+    EXPECT_EQ(expected_result == compiler.program, true);
 }
 
 TEST(compiler_less, CompileLongLessThanCheck) {
@@ -40,18 +40,18 @@ TEST(compiler_less, CompileLongLessThanCheck) {
                     new SyntaxTreeNode(new Token(74)),
             });
 
-    const std::vector<Instruction *> expected_result = {
-            new LoadLiteral(12),
-            new LoadLiteral(12),
-            new LessThan(),
-            new LoadLiteral(74),
-            new LessThan(),
-    };
-    std::vector<Instruction *> actual_result;
-    Compiler().compile(expression, actual_result);
+    auto expected_result = Program({
+            new Segment({
+                    new LoadLiteral(12),
+                    new LoadLiteral(12),
+                    new LessThan(),
+                    new LoadLiteral(74),
+                    new LessThan(),
+            }),
+    });
 
-    EXPECT_EQ(expected_result.size(), actual_result.size());
-    for (int i = 0; i < actual_result.size(); i++) {
-        EXPECT_EQ(*actual_result[i], *expected_result[i]);
-    }
+    Compiler compiler = Compiler();
+    compiler.compile(expression);
+
+    EXPECT_EQ(expected_result == compiler.program, true);
 }

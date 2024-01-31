@@ -11,7 +11,8 @@ namespace Bytecode {
     class Compiler {
     public:
         Compiler() = default;
-        void compile(const SyntaxTreeNode &, std::vector<Instruction *> &);
+        void compile(const SyntaxTreeNode &, Segment *, std::vector<Instruction *> &);
+        void compile(const SyntaxTreeNode &, Segment *);
         void compile(const SyntaxTreeNode &);
         Program program;
     };

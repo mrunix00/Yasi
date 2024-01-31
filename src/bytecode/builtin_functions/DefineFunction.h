@@ -9,18 +9,18 @@ namespace Bytecode::BuiltinFunctions {
         void compile(
                 const std::vector<SyntaxTreeNode *> &args,
                 Bytecode::Compiler &compiler,
-                std::vector<Bytecode::Instruction *> &result) override {
+                std::vector<Instruction *> &instructions,
+                Segment *result) override {
             if (args[1]->children.empty()) {
-                compiler.compile(*args[1], result);
+                compiler.compile(*args[1], result, instructions);
                 const auto reg = compiler.program.declare_global(*args[0]->token->token);
-                result.push_back(new StoreGlobal(reg));
+                instructions.push_back(new StoreGlobal(reg));
             } else {
                 auto segment = new Segment({});
                 compiler.program.declare_function(*args[0]->token->asString(), segment);
                 for (auto argument: args[0]->children)
-                    compiler.program.declare_variable(*argument->token->asString());
-                compiler.compile(*args[1], segment->instructions);
-
+                    segment->declare_variable(*argument->token->asString());
+                compiler.compile(*args[1], segment);
             }
         }
     };

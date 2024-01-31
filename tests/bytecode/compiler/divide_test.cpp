@@ -16,18 +16,18 @@ TEST(compiler_divide, CompileSimpleDivision) {
                     new SyntaxTreeNode(new Token(74)),
             });
 
-    const std::vector<Instruction *> expected_result = {
-            new LoadLiteral(12),
-            new LoadLiteral(74),
-            new Divide(),
-    };
-    std::vector<Instruction *> actual_result;
-    Compiler().compile(expression, actual_result);
+    auto expected_result = Program({
+            new Segment({
+                    new LoadLiteral(12),
+                    new LoadLiteral(74),
+                    new Divide(),
+            }),
+    });
 
-    EXPECT_EQ(expected_result.size(), actual_result.size());
-    for (int i = 0; i < actual_result.size(); i++) {
-        EXPECT_EQ(*actual_result[i], *expected_result[i]);
-    }
+    Compiler compiler;
+    compiler.compile(expression);
+
+    EXPECT_EQ(expected_result == compiler.program, true);
 }
 
 TEST(compiler_divide, CompileLongDivision) {
@@ -39,21 +39,21 @@ TEST(compiler_divide, CompileLongDivision) {
                     new SyntaxTreeNode(new Token(74)),
                     new SyntaxTreeNode(new Token(17)),
             });
-    const std::vector<Instruction *> expected_result = {
-            new LoadLiteral(12),
-            new LoadLiteral(74),
-            new Divide(),
-            new LoadLiteral(17),
-            new Divide(),
-    };
+    auto expected_result = Program(
+            {
+                    new Segment({
+                            new LoadLiteral(12),
+                            new LoadLiteral(74),
+                            new Divide(),
+                            new LoadLiteral(17),
+                            new Divide(),
+                    }),
+            });
 
-    std::vector<Instruction *> actual_result;
-    Compiler().compile(expression, actual_result);
+    Compiler compiler;
+    compiler.compile(expression);
 
-    EXPECT_EQ(expected_result.size(), actual_result.size());
-    for (int i = 0; i < actual_result.size(); i++) {
-        EXPECT_EQ(*actual_result[i], *expected_result[i]);
-    }
+    EXPECT_EQ(expected_result == compiler.program, true);
 }
 
 TEST(compiler_divide, CompileNestedDivision) {
@@ -69,19 +69,19 @@ TEST(compiler_divide, CompileNestedDivision) {
                             }),
                     new SyntaxTreeNode(new Token(43)),
             });
-    const std::vector<Instruction *> expected_result = {
-            new LoadLiteral(23),
-            new LoadLiteral(74),
-            new Divide(),
-            new LoadLiteral(43),
-            new Divide(),
-    };
+    auto expected_result = Program(
+            {
+                    new Segment({
+                            new LoadLiteral(23),
+                            new LoadLiteral(74),
+                            new Divide(),
+                            new LoadLiteral(43),
+                            new Divide(),
+                    }),
+            });
 
-    std::vector<Instruction *> actual_result;
-    Compiler().compile(expression, actual_result);
+    Compiler compiler;
+    compiler.compile(expression);
 
-    EXPECT_EQ(expected_result.size(), actual_result.size());
-    for (int i = 0; i < actual_result.size(); i++) {
-        EXPECT_EQ(*actual_result[i], *expected_result[i]);
-    }
+    EXPECT_EQ(expected_result == compiler.program, true);
 }
