@@ -2,7 +2,6 @@
 #define YASI_LOAD_H
 
 #include "Instruction.h"
-#include <cstdio>
 
 namespace Bytecode {
     class Load final : public Instruction {

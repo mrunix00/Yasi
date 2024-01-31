@@ -2,7 +2,7 @@
 #define YASI_DEFINE_FUNCTION_H
 
 #include "Function.h"
-#include "bytecode/instructions/Store.h"
+#include "bytecode/instructions/StoreGlobal.h"
 
 namespace Bytecode::BuiltinFunctions {
     class Define : public Function {
@@ -12,8 +12,8 @@ namespace Bytecode::BuiltinFunctions {
                 std::vector<Bytecode::Instruction *> &result) override {
             if (args[1]->children.empty()) {
                 compiler.compile(*args[1], result);
-                const auto reg = compiler.program.declare_variable(*args[0]->token->token);
-                result.push_back(new Store(reg));
+                const auto reg = compiler.program.declare_global(*args[0]->token->token);
+                result.push_back(new StoreGlobal(reg));
             } else {
                 auto segment = new Segment({});
                 compiler.program.declare_function(*args[0]->token->asString(), segment);

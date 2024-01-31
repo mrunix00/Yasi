@@ -1,14 +1,14 @@
 #include "bytecode/compiler/Compiler.h"
 #include "bytecode/instructions/Instruction.h"
-#include "bytecode/instructions/Load.h"
+#include "bytecode/instructions/LoadGlobal.h"
 #include "bytecode/instructions/LoadLiteral.h"
-#include "bytecode/instructions/Store.h"
+#include "bytecode/instructions/StoreGlobal.h"
 #include "parser/SyntaxTreeNode.h"
 #include <gtest/gtest.h>
 
 using namespace Bytecode;
 
-TEST(compiler_variables, VariableDefinition) {
+TEST(compiler_variables, GlobalVariableDefinition) {
     // (define x 10)
     const auto expression = SyntaxTreeNode(
             new Token(Token::Symbol, "define"),
@@ -19,7 +19,7 @@ TEST(compiler_variables, VariableDefinition) {
 
     const std::vector<Instruction *> expected_result = {
             new LoadLiteral(10),
-            new Store(0),
+            new StoreGlobal(0),
     };
 
     std::vector<Instruction *> actual_result;
@@ -31,7 +31,7 @@ TEST(compiler_variables, VariableDefinition) {
     }
 }
 
-TEST(compiler_variables, MultipleVariablesDefinitions) {
+TEST(compiler_variables, MultipleGlobalVariablesDefinitions) {
     // (define x 10)
     const auto first_expression = SyntaxTreeNode(
             new Token(Token::Symbol, "define"),
@@ -48,9 +48,9 @@ TEST(compiler_variables, MultipleVariablesDefinitions) {
 
     const std::vector<Instruction *> expected_result = {
             new LoadLiteral(10),
-            new Store(0),
+            new StoreGlobal(0),
             new LoadLiteral(15),
-            new Store(1),
+            new StoreGlobal(1),
     };
 
     std::vector<Instruction *> actual_result;
@@ -64,7 +64,7 @@ TEST(compiler_variables, MultipleVariablesDefinitions) {
     }
 }
 
-TEST(compiler_variables, UseVariableInAnExpression) {
+TEST(compiler_variables, UseGlobalVariableInAnExpression) {
     // (define x 10)
     const auto first_expression = SyntaxTreeNode(
             new Token(Token::Symbol, "define"),
@@ -77,8 +77,8 @@ TEST(compiler_variables, UseVariableInAnExpression) {
 
     const std::vector<Instruction *> expected_result = {
             new LoadLiteral(10),
-            new Store(0),
-            new Load(0),
+            new StoreGlobal(0),
+            new LoadGlobal(0),
     };
 
     std::vector<Instruction *> actual_result;

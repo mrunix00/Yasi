@@ -12,6 +12,7 @@
 #include "bytecode/instructions/Add.h"
 #include "bytecode/instructions/Call.h"
 #include "bytecode/instructions/Load.h"
+#include "bytecode/instructions/LoadGlobal.h"
 #include "bytecode/instructions/LoadLiteral.h"
 #include "bytecode/instructions/Store.h"
 
@@ -39,6 +40,10 @@ namespace Bytecode {
                 if (tree.children.empty()) {
                     if (program.find_variable(*tree.token->token) != -1) {
                         result.push_back(new Load(program.find_variable(*tree.token->asString())));
+                        return;
+                    }
+                    if (program.find_global(*tree.token->token) != -1) {
+                        result.push_back(new LoadGlobal(program.find_global(*tree.token->asString())));
                         return;
                     }
                 } else {
