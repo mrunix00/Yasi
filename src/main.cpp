@@ -17,6 +17,7 @@ struct options {
     bool displayTokens = false;
     bool displayAST = false;
     bool dumpBytecode = false;
+    bool compilerOptimization = false;
 };
 
 void exec_program(const std::string &program, struct options opts) {
@@ -36,7 +37,7 @@ void exec_program(const std::string &program, struct options opts) {
             }
 
             if (opts.dumpBytecode && ast != nullptr) {
-                static Bytecode::Compiler compiler;
+                static auto compiler = Bytecode::Compiler(opts.compilerOptimization);
                 compiler.compile(*ast);
                 for (size_t i = 0; i < compiler.program.segments.size(); i++) {
                     std::cout << ':' << i << '\n';
@@ -61,7 +62,7 @@ int main(int argc, char *argv[]) {
     struct options opts;
 
     int opt;
-    while ((opt = getopt(argc, argv, "atd")) != -1) {
+    while ((opt = getopt(argc, argv, "atdO")) != -1) {
         switch (opt) {
             case 't':
                 opts.displayTokens = true;
@@ -71,6 +72,9 @@ int main(int argc, char *argv[]) {
                 break;
             case 'd':
                 opts.dumpBytecode = true;
+                break;
+            case 'O':
+                opts.compilerOptimization = true;
                 break;
             default:
                 break;
