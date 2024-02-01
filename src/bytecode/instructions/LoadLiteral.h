@@ -5,8 +5,6 @@
 
 namespace Bytecode {
     class LoadLiteral final : public Instruction {
-        int value;
-
     public:
         explicit LoadLiteral(int integer) {
             type = InstructionType::LoadLiteral;
@@ -18,6 +16,7 @@ namespace Bytecode {
         bool operator==(const Instruction &instruction) const override {
             return instruction.type == type && ((LoadLiteral *) &instruction)->value == value;
         }
+        int value;
     };
 }// namespace Bytecode
 #endif

@@ -10,7 +10,9 @@
 namespace Bytecode {
     class Compiler {
     public:
+        bool optimization = false;
         Compiler() = default;
+        explicit Compiler(bool optimize) : optimization(optimize){};
         void compile(const SyntaxTreeNode &, Segment *, std::vector<Instruction *> &);
         void compile(const SyntaxTreeNode &, Segment *);
         void compile(const SyntaxTreeNode &);
