@@ -6,10 +6,10 @@
 #include "bytecode/instructions/Load.h"
 #include "bytecode/instructions/LoadLiteral.h"
 
-static inline bool is_optimizable(const std::vector<SyntaxTreeNode *> &args) {
+static inline bool is_addition_optimizable(const std::vector<SyntaxTreeNode *> &args) {
     for (const auto arg: args) {
         if (!arg->children.empty()) {
-            if (!is_optimizable(arg->children)) return false;
+            if (!is_addition_optimizable(arg->children)) return false;
         } else if (arg->token->type == Token::Symbol)
             return false;
     }
@@ -23,7 +23,7 @@ namespace Bytecode::BuiltinFunctions {
                 Compiler &compiler,
                 std::vector<Instruction *> &instructions,
                 Segment *segment) override {
-            if (compiler.optimization && is_optimizable(args)) {
+            if (compiler.optimization && is_addition_optimizable(args)) {
                 int result = 0;
                 for (const auto arg: args) {
                     if (!arg->children.empty()) {
