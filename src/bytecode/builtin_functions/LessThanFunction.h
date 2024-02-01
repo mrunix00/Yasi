@@ -7,7 +7,7 @@ namespace Bytecode::BuiltinFunctions {
     class LessThan : public Function {
         void compile(
                 const std::vector<SyntaxTreeNode *> &args,
-                Bytecode::Compiler &compiler,
+                Compiler &compiler,
                 std::vector<Instruction *> &instructions,
                 Segment *result) override {
             compiler.compile(*args[0], result, instructions);

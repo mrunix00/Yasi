@@ -8,7 +8,7 @@ namespace Bytecode::BuiltinFunctions {
     class Define : public Function {
         void compile(
                 const std::vector<SyntaxTreeNode *> &args,
-                Bytecode::Compiler &compiler,
+                Compiler &compiler,
                 std::vector<Instruction *> &instructions,
                 Segment *result) override {
             if (args[1]->children.empty()) {

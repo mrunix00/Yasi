@@ -18,7 +18,7 @@ namespace Bytecode::BuiltinFunctions {
     class Multiply : public Function {
         void compile(
                 const std::vector<SyntaxTreeNode *> &args,
-                Bytecode::Compiler &compiler,
+                Compiler &compiler,
                 std::vector<Instruction *> &instructions,
                 Segment *segment) override {
             if (compiler.optimization && is_multiplication_optimizable(args)) {
@@ -32,7 +32,7 @@ namespace Bytecode::BuiltinFunctions {
                         result *= arg->token->asInteger();
                     }
                 }
-                instructions.push_back(new Bytecode::LoadLiteral(result));
+                instructions.push_back(new LoadLiteral(result));
             } else {
                 compiler.compile(*args[0], segment, instructions);
                 compiler.compile(*args[1], segment, instructions);

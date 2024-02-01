@@ -34,7 +34,7 @@ namespace Bytecode::BuiltinFunctions {
                         result += arg->token->asInteger();
                     }
                 }
-                instructions.push_back(new Bytecode::LoadLiteral(result));
+                instructions.push_back(new LoadLiteral(result));
                 return;
             }
             compiler.compile(*args[0], segment, instructions);

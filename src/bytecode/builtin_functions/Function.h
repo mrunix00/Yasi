@@ -10,7 +10,7 @@ namespace Bytecode::BuiltinFunctions {
     public:
         virtual void compile(
                 const std::vector<SyntaxTreeNode *> &args,
-                Bytecode::Compiler &compiler,
+                Compiler &compiler,
                 std::vector<Instruction *> &instructions,
                 Segment *) = 0;
 

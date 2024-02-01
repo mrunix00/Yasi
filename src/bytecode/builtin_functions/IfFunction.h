@@ -9,7 +9,7 @@ namespace Bytecode::BuiltinFunctions {
     class If : public Function {
         void compile(
                 const std::vector<SyntaxTreeNode *> &args,
-                Bytecode::Compiler &compiler,
+                Compiler &compiler,
                 std::vector<Instruction *> &instructions,
                 Segment *result) override {
             std::vector<Instruction *> condition_success;
