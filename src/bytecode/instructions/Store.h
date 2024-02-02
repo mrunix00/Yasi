@@ -12,6 +12,7 @@ namespace Bytecode {
             reg = rg;
             type = InstructionType::Store;
         }
+        void execute(Bytecode::VM *vm) override {}
         [[nodiscard]] std::string toString() const override {
             return "Store $r" + std::to_string(reg);
         }

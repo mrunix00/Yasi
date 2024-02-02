@@ -10,6 +10,9 @@ namespace Bytecode {
             type = InstructionType::LoadLiteral;
             value = integer;
         };
+        void execute(Bytecode::VM *vm) override {
+            vm->Push(new StackObject(new Literal(value)));
+        }
         [[nodiscard]] std::string toString() const override {
             return "LoadLiteral d" + std::to_string(value);
         }

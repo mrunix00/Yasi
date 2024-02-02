@@ -8,6 +8,7 @@ namespace Bytecode {
 
     public:
         explicit Jump(size_t line) : line(line) { type = InstructionType::Jump; }
+        void execute(Bytecode::VM *vm) override {}
         [[nodiscard]] std::string toString() const override {
             return "Jump " + std::to_string(line);
         }

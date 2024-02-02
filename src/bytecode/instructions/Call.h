@@ -8,6 +8,7 @@ namespace Bytecode {
 
     public:
         explicit Call(size_t segment) : segment(segment) { type = InstructionType::Call; }
+        void execute(Bytecode::VM *vm) override {}
         [[nodiscard]] std::string toString() const override {
             return "Call :" + std::to_string(segment);
         }

@@ -8,6 +8,7 @@ namespace Bytecode {
 
     public:
         explicit CondJumpIfNot(size_t line) : line(line) { type = InstructionType::CondJumpIfNot; }
+        void execute(Bytecode::VM *vm) override {}
         [[nodiscard]] std::string toString() const override {
             return "CondJumpIfNot " + std::to_string(line);
         }

@@ -9,6 +9,7 @@ namespace Bytecode {
 
     public:
         explicit LoadGlobal(size_t reg) : reg(reg) { type = InstructionType::LoadGlobal; };
+        void execute(Bytecode::VM *vm) override {}
         [[nodiscard]] std::string toString() const override {
             return "LoadGlobal $g" + std::to_string(reg);
         }
