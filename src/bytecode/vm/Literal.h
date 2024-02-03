@@ -2,14 +2,33 @@
 #define YASI_LITERAL_H
 
 namespace Bytecode {
+    enum class Boolean {
+        True,
+        False
+    };
+
     class Literal {
     public:
-        explicit Literal(int val) : int_literal(val) {}
+        enum class Type {
+            Integer,
+            Boolean
+        };
+        int int_literal{};
+        Boolean bool_literal{};
+        Type type;
+
+        explicit Literal(Boolean b) : bool_literal(b), type(Type::Boolean) {}
+        explicit Literal(int val) : int_literal(val), type(Type::Integer) {}
 
         inline bool operator==(Literal l) const {
-            return int_literal == l.int_literal;
+            if (type == l.type) {
+                if (type == Type::Boolean)
+                    return bool_literal == l.bool_literal;
+                if (type == Type::Integer)
+                    return int_literal == l.int_literal;
+            }
+            return false;
         }
-        int int_literal;
     };
 }// namespace Bytecode
 
