@@ -11,7 +11,7 @@ namespace Bytecode {
         explicit LoadGlobal(size_t reg) : reg(reg) { type = InstructionType::LoadGlobal; };
         void execute(Bytecode::VM *vm) override {
             auto object = vm->getGlobal(reg);
-            vm->Push(object);
+            vm->stackPush(object);
         }
         [[nodiscard]] std::string toString() const override {
             return "LoadGlobal $g" + std::to_string(reg);

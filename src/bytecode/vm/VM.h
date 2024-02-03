@@ -12,7 +12,7 @@ namespace Bytecode {
     public:
         VM() = default;
         StackObject *stackTop();
-        void Push(StackObject *);
+        void stackPush(StackObject *object);
         StackObject* stackPop();
         void setGlobal(size_t i, StackObject *sObject);
         StackObject* getGlobal(size_t i);

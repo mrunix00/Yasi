@@ -3,7 +3,7 @@ namespace Bytecode {
     StackObject* VM::stackTop() {
         return program_stack.front();
     }
-    void VM::Push(StackObject *object) {
+    void VM::stackPush(StackObject *object) {
         program_stack.push_back(object);
     }
     StackObject* VM::stackPop() {
