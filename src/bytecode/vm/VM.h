@@ -3,6 +3,7 @@
 
 #include "StackObject.h"
 #include <vector>
+#include <cstddef>
 
 namespace Bytecode {
     class VM {
