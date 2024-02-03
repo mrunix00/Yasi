@@ -1,5 +1,5 @@
 #include "bytecode/compiler/Compiler.h"
-#include "bytecode/instructions/Instruction.h"
+#include "bytecode/vm/Interpreter.h"
 #include "exceptions/SyntaxError.h"
 #include "lexer/Lexer.h"
 #include "parser/Parser.h"
@@ -17,6 +17,7 @@ struct options {
     bool displayTokens = false;
     bool displayAST = false;
     bool dumpBytecode = false;
+    bool executeBytecode = false;
     bool compilerOptimization = false;
 };
 
@@ -36,14 +37,20 @@ void exec_program(const std::string &program, struct options opts) {
                 print_ast(stdOut, *ast);
             }
 
-            if (opts.dumpBytecode && ast != nullptr) {
+            if ((opts.dumpBytecode || opts.executeBytecode) && ast != nullptr) {
                 static auto compiler = Bytecode::Compiler(opts.compilerOptimization);
                 compiler.compile(*ast);
-                for (size_t i = 0; i < compiler.program.segments.size(); i++) {
+                for (size_t i = 0; i < compiler.program.segments.size() && opts.dumpBytecode; i++) {
                     std::cout << ':' << i << '\n';
                     for (size_t j = 0; j < compiler.program.segments[i]->instructions.size(); j++)
                         std::cout << j << '\t' << compiler.program.segments[i]->instructions[j]->toString() << '\n';
                     std::cout << '\n';
+                }
+
+                if (opts.executeBytecode) {
+                    static auto interpreter = Bytecode::Interpreter();
+                    interpreter.execute(compiler.program);
+                    std::cout << interpreter.vm.stackTop()->literal->int_literal << '\n';
                 }
             } else {
                 auto result = RecursiveEvaluation::evaluate(ast);
@@ -62,13 +69,16 @@ int main(int argc, char *argv[]) {
     struct options opts;
 
     int opt;
-    while ((opt = getopt(argc, argv, "atdO")) != -1) {
+    while ((opt = getopt(argc, argv, "atbdO")) != -1) {
         switch (opt) {
             case 't':
                 opts.displayTokens = true;
                 break;
             case 'a':
                 opts.displayAST = true;
+                break;
+            case 'b':
+                opts.executeBytecode = true;
                 break;
             case 'd':
                 opts.dumpBytecode = true;
