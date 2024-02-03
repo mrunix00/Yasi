@@ -6,7 +6,7 @@
 
 using namespace Bytecode;
 
-TEST(multiply_test, ShouldMultiplyTwoLiterals) {
+TEST(vm_multiply_test, ShouldMultiplyTwoLiterals) {
     const auto program = Program({
             new Segment({
                     new LoadLiteral(10),
