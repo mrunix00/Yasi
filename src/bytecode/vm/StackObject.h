@@ -5,7 +5,6 @@
 
 namespace Bytecode {
     class StackObject {
-        Literal *literal;
 
     public:
         ~StackObject() { delete literal; }
@@ -14,6 +13,7 @@ namespace Bytecode {
         inline bool operator==(const StackObject& so) {
             return *so.literal == *literal;
         }
+        Literal *literal;
     };
 }// namespace Bytecode
 

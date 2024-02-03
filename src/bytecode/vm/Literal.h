@@ -3,13 +3,13 @@
 
 namespace Bytecode {
     class Literal {
-        int int_literal;
     public:
         explicit Literal(int val) : int_literal(val) {}
 
         inline bool operator==(Literal l) const {
             return int_literal == l.int_literal;
         }
+        int int_literal;
     };
 }// namespace Bytecode
 

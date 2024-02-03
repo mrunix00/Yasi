@@ -1,13 +1,13 @@
 #include "VM.h"
 namespace Bytecode {
     StackObject* VM::stackTop() {
-        return program_stack.front();
+        return program_stack.back();
     }
     void VM::stackPush(StackObject *object) {
         program_stack.push_back(object);
     }
     StackObject* VM::stackPop() {
-        auto object = program_stack.front();
+        auto object = program_stack.back();
         program_stack.pop_back();
         return object;
     }
