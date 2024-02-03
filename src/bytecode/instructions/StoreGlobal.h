@@ -12,7 +12,10 @@ namespace Bytecode {
             reg = rg;
             type = InstructionType::StoreGlobal;
         }
-        void execute(Bytecode::VM *vm) override {}
+        void execute(Bytecode::VM *vm) override {
+            auto object = vm->stackPop();
+            vm->setGlobal(reg, object);
+        }
         [[nodiscard]] std::string toString() const override {
             return "StoreGlobal $g" + std::to_string(reg);
         }

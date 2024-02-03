@@ -7,11 +7,15 @@
 namespace Bytecode {
     class VM {
         std::vector<StackObject *> program_stack;
+        std::vector<StackObject *> global_registers;
 
     public:
         VM() = default;
-        StackObject *StackTop();
+        StackObject *stackTop();
         void Push(StackObject *);
+        StackObject* stackPop();
+        void setGlobal(size_t i, StackObject *sObject);
+        StackObject* getGlobal(size_t i);
     };
 }// namespace Bytecode
 
