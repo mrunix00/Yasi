@@ -14,9 +14,7 @@ namespace Bytecode {
             auto object2 = vm->stackPop();
             auto result = new StackObject(
                     new Literal(object2->literal->int_literal <
-                                                object1->literal->int_literal
-                                        ? Boolean::True
-                                        : Boolean::False));
+                                object1->literal->int_literal));
             vm->stackPush(result);
         }
         [[nodiscard]] std::string toString() const override { return "LessThan"; }

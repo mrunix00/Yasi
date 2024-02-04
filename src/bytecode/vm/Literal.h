@@ -17,6 +17,8 @@ namespace Bytecode {
         Boolean bool_literal{};
         Type type;
 
+        explicit Literal(bool b) : bool_literal(b ? Boolean::True : Boolean::False),
+                                   type(Type::Boolean) {}
         explicit Literal(Boolean b) : bool_literal(b), type(Type::Boolean) {}
         explicit Literal(int val) : int_literal(val), type(Type::Integer) {}
 
