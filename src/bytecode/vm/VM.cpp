@@ -1,6 +1,6 @@
 #include "VM.h"
 namespace Bytecode {
-    StackObject* VM::stackTop() {
+    StackObject* VM::stackTop() const {
         return program_stack.back();
     }
     void VM::stackPush(StackObject *object) {
@@ -18,7 +18,7 @@ namespace Bytecode {
         else if (global_registers.size() == i)
             global_registers.push_back(sObject);
     }
-    StackObject* VM::getGlobal(size_t i) {
+    StackObject* VM::getGlobal(const size_t i) const {
         return global_registers.at(i);
     }
 }// namespace Bytecode

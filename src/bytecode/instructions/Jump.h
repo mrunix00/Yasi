@@ -7,15 +7,16 @@ namespace Bytecode {
         size_t line;
 
     public:
-        explicit Jump(size_t line) : line(line) { type = InstructionType::Jump; }
-        void execute(Bytecode::VM *vm) override {}
+        explicit Jump(const size_t line) : line(line) { type = InstructionType::Jump; }
+        void execute(VM *vm) override {}
         [[nodiscard]] std::string toString() const override {
             return "Jump " + std::to_string(line);
         }
         bool operator==(const Instruction &instruction) const override {
-            return instruction.type == type && ((Jump *) &instruction)->line == line;
+            return instruction.type == type &&
+                   dynamic_cast<const Jump *>(&instruction)->line == line;
         }
     };
-}
+}// namespace Bytecode
 
 #endif//YASI_JUMP_H

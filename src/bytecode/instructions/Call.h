@@ -7,13 +7,14 @@ namespace Bytecode {
         size_t segment;
 
     public:
-        explicit Call(size_t segment) : segment(segment) { type = InstructionType::Call; }
-        void execute(Bytecode::VM *vm) override {}
+        explicit Call(const size_t segment) : segment(segment) { type = InstructionType::Call; }
+        void execute(VM *vm) override {}
         [[nodiscard]] std::string toString() const override {
             return "Call :" + std::to_string(segment);
         }
         bool operator==(const Instruction &instruction) const override {
-            return instruction.type == type && ((Call *) &instruction)->segment == segment;
+            return instruction.type == type &&
+                   dynamic_cast<const Call *>(&instruction)->segment == segment;
         }
     };
 }// namespace Bytecode

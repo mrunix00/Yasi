@@ -1,18 +1,16 @@
 #ifndef YASI_EQUALS_H
 #define YASI_EQUALS_H
 
-#include "../compiler/Compiler.h"
 #include "bytecode/instructions/Instruction.h"
-#include "parser/SyntaxTreeNode.h"
 
 namespace Bytecode {
     class Equals final : public Instruction {
     public:
         Equals() { type = InstructionType::Equals; };
-        void execute(Bytecode::VM *vm) override {
-            auto object1 = vm->stackPop();
-            auto object2 = vm->stackPop();
-            auto result = new StackObject(
+        void execute(VM *vm) override {
+            const auto object1 = vm->stackPop();
+            const auto object2 = vm->stackPop();
+            const auto result = new StackObject(
                     new Literal(object1->literal->int_literal ==
                                 object2->literal->int_literal));
             vm->stackPush(result);

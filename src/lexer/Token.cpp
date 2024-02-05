@@ -3,9 +3,9 @@
 #include <sstream>
 
 Token::Token(
-        Token::TokenType type,
+        const TokenType type,
         std::string *token,
-        int line, int column)
+        const int line, const int column)
     : type(type),
       token(token),
       line(line), column(column) {
@@ -17,22 +17,22 @@ Token::Token(
 }
 
 Token::Token(
-        Token::TokenType type,
+        const TokenType type,
         std::string *token)
     : type(type),
       token(token) {
-    if (type == Token::Integer) {
+    if (type == Integer) {
         integer = std::stoi(*token);
-    } else if (type == Token::Decimal) {
+    } else if (type == Decimal) {
         decimal = std::stof(*token);
     }
 }
 
 std::string *Token::asString() {
-    if (token == nullptr && type != Token::String) {
-        if (type == Token::Integer) {
+    if (token == nullptr && type != String) {
+        if (type == Integer) {
             token = new std::string(std::to_string(integer));
-        } else if (type == Token::Decimal) {
+        } else if (type == Decimal) {
             std::stringstream s;
             s << decimal;
             token = new std::string(s.str());
@@ -42,14 +42,14 @@ std::string *Token::asString() {
 }
 
 int Token::asInteger() const {
-    if (type == Token::Decimal)
-        return (int) decimal;
+    if (type == Decimal)
+        return static_cast<int>(decimal);
     return integer;
 }
 
 float Token::asDecimal() const {
-    if (type == Token::Integer)
-        return (float) integer;
+    if (type == Integer)
+        return static_cast<float>(integer);
     return decimal;
 }
 
@@ -68,27 +68,27 @@ bool Token::operator==(const Token &object) const {
     }
 }
 Token::Token(
-        Token::TokenType type,
+        const TokenType type,
         const std::string &token)
     : type(type),
       token(new std::string(token)) {
-    if (type == Token::Integer) {
+    if (type == Integer) {
         integer = std::stoi(token);
-    } else if (type == Token::Decimal) {
+    } else if (type == Decimal) {
         decimal = std::stof(token);
     }
 }
 Token::Token(
-        TokenType type,
+        const TokenType type,
         const std::string &token,
-        int line,
-        int column)
+        const int line,
+        const int column)
     : type(type),
       token(new std::string(token)),
       line(line), column(column) {
-    if (type == Token::Integer) {
+    if (type == Integer) {
         integer = std::stoi(token);
-    } else if (type == Token::Decimal) {
+    } else if (type == Decimal) {
         decimal = std::stof(token);
     }
 }

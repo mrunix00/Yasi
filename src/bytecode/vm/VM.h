@@ -12,11 +12,11 @@ namespace Bytecode {
 
     public:
         VM() = default;
-        StackObject *stackTop();
+        [[nodiscard]] StackObject *stackTop() const;
         void stackPush(StackObject *object);
         StackObject* stackPop();
         void setGlobal(size_t i, StackObject *sObject);
-        StackObject* getGlobal(size_t i);
+        [[nodiscard]] StackObject* getGlobal(size_t i) const;
     };
 }// namespace Bytecode
 

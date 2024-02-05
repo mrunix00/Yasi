@@ -5,15 +5,14 @@
 
 namespace Bytecode {
     class StackObject {
-
     public:
+        Literal *literal;
         ~StackObject() { delete literal; }
         explicit StackObject(Literal *literal) : literal(literal){};
 
-        inline bool operator==(const StackObject& so) {
+        bool operator==(const StackObject& so) const {
             return *so.literal == *literal;
         }
-        Literal *literal;
     };
 }// namespace Bytecode
 

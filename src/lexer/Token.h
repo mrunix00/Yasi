@@ -25,7 +25,7 @@ public:
     int line = 0;
     int column = 0;
 
-    Token() : type(Token::Invalid) {}
+    Token() : type(Invalid) {}
 
     Token(TokenType type, std::string *token);
     Token(TokenType type, const std::string &token);
@@ -33,14 +33,14 @@ public:
     Token(TokenType type, std::string *token,
           int line, int column);
 
-    explicit Token(int token)
-        : type(Token::Integer), integer(token) {}
+    explicit Token(const int token)
+        : integer(token), type(Integer) {}
 
-    explicit Token(float token)
-        : type(Token::Decimal), decimal(token) {}
+    explicit Token(const float token)
+        : decimal(token), type(Decimal) {}
 
-    int asInteger() const;
-    float asDecimal() const;
+    [[nodiscard]] int asInteger() const;
+    [[nodiscard]] float asDecimal() const;
     std::string *asString();
 
     bool operator==(const Token &object) const;

@@ -25,11 +25,14 @@ namespace Bytecode {
     };
 
     class Instruction {
+    protected:
+        ~Instruction() = default;
+
     public:
         InstructionType type;
         Instruction() : type(InstructionType::Unknown){};
         [[nodiscard]] virtual std::string toString() const = 0;
-        virtual void execute(Bytecode::VM *vm) = 0;
+        virtual void execute(VM *vm) = 0;
         virtual bool operator==(const Instruction &instruction) const = 0;
     };
 }// namespace Bytecode

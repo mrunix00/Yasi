@@ -12,7 +12,7 @@ public:
     std::string message;
 
     explicit SyntaxError(std::string message) : message(std::move(message)) {}
-    SyntaxError(std::string message, int line, int column)
+    SyntaxError(std::string message, const int line, const int column)
         : message(std::move(message)), line(line), column(column) {}
 };
 

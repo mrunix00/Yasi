@@ -2,16 +2,15 @@
 #define YASI_SYNTAXTREENODE_H
 
 #include "lexer/Lexer.h"
-#include <utility>
 #include <vector>
 
 class SyntaxTreeNode {
 public:
     Token *token;
-    std::vector<SyntaxTreeNode*> children;
+    std::vector<SyntaxTreeNode *> children;
 
-    SyntaxTreeNode() : token(new Token()) {};
-    SyntaxTreeNode(Token* token, const std::vector<SyntaxTreeNode*> &children)
+    SyntaxTreeNode() : token(new Token()){};
+    SyntaxTreeNode(Token *token, const std::vector<SyntaxTreeNode *> &children)
         : token(token), children(children) {}
 
     explicit SyntaxTreeNode(Token *token) : token(token) {}
@@ -20,8 +19,8 @@ public:
         if (*token == *node.token) {
             for (auto i = 0; i < children.size(); i++) {
                 auto child1 = *node.children[i];
-                auto child2 = *children[i];
-                if (!(child1 == child2)) return false;
+                if (auto child2 = *children[i]; child1 != child2)
+                    return false;
             }
             return true;
         }
