@@ -4,18 +4,19 @@
 #include "Function.h"
 #include "bytecode/instructions/Multiply.h"
 
-static inline bool is_multiplication_optimizable(const std::vector<SyntaxTreeNode *> &args) {
-    for (const auto arg: args) {
+static bool is_multiplication_optimizable(const std::vector<SyntaxTreeNode *> &args) {
+    return std::all_of(args.begin(), args.end(), [](const SyntaxTreeNode *arg) {
         if (!arg->children.empty()) {
-            if (!is_multiplication_optimizable(arg->children)) return false;
-        } else if (arg->token->type == Token::Symbol)
-            return false;
-    }
-    return true;
+            if (!is_addition_optimizable(arg->children)) return false;
+        } else {
+            return arg->token->type != Token::Symbol;
+        }
+        return true;
+    });
 }
 
 namespace Bytecode::BuiltinFunctions {
-    class Multiply : public Function {
+    class Multiply final : public Function {
         void compile(
                 const std::vector<SyntaxTreeNode *> &args,
                 Compiler &compiler,
@@ -27,7 +28,7 @@ namespace Bytecode::BuiltinFunctions {
                     if (!arg->children.empty()) {
                         auto part = std::vector<Instruction *>();
                         compiler.compile(*arg, segment, part);
-                        result *= ((LoadLiteral *) part[0])->value;
+                        result *= static_cast<LoadLiteral *>(part[0])->value;
                     } else {
                         result *= arg->token->asInteger();
                     }

@@ -8,6 +8,7 @@
 namespace Bytecode::BuiltinFunctions {
     class Function {
     public:
+        virtual ~Function() = default;
         virtual void compile(
                 const std::vector<SyntaxTreeNode *> &args,
                 Compiler &compiler,
