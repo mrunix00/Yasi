@@ -2,21 +2,9 @@
 #define YASI_ADD_FUNCTION_H
 
 #include "./Function.h"
+#include "bytecode/compiler/CompilerUtils.h"
 #include "bytecode/instructions/Add.h"
 #include "bytecode/instructions/LoadLiteral.h"
-
-#include <algorithm>
-
-static bool is_addition_optimizable(const std::vector<SyntaxTreeNode *> &args) {
-    return std::all_of(args.begin(), args.end(), [](const SyntaxTreeNode *arg) {
-        if (!arg->children.empty()) {
-            if (!is_addition_optimizable(arg->children)) return false;
-        } else {
-            return arg->token->type != Token::Symbol;
-        }
-        return true;
-    });
-}
 
 namespace Bytecode::BuiltinFunctions {
     class Add final : public Function {
@@ -25,7 +13,7 @@ namespace Bytecode::BuiltinFunctions {
                 Compiler &compiler,
                 std::vector<Instruction *> &instructions,
                 Segment *segment) override {
-            if (compiler.optimization && is_addition_optimizable(args)) {
+            if (compiler.optimization && is_optimizable(args)) {
                 int result = 0;
                 for (const auto arg: args) {
                     if (!arg->children.empty()) {
