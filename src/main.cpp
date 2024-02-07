@@ -23,7 +23,7 @@ struct options {
 
 void exec_program(const std::string &program, struct options opts) {
     static auto *stdOut = new StdOut;
-    auto expressions = break_lines(program);
+    const auto expressions = break_lines(program);
 
     for (const auto &expression: expressions) {
         auto tokens = Lexer::tokenize(expression);
@@ -32,7 +32,7 @@ void exec_program(const std::string &program, struct options opts) {
                 printTokens(stdOut, tokens);
             }
 
-            auto ast = Parser::parse(tokens);
+            const auto ast = Parser::parse(tokens);
             if (opts.displayAST && ast != nullptr) {
                 print_ast(stdOut, *ast);
             }
@@ -60,8 +60,8 @@ void exec_program(const std::string &program, struct options opts) {
                     }
                 }
             } else {
-                auto result = RecursiveEvaluation::evaluate(ast);
-                if (result != nullptr && (*result).token->type != Token::Invalid)
+                if (const auto result = RecursiveEvaluation::evaluate(ast);
+                    result != nullptr && result->token->type != Token::Invalid)
                     std::cout << *result->token->asString() << '\n';
             }
         } catch (SyntaxError &error) {
@@ -113,7 +113,7 @@ int main(int argc, char *argv[]) {
         while (true) {
             try {
                 userInput = readCommand();
-            } catch (ProgramExit &exception) {
+            } catch (ProgramExit &) {
                 return EXIT_SUCCESS;
             }
 

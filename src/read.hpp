@@ -1,3 +1,4 @@
+#pragma once
 #include <exception>
 #include <string>
 
@@ -6,7 +7,7 @@ char *linenoise(const char *);
 int linenoiseHistoryAdd(char *);
 }
 
-class ProgramExit : std::exception {
+class ProgramExit final : std::exception {
 };
 
 std::string readCommand();

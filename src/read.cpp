@@ -2,7 +2,7 @@
 #include <stack>
 #include <string>
 
-std::string readLine(bool displayLinePointer) {
+std::string readLine(const bool displayLinePointer) {
     char *input;
     if ((input = linenoise(displayLinePointer ? ">>> " : "")) == nullptr) {
         throw ProgramExit();
@@ -11,7 +11,7 @@ std::string readLine(bool displayLinePointer) {
     return input;
 }
 
-int checkParenthesis(std::string input) {
+size_t checkParenthesis(const std::string &input) {
     std::stack<char> parenthesis_stack;
     for (auto c : input) {
         if (c == '(') parenthesis_stack.push(c);
@@ -23,7 +23,7 @@ int checkParenthesis(std::string input) {
 std::string readCommand() {
     auto command = readLine(true);
     while (checkParenthesis(command) > 0) {
-        command = command + '\n' + readLine(false);
+        command += '\n' + readLine(false);
     }
     return command;
 }
