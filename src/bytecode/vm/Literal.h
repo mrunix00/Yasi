@@ -1,5 +1,4 @@
-#ifndef YASI_LITERAL_H
-#define YASI_LITERAL_H
+#pragma once
 
 namespace Bytecode {
     enum class Boolean {
@@ -33,5 +32,3 @@ namespace Bytecode {
         }
     };
 }// namespace Bytecode
-
-#endif//YASI_LITERAL_H

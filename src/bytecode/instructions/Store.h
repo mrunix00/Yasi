@@ -1,5 +1,4 @@
-#ifndef YASI_STORE_H
-#define YASI_STORE_H
+#pragma once
 
 #include "Instruction.h"
 #include <string>
@@ -23,5 +22,3 @@ namespace Bytecode {
         }
     };
 }// namespace Bytecode
-
-#endif//YASI_STORE_H

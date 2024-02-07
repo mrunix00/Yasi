@@ -1,5 +1,4 @@
-#ifndef YASI_SUBTRACT_FUNCTION_H
-#define YASI_SUBTRACT_FUNCTION_H
+#pragma once
 
 #include "Function.h"
 #include "bytecode/instructions/Subtract.h"
@@ -21,4 +20,3 @@ namespace Bytecode::BuiltinFunctions {
         }
     };
 }// namespace Bytecode::BuiltinFunctions
-#endif//YASI_SUBTRACT_FUNCTION_H

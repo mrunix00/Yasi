@@ -1,5 +1,4 @@
-#ifndef YASI_STACKOBJECT_H
-#define YASI_STACKOBJECT_H
+#pragma once
 
 #include "Literal.h"
 
@@ -15,5 +14,3 @@ namespace Bytecode {
         }
     };
 }// namespace Bytecode
-
-#endif//YASI_STACKOBJECT_H

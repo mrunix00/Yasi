@@ -1,3 +1,5 @@
+#include "bytecode/compiler/Compiler.h"
+#include "bytecode/compiler/Program.h"
 #include "bytecode/compiler/Segment.h"
 #include "bytecode/instructions/Add.h"
 #include "bytecode/instructions/Call.h"
@@ -66,7 +68,7 @@ TEST(compiler_functions, FunctionDefinitionWithMultipleArgs) {
                             }),
             });
 
-    auto expected_result = Program(
+    const auto expected_result = Program(
             {
                     new Segment({}),
                     new Segment({
@@ -107,7 +109,7 @@ TEST(compiler_functions, SimpleFunctionCall) {
                     new SyntaxTreeNode(new Token(Token::Integer, "15")),
             });
 
-    auto expected_result = Program(
+    const auto expected_result = Program(
             {
                     new Segment({
                             new LoadLiteral(15),
@@ -165,7 +167,7 @@ TEST(compiler_functions, RecursiveFunction) {
                             }),
             });
 
-    auto expected_result = Program(
+    const auto expected_result = Program(
             {
                     new Segment({}),
                     new Segment({
@@ -222,7 +224,7 @@ TEST(compiler_functions, MultipleFunctionsDefinitions) {
                             }),
             });
 
-    auto expected_result = Program(
+    const auto expected_result = Program(
             {
                     new Segment({}),
                     new Segment({
@@ -237,7 +239,7 @@ TEST(compiler_functions, MultipleFunctionsDefinitions) {
                     }),
             });
 
-    Compiler compiler = Compiler();
+    auto compiler = Compiler();
     compiler.compile(first_function);
     compiler.compile(second_function);
 

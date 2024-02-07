@@ -1,11 +1,10 @@
-#ifndef YASI_DEFINE_FUNCTION_H
-#define YASI_DEFINE_FUNCTION_H
+#pragma once
 
 #include "Function.h"
 #include "bytecode/instructions/StoreGlobal.h"
 
 namespace Bytecode::BuiltinFunctions {
-    class Define : public Function {
+    class Define final : public Function {
         void compile(
                 const std::vector<SyntaxTreeNode *> &args,
                 Compiler &compiler,
@@ -25,5 +24,3 @@ namespace Bytecode::BuiltinFunctions {
         }
     };
 }// namespace Bytecode::BuiltinFunctions
-
-#endif//YASI_DEFINE_FUNCTION_H

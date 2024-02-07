@@ -1,8 +1,9 @@
+#pragma once
 #include "recursive_evaluation/builtin_functions/Function.h"
 #include <string>
 
 namespace RecursiveEvaluation {
-    class Print : public Function {
+    class Print final : public Function {
     public:
         const std::string &getName() override {
             static const std::string name = "print";

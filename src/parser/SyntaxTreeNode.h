@@ -1,5 +1,4 @@
-#ifndef YASI_SYNTAXTREENODE_H
-#define YASI_SYNTAXTREENODE_H
+#pragma once
 
 #include "lexer/Lexer.h"
 #include <vector>
@@ -32,4 +31,3 @@ public:
     }
 };
 
-#endif

@@ -1,5 +1,4 @@
-#ifndef YASI_IFFUNCTION_H
-#define YASI_IFFUNCTION_H
+#pragma once
 
 #include "Function.h"
 #include "bytecode/instructions/CondJumpIfNot.h"
@@ -33,5 +32,3 @@ namespace Bytecode::BuiltinFunctions {
         }
     };
 }// namespace Bytecode::BuiltinFunctions
-
-#endif//YASI_IFFUNCTION_H

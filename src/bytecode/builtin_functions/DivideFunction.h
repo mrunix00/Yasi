@@ -1,11 +1,10 @@
-#ifndef YASI_DIVIDE_FUNCTION_H
-#define YASI_DIVIDE_FUNCTION_H
+#pragma once
 
 #include "Function.h"
 #include "bytecode/instructions/Divide.h"
 
 namespace Bytecode::BuiltinFunctions {
-    class Divide : public Function {
+    class Divide final : public Function {
         void compile(
                 const std::vector<SyntaxTreeNode *> &args,
                 Compiler &compiler,
@@ -21,4 +20,3 @@ namespace Bytecode::BuiltinFunctions {
         }
     };
 }// namespace Bytecode::BuiltinFunctions
-#endif//YASI_DIVIDE_FUNCTION_H

@@ -1,6 +1,5 @@
+#pragma once
 #include "builtin_functions/Function.h"
-#include <stack>
-#include <unordered_map>
 
 namespace RecursiveEvaluation {
     class DefinitionsTable {

@@ -1,5 +1,4 @@
-#ifndef YASI_INTERPRETER_H
-#define YASI_INTERPRETER_H
+#pragma once
 
 #include "VM.h"
 #include "bytecode/compiler/Program.h"
@@ -16,5 +15,3 @@ namespace Bytecode {
         VM vm;
     };
 }// namespace Bytecode
-
-#endif//YASI_INTERPRETER_H

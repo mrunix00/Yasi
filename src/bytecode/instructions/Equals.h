@@ -1,5 +1,4 @@
-#ifndef YASI_EQUALS_H
-#define YASI_EQUALS_H
+#pragma once
 
 #include "bytecode/instructions/Instruction.h"
 
@@ -21,4 +20,3 @@ namespace Bytecode {
         }
     };
 }// namespace Bytecode
-#endif//YASI_EQUALS_H

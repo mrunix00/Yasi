@@ -1,5 +1,4 @@
-#ifndef YASI_INSTRUCTION_H
-#define YASI_INSTRUCTION_H
+#pragma once
 
 #include "bytecode/vm/VM.h"
 #include <string>
@@ -36,4 +35,3 @@ namespace Bytecode {
         virtual bool operator==(const Instruction &instruction) const = 0;
     };
 }// namespace Bytecode
-#endif

@@ -1,5 +1,4 @@
-#ifndef YASI_LEXER_H
-#define YASI_LEXER_H
+#pragma once
 
 #include "Token.h"
 #include <sstream>
@@ -11,4 +10,3 @@ public:
     static std::vector<Token*> tokenize(const std::string &line);
 };
 
-#endif

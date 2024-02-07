@@ -1,6 +1,4 @@
-#ifndef YASI_CONDJUMPIFNOT_H
-#define YASI_CONDJUMPIFNOT_H
-
+#pragma once
 #include "Instruction.h"
 namespace Bytecode {
     class CondJumpIfNot final : public Instruction {
@@ -18,5 +16,3 @@ namespace Bytecode {
         }
     };
 }// namespace Bytecode
-
-#endif//YASI_CONDJUMPIFNOT_H

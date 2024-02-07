@@ -17,4 +17,13 @@ namespace Bytecode {
         return -1;
     }
 
+    bool Program::operator==(const Program &program) const {
+        if (segments.size() != program.segments.size())
+            return false;
+        for (size_t i = 0; i < segments.size(); i++)
+            if (!(*program.segments[i] == *segments[i]))
+                return false;
+        return true;
+    }
+
 }// namespace Bytecode

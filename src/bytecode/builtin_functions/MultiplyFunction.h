@@ -1,5 +1,4 @@
-#ifndef YASI_MULTIPLY_FUNCTION_H
-#define YASI_MULTIPLY_FUNCTION_H
+#pragma once
 
 #include "Function.h"
 #include "bytecode/compiler/CompilerUtils.h"
@@ -36,5 +35,3 @@ namespace Bytecode::BuiltinFunctions {
         }
     };
 }// namespace Bytecode::BuiltinFunctions
-
-#endif//YASI_MULTIPLY_FUNCTION_H

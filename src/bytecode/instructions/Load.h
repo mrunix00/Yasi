@@ -1,5 +1,4 @@
-#ifndef YASI_LOAD_H
-#define YASI_LOAD_H
+#pragma once
 
 #include "Instruction.h"
 
@@ -19,5 +18,3 @@ namespace Bytecode {
         }
     };
 }// namespace Bytecode
-
-#endif

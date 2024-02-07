@@ -1,11 +1,10 @@
-#ifndef YASI_SYNTAXERROR_H
-#define YASI_SYNTAXERROR_H
+#pragma once
 
 #include <exception>
 #include <string>
 #include <utility>
 
-class SyntaxError : public std::exception {
+class SyntaxError final : public std::exception {
 public:
     int line = 0;
     int column = 0;
@@ -13,7 +12,5 @@ public:
 
     explicit SyntaxError(std::string message) : message(std::move(message)) {}
     SyntaxError(std::string message, const int line, const int column)
-        : message(std::move(message)), line(line), column(column) {}
+        : line(line), column(column), message(std::move(message)) {}
 };
-
-#endif

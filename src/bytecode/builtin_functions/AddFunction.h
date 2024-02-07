@@ -1,5 +1,4 @@
-#ifndef YASI_ADD_FUNCTION_H
-#define YASI_ADD_FUNCTION_H
+#pragma once
 
 #include "./Function.h"
 #include "bytecode/compiler/CompilerUtils.h"
@@ -37,4 +36,3 @@ namespace Bytecode::BuiltinFunctions {
         }
     };
 }// namespace Bytecode::BuiltinFunctions
-#endif//YASI_ADD_FUNCTION_H

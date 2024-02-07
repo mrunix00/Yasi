@@ -1,5 +1,4 @@
-#ifndef YASI_LOADGLOBAL_H
-#define YASI_LOADGLOBAL_H
+#pragma once
 
 #include "Instruction.h"
 
@@ -21,5 +20,3 @@ namespace Bytecode {
         }
     };
 }// namespace Bytecode
-
-#endif//YASI_LOADGLOBAL_H

@@ -1,5 +1,4 @@
-#ifndef YASI_LESSTHAN_FUNCTION_H
-#define YASI_LESSTHAN_FUNCTION_H
+#pragma once
 
 #include "Function.h"
 #include "bytecode/instructions/LessThan.h"
@@ -20,4 +19,3 @@ namespace Bytecode::BuiltinFunctions {
         }
     };
 }// namespace Bytecode::BuiltinFunctions
-#endif//YASI_LESSTHAN_FUNCTION_H

@@ -1,9 +1,7 @@
-#ifndef YASI_SEGMENT_H
-#define YASI_SEGMENT_H
+#pragma once
 
 #include "bytecode/instructions/Instruction.h"
 #include <unordered_map>
-#include <utility>
 #include <vector>
 
 namespace Bytecode {
@@ -23,7 +21,7 @@ namespace Bytecode {
             return -1;
         }
 
-        inline bool operator==(const Segment &segment) const {
+        bool operator==(const Segment &segment) const {
             if (segment.instructions.size() != instructions.size())
                 return false;
             for (size_t i = 0; i < instructions.size(); i++) {
@@ -35,5 +33,3 @@ namespace Bytecode {
         std::vector<Instruction *> instructions;
     };
 }// namespace Bytecode
-
-#endif//YASI_SEGMENT_H

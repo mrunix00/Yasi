@@ -1,5 +1,4 @@
-#ifndef YASI_LESS_THAN_HH
-#define YASI_LESS_THAN_HH
+#pragma once
 
 #include "parser/SyntaxTreeNode.h"
 #include "recursive_evaluation/builtin_functions/Function.h"
@@ -7,7 +6,7 @@
 #include <vector>
 
 namespace RecursiveEvaluation {
-    class LessThan : public Function {
+    class LessThan final : public Function {
     public:
         const std::string &getName() override {
             static const std::string name = "<";
@@ -16,5 +15,3 @@ namespace RecursiveEvaluation {
         SyntaxTreeNode *evaluate(const std::vector<SyntaxTreeNode *> &args) override;
     };
 }// namespace RecursiveEvaluation
-
-#endif

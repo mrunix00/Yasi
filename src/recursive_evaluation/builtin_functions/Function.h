@@ -1,5 +1,4 @@
-#ifndef YASI_FUNCTION_H
-#define YASI_FUNCTION_H
+#pragma once
 
 #include "parser/SyntaxTreeNode.h"
 #include <string>
@@ -13,5 +12,3 @@ namespace RecursiveEvaluation {
                 const std::vector<SyntaxTreeNode*> &args) = 0;
     };
 }
-
-#endif

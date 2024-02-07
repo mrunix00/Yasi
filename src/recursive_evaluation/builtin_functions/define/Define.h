@@ -1,11 +1,11 @@
+#pragma once
 #include <utility>
 
 #include "parser/SyntaxTreeNode.h"
-#include "recursive_evaluation/RecursiveEvaluation.h"
 #include "recursive_evaluation/builtin_functions/Function.h"
 
 namespace RecursiveEvaluation {
-    class Variable : public RecursiveEvaluation::Function {
+    class Variable final : public Function {
         std::string *name;
         SyntaxTreeNode *value;
 
@@ -19,7 +19,7 @@ namespace RecursiveEvaluation {
                 override { return value; };
     };
 
-    class DefinedFunction : public RecursiveEvaluation::Function {
+    class DefinedFunction final : public Function {
         std::string *name;
         SyntaxTreeNode *definition;
         std::vector<SyntaxTreeNode *> arguments;
@@ -30,13 +30,13 @@ namespace RecursiveEvaluation {
                 std::vector<SyntaxTreeNode *> args,
                 SyntaxTreeNode *definition)
             : name(name),
-              arguments(std::move(args)),
-              definition(definition) {}
+              definition(definition),
+              arguments(std::move(args)) {}
         const std::string &getName() override { return *name; }
         SyntaxTreeNode *evaluate(const std::vector<SyntaxTreeNode *> &args) override;
     };
 
-    class Define : public RecursiveEvaluation::Function {
+    class Define final : public Function {
     public:
         const std::string &getName() override {
             static const std::string name = "define";

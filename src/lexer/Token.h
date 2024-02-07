@@ -1,5 +1,4 @@
-#ifndef YASI_TOKEN_H
-#define YASI_TOKEN_H
+#pragma once
 
 #include <string>
 
@@ -46,5 +45,3 @@ public:
     bool operator==(const Token &object) const;
     Token(TokenType type, const std::string &token, int line, int column);
 };
-
-#endif

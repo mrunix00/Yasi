@@ -1,6 +1,8 @@
 #include "Define.h"
 #include "parser/SyntaxTreeNode.h"
 #include "recursive_evaluation/DefinitionsTable.h"
+#include "recursive_evaluation/RecursiveEvaluation.h"
+
 #include <vector>
 
 namespace RecursiveEvaluation {
@@ -13,7 +15,7 @@ namespace RecursiveEvaluation {
             DefinitionsTable::define(
                     new DefinedFunction(
                             args[0]->token->token,
-                            (*args[0]).children,
+                            args[0]->children,
                             args[1]));
         }
         return new SyntaxTreeNode();

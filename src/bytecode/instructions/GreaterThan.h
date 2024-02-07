@@ -1,5 +1,4 @@
-#ifndef YASI_GREATERTHAN_H
-#define YASI_GREATERTHAN_H
+#pragma once
 
 #include "bytecode/instructions/Instruction.h"
 
@@ -21,5 +20,3 @@ namespace Bytecode {
         }
     };
 }// namespace Bytecode
-
-#endif//YASI_GREATERTHAN_H

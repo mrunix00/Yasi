@@ -1,5 +1,4 @@
-#ifndef YASI_DIVIDE_H
-#define YASI_DIVIDE_H
+#pragma once
 
 #include "bytecode/instructions/Instruction.h"
 
@@ -14,5 +13,3 @@ namespace Bytecode {
         }
     };
 }// namespace Bytecode
-
-#endif//YASI_DIVIDE_H

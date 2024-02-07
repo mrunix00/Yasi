@@ -1,5 +1,4 @@
-#ifndef YASI_CALL_H
-#define YASI_CALL_H
+#pragma once
 
 #include "Instruction.h"
 namespace Bytecode {
@@ -18,5 +17,3 @@ namespace Bytecode {
         }
     };
 }// namespace Bytecode
-
-#endif//YASI_CALL_H

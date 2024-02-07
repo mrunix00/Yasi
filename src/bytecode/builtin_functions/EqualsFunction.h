@@ -1,5 +1,4 @@
-#ifndef YASI_EQUALS_FUNCTION_H
-#define YASI_EQUALS_FUNCTION_H
+#pragma once
 
 #include "Function.h"
 #include "bytecode/instructions/Equals.h"
@@ -21,4 +20,3 @@ namespace Bytecode::BuiltinFunctions {
         }
     };
 }// namespace Bytecode::BuiltinFunctions
-#endif//YASI_EQUALS_FUNCTION_H

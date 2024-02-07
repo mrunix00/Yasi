@@ -1,11 +1,10 @@
-#ifndef YASI_ADD_FUNCTION_H
-#define YASI_ADD_H
+#pragma once
 
 #include "parser/SyntaxTreeNode.h"
 #include "recursive_evaluation/builtin_functions/Function.h"
 
 namespace RecursiveEvaluation {
-    class Add : public Function {
+    class Add final : public Function {
     public:
         const std::string &getName() override {
             static const std::string name = "+";
@@ -13,6 +12,4 @@ namespace RecursiveEvaluation {
         };
         SyntaxTreeNode *evaluate(const std::vector<SyntaxTreeNode *> &args) override;
     };
-}
-
-#endif
+}// namespace RecursiveEvaluation

@@ -1,5 +1,4 @@
-#ifndef YASI_STOREGLOBAL_H
-#define YASI_STOREGLOBAL_H
+#pragma once
 
 #include "Instruction.h"
 
@@ -25,5 +24,3 @@ namespace Bytecode {
         }
     };
 }// namespace Bytecode
-
-#endif//YASI_STOREGLOBAL_H

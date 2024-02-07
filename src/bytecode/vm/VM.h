@@ -1,5 +1,4 @@
-#ifndef YASI_VM_H
-#define YASI_VM_H
+#pragma once
 
 #include "StackObject.h"
 #include <vector>
@@ -19,5 +18,3 @@ namespace Bytecode {
         [[nodiscard]] StackObject* getGlobal(size_t i) const;
     };
 }// namespace Bytecode
-
-#endif//YASI_VM_H

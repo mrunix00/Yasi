@@ -1,5 +1,4 @@
-#ifndef YASI_GREATER_THAN_FUNCTION_H
-#define YASI_GREATER_THAN_FUNCTION_H
+#pragma once
 
 #include "Function.h"
 #include "bytecode/instructions/GreaterThan.h"
@@ -21,4 +20,3 @@ namespace Bytecode::BuiltinFunctions {
         }
     };
 }// namespace Bytecode::BuiltinFunctions
-#endif//YASI_GREATER_THAN_FUNCTION_H

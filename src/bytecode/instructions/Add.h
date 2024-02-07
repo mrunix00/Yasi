@@ -1,7 +1,5 @@
-#ifndef YASI_ADD_H
-#define YASI_ADD_H
+#pragma once
 
-#include "../compiler/Compiler.h"
 #include "bytecode/instructions/Instruction.h"
 
 namespace Bytecode {
@@ -22,5 +20,3 @@ namespace Bytecode {
         }
     };
 }// namespace Bytecode
-
-#endif

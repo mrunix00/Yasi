@@ -1,3 +1,4 @@
+#include "bytecode/compiler/Compiler.h"
 #include "bytecode/compiler/Program.h"
 #include "bytecode/instructions/Add.h"
 #include "bytecode/instructions/CondJumpIfNot.h"
@@ -34,7 +35,7 @@ TEST(compiler_if, SimpleConditionalStatement) {
                     }),
             });
 
-    Compiler compiler = Compiler();
+    auto compiler = Compiler();
     compiler.compile(expression);
 
     EXPECT_EQ(expected_result == compiler.program, true);
@@ -68,7 +69,7 @@ TEST(compiler_if, SimpleConditionWithElseClause) {
                     }),
             });
 
-    Compiler compiler = Compiler();
+    auto compiler = Compiler();
     compiler.compile(expression);
 
     EXPECT_EQ(expected_result == compiler.program, true);
@@ -93,7 +94,7 @@ TEST(compiler_if, LongCondition) {
                             }),
             });
 
-    auto expected_result = Program(
+    const auto expected_result = Program(
             {
                     new Segment({
                             new LoadLiteral(20),
@@ -106,7 +107,7 @@ TEST(compiler_if, LongCondition) {
                     }),
             });
 
-    Compiler compiler = Compiler();
+    auto compiler = Compiler();
     compiler.compile(expression);
 
     EXPECT_EQ(expected_result == compiler.program, true);
@@ -137,7 +138,7 @@ TEST(compiler_if, LongConditionWithElseClause) {
                             }),
             });
 
-    auto expected_result = Program(
+    const auto expected_result = Program(
             {
                     new Segment({
                             new LoadLiteral(20),
@@ -154,7 +155,7 @@ TEST(compiler_if, LongConditionWithElseClause) {
                     }),
             });
 
-    Compiler compiler = Compiler();
+    auto compiler = Compiler();
     compiler.compile(expression);
 
     EXPECT_EQ(expected_result == compiler.program, true);

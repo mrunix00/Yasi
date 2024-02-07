@@ -1,11 +1,10 @@
-#ifndef YASI_DIVIDE_H
-#define YASI_DIVIDE_H
+#pragma once
 
 #include "parser/SyntaxTreeNode.h"
 #include "recursive_evaluation/builtin_functions/Function.h"
 
 namespace RecursiveEvaluation {
-    class Divide : public Function {
+    class Divide final : public Function {
     public:
         const std::string &getName() override {
             static const std::string name = "/";
@@ -14,5 +13,3 @@ namespace RecursiveEvaluation {
         SyntaxTreeNode *evaluate(const std::vector<SyntaxTreeNode *> &args) override;
     };
 }// namespace RecursiveEvaluation
-
-#endif

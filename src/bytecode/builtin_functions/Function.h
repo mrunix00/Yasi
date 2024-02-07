@@ -1,5 +1,4 @@
-#ifndef YASI_FUNCTION_H
-#define YASI_FUNCTION_H
+#pragma once
 
 #include "bytecode/compiler/Compiler.h"
 #include "parser/SyntaxTreeNode.h"
@@ -17,4 +16,3 @@ namespace Bytecode::BuiltinFunctions {
 
     };
 }// namespace Bytecode::BuiltinFunctions
-#endif//YASI_FUNCTION_H

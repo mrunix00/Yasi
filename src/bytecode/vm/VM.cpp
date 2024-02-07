@@ -12,7 +12,7 @@ namespace Bytecode {
         return object;
     }
 
-    void VM::setGlobal(size_t i, StackObject *sObject) {
+    void VM::setGlobal(const size_t i, StackObject *sObject) {
         if (global_registers.size() < i)
             global_registers.at(i) = sObject;
         else if (global_registers.size() == i)
