@@ -50,15 +50,17 @@ void exec_program(const std::string &program, struct options opts) {
                 if (opts.executeBytecode) {
                     static auto interpreter = Bytecode::Interpreter();
                     interpreter.execute(compiler.program);
-                    if (interpreter.vm.stackTop() != nullptr) {
-                        if (interpreter.vm.stackTop()->literal->type == Bytecode::Literal::Type::Integer)
-                            std::cout << interpreter.vm.stackTop()->literal->int_literal << '\n';
-                        if (interpreter.vm.stackTop()->literal->type == Bytecode::Literal::Type::Boolean) {
-                            if (interpreter.vm.stackTop()->literal->bool_literal == Bytecode::Boolean::True)
-                                std::cout << "true\n";
-                            else
-                                std::cout << "false\n";
-                        }
+
+                    if (interpreter.vm.stackTop() == nullptr)
+                        continue;
+
+                    if (interpreter.vm.stackTop()->literal->type == Bytecode::Literal::Type::Integer)
+                        std::cout << interpreter.vm.stackTop()->literal->int_literal << '\n';
+                    if (interpreter.vm.stackTop()->literal->type == Bytecode::Literal::Type::Boolean) {
+                        if (interpreter.vm.stackTop()->literal->bool_literal == Bytecode::Boolean::True)
+                            std::cout << "true\n";
+                        else
+                            std::cout << "false\n";
                     }
                 }
             } else {
