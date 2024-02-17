@@ -59,7 +59,7 @@ TEST(vm_conf_test, ShouldJumpToOppositeCondition) {
                             new Jump(7),
                             new LoadLiteral(10),
                     }),
-            });;
+            });
 
     const auto expected_result = new StackObject(new Literal(20));
 
