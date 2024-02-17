@@ -26,4 +26,7 @@ namespace Bytecode {
     void VM::jump(size_t line) {
         current_line = line;
     }
+    void VM::clearStack() {
+        program_stack.clear();
+    }
 }// namespace Bytecode

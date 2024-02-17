@@ -9,8 +9,9 @@ namespace Bytecode {
         Interpreter() = default;
         VM vm;
         void execute(const Program &program) {
-            for (; vm.current_line < program.segments[0]->instructions.size(); vm.current_line++)
-                program.segments[0]->instructions[vm.current_line]->execute(&vm);
+            while(vm.current_line < program.segments[0]->instructions.size()) {
+                program.segments[0]->instructions[vm.current_line++]->execute(&vm);
+            }
         }
     };
 }// namespace Bytecode

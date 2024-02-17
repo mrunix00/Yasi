@@ -62,6 +62,7 @@ void exec_program(const std::string &program, struct options opts) {
                         else
                             std::cout << "false\n";
                     }
+                    interpreter.vm.clearStack();
                 }
             } else {
                 if (const auto result = RecursiveEvaluation::evaluate(ast);
