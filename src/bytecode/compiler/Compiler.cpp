@@ -14,7 +14,6 @@
 #include "bytecode/instructions/Load.h"
 #include "bytecode/instructions/LoadGlobal.h"
 #include "bytecode/instructions/LoadLiteral.h"
-#include "bytecode/instructions/Store.h"
 
 namespace Bytecode {
     void Compiler::compile(const SyntaxTreeNode &tree) {
@@ -59,7 +58,8 @@ namespace Bytecode {
                         for (const auto &argument: tree.children)
                             compile(*argument, segment, instructions);
                         auto called_segment = program.find_function(*tree.token->asString());
-                        instructions.push_back(new Call(called_segment, 1));
+                        auto args = program.segments[called_segment]->variables_table.size();
+                        instructions.push_back(new Call(called_segment, args));
                         return;
                     }
                 }

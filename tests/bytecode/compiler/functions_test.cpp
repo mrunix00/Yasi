@@ -129,6 +129,54 @@ TEST(compiler_functions, SimpleFunctionCall) {
     EXPECT_EQ(expected_result == compiler.program, true);
 }
 
+TEST(compiler_functions, FunctionWithMultipleArgsCall) {
+    // (define (add x y) (+ x y))
+    const auto function_definition = SyntaxTreeNode(
+            new Token(Token::Symbol, "define"),
+            {
+                    new SyntaxTreeNode(
+                            new Token(Token::Symbol, "add"),
+                            {
+                                    new SyntaxTreeNode(new Token(Token::Symbol, "x")),
+                                    new SyntaxTreeNode(new Token(Token::Symbol, "y")),
+                            }),
+                    new SyntaxTreeNode(
+                            new Token(Token::Symbol, "+"),
+                            {
+                                    new SyntaxTreeNode(new Token(Token::Symbol, "x")),
+                                    new SyntaxTreeNode(new Token(Token::Symbol, "y")),
+                            }),
+            });
+
+    // (add 20 30)
+    const auto function_call = SyntaxTreeNode(
+            new Token(Token::Symbol, "add"),
+            {
+                    new SyntaxTreeNode(new Token(20)),
+                    new SyntaxTreeNode(new Token(30)),
+            });
+
+    const auto expected_result = Program(
+            {
+                    new Segment({
+                            new LoadLiteral(20),
+                            new LoadLiteral(30),
+                            new Call(1, 2),
+                    }),
+                    new Segment({
+                            new Load(0),
+                            new Load(1),
+                            new Add(),
+                    }),
+            });
+
+    Compiler compiler = Compiler();
+    compiler.compile(function_definition);
+    compiler.compile(function_call);
+
+    EXPECT_EQ(expected_result == compiler.program, true);
+}
+
 TEST(compiler_functions, RecursiveFunction) {
     // (define (sum n) (if (= n 1) 1 (+ n (sum (- n 1)))))
     const auto expression = SyntaxTreeNode(

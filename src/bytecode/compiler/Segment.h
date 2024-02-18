@@ -6,9 +6,10 @@
 
 namespace Bytecode {
     class Segment {
+    public:
+        std::vector<Instruction *> instructions;
         std::unordered_map<std::string, size_t> variables_table;
 
-    public:
         explicit Segment(const std::vector<Instruction *> &instructions)
             : instructions(instructions) {}
 
@@ -30,6 +31,5 @@ namespace Bytecode {
             }
             return true;
         }
-        std::vector<Instruction *> instructions;
     };
 }// namespace Bytecode
