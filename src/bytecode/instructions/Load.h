@@ -8,7 +8,10 @@ namespace Bytecode {
 
     public:
         explicit Load(const size_t reg) : reg(reg) { type = InstructionType::Load; };
-        void execute(VM *vm) override {}
+        void execute(VM *vm) override {
+            const auto object = vm->getLocal(reg);
+            vm->stackPush(object);
+        }
         [[nodiscard]] std::string toString() const override {
             return "Load $r" + std::to_string(reg);
         }

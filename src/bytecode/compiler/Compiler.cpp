@@ -58,7 +58,8 @@ namespace Bytecode {
                     if (program.find_function(*tree.token->token) != -1) {
                         for (const auto &argument: tree.children)
                             compile(*argument, segment, instructions);
-                        instructions.push_back(new Call(program.find_function(*tree.token->asString())));
+                        auto called_segment = program.find_function(*tree.token->asString());
+                        instructions.push_back(new Call(called_segment, 1));
                         return;
                     }
                 }

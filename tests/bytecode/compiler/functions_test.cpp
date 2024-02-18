@@ -113,7 +113,7 @@ TEST(compiler_functions, SimpleFunctionCall) {
             {
                     new Segment({
                             new LoadLiteral(15),
-                            new Call(1),
+                            new Call(1, 1),
                     }),
                     new Segment({
                             new Load(0),
@@ -181,7 +181,7 @@ TEST(compiler_functions, RecursiveFunction) {
                             new Load(0),
                             new LoadLiteral(1),
                             new Subtract(),
-                            new Call(1),
+                            new Call(1, 1),
                             new Add(),
                     }),
             });

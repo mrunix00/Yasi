@@ -24,9 +24,44 @@ namespace Bytecode {
     }
 
     void VM::jump(size_t line) {
-        current_line = line;
+        call_stack.back().current_line = line - 1;
     }
     void VM::clearStack() {
         program_stack.clear();
+    }
+
+    void VM::newStackFrame(size_t segment) {
+        local_registers.emplace_back();
+        StackFrame stackFrame;
+        stackFrame.segment = segment;
+        stackFrame.current_line = -1;
+        call_stack.emplace_back(stackFrame);
+    }
+
+    void VM::setLocal(size_t i, StackObject *sObject) {
+        auto registers = &local_registers[local_registers.size() - 1];
+        if (registers->size() < i)
+            registers->at(i) = sObject;
+        else if (registers->size() == i)
+            registers->push_back(sObject);
+    }
+
+    StackObject *VM::getLocal(size_t i) {
+        return local_registers[local_registers.size() - 1][i];
+    }
+    size_t VM::getCurrentLine() {
+        return call_stack.back().current_line;
+    }
+    size_t VM::getCurrentSegment() {
+        return call_stack.back().segment;
+    }
+    void VM::nextLine() {
+        call_stack.back().current_line++;
+    }
+    void VM::popStackFrame() {
+        if (!call_stack.empty())
+            call_stack.pop_back();
+        if (!local_registers.empty())
+            local_registers.pop_back();
     }
 }// namespace Bytecode
