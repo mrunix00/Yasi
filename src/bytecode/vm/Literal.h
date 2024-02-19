@@ -21,6 +21,12 @@ namespace Bytecode {
         explicit Literal(const Boolean b) : bool_literal(b), type(Type::Boolean) {}
         explicit Literal(const int val) : int_literal(val), type(Type::Integer) {}
 
+        [[nodiscard]] Literal* copy() const {
+            if (type == Type::Integer) return new Literal(int_literal);
+            else if (type == Type::Boolean) return new Literal(bool_literal);
+            return nullptr;
+        }
+
         bool operator==(const Literal l) const {
             if (type == l.type) {
                 if (type == Type::Boolean)

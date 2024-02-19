@@ -61,7 +61,10 @@ namespace Bytecode {
     void VM::popStackFrame() {
         if (!call_stack.empty())
             call_stack.pop_back();
-        if (!local_registers.empty())
+        if (!local_registers.empty()) {
+            for (auto r : local_registers.back())
+                delete r;
             local_registers.pop_back();
+        }
     }
 }// namespace Bytecode

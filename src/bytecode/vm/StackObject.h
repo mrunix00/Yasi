@@ -10,7 +10,6 @@ namespace Bytecode {
         explicit StackObject(Literal *literal) : literal(literal){};
 
         bool operator==(const StackObject& so) const {
-            if (this == nullptr) return false;
             return *so.literal == *literal;
         }
     };

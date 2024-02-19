@@ -12,6 +12,8 @@ namespace Bytecode {
             const auto result = new StackObject(
                     new Literal(object1->literal->int_literal ==
                                 object2->literal->int_literal));
+            delete object1;
+            delete object2;
             vm->stackPush(result);
         }
         [[nodiscard]] std::string toString() const override { return "Equals"; }
