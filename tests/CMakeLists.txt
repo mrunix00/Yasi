@@ -29,8 +29,7 @@ file(
         ./*.cpp
 )
 
-add_executable(all_tests ${SRCS}
-        bytecode/vm/calls_test.cpp)
+add_executable(all_tests ${SRCS})
 
 target_link_libraries(all_tests GTest::gtest_main GTest::gmock_main)
 
