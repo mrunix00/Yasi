@@ -14,6 +14,10 @@ namespace Bytecode {
         std::vector<Segment *> segments;
 
         Program() : segments({new Segment({})}){};
+        ~Program() {
+            for (auto segment: segments)
+                delete segment;
+        }
         explicit Program(const std::vector<Segment *> &segments) : segments(segments){};
 
         size_t declare_global(const std::string &);

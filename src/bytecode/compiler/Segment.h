@@ -12,6 +12,10 @@ namespace Bytecode {
 
         explicit Segment(const std::vector<Instruction *> &instructions)
             : instructions(instructions) {}
+        ~Segment() {
+            for (auto instruction: instructions)
+                delete instruction;
+        }
 
         size_t declare_variable(const std::string &name) {
             return variables_table[name] = variables_table.size();

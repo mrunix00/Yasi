@@ -16,6 +16,18 @@
 #include "bytecode/instructions/LoadLiteral.h"
 
 namespace Bytecode {
+    static std::unordered_map<std::string, BuiltinFunctions::Function *> builtin_instructions = {
+            {"+", new BuiltinFunctions::Add},
+            {"*", new BuiltinFunctions::Multiply},
+            {"/", new BuiltinFunctions::Divide},
+            {"-", new BuiltinFunctions::Subtract},
+            {"=", new BuiltinFunctions::Equals},
+            {"<", new BuiltinFunctions::LessThan},
+            {">", new BuiltinFunctions::GreaterThan},
+            {"define", new BuiltinFunctions::Define},
+            {"if", new BuiltinFunctions::If},
+    };
+
     void Compiler::compile(const SyntaxTreeNode &tree) {
         Compiler::compile(tree, program.segments[0]);
     }
@@ -27,18 +39,6 @@ namespace Bytecode {
     void Compiler::compile(const SyntaxTreeNode &tree,
                            Segment *segment,
                            std::vector<Instruction *> &instructions) {
-        std::unordered_map<std::string, BuiltinFunctions::Function *> builtin_instructions = {
-                {"+", new BuiltinFunctions::Add},
-                {"*", new BuiltinFunctions::Multiply},
-                {"/", new BuiltinFunctions::Divide},
-                {"-", new BuiltinFunctions::Subtract},
-                {"=", new BuiltinFunctions::Equals},
-                {"<", new BuiltinFunctions::LessThan},
-                {">", new BuiltinFunctions::GreaterThan},
-                {"define", new BuiltinFunctions::Define},
-                {"if", new BuiltinFunctions::If},
-        };
-
         switch (tree.token->type) {
             case Token::Integer:
                 instructions.push_back(new LoadLiteral(tree.token->asInteger()));
