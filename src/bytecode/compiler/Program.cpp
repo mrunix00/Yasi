@@ -1,8 +1,9 @@
 #include "Program.h"
+#include "bytecode/objects/GlobalRegister.h"
 
 namespace Bytecode {
-    size_t Program::declare_global(const std::string &name) {
-        return globals_table[name] = globals_table.size();
+    GlobalRegister *Program::declare_global(const std::string &name) {
+        return new GlobalRegister(globals_table[name] = globals_table.size());
     }
     size_t Program::declare_function(const std::string &name, Segment *segment) {
         segments.push_back(segment);
@@ -12,9 +13,10 @@ namespace Bytecode {
         if (segments_table.find(name) == segments_table.end()) return -1;
         return segments_table[name];
     }
-    size_t Program::find_global(const std::string &name) {
-        if (globals_table.find(name) != globals_table.end()) return globals_table[name];
-        return -1;
+    GlobalRegister *Program::find_global(const std::string &name) {
+        if (globals_table.find(name) != globals_table.end())
+            return new GlobalRegister(globals_table[name]);
+        return nullptr;
     }
 
     bool Program::operator==(const Program &program) const {

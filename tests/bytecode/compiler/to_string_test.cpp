@@ -41,7 +41,7 @@ TEST(instruction_to_string, divide) {
 }
 
 TEST(instruction_to_string, load) {
-    const auto instruction = Load(1);
+    const auto instruction = Load(new LocalRegister(1));
     const auto expected_result = "Load $r1";
     const auto actual_result = instruction.toString();
     EXPECT_EQ(expected_result, actual_result);
@@ -55,7 +55,7 @@ TEST(instruction_to_string, load_literal) {
 }
 
 TEST(instruction_to_string, store) {
-    const auto instruction = Store(12);
+    const auto instruction = Store(new LocalRegister(12));
     const auto expected_result = "Store $r12";
     const auto actual_result = instruction.toString();
     EXPECT_EQ(expected_result, actual_result);

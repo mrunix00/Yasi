@@ -1,23 +1,28 @@
 #pragma once
 
 #include "Instruction.h"
+#include "bytecode/objects/LocalRegister.h"
+#include "bytecode/objects/Register.h"
 
 namespace Bytecode {
     class Load final : public Instruction {
-        size_t reg;
+        Register *reg;
 
     public:
-        explicit Load(const size_t reg) : reg(reg) { type = InstructionType::Load; };
-        void execute(VM *vm) override {
-            const auto object = new StackObject(vm->getLocal(reg)->literal->copy());
-            vm->stackPush(object);
+        explicit Load(Register *reg) : reg(reg) {
+            type = InstructionType::Load;
         }
+
+        void execute(VM *vm) override {
+            vm->stackPush(reg->get(vm));
+        }
+
         [[nodiscard]] std::string toString() const override {
-            return "Load $r" + std::to_string(reg);
+            return "Load " + reg->toString();
         }
         bool operator==(const Instruction &instruction) const override {
             return instruction.type == type &&
-                dynamic_cast<const Load *>(&instruction)->reg == reg;
+                   *(dynamic_cast<const Load *>(&instruction)->reg) == *reg;
         }
     };
 }// namespace Bytecode

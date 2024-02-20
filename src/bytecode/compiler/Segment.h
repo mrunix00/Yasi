@@ -1,6 +1,7 @@
 #pragma once
 
 #include "bytecode/instructions/Instruction.h"
+#include "bytecode/objects/LocalRegister.h"
 #include <unordered_map>
 #include <vector>
 
@@ -21,9 +22,9 @@ namespace Bytecode {
             return variables_table[name] = variables_table.size();
         }
 
-        size_t find_variable(const std::string &name) {
-            if (variables_table.find(name) != variables_table.end()) return variables_table[name];
-            return -1;
+        LocalRegister* find_variable(const std::string &name) {
+            if (variables_table.find(name) != variables_table.end()) return new LocalRegister(variables_table[name]);
+            return nullptr;
         }
 
         bool operator==(const Segment &segment) const {

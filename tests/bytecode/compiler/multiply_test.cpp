@@ -1,9 +1,9 @@
 #include "bytecode/compiler/Compiler.h"
 #include "bytecode/instructions/Instruction.h"
-#include "bytecode/instructions/LoadGlobal.h"
+#include "bytecode/instructions/Load.h"
 #include "bytecode/instructions/LoadLiteral.h"
 #include "bytecode/instructions/Multiply.h"
-#include "bytecode/instructions/StoreGlobal.h"
+#include "bytecode/instructions/Store.h"
 #include "parser/SyntaxTreeNode.h"
 #include <gtest/gtest.h>
 
@@ -70,8 +70,8 @@ TEST(compiler_multiply, IgnoreOptimizationWhenNotPossible) {
     auto expected_result = Program({
             new Segment({
                     new LoadLiteral(12),
-                    new StoreGlobal(0),
-                    new LoadGlobal(0),
+                    new Store(new GlobalRegister(0)),
+                    new Load(new GlobalRegister(0)),
                     new LoadLiteral(74),
                     new Multiply(),
             }),

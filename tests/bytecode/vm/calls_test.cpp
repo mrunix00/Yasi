@@ -16,8 +16,8 @@ TEST(vm_calls_test, function_with_a_single_arg) {
                     new Call(1, 1),
             }),
             new Segment({
-                    new Load(0),
-                    new Load(0),
+                    new Load(new LocalRegister(0)),
+                    new Load(new LocalRegister(0)),
                     new Multiply(),
             }),
     });
@@ -38,8 +38,8 @@ TEST(vm_calls_test, function_with_multiple_args) {
                     new Call(1, 2),
             }),
             new Segment({
-                    new Load(0),
-                    new Load(1),
+                    new Load(new LocalRegister(0)),
+                    new Load(new LocalRegister(1)),
                     new Subtract(),
             }),
     });

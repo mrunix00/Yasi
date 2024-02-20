@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Function.h"
-#include "bytecode/instructions/StoreGlobal.h"
+#include "bytecode/instructions/Store.h"
 
 namespace Bytecode::BuiltinFunctions {
     class Define final : public Function {
@@ -13,7 +13,7 @@ namespace Bytecode::BuiltinFunctions {
             if (args[1]->children.empty()) {
                 compiler.compile(*args[1], result, instructions);
                 const auto reg = compiler.program.declare_global(*args[0]->token->token);
-                instructions.push_back(new StoreGlobal(reg));
+                instructions.push_back(new Store(reg));
             } else {
                 auto segment = new Segment({});
                 compiler.program.declare_function(*args[0]->token->asString(), segment);

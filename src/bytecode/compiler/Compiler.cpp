@@ -13,7 +13,6 @@
 #include "bytecode/instructions/Add.h"
 #include "bytecode/instructions/Call.h"
 #include "bytecode/instructions/Load.h"
-#include "bytecode/instructions/LoadGlobal.h"
 #include "bytecode/instructions/LoadLiteral.h"
 
 namespace Bytecode {
@@ -47,12 +46,12 @@ namespace Bytecode {
                 break;
             case Token::Symbol:
                 if (tree.children.empty()) {
-                    if (segment->find_variable(*tree.token->token) != -1) {
+                    if (segment->find_variable(*tree.token->token) != nullptr) {
                         instructions.push_back(new Load(segment->find_variable(*tree.token->asString())));
                         return;
                     }
-                    if (program.find_global(*tree.token->token) != -1) {
-                        instructions.push_back(new LoadGlobal(program.find_global(*tree.token->asString())));
+                    if (program.find_global(*tree.token->token) != nullptr) {
+                        instructions.push_back(new Load(program.find_global(*tree.token->asString())));
                         return;
                     }
                 } else {
