@@ -10,6 +10,7 @@ namespace Bytecode {
             LocalRegister,
             GlobalRegister,
             None,
+            StdOutRegister,
         };
         RegisterType type = None;
 

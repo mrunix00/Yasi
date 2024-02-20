@@ -9,6 +9,7 @@
 #include "bytecode/builtin_functions/IfFunction.h"
 #include "bytecode/builtin_functions/LessThanFunction.h"
 #include "bytecode/builtin_functions/MultiplyFunction.h"
+#include "bytecode/builtin_functions/PrintFunction.h"
 #include "bytecode/builtin_functions/SubtractFunction.h"
 #include "bytecode/instructions/Add.h"
 #include "bytecode/instructions/Call.h"
@@ -27,6 +28,7 @@ namespace Bytecode {
             {"define", new BuiltinFunctions::Define},
             {"if", new BuiltinFunctions::If},
             {"cond", new BuiltinFunctions::Cond},
+            {"print", new BuiltinFunctions::Print},
     };
 
     void Compiler::compile(const SyntaxTreeNode &tree) {
