@@ -1,5 +1,6 @@
 #include "Compiler.h"
 #include "bytecode/builtin_functions/AddFunction.h"
+#include "bytecode/builtin_functions/CondFunction.h"
 #include "bytecode/builtin_functions/DefineFunction.h"
 #include "bytecode/builtin_functions/DivideFunction.h"
 #include "bytecode/builtin_functions/EqualsFunction.h"
@@ -26,6 +27,7 @@ namespace Bytecode {
             {">", new BuiltinFunctions::GreaterThan},
             {"define", new BuiltinFunctions::Define},
             {"if", new BuiltinFunctions::If},
+            {"cond", new BuiltinFunctions::Cond},
     };
 
     void Compiler::compile(const SyntaxTreeNode &tree) {
