@@ -1,4 +1,4 @@
-# Yasi (Yet (Another (Scheme (Interpreter))))
+# Yasi (Yet (Another (Scheme (Implementation))))
 
 ### ⚠️ Warning
 This project is written for educational purposes and it sucks so much you wouldn't use it for any practical or serious projects.
