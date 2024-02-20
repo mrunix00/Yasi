@@ -31,9 +31,8 @@ TEST(compiler_cond, CompileSimpleCondition) {
                             new LoadLiteral(20),
                             new LoadLiteral(10),
                             new GreaterThan(),
-                            new CondJumpIfNot(6),
+                            new CondJumpIfNot(5),
                             new LoadLiteral(20),
-                            new Jump(6),
                     }),
             });
 
@@ -102,11 +101,10 @@ TEST(compiler_cond, LongCondition) {
                             new LoadLiteral(20),
                             new LoadLiteral(10),
                             new GreaterThan(),
-                            new CondJumpIfNot(8),
+                            new CondJumpIfNot(7),
                             new LoadLiteral(10),
                             new LoadLiteral(10),
                             new Add(),
-                            new Jump(8),
                     }),
             });
 

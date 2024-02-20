@@ -29,7 +29,7 @@ namespace Bytecode::BuiltinFunctions {
                 compiler.compile(*args.back(), result, default_case);
             }
 
-            size_t end = instructions.size() + default_case.size();
+            size_t end = instructions.size() + default_case.size() - default_case.empty();
             for (size_t i = 0; i < conditions.size(); i++) {
                 end += conditions[i].size();
                 end += cond_success[i].size();
@@ -43,12 +43,13 @@ namespace Bytecode::BuiltinFunctions {
                         new CondJumpIfNot(
                                 result->instructions.size() +
                                 cond_success[i].size() +
-                                2));
+                                2 - default_case.empty()));
 
                 for (const auto instruction: cond_success[i])
                     result->instructions.push_back(instruction);
 
-                result->instructions.push_back(new Jump(end));
+                if (!default_case.empty())
+                    result->instructions.push_back(new Jump(end));
             }
 
             for (const auto instruction: default_case)
