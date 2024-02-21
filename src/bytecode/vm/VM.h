@@ -1,8 +1,8 @@
 #pragma once
 
-#include "StackObject.h"
-#include <vector>
+#include "bytecode/objects/StackObject.h"
 #include <cstddef>
+#include <vector>
 
 namespace Bytecode {
     struct StackFrame {

@@ -22,7 +22,7 @@ TEST(vm_calls_test, function_with_a_single_arg) {
             }),
     });
 
-    const auto expected_result = new StackObject(new Literal(100));
+    const auto expected_result = new StackObject(new NumberLiteral(100));
 
     auto interpreter = Interpreter();
     interpreter.execute(program);
@@ -44,7 +44,7 @@ TEST(vm_calls_test, function_with_multiple_args) {
             }),
     });
 
-    const auto expected_result = new StackObject(new Literal(40));
+    const auto expected_result = new StackObject(new NumberLiteral(40));
 
     auto interpreter = Interpreter();
     interpreter.execute(program);

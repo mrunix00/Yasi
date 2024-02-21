@@ -2,10 +2,9 @@
 #include "bytecode/instructions/Load.h"
 #include "bytecode/instructions/LoadLiteral.h"
 #include "bytecode/instructions/Store.h"
+#include "bytecode/objects/Literal.h"
+#include "bytecode/objects/StackObject.h"
 #include "bytecode/vm/Interpreter.h"
-#include "bytecode/vm/Literal.h"
-#include "bytecode/vm/StackObject.h"
-#include "bytecode/vm/VM.h"
 #include <gtest/gtest.h>
 
 using namespace Bytecode;
@@ -15,7 +14,7 @@ TEST(vm_load_test, ShouldLoadLiteralIntoStack) {
             new Segment({new LoadLiteral(10)}),
     });
 
-    const auto expected_result = new StackObject(new Literal(10));
+    const auto expected_result = new StackObject(new NumberLiteral(10));
 
     auto interpreter = Interpreter();
     interpreter.execute(program);
@@ -32,7 +31,7 @@ TEST(vm_load_test, ShouldLoadGlobalVariableIntoStack) {
             }),
     });
 
-    const auto expected_result = new StackObject(new Literal(10));
+    const auto expected_result = new StackObject(new NumberLiteral(10));
 
     auto interpreter = Interpreter();
     interpreter.execute(program);

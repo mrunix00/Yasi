@@ -1,15 +1,15 @@
 #pragma once
 
-#include "Literal.h"
+#include "bytecode/objects/Literal.h"
 
 namespace Bytecode {
     class StackObject {
     public:
         Literal *literal;
         ~StackObject() { delete literal; }
-        explicit StackObject(Literal *literal) : literal(literal){};
+        explicit StackObject(Literal *literal) : literal(literal) {};
 
-        bool operator==(const StackObject& so) const {
+        bool operator==(const StackObject &so) const {
             return *so.literal == *literal;
         }
     };

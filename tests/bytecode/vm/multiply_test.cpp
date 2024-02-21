@@ -15,7 +15,7 @@ TEST(vm_multiply_test, ShouldMultiplyTwoLiterals) {
             }),
     });
 
-    const auto expected_result = new StackObject(new Literal(200));
+    const auto expected_result = new StackObject(new NumberLiteral(200));
 
     auto interpreter = Interpreter();
     interpreter.execute(program);

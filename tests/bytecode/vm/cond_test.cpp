@@ -21,7 +21,7 @@ TEST(vm_cond_test, ShouldNotJumpOnTrueCondition) {
                     }),
             });
 
-    const auto expected_result = new StackObject(new Literal(20));
+    const auto expected_result = new StackObject(new NumberLiteral(20));
 
     auto interpreter = Interpreter();
     interpreter.execute(program);
@@ -61,7 +61,7 @@ TEST(vm_conf_test, ShouldJumpToOppositeCondition) {
                     }),
             });
 
-    const auto expected_result = new StackObject(new Literal(20));
+    const auto expected_result = new StackObject(new NumberLiteral(20));
 
     auto interpreter = Interpreter();
     interpreter.execute(program);

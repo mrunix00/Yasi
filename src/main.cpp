@@ -1,4 +1,5 @@
 #include "bytecode/compiler/Compiler.h"
+#include "bytecode/objects/NumberLiteral.h"
 #include "bytecode/vm/Interpreter.h"
 #include "exceptions/SyntaxError.h"
 #include "lexer/Lexer.h"
@@ -54,14 +55,11 @@ void exec_program(const std::string &program, struct options opts) {
                     if (interpreter.vm.stackTop() == nullptr)
                         continue;
 
-                    if (interpreter.vm.stackTop()->literal->type == Bytecode::Literal::Type::Integer)
-                        std::cout << interpreter.vm.stackTop()->literal->int_literal << '\n';
-                    if (interpreter.vm.stackTop()->literal->type == Bytecode::Literal::Type::Boolean) {
-                        if (interpreter.vm.stackTop()->literal->bool_literal == Bytecode::Boolean::True)
-                            std::cout << "true\n";
-                        else
-                            std::cout << "false\n";
-                    }
+                    if (interpreter.vm.stackTop()->literal->type == Bytecode::Literal::Type::Number)
+                        std::cout << ((Bytecode::NumberLiteral*) interpreter.vm.stackTop()->literal)->asNumber() << '\n';
+                    else
+                        std::cout << interpreter.vm.stackTop()->literal->toString() << '\n';
+
                     interpreter.vm.clearStack();
                 }
             } else {

@@ -15,7 +15,7 @@ namespace Bytecode {
         }
 
         void store(VM *vm) override {
-            std::cout << vm->stackPop()->literal->int_literal << '\n';
+            std::cout << vm->stackPop()->literal->toString() << '\n';
         }
 
         bool operator==(const Register &r) override {

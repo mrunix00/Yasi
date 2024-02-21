@@ -15,7 +15,7 @@ TEST(vm_greater_than, ShouldReturnTrueWhenGreaterThan) {
             }),
     });
 
-    const auto expected_result = new StackObject(new Literal(Boolean::True));
+    const auto expected_result = new StackObject(new BooleanLiteral(true));
 
     auto interpreter = Interpreter();
     interpreter.execute(program);
@@ -32,7 +32,7 @@ TEST(vm_greater_than, ShouldReturnFalseWhenNotGreaterThan) {
             }),
     });
 
-    const auto expected_result = new StackObject(new Literal(Boolean::False));
+    const auto expected_result = new StackObject(new BooleanLiteral(false));
 
     auto interpreter = Interpreter();
     interpreter.execute(program);
