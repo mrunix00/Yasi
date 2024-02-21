@@ -30,3 +30,26 @@ TEST(compiler_print, SimplePrintStatement) {
 
     EXPECT_EQ(expected_result == compiler.program, true);
 }
+
+TEST(compiler_print, PrintMultipleArgs) {
+    const auto expression = SyntaxTreeNode(
+            new Token(Token::Symbol, "print"),
+            {
+                    new SyntaxTreeNode(new Token(75)),
+                    new SyntaxTreeNode(new Token(12)),
+            });
+
+    auto expected_result = Program({
+            new Segment(
+                    {
+                            new LoadLiteral(75),
+                            new LoadLiteral(12),
+                            new Store(new StdOutRegister()),
+                    }),
+    });
+
+    Compiler compiler;
+    compiler.compile(expression);
+
+    EXPECT_EQ(expected_result == compiler.program, true);
+}
