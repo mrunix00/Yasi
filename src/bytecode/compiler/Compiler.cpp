@@ -11,7 +11,6 @@
 #include "bytecode/builtin_functions/MultiplyFunction.h"
 #include "bytecode/builtin_functions/PrintFunction.h"
 #include "bytecode/builtin_functions/SubtractFunction.h"
-#include "bytecode/instructions/Add.h"
 #include "bytecode/instructions/Call.h"
 #include "bytecode/instructions/Load.h"
 #include "bytecode/instructions/LoadLiteral.h"
@@ -45,6 +44,11 @@ namespace Bytecode {
         switch (tree.token->type) {
             case Token::Integer:
                 instructions.push_back(new LoadLiteral(tree.token->asInteger()));
+                break;
+            case Token::Decimal:
+                instructions.push_back(
+                        new LoadLiteral(
+                                new DecimalNumberLiteral(tree.token->asDecimal())));
                 break;
             case Token::Symbol:
                 if (tree.children.empty()) {

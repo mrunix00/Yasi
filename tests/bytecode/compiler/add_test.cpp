@@ -185,3 +185,24 @@ TEST(compiler_add, CompileNestedAdditionWithOptimization) {
 
     EXPECT_EQ(expected_result == compiler.program, true);
 }
+
+TEST(compiler_add, CompileAddtionWithDecimalNumbers) {
+    const auto expression = SyntaxTreeNode(
+            new Token(Token::Symbol, "+"),
+            {
+                    new SyntaxTreeNode(new Token((float) 3.14)),
+                    new SyntaxTreeNode(new Token(43)),
+            });
+    auto expected_result = Program({
+            new Segment({
+                    new LoadLiteral(new DecimalNumberLiteral(3.14)),
+                    new LoadLiteral(43),
+                    new Add(),
+            })
+    });
+
+    auto compiler = Compiler();
+    compiler.compile(expression);
+
+    EXPECT_EQ(expected_result == compiler.program, true);
+}

@@ -7,9 +7,10 @@ namespace Bytecode {
     class Literal {
     public:
         enum Type {
+            None,
             Number,
             Boolean,
-            None,
+            DecimalNumber,
         };
         Type type = None;
         virtual ~Literal() = default;

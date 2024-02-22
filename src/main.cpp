@@ -1,4 +1,5 @@
 #include "bytecode/compiler/Compiler.h"
+#include "bytecode/objects/DecimalNumberLiteral.h"
 #include "bytecode/objects/NumberLiteral.h"
 #include "bytecode/vm/Interpreter.h"
 #include "exceptions/SyntaxError.h"
@@ -56,8 +57,10 @@ void exec_program(const std::string &program, struct options opts) {
                         continue;
 
                     if (interpreter.vm.stackTop()->literal->type == Bytecode::Literal::Type::Number)
-                        std::cout << ((Bytecode::NumberLiteral*) interpreter.vm.stackTop()->literal)->asNumber() << '\n';
-                    else
+                        std::cout << ((Bytecode::NumberLiteral *) interpreter.vm.stackTop()->literal)->asNumber() << '\n';
+                    else if (interpreter.vm.stackTop()->literal->type == Bytecode::Literal::Type::DecimalNumber) {
+                        std::cout << ((Bytecode::DecimalNumberLiteral *) interpreter.vm.stackTop()->literal)->asDecimalNumber() << '\n';
+                    } else
                         std::cout << interpreter.vm.stackTop()->literal->toString() << '\n';
 
                     interpreter.vm.clearStack();

@@ -1,6 +1,7 @@
 #pragma once
 
 #include "bytecode/instructions/Instruction.h"
+#include "bytecode/objects/DecimalNumberLiteral.h"
 #include "bytecode/objects/NumberLiteral.h"
 
 namespace Bytecode {
@@ -12,6 +13,8 @@ namespace Bytecode {
             type = InstructionType::LoadLiteral;
             literal = new NumberLiteral(integer);
         };
+
+        explicit LoadLiteral(Literal *literal) : literal(literal) {}
 
         void execute(VM *vm) override {
             vm->stackPush(new StackObject(literal->copy()));
