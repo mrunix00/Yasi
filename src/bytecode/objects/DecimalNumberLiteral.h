@@ -22,8 +22,10 @@ namespace Bytecode {
         }
 
         bool operator==(const Literal &l) const override {
-            return type == Type::DecimalNumber &&
-                   ((DecimalNumberLiteral *) &l)->decimal == decimal;
+            if (type == Type::DecimalNumber) {
+                return std::abs(((DecimalNumberLiteral *) &l)->decimal - decimal) < std::numeric_limits<float>::epsilon();
+            }
+            return false;
         }
     };
 }// namespace Bytecode
