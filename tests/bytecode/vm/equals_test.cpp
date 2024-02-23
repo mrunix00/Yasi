@@ -39,3 +39,37 @@ TEST(vm_equals_test, ShouldReturnFalseOnInequality) {
 
     EXPECT_EQ(*interpreter.vm.stackTop() == *expected_result, true);
 }
+
+TEST(vm_equals_test, ShouldCompareTwoDecimalNumbersAndReturnTrueOnEquality) {
+    const auto program = Program({
+            new Segment({
+                    new LoadLiteral(new DecimalNumberLiteral(3.5)),
+                    new LoadLiteral(new DecimalNumberLiteral(3.5)),
+                    new Equals(),
+            }),
+    });
+
+    const auto expected_result = new StackObject(new BooleanLiteral(true));
+
+    auto interpreter = Interpreter();
+    interpreter.execute(program);
+
+    EXPECT_EQ(*interpreter.vm.stackTop() == *expected_result, true);
+}
+
+TEST(vm_equals_test, ShouldCompareTwoDecimalNumbersAndReturnTrueOnInequality) {
+    const auto program = Program({
+            new Segment({
+                    new LoadLiteral(new DecimalNumberLiteral(3.5)),
+                    new LoadLiteral(new DecimalNumberLiteral(3.14)),
+                    new Equals(),
+            }),
+    });
+
+    const auto expected_result = new StackObject(new BooleanLiteral(false));
+
+    auto interpreter = Interpreter();
+    interpreter.execute(program);
+
+    EXPECT_EQ(*interpreter.vm.stackTop() == *expected_result, true);
+}
