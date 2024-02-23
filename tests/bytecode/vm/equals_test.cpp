@@ -57,7 +57,7 @@ TEST(vm_equals_test, ShouldCompareTwoDecimalNumbersAndReturnTrueOnEquality) {
     EXPECT_EQ(*interpreter.vm.stackTop() == *expected_result, true);
 }
 
-TEST(vm_equals_test, ShouldCompareTwoDecimalNumbersAndReturnTrueOnInequality) {
+TEST(vm_equals_test, ShouldCompareTwoDecimalNumbersAndReturnFalseOnInequality) {
     const auto program = Program({
             new Segment({
                     new LoadLiteral(new DecimalNumberLiteral(3.5)),

@@ -3,17 +3,27 @@
 #include "bytecode/instructions/Instruction.h"
 #include "bytecode/objects/BooleanLiteral.h"
 #include "bytecode/objects/NumberLiteral.h"
+#include "bytecode/objects/DecimalNumberLiteral.h"
 
 namespace Bytecode {
     class GreaterThan final : public Instruction {
     public:
         GreaterThan() { type = InstructionType::GreaterThan; };
         void execute(VM *vm) override {
-            const auto object1 = vm->stackPop();
             const auto object2 = vm->stackPop();
-            const auto result =
-                    ((NumberLiteral *) object2->literal)->asNumber() >
-                    ((NumberLiteral *) object1->literal)->asNumber();
+            const auto object1 = vm->stackPop();
+            bool result;
+            if (object1->literal->type == Literal::Type::Number &&
+                object2->literal->type == Literal::Type::Number) {
+                result = ((NumberLiteral *) object1->literal)->asNumber() > ((NumberLiteral *) object2->literal)->asNumber();
+            } else {
+                result = (object1->literal->type == Literal::DecimalNumber
+                                  ? ((DecimalNumberLiteral *) object1->literal)->asDecimalNumber()
+                                  : (float) ((NumberLiteral *) object1->literal)->asNumber()) >
+                         (object2->literal->type == Literal::DecimalNumber
+                                  ? ((DecimalNumberLiteral *) object2->literal)->asDecimalNumber()
+                                  : (float) ((NumberLiteral *) object2->literal)->asNumber());
+            }
             delete object1;
             delete object2;
             vm->stackPush(new StackObject(new BooleanLiteral(result)));
