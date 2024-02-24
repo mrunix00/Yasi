@@ -23,7 +23,8 @@ namespace Bytecode {
         }
 
         [[nodiscard]] std::string toString() const override {
-            return value;
+            if (value == "\n") return R"("\n")";
+            return '"' + value + '"';
         }
 
         bool operator==(const Literal &l) const override {
