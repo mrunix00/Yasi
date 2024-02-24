@@ -11,9 +11,10 @@ namespace Bytecode::BuiltinFunctions {
                 Compiler &compiler,
                 std::vector<Instruction *> &instructions,
                 Segment *segment) override {
-            for (const auto arg: args)
+            for (const auto arg: args) {
                 compiler.compile(*arg, segment, instructions);
-            instructions.push_back(new Store(new StdOutRegister()));
+                instructions.push_back(new Store(new StdOutRegister()));
+            }
         };
     };
 }// namespace Bytecode::BuiltinFunctions

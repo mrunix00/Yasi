@@ -43,6 +43,7 @@ TEST(compiler_print, PrintMultipleArgs) {
             new Segment(
                     {
                             new LoadLiteral(75),
+                            new Store(new StdOutRegister()),
                             new LoadLiteral(12),
                             new Store(new StdOutRegister()),
                     }),
