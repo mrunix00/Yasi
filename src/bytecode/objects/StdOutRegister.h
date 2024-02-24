@@ -1,6 +1,10 @@
 #pragma once
 
 #include "Register.h"
+#include "StringLiteral.h"
+#include "BooleanLiteral.h"
+#include "NumberLiteral.h"
+#include "DecimalNumberLiteral.h"
 #include <iostream>
 
 namespace Bytecode {
@@ -15,7 +19,25 @@ namespace Bytecode {
         }
 
         void store(VM *vm) override {
-            std::cout << vm->stackPop()->literal->toString() << '\n';
+            const auto literal = vm->stackPop()->literal;
+            switch (literal->type) {
+                case Literal::Boolean:
+                    std::cout << (((BooleanLiteral *) literal)->asBoolean()
+                                          ? std::string("#true")
+                                          : std::string("#false"));
+                    break;
+                case Literal::Number:
+                    std::cout << ((NumberLiteral *) literal)->asNumber();
+                    break;
+                case Literal::DecimalNumber:
+                    std::cout << ((DecimalNumberLiteral *) literal)->asDecimalNumber();
+                    break;
+                case Literal::String:
+                    std::cout << ((StringLiteral *) literal)->asString();
+                    break;
+                default:
+                    std::cout << literal->toString();
+            }
         }
 
         bool operator==(const Register &r) override {

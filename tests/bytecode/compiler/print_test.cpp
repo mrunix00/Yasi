@@ -23,6 +23,8 @@ TEST(compiler_print, SimplePrintStatement) {
                     {
                             new LoadLiteral(12),
                             new Store(new StdOutRegister()),
+                            new LoadLiteral(new StringLiteral("\n")),
+                            new Store(new StdOutRegister()),
                     }),
     });
 
@@ -47,6 +49,8 @@ TEST(compiler_print, PrintMultipleArgs) {
                             new Store(new StdOutRegister()),
                             new LoadLiteral(12),
                             new Store(new StdOutRegister()),
+                            new LoadLiteral(new StringLiteral("\n")),
+                            new Store(new StdOutRegister()),
                     }),
     });
 
@@ -67,6 +71,8 @@ TEST(compiler_print, PrintStrings) {
             new Segment(
                     {
                             new LoadLiteral(new StringLiteral("Hello World!")),
+                            new Store(new StdOutRegister()),
+                            new LoadLiteral(new StringLiteral("\n")),
                             new Store(new StdOutRegister()),
                     }),
     });
