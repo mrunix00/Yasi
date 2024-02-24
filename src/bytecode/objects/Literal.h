@@ -11,6 +11,7 @@ namespace Bytecode {
             Number,
             Boolean,
             DecimalNumber,
+            String,
         };
         Type type = None;
         virtual ~Literal() = default;
