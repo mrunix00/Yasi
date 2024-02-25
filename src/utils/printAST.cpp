@@ -10,7 +10,7 @@ std::string parse_ast(const SyntaxTreeNode &ast, int level) {
     tabs = tabs + "-> ";
 
     if (!ast.children.empty()) {
-        output = tabs + "Node (" + *ast.token->token + ")\n";
+        output = tabs + "Node (" + ast.token->token + ")\n";
     } else {
         std::string type;
         if (ast.token->type == Token::Integer) type = "Integer";
@@ -20,7 +20,7 @@ std::string parse_ast(const SyntaxTreeNode &ast, int level) {
             type = "String";
         else
             type = "Symbol";
-        return tabs + type + " (" + *ast.token->token + ")\n";
+        return tabs + type + " (" + ast.token->token + ")\n";
     }
 
     for (const auto child: ast.children) {

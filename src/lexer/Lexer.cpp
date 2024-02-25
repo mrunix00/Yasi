@@ -13,7 +13,7 @@ std::vector<Token *> Lexer::tokenize(const std::string &line) {
 
         if (((c == '(' || c == ')') && currentToken[0] == '"') ||
             (c != '(' && c != ')' && (c != ' ' || currentToken[0] == '"') &&
-                    (c != '"' || currentToken[0] != '"') && c != '\n')) {
+             (c != '"' || currentToken[0] != '"') && c != '\n')) {
             currentToken.append(1, c);
             continue;
         }
@@ -21,18 +21,18 @@ std::vector<Token *> Lexer::tokenize(const std::string &line) {
 
         if (!currentToken.empty()) {
             if (std::regex_match(currentToken, std::regex("[+-]?[0-9]+"))) {
-                result.emplace_back(new Token(Token::Integer, new std::string(currentToken),
+                result.emplace_back(new Token(Token::Integer, currentToken,
                                               currentLine, currentColumn));
             } else if (std::regex_match(currentToken,
                                         std::regex("-?[0-9]+([\\.][0-9]+)?"))) {
-                result.emplace_back(new Token(Token::Decimal, new std::string(currentToken),
+                result.emplace_back(new Token(Token::Decimal, currentToken,
                                               currentLine, currentColumn));
             } else if (c != '"') {
-                result.emplace_back(new Token(Token::Symbol, new std::string(currentToken),
+                result.emplace_back(new Token(Token::Symbol, currentToken,
                                               currentLine, currentColumn));
             } else {
                 currentToken.append(1, '"');
-                result.emplace_back(new Token(Token::String, new std::string(currentToken),
+                result.emplace_back(new Token(Token::String, currentToken,
                                               currentLine, currentColumn));
             }
             if (c == '\n') {
@@ -44,10 +44,10 @@ std::vector<Token *> Lexer::tokenize(const std::string &line) {
 
         currentToken.clear();
         if (c == '(')
-            result.emplace_back(new Token(Token::OpenBracket, new std::string("("),
+            result.emplace_back(new Token(Token::OpenBracket, "(",
                                           currentLine, currentColumn));
         else if (c == ')')
-            result.emplace_back(new Token(Token::ClosedBracket, new std::string(")"),
+            result.emplace_back(new Token(Token::ClosedBracket, ")",
                                           currentLine, currentColumn));
     }
 
