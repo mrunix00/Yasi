@@ -12,6 +12,12 @@ public:
     SyntaxTreeNode(Token *token, const std::vector<SyntaxTreeNode *> &children)
         : token(token), children(children) {}
 
+    ~SyntaxTreeNode() {
+        delete token;
+        for (auto child: children)
+            delete child;
+    }
+
     explicit SyntaxTreeNode(Token *token) : token(token) {}
 
     bool operator==(const SyntaxTreeNode &node) const {

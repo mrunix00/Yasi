@@ -39,6 +39,7 @@ void exec_program(const std::string &program, struct options opts) {
 
             static auto compiler = Bytecode::Compiler(opts.compilerOptimization);
             compiler.compile(*ast);
+            delete ast;
 
             if ((opts.dumpBytecode) && ast != nullptr) {
                 for (size_t i = 0; i < compiler.program.segments.size() && opts.dumpBytecode; i++) {
@@ -63,7 +64,6 @@ void exec_program(const std::string &program, struct options opts) {
                 std::cout << interpreter.vm.stackTop()->literal->toString() << '\n';
 
             interpreter.vm.clearStack();
-
         } catch (SyntaxError &error) {
             std::cout << "SyntaxError (" << error.line
                       << ':' << error.column << "): "
