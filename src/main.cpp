@@ -6,7 +6,6 @@
 #include "lexer/Lexer.h"
 #include "parser/Parser.h"
 #include "read.hpp"
-#include "recursive_evaluation/RecursiveEvaluation.h"
 #include "utils/StdOut.h"
 #include "utils/break_lines.h"
 #include "utils/printAST.h"
@@ -19,7 +18,6 @@ struct options {
     bool displayTokens = false;
     bool displayAST = false;
     bool dumpBytecode = false;
-    bool executeBytecode = false;
     bool compilerOptimization = false;
 };
 
@@ -39,37 +37,33 @@ void exec_program(const std::string &program, struct options opts) {
                 print_ast(stdOut, *ast);
             }
 
-            if ((opts.dumpBytecode || opts.executeBytecode) && ast != nullptr) {
-                static auto compiler = Bytecode::Compiler(opts.compilerOptimization);
-                compiler.compile(*ast);
+            static auto compiler = Bytecode::Compiler(opts.compilerOptimization);
+            compiler.compile(*ast);
+
+            if ((opts.dumpBytecode) && ast != nullptr) {
                 for (size_t i = 0; i < compiler.program.segments.size() && opts.dumpBytecode; i++) {
                     std::cout << ':' << i << '\n';
                     for (size_t j = 0; j < compiler.program.segments[i]->instructions.size(); j++)
                         std::cout << j << '\t' << compiler.program.segments[i]->instructions[j]->toString() << '\n';
                     std::cout << '\n';
                 }
-
-                if (opts.executeBytecode) {
-                    static auto interpreter = Bytecode::Interpreter();
-                    interpreter.execute(compiler.program);
-
-                    if (interpreter.vm.stackTop() == nullptr)
-                        continue;
-
-                    if (interpreter.vm.stackTop()->literal->type == Bytecode::Literal::Type::Number)
-                        std::cout << ((Bytecode::NumberLiteral *) interpreter.vm.stackTop()->literal)->asNumber() << '\n';
-                    else if (interpreter.vm.stackTop()->literal->type == Bytecode::Literal::Type::DecimalNumber) {
-                        std::cout << ((Bytecode::DecimalNumberLiteral *) interpreter.vm.stackTop()->literal)->asDecimalNumber() << '\n';
-                    } else
-                        std::cout << interpreter.vm.stackTop()->literal->toString() << '\n';
-
-                    interpreter.vm.clearStack();
-                }
-            } else {
-                if (const auto result = RecursiveEvaluation::evaluate(ast);
-                    result != nullptr && result->token->type != Token::Invalid)
-                    std::cout << *result->token->asString() << '\n';
             }
+
+            static auto interpreter = Bytecode::Interpreter();
+            interpreter.execute(compiler.program);
+
+            if (interpreter.vm.stackTop() == nullptr)
+                continue;
+
+            if (interpreter.vm.stackTop()->literal->type == Bytecode::Literal::Type::Number)
+                std::cout << ((Bytecode::NumberLiteral *) interpreter.vm.stackTop()->literal)->asNumber() << '\n';
+            else if (interpreter.vm.stackTop()->literal->type == Bytecode::Literal::Type::DecimalNumber) {
+                std::cout << ((Bytecode::DecimalNumberLiteral *) interpreter.vm.stackTop()->literal)->asDecimalNumber() << '\n';
+            } else
+                std::cout << interpreter.vm.stackTop()->literal->toString() << '\n';
+
+            interpreter.vm.clearStack();
+
         } catch (SyntaxError &error) {
             std::cout << "SyntaxError (" << error.line
                       << ':' << error.column << "): "
@@ -89,9 +83,6 @@ int main(int argc, char *argv[]) {
                 break;
             case 'a':
                 opts.displayAST = true;
-                break;
-            case 'b':
-                opts.executeBytecode = true;
                 break;
             case 'd':
                 opts.dumpBytecode = true;
