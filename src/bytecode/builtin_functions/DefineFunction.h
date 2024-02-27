@@ -12,13 +12,13 @@ namespace Bytecode::BuiltinFunctions {
                 Segment *result) override {
             if (args[1]->children.empty()) {
                 compiler.compile(*args[1], result, instructions);
-                const auto reg = compiler.program.declare_global(args[0]->token->token);
+                const auto reg = compiler.program.declare_global(args[0]->token.token);
                 instructions.push_back(new Store(reg));
             } else {
                 auto segment = new Segment({});
-                compiler.program.declare_function(args[0]->token->asString(), segment);
+                compiler.program.declare_function(args[0]->token.asString(), segment);
                 for (auto argument: args[0]->children)
-                    segment->declare_variable(argument->token->asString());
+                    segment->declare_variable(argument->token.asString());
                 compiler.compile(*args[1], segment);
             }
         }

@@ -10,17 +10,17 @@ std::string parse_ast(const SyntaxTreeNode &ast, int level) {
     tabs = tabs + "-> ";
 
     if (!ast.children.empty()) {
-        output = tabs + "Node (" + ast.token->token + ")\n";
+        output = tabs + "Node (" + ast.token.token + ")\n";
     } else {
         std::string type;
-        if (ast.token->type == Token::Integer) type = "Integer";
-        else if (ast.token->type == Token::Decimal)
+        if (ast.token.type == Token::Integer) type = "Integer";
+        else if (ast.token.type == Token::Decimal)
             type = "Decimal";
-        else if (ast.token->type == Token::String)
+        else if (ast.token.type == Token::String)
             type = "String";
         else
             type = "Symbol";
-        return tabs + type + " (" + ast.token->token + ")\n";
+        return tabs + type + " (" + ast.token.token + ")\n";
     }
 
     for (const auto child: ast.children) {

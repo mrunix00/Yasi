@@ -18,18 +18,18 @@ using namespace Bytecode;
 TEST(compiler_functions, SimpleFunctionDefinition) {
     // (define (square x) (* x x))
     const auto expression = SyntaxTreeNode(
-            new Token(Token::Symbol, "define"),
+            Token(Token::Symbol, "define"),
             {
                     new SyntaxTreeNode(
-                            new Token(Token::Symbol, "square"),
+                            Token(Token::Symbol, "square"),
                             {
-                                    new SyntaxTreeNode(new Token(Token::Symbol, "x")),
+                                    new SyntaxTreeNode(Token(Token::Symbol, "x")),
                             }),
                     new SyntaxTreeNode(
-                            new Token(Token::Symbol, "*"),
+                            Token(Token::Symbol, "*"),
                             {
-                                    new SyntaxTreeNode(new Token(Token::Symbol, "x")),
-                                    new SyntaxTreeNode(new Token(Token::Symbol, "x")),
+                                    new SyntaxTreeNode(Token(Token::Symbol, "x")),
+                                    new SyntaxTreeNode(Token(Token::Symbol, "x")),
                             }),
             });
 
@@ -52,19 +52,19 @@ TEST(compiler_functions, SimpleFunctionDefinition) {
 TEST(compiler_functions, FunctionDefinitionWithMultipleArgs) {
     // (define (add x y) (+ x y))
     const auto expression = SyntaxTreeNode(
-            new Token(Token::Symbol, "define"),
+             Token(Token::Symbol, "define"),
             {
                     new SyntaxTreeNode(
-                            new Token(Token::Symbol, "add"),
+                             Token(Token::Symbol, "add"),
                             {
-                                    new SyntaxTreeNode(new Token(Token::Symbol, "x")),
-                                    new SyntaxTreeNode(new Token(Token::Symbol, "y")),
+                                    new SyntaxTreeNode(Token(Token::Symbol, "x")),
+                                    new SyntaxTreeNode(Token(Token::Symbol, "y")),
                             }),
                     new SyntaxTreeNode(
-                            new Token(Token::Symbol, "+"),
+                            Token(Token::Symbol, "+"),
                             {
-                                    new SyntaxTreeNode(new Token(Token::Symbol, "x")),
-                                    new SyntaxTreeNode(new Token(Token::Symbol, "y")),
+                                    new SyntaxTreeNode(Token(Token::Symbol, "x")),
+                                    new SyntaxTreeNode(Token(Token::Symbol, "y")),
                             }),
             });
 
@@ -87,26 +87,26 @@ TEST(compiler_functions, FunctionDefinitionWithMultipleArgs) {
 TEST(compiler_functions, SimpleFunctionCall) {
     // (define (square x) (* x x))
     const auto function_definition = SyntaxTreeNode(
-            new Token(Token::Symbol, "define"),
+            Token(Token::Symbol, "define"),
             {
                     new SyntaxTreeNode(
-                            new Token(Token::Symbol, "square"),
+                            Token(Token::Symbol, "square"),
                             {
-                                    new SyntaxTreeNode(new Token(Token::Symbol, "x")),
+                                    new SyntaxTreeNode(Token(Token::Symbol, "x")),
                             }),
                     new SyntaxTreeNode(
-                            new Token(Token::Symbol, "*"),
+                            Token(Token::Symbol, "*"),
                             {
-                                    new SyntaxTreeNode(new Token(Token::Symbol, "x")),
-                                    new SyntaxTreeNode(new Token(Token::Symbol, "x")),
+                                    new SyntaxTreeNode(Token(Token::Symbol, "x")),
+                                    new SyntaxTreeNode(Token(Token::Symbol, "x")),
                             }),
             });
 
     // (square 15)
     const auto function_call = SyntaxTreeNode(
-            new Token(Token::Symbol, "square"),
+            Token(Token::Symbol, "square"),
             {
-                    new SyntaxTreeNode(new Token(Token::Integer, "15")),
+                    new SyntaxTreeNode(Token(Token::Integer, "15")),
             });
 
     const auto expected_result = Program(
@@ -132,28 +132,28 @@ TEST(compiler_functions, SimpleFunctionCall) {
 TEST(compiler_functions, FunctionWithMultipleArgsCall) {
     // (define (add x y) (+ x y))
     const auto function_definition = SyntaxTreeNode(
-            new Token(Token::Symbol, "define"),
+            Token(Token::Symbol, "define"),
             {
                     new SyntaxTreeNode(
-                            new Token(Token::Symbol, "add"),
+                            Token(Token::Symbol, "add"),
                             {
-                                    new SyntaxTreeNode(new Token(Token::Symbol, "x")),
-                                    new SyntaxTreeNode(new Token(Token::Symbol, "y")),
+                                    new SyntaxTreeNode(Token(Token::Symbol, "x")),
+                                    new SyntaxTreeNode(Token(Token::Symbol, "y")),
                             }),
                     new SyntaxTreeNode(
-                            new Token(Token::Symbol, "+"),
+                            Token(Token::Symbol, "+"),
                             {
-                                    new SyntaxTreeNode(new Token(Token::Symbol, "x")),
-                                    new SyntaxTreeNode(new Token(Token::Symbol, "y")),
+                                    new SyntaxTreeNode(Token(Token::Symbol, "x")),
+                                    new SyntaxTreeNode(Token(Token::Symbol, "y")),
                             }),
             });
 
     // (add 20 30)
     const auto function_call = SyntaxTreeNode(
-            new Token(Token::Symbol, "add"),
+            Token(Token::Symbol, "add"),
             {
-                    new SyntaxTreeNode(new Token(20)),
-                    new SyntaxTreeNode(new Token(30)),
+                    new SyntaxTreeNode(Token(20)),
+                    new SyntaxTreeNode(Token(30)),
             });
 
     const auto expected_result = Program(
@@ -180,35 +180,35 @@ TEST(compiler_functions, FunctionWithMultipleArgsCall) {
 TEST(compiler_functions, RecursiveFunction) {
     // (define (sum n) (if (= n 1) 1 (+ n (sum (- n 1)))))
     const auto expression = SyntaxTreeNode(
-            new Token(Token::Symbol, "define"),
+            Token(Token::Symbol, "define"),
             {
                     new SyntaxTreeNode(
-                            new Token(Token::Symbol, "sum"),
+                            Token(Token::Symbol, "sum"),
                             {
-                                    new SyntaxTreeNode(new Token(Token::Symbol, "n")),
+                                    new SyntaxTreeNode(Token(Token::Symbol, "n")),
                             }),
                     new SyntaxTreeNode(
-                            new Token(Token::Symbol, "if"),
+                            Token(Token::Symbol, "if"),
                             {
                                     new SyntaxTreeNode(
-                                            new Token(Token::Symbol, "="),
+                                            Token(Token::Symbol, "="),
                                             {
-                                                    new SyntaxTreeNode(new Token(Token::Symbol, "n")),
-                                                    new SyntaxTreeNode(new Token(1)),
+                                                    new SyntaxTreeNode(Token(Token::Symbol, "n")),
+                                                    new SyntaxTreeNode(Token(1)),
                                             }),
-                                    new SyntaxTreeNode(new Token(1)),
+                                    new SyntaxTreeNode(Token(1)),
                                     new SyntaxTreeNode(
-                                            new Token(Token::Symbol, "+"),
+                                            Token(Token::Symbol, "+"),
                                             {
-                                                    new SyntaxTreeNode(new Token(Token::Symbol, "n")),
+                                                    new SyntaxTreeNode(Token(Token::Symbol, "n")),
                                                     new SyntaxTreeNode(
-                                                            new Token(Token::Symbol, "sum"),
+                                                            Token(Token::Symbol, "sum"),
                                                             {
                                                                     new SyntaxTreeNode(
-                                                                            new Token(Token::Symbol, "-"),
+                                                                            Token(Token::Symbol, "-"),
                                                                             {
-                                                                                    new SyntaxTreeNode(new Token(Token::Symbol, "n")),
-                                                                                    new SyntaxTreeNode(new Token(1)),
+                                                                                    new SyntaxTreeNode(Token(Token::Symbol, "n")),
+                                                                                    new SyntaxTreeNode(Token(1)),
                                                                             }),
                                                             }),
                                             }),
@@ -242,33 +242,33 @@ TEST(compiler_functions, RecursiveFunction) {
 
 TEST(compiler_functions, MultipleFunctionsDefinitions) {
     const auto first_function = SyntaxTreeNode(
-            new Token(Token::Symbol, "define"),
+            Token(Token::Symbol, "define"),
             {
                     new SyntaxTreeNode(
-                            new Token(Token::Symbol, "square-area"),
-                            {new SyntaxTreeNode(new Token(Token::Symbol, "x"))}),
+                            Token(Token::Symbol, "square-area"),
+                            {new SyntaxTreeNode(Token(Token::Symbol, "x"))}),
                     new SyntaxTreeNode(
-                            new Token(Token::Symbol, "*"),
+                            Token(Token::Symbol, "*"),
                             {
-                                    new SyntaxTreeNode(new Token(Token::Symbol, "x")),
-                                    new SyntaxTreeNode(new Token(Token::Symbol, "x")),
+                                    new SyntaxTreeNode(Token(Token::Symbol, "x")),
+                                    new SyntaxTreeNode(Token(Token::Symbol, "x")),
                             }),
             });
 
     const auto second_function = SyntaxTreeNode(
-            new Token(Token::Symbol, "define"),
+            Token(Token::Symbol, "define"),
             {
                     new SyntaxTreeNode(
-                            new Token(Token::Symbol, "rect-area"),
+                            Token(Token::Symbol, "rect-area"),
                             {
-                                    new SyntaxTreeNode(new Token(Token::Symbol, "x")),
-                                    new SyntaxTreeNode(new Token(Token::Symbol, "y")),
+                                    new SyntaxTreeNode(Token(Token::Symbol, "x")),
+                                    new SyntaxTreeNode(Token(Token::Symbol, "y")),
                             }),
                     new SyntaxTreeNode(
-                            new Token(Token::Symbol, "*"),
+                            Token(Token::Symbol, "*"),
                             {
-                                    new SyntaxTreeNode(new Token(Token::Symbol, "x")),
-                                    new SyntaxTreeNode(new Token(Token::Symbol, "y")),
+                                    new SyntaxTreeNode(Token(Token::Symbol, "x")),
+                                    new SyntaxTreeNode(Token(Token::Symbol, "y")),
                             }),
             });
 

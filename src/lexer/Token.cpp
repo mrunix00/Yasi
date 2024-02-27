@@ -28,14 +28,14 @@ Token::Token(
     }
 }
 
-std::string Token::asString() {
+std::string Token::asString() const {
     if (type != String) {
         if (type == Integer) {
-            token = std::to_string(integer);
+            return std::to_string(integer);
         } else if (type == Decimal) {
             std::stringstream s;
             s << decimal;
-            token = s.str();
+            return s.str();
         }
     }
     return token;

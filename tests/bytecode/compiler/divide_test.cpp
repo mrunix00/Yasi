@@ -10,10 +10,10 @@ using namespace Bytecode;
 TEST(compiler_divide, CompileSimpleDivision) {
     // (/ 12 74)
     const auto expression = SyntaxTreeNode(
-            new Token(Token::Symbol, "/"),
+            Token(Token::Symbol, "/"),
             {
-                    new SyntaxTreeNode(new Token(12)),
-                    new SyntaxTreeNode(new Token(74)),
+                    new SyntaxTreeNode(Token(12)),
+                    new SyntaxTreeNode(Token(74)),
             });
 
     auto expected_result = Program({
@@ -33,11 +33,11 @@ TEST(compiler_divide, CompileSimpleDivision) {
 TEST(compiler_divide, CompileLongDivision) {
     // (/ 12 74 17)
     const auto expression = SyntaxTreeNode(
-            new Token(Token::Symbol, "/"),
+            Token(Token::Symbol, "/"),
             {
-                    new SyntaxTreeNode(new Token(12)),
-                    new SyntaxTreeNode(new Token(74)),
-                    new SyntaxTreeNode(new Token(17)),
+                    new SyntaxTreeNode(Token(12)),
+                    new SyntaxTreeNode(Token(74)),
+                    new SyntaxTreeNode(Token(17)),
             });
     auto expected_result = Program(
             {
@@ -59,15 +59,15 @@ TEST(compiler_divide, CompileLongDivision) {
 TEST(compiler_divide, CompileNestedDivision) {
     // (/ (/ 23 74) 43)
     const auto expression = SyntaxTreeNode(
-            new Token(Token::Symbol, "/"),
+            Token(Token::Symbol, "/"),
             {
                     new SyntaxTreeNode(
-                            new Token(Token::Symbol, "/"),
+                            Token(Token::Symbol, "/"),
                             {
-                                    new SyntaxTreeNode(new Token(23)),
-                                    new SyntaxTreeNode(new Token(74)),
+                                    new SyntaxTreeNode(Token(23)),
+                                    new SyntaxTreeNode(Token(74)),
                             }),
-                    new SyntaxTreeNode(new Token(43)),
+                    new SyntaxTreeNode(Token(43)),
             });
     auto expected_result = Program(
             {

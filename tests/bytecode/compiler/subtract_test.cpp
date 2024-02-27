@@ -10,10 +10,10 @@ using namespace Bytecode;
 TEST(compiler_subtract, CompileSimpleSubtraction) {
     // (- 100 32)
     const auto expression = SyntaxTreeNode(
-            new Token(Token::Symbol, "-"),
+            Token(Token::Symbol, "-"),
             {
-                    new SyntaxTreeNode(new Token(100)),
-                    new SyntaxTreeNode(new Token(32)),
+                    new SyntaxTreeNode(Token(100)),
+                    new SyntaxTreeNode(Token(32)),
             });
 
     auto expected_result = Program({
@@ -33,11 +33,11 @@ TEST(compiler_subtract, CompileSimpleSubtraction) {
 TEST(compiler_subtract, CompileLongSubtraction) {
     // (- 120 60 39)
     const auto expression = SyntaxTreeNode(
-            new Token(Token::Symbol, "-"),
+            Token(Token::Symbol, "-"),
             {
-                    new SyntaxTreeNode(new Token(120)),
-                    new SyntaxTreeNode(new Token(60)),
-                    new SyntaxTreeNode(new Token(39)),
+                    new SyntaxTreeNode(Token(120)),
+                    new SyntaxTreeNode(Token(60)),
+                    new SyntaxTreeNode(Token(39)),
             });
     auto expected_result = Program({
             new Segment({
@@ -58,15 +58,15 @@ TEST(compiler_subtract, CompileLongSubtraction) {
 TEST(compiler_subtract, CompileNestedSubtraction) {
     // (- (- 153 74) 43)
     const auto expression = SyntaxTreeNode(
-            new Token(Token::Symbol, "-"),
+            Token(Token::Symbol, "-"),
             {
                     new SyntaxTreeNode(
-                            new Token(Token::Symbol, "-"),
+                            Token(Token::Symbol, "-"),
                             {
-                                    new SyntaxTreeNode(new Token(153)),
-                                    new SyntaxTreeNode(new Token(74)),
+                                    new SyntaxTreeNode(Token(153)),
+                                    new SyntaxTreeNode(Token(74)),
                             }),
-                    new SyntaxTreeNode(new Token(43)),
+                    new SyntaxTreeNode(Token(43)),
             });
     auto expected_result = Program({
             new Segment({

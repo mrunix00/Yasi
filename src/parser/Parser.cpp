@@ -6,7 +6,7 @@ SyntaxTreeNode *Parser::parse(const std::vector<Token *> &tokens) {
     std::stack<Token *> operators_stack;
     std::stack<std::vector<SyntaxTreeNode *>> nodes_stack;
 
-    if (tokens.size() == 1) return new SyntaxTreeNode(tokens[0]);
+    if (tokens.size() == 1) return new SyntaxTreeNode(*tokens[0]);
 
     for (const auto &token: tokens) {
         if (token->type == Token::OpenBracket) {
@@ -32,11 +32,11 @@ SyntaxTreeNode *Parser::parse(const std::vector<Token *> &tokens) {
             if (nodes_stack.empty())
                 nodes_stack.emplace();
             nodes_stack.top().emplace_back(
-                    new SyntaxTreeNode(operators_stack.top(), args));
+                    new SyntaxTreeNode(*operators_stack.top(), args));
             operators_stack.pop();// pop the operator
             operators_stack.pop();// pop the bracket
         } else {
-            nodes_stack.top().emplace_back(new SyntaxTreeNode(token));
+            nodes_stack.top().emplace_back(new SyntaxTreeNode(*token));
         }
     }
 

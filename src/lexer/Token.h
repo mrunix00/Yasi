@@ -39,7 +39,7 @@ public:
 
     [[nodiscard]] int asInteger() const;
     [[nodiscard]] float asDecimal() const;
-    std::string asString();
+    std::string asString() const;
 
     bool operator==(const Token &object) const;
 };

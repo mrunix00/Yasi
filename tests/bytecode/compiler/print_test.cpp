@@ -13,9 +13,9 @@ using namespace Bytecode;
 
 TEST(compiler_print, SimplePrintStatement) {
     const auto expression = SyntaxTreeNode(
-            new Token(Token::Symbol, "print"),
+            Token(Token::Symbol, "print"),
             {
-                    new SyntaxTreeNode(new Token(12)),
+                    new SyntaxTreeNode(Token(12)),
             });
 
     auto expected_result = Program({
@@ -36,10 +36,10 @@ TEST(compiler_print, SimplePrintStatement) {
 
 TEST(compiler_print, PrintMultipleArgs) {
     const auto expression = SyntaxTreeNode(
-            new Token(Token::Symbol, "print"),
+            Token(Token::Symbol, "print"),
             {
-                    new SyntaxTreeNode(new Token(75)),
-                    new SyntaxTreeNode(new Token(12)),
+                    new SyntaxTreeNode(Token(75)),
+                    new SyntaxTreeNode(Token(12)),
             });
 
     auto expected_result = Program({
@@ -62,9 +62,9 @@ TEST(compiler_print, PrintMultipleArgs) {
 
 TEST(compiler_print, PrintStrings) {
     const auto expression = SyntaxTreeNode(
-            new Token(Token::Symbol, "print"),
+            Token(Token::Symbol, "print"),
             {
-                    new SyntaxTreeNode(new Token(Token::String, "Hello World!")),
+                    new SyntaxTreeNode(Token(Token::String, "Hello World!")),
             });
 
     auto expected_result = Program({

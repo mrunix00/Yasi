@@ -13,15 +13,15 @@ using namespace Bytecode;
 TEST(compiler_if, SimpleConditionalStatement) {
     // (if (> 20 10) 20)
     const auto expression = SyntaxTreeNode(
-            new Token(Token::Symbol, "if"),
+            Token(Token::Symbol, "if"),
             {
                     new SyntaxTreeNode(
-                            new Token(Token::Symbol, ">"),
+                            Token(Token::Symbol, ">"),
                             {
-                                    new SyntaxTreeNode(new Token(20)),
-                                    new SyntaxTreeNode(new Token(10)),
+                                    new SyntaxTreeNode(Token(20)),
+                                    new SyntaxTreeNode(Token(10)),
                             }),
-                    new SyntaxTreeNode(new Token(20)),
+                    new SyntaxTreeNode(Token(20)),
             });
 
     auto expected_result = Program(
@@ -44,16 +44,16 @@ TEST(compiler_if, SimpleConditionalStatement) {
 TEST(compiler_if, SimpleConditionWithElseClause) {
     // (if (> 20 10) 20 10)
     const auto expression = SyntaxTreeNode(
-            new Token(Token::Symbol, "if"),
+            Token(Token::Symbol, "if"),
             {
                     new SyntaxTreeNode(
-                            new Token(Token::Symbol, ">"),
+                            Token(Token::Symbol, ">"),
                             {
-                                    new SyntaxTreeNode(new Token(20)),
-                                    new SyntaxTreeNode(new Token(10)),
+                                    new SyntaxTreeNode(Token(20)),
+                                    new SyntaxTreeNode(Token(10)),
                             }),
-                    new SyntaxTreeNode(new Token(20)),
-                    new SyntaxTreeNode(new Token(10)),
+                    new SyntaxTreeNode(Token(20)),
+                    new SyntaxTreeNode(Token(10)),
             });
 
     auto expected_result = Program(
@@ -78,19 +78,19 @@ TEST(compiler_if, SimpleConditionWithElseClause) {
 TEST(compiler_if, LongCondition) {
     // (if (> 20 10) (+ 10 10))
     const auto expression = SyntaxTreeNode(
-            new Token(Token::Symbol, "if"),
+            Token(Token::Symbol, "if"),
             {
                     new SyntaxTreeNode(
-                            new Token(Token::Symbol, ">"),
+                            Token(Token::Symbol, ">"),
                             {
-                                    new SyntaxTreeNode(new Token(20)),
-                                    new SyntaxTreeNode(new Token(10)),
+                                    new SyntaxTreeNode(Token(20)),
+                                    new SyntaxTreeNode(Token(10)),
                             }),
                     new SyntaxTreeNode(
-                            new Token(Token::Symbol, "+"),
+                            Token(Token::Symbol, "+"),
                             {
-                                    new SyntaxTreeNode(new Token(10)),
-                                    new SyntaxTreeNode(new Token(10)),
+                                    new SyntaxTreeNode(Token(10)),
+                                    new SyntaxTreeNode(Token(10)),
                             }),
             });
 
@@ -116,25 +116,25 @@ TEST(compiler_if, LongCondition) {
 TEST(compiler_if, LongConditionWithElseClause) {
     // (if (> 20 10) (+ 10 10) (+ 5 5))
     const auto expression = SyntaxTreeNode(
-            new Token(Token::Symbol, "if"),
+            Token(Token::Symbol, "if"),
             {
                     new SyntaxTreeNode(
-                            new Token(Token::Symbol, ">"),
+                            Token(Token::Symbol, ">"),
                             {
-                                    new SyntaxTreeNode(new Token(20)),
-                                    new SyntaxTreeNode(new Token(10)),
+                                    new SyntaxTreeNode(Token(20)),
+                                    new SyntaxTreeNode(Token(10)),
                             }),
                     new SyntaxTreeNode(
-                            new Token(Token::Symbol, "+"),
+                            Token(Token::Symbol, "+"),
                             {
-                                    new SyntaxTreeNode(new Token(10)),
-                                    new SyntaxTreeNode(new Token(10)),
+                                    new SyntaxTreeNode(Token(10)),
+                                    new SyntaxTreeNode(Token(10)),
                             }),
                     new SyntaxTreeNode(
-                            new Token(Token::Symbol, "+"),
+                            Token(Token::Symbol, "+"),
                             {
-                                    new SyntaxTreeNode(new Token(5)),
-                                    new SyntaxTreeNode(new Token(5)),
+                                    new SyntaxTreeNode(Token(5)),
+                                    new SyntaxTreeNode(Token(5)),
                             }),
             });
 

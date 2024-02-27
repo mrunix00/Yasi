@@ -13,10 +13,10 @@ using namespace Bytecode;
 TEST(compiler_add, CompileSimpleAddition) {
     // (+ 12 74)
     const auto expression = SyntaxTreeNode(
-            new Token(Token::Symbol, "+"),
+            Token(Token::Symbol, "+"),
             {
-                    new SyntaxTreeNode(new Token(12)),
-                    new SyntaxTreeNode(new Token(74)),
+                    new SyntaxTreeNode(Token(12)),
+                    new SyntaxTreeNode(Token(74)),
             });
 
     auto expected_result = Program({
@@ -36,10 +36,10 @@ TEST(compiler_add, CompileSimpleAddition) {
 TEST(compiler_add, CompileSimpleAdditionWithOptimization) {
     // (+ 12 74)
     const auto expression = SyntaxTreeNode(
-            new Token(Token::Symbol, "+"),
+            Token(Token::Symbol, "+"),
             {
-                    new SyntaxTreeNode(new Token(12)),
-                    new SyntaxTreeNode(new Token(74)),
+                    new SyntaxTreeNode(Token(12)),
+                    new SyntaxTreeNode(Token(74)),
             });
 
     auto expected_result = Program({
@@ -55,17 +55,17 @@ TEST(compiler_add, CompileSimpleAdditionWithOptimization) {
 TEST(compiler_add, DontOptimizeIfNotPossible) {
     // (define x 12)
     const auto first_expression = SyntaxTreeNode(
-            new Token(Token::Symbol, "define"),
+            Token(Token::Symbol, "define"),
             {
-                    new SyntaxTreeNode(new Token(Token::Symbol, "x")),
-                    new SyntaxTreeNode(new Token(12)),
+                    new SyntaxTreeNode(Token(Token::Symbol, "x")),
+                    new SyntaxTreeNode(Token(12)),
             });
     // (+ x 74)
     const auto second_expression = SyntaxTreeNode(
-            new Token(Token::Symbol, "+"),
+            Token(Token::Symbol, "+"),
             {
-                    new SyntaxTreeNode(new Token(Token::Symbol, "x")),
-                    new SyntaxTreeNode(new Token(74)),
+                    new SyntaxTreeNode(Token(Token::Symbol, "x")),
+                    new SyntaxTreeNode(Token(74)),
             });
 
     auto expected_result = Program({
@@ -89,11 +89,11 @@ TEST(compiler_add, DontOptimizeIfNotPossible) {
 TEST(compiler_add, CompileLongAddition) {
     // (+ 12 74 17)
     const auto expression = SyntaxTreeNode(
-            new Token(Token::Symbol, "+"),
+            Token(Token::Symbol, "+"),
             {
-                    new SyntaxTreeNode(new Token(12)),
-                    new SyntaxTreeNode(new Token(74)),
-                    new SyntaxTreeNode(new Token(17)),
+                    new SyntaxTreeNode(Token(12)),
+                    new SyntaxTreeNode(Token(74)),
+                    new SyntaxTreeNode(Token(17)),
             });
     auto expected_result = Program(
             {
@@ -115,11 +115,11 @@ TEST(compiler_add, CompileLongAddition) {
 TEST(compiler_add, CompileLongAdditionWithOptimization) {
     // (+ 12 74 17)
     const auto expression = SyntaxTreeNode(
-            new Token(Token::Symbol, "+"),
+            Token(Token::Symbol, "+"),
             {
-                    new SyntaxTreeNode(new Token(12)),
-                    new SyntaxTreeNode(new Token(74)),
-                    new SyntaxTreeNode(new Token(17)),
+                    new SyntaxTreeNode(Token(12)),
+                    new SyntaxTreeNode(Token(74)),
+                    new SyntaxTreeNode(Token(17)),
             });
     auto expected_result = Program(
             {
@@ -135,15 +135,15 @@ TEST(compiler_add, CompileLongAdditionWithOptimization) {
 TEST(compiler_add, CompileNestedAddition) {
     // (+ (+ 23 74) 43)
     const auto expression = SyntaxTreeNode(
-            new Token(Token::Symbol, "+"),
+            Token(Token::Symbol, "+"),
             {
                     new SyntaxTreeNode(
-                            new Token(Token::Symbol, "+"),
+                            Token(Token::Symbol, "+"),
                             {
-                                    new SyntaxTreeNode(new Token(23)),
-                                    new SyntaxTreeNode(new Token(74)),
+                                    new SyntaxTreeNode(Token(23)),
+                                    new SyntaxTreeNode(Token(74)),
                             }),
-                    new SyntaxTreeNode(new Token(43)),
+                    new SyntaxTreeNode(Token(43)),
             });
     auto expected_result = Program(
             {
@@ -165,15 +165,15 @@ TEST(compiler_add, CompileNestedAddition) {
 TEST(compiler_add, CompileNestedAdditionWithOptimization) {
     // (+ (+ 23 74) 43)
     const auto expression = SyntaxTreeNode(
-            new Token(Token::Symbol, "+"),
+            Token(Token::Symbol, "+"),
             {
                     new SyntaxTreeNode(
-                            new Token(Token::Symbol, "+"),
+                            Token(Token::Symbol, "+"),
                             {
-                                    new SyntaxTreeNode(new Token(23)),
-                                    new SyntaxTreeNode(new Token(74)),
+                                    new SyntaxTreeNode(Token(23)),
+                                    new SyntaxTreeNode(Token(74)),
                             }),
-                    new SyntaxTreeNode(new Token(43)),
+                    new SyntaxTreeNode(Token(43)),
             });
     auto expected_result = Program(
             {
@@ -188,18 +188,16 @@ TEST(compiler_add, CompileNestedAdditionWithOptimization) {
 
 TEST(compiler_add, CompileAddtionWithDecimalNumbers) {
     const auto expression = SyntaxTreeNode(
-            new Token(Token::Symbol, "+"),
+            Token(Token::Symbol, "+"),
             {
-                    new SyntaxTreeNode(new Token((float) 3.14)),
-                    new SyntaxTreeNode(new Token(43)),
+                    new SyntaxTreeNode(Token((float) 3.14)),
+                    new SyntaxTreeNode(Token(43)),
             });
-    auto expected_result = Program({
-            new Segment({
-                    new LoadLiteral(new DecimalNumberLiteral(3.14)),
-                    new LoadLiteral(43),
-                    new Add(),
-            })
-    });
+    auto expected_result = Program({new Segment({
+            new LoadLiteral(new DecimalNumberLiteral(3.14)),
+            new LoadLiteral(43),
+            new Add(),
+    })});
 
     auto compiler = Compiler();
     compiler.compile(expression);

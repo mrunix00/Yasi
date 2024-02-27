@@ -1,27 +1,27 @@
 #pragma once
 
 #include "lexer/Lexer.h"
+#include <utility>
 #include <vector>
 
 class SyntaxTreeNode {
 public:
-    Token *token;
+    Token token;
     std::vector<SyntaxTreeNode *> children;
 
-    SyntaxTreeNode() : token(new Token()){};
-    SyntaxTreeNode(Token *token, const std::vector<SyntaxTreeNode *> &children)
-        : token(token), children(children) {}
+    SyntaxTreeNode() = default;
+    SyntaxTreeNode(Token token, const std::vector<SyntaxTreeNode *> &children)
+        : token(std::move(token)), children(children) {}
 
     ~SyntaxTreeNode() {
-        delete token;
         for (auto child: children)
             delete child;
     }
 
-    explicit SyntaxTreeNode(Token *token) : token(token) {}
+    explicit SyntaxTreeNode(Token token) : token(std::move(token)) {}
 
     bool operator==(const SyntaxTreeNode &node) const {
-        if (*token == *node.token) {
+        if (token == node.token) {
             for (auto i = 0; i < children.size(); i++) {
                 auto child1 = *node.children[i];
                 if (auto child2 = *children[i]; child1 != child2)

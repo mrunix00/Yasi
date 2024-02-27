@@ -11,10 +11,10 @@ using namespace Bytecode;
 TEST(compiler_variables, GlobalVariableDefinition) {
     // (define x 10)
     const auto expression = SyntaxTreeNode(
-            new Token(Token::Symbol, "define"),
+            Token(Token::Symbol, "define"),
             {
-                    new SyntaxTreeNode(new Token(Token::Symbol, "x")),
-                    new SyntaxTreeNode(new Token(10)),
+                    new SyntaxTreeNode(Token(Token::Symbol, "x")),
+                    new SyntaxTreeNode(Token(10)),
             });
 
     auto expected_result = Program({
@@ -33,16 +33,16 @@ TEST(compiler_variables, GlobalVariableDefinition) {
 TEST(compiler_variables, MultipleGlobalVariablesDefinitions) {
     // (define x 10)
     const auto first_expression = SyntaxTreeNode(
-            new Token(Token::Symbol, "define"),
+            Token(Token::Symbol, "define"),
             {
-                    new SyntaxTreeNode(new Token(Token::Symbol, "x")),
-                    new SyntaxTreeNode(new Token(10)),
+                    new SyntaxTreeNode(Token(Token::Symbol, "x")),
+                    new SyntaxTreeNode(Token(10)),
             });
     const auto second_expression = SyntaxTreeNode(
-            new Token(Token::Symbol, "define"),
+            Token(Token::Symbol, "define"),
             {
-                    new SyntaxTreeNode(new Token(Token::Symbol, "y")),
-                    new SyntaxTreeNode(new Token(15)),
+                    new SyntaxTreeNode(Token(Token::Symbol, "y")),
+                    new SyntaxTreeNode(Token(15)),
             });
 
     auto expected_result = Program({
@@ -64,13 +64,13 @@ TEST(compiler_variables, MultipleGlobalVariablesDefinitions) {
 TEST(compiler_variables, UseGlobalVariableInAnExpression) {
     // (define x 10)
     const auto first_expression = SyntaxTreeNode(
-            new Token(Token::Symbol, "define"),
+            Token(Token::Symbol, "define"),
             {
-                    new SyntaxTreeNode(new Token(Token::Symbol, "x")),
-                    new SyntaxTreeNode(new Token(10)),
+                    new SyntaxTreeNode(Token(Token::Symbol, "x")),
+                    new SyntaxTreeNode(Token(10)),
             });
     const auto second_expression = SyntaxTreeNode(
-            new Token(Token::Symbol, "x"));
+            Token(Token::Symbol, "x"));
 
     auto expected_result = Program({
             new Segment({

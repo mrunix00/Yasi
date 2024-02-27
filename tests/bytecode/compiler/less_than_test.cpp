@@ -10,10 +10,10 @@ using namespace Bytecode;
 TEST(compiler_less, CompileSimpleLessThanCheck) {
     // (< 12 74)
     const auto expression = SyntaxTreeNode(
-            new Token(Token::Symbol, "<"),
+            Token(Token::Symbol, "<"),
             {
-                    new SyntaxTreeNode(new Token(12)),
-                    new SyntaxTreeNode(new Token(74)),
+                    new SyntaxTreeNode(Token(12)),
+                    new SyntaxTreeNode(Token(74)),
             });
 
     auto expected_result = Program({
@@ -33,11 +33,11 @@ TEST(compiler_less, CompileSimpleLessThanCheck) {
 TEST(compiler_less, CompileLongLessThanCheck) {
     // (< 12 74)
     const auto expression = SyntaxTreeNode(
-            new Token(Token::Symbol, "<"),
+            Token(Token::Symbol, "<"),
             {
-                    new SyntaxTreeNode(new Token(12)),
-                    new SyntaxTreeNode(new Token(12)),
-                    new SyntaxTreeNode(new Token(74)),
+                    new SyntaxTreeNode(Token(12)),
+                    new SyntaxTreeNode(Token(12)),
+                    new SyntaxTreeNode(Token(74)),
             });
 
     auto expected_result = Program({

@@ -15,10 +15,10 @@ public:
 TEST(print_ast_test, ShouldPrintSimpleAST) {
     // (+ 1 2)
     const auto ast = new SyntaxTreeNode(
-            new Token(Token::Symbol, "+"),
+            Token(Token::Symbol, "+"),
             {
-                    new SyntaxTreeNode(new Token(Token::Integer, "1")),
-                    new SyntaxTreeNode(new Token(Token::Integer, "2")),
+                    new SyntaxTreeNode(Token(Token::Integer, "1")),
+                    new SyntaxTreeNode(Token(Token::Integer, "2")),
             });
     std::shared_ptr<MockOutputSource> mockOutputSource(new MockOutputSource);
 
@@ -31,15 +31,15 @@ TEST(print_ast_test, ShouldPrintSimpleAST) {
 TEST(print_ast_test, ShouldPrintNestedAST) {
     // (+ (* 5 2) 4)
     const auto ast = new SyntaxTreeNode(
-            new Token(Token::Symbol, "+"),
+            Token(Token::Symbol, "+"),
             {
                     new SyntaxTreeNode(
-                            new Token(Token::Symbol, "*"),
+                            Token(Token::Symbol, "*"),
                             {
-                                    new SyntaxTreeNode(new Token(Token::Integer, "5")),
-                                    new SyntaxTreeNode(new Token(Token::Integer, "2")),
+                                    new SyntaxTreeNode(Token(Token::Integer, "5")),
+                                    new SyntaxTreeNode(Token(Token::Integer, "2")),
                             }),
-                    new SyntaxTreeNode(new Token(Token::Integer, "4")),
+                    new SyntaxTreeNode(Token(Token::Integer, "4")),
             });
     const std::string expectedOutput = "-> Node (+)\n"
                                        "\t-> Node (*)\n"

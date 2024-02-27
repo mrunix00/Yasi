@@ -42,42 +42,42 @@ namespace Bytecode {
     void Compiler::compile(const SyntaxTreeNode &tree,
                            Segment *segment,
                            std::vector<Instruction *> &instructions) {
-        switch (tree.token->type) {
+        switch (tree.token.type) {
             case Token::Integer:
-                instructions.push_back(new LoadLiteral(tree.token->asInteger()));
+                instructions.push_back(new LoadLiteral(tree.token.asInteger()));
                 break;
             case Token::Decimal:
                 instructions.push_back(
                         new LoadLiteral(
-                                new DecimalNumberLiteral(tree.token->asDecimal())));
+                                new DecimalNumberLiteral(tree.token.asDecimal())));
                 break;
             case Token::String:
                 instructions.push_back(
-                        new LoadLiteral(new StringLiteral(tree.token->asString())));
+                        new LoadLiteral(new StringLiteral(tree.token.asString())));
                 break;
             case Token::Symbol:
                 if (tree.children.empty()) {
-                    if (segment->find_variable(tree.token->token) != nullptr) {
-                        instructions.push_back(new Load(segment->find_variable(tree.token->asString())));
+                    if (segment->find_variable(tree.token.token) != nullptr) {
+                        instructions.push_back(new Load(segment->find_variable(tree.token.asString())));
                         return;
                     }
-                    if (program.find_global(tree.token->token) != nullptr) {
-                        instructions.push_back(new Load(program.find_global(tree.token->asString())));
+                    if (program.find_global(tree.token.token) != nullptr) {
+                        instructions.push_back(new Load(program.find_global(tree.token.asString())));
                         return;
                     }
                 } else {
-                    if (program.find_function(tree.token->token) != -1) {
+                    if (program.find_function(tree.token.token) != -1) {
                         for (const auto &argument: tree.children)
                             compile(*argument, segment, instructions);
-                        auto called_segment = program.find_function(tree.token->asString());
+                        auto called_segment = program.find_function(tree.token.asString());
                         auto args = program.segments[called_segment]->variables_table.size();
                         instructions.push_back(new Call(called_segment, args));
                         return;
                     }
                 }
 
-                if (builtin_instructions.find(tree.token->token) != builtin_instructions.end()) {
-                    builtin_instructions[tree.token->token]->compile(
+                if (builtin_instructions.find(tree.token.token) != builtin_instructions.end()) {
+                    builtin_instructions[tree.token.token]->compile(
                             tree.children,
                             *this,
                             instructions,

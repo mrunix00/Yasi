@@ -9,7 +9,7 @@ namespace Bytecode {
             if (!arg->children.empty()) {
                 if (!is_optimizable(arg->children)) return false;
             } else {
-                return arg->token->type != Token::Symbol;
+                return arg->token.type != Token::Symbol;
             }
             return true;
         });

@@ -20,7 +20,7 @@ namespace Bytecode::BuiltinFunctions {
                         compiler.compile(*arg, segment, part);
                         result += ((NumberLiteral *) static_cast<LoadLiteral *>(part[0])->literal)->asNumber();
                     } else {
-                        result += arg->token->asInteger();
+                        result += arg->token.asInteger();
                     }
                 }
                 instructions.push_back(new LoadLiteral(result));
