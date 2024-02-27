@@ -4,7 +4,7 @@
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
 
-class MockOutputSource : public OutputSource {
+class MockOutputSource final : public OutputSource {
 public:
     MOCK_METHOD(void, out, (std::string out), (override));
 };
@@ -19,7 +19,7 @@ TEST(print_tokens, ShouldPrintTokens) {
             new Token(Token::ClosedBracket, ")"),
     };
 
-    std::shared_ptr<MockOutputSource> mockOutputSource(new MockOutputSource);
+    const std::shared_ptr<MockOutputSource> mockOutputSource(new MockOutputSource);
     EXPECT_CALL(*mockOutputSource, out("['(', '+', 1, 2, ')']"));
 
     printTokens(mockOutputSource.get(), sample);
@@ -34,7 +34,7 @@ TEST(print_tokens, ShouldPrintStringTokens) {
             new Token(Token::ClosedBracket, ")"),
     };
 
-    std::shared_ptr<MockOutputSource> mockOutputSource(new MockOutputSource);
+    const std::shared_ptr<MockOutputSource> mockOutputSource(new MockOutputSource);
     EXPECT_CALL(*mockOutputSource, out("['(', 'print', \"Hello World\", ')']"));
 
     printTokens(mockOutputSource.get(), sample);

@@ -33,7 +33,7 @@ TEST(compiler_functions, SimpleFunctionDefinition) {
                             }),
             });
 
-    auto expected_result = Program(
+    const auto expected_result = Program(
             {
                     new Segment({}),
                     new Segment({
@@ -43,7 +43,7 @@ TEST(compiler_functions, SimpleFunctionDefinition) {
                     }),
             });
 
-    Compiler compiler = Compiler();
+    auto compiler = Compiler();
     compiler.compile(expression);
 
     EXPECT_EQ(expected_result == compiler.program, true);
@@ -78,7 +78,7 @@ TEST(compiler_functions, FunctionDefinitionWithMultipleArgs) {
                     }),
             });
 
-    Compiler compiler = Compiler();
+    auto compiler = Compiler();
     compiler.compile(expression);
 
     EXPECT_EQ(expected_result == compiler.program, true);
@@ -122,7 +122,7 @@ TEST(compiler_functions, SimpleFunctionCall) {
                     }),
             });
 
-    Compiler compiler = Compiler();
+    auto compiler = Compiler();
     compiler.compile(function_definition);
     compiler.compile(function_call);
 
@@ -170,7 +170,7 @@ TEST(compiler_functions, FunctionWithMultipleArgsCall) {
                     }),
             });
 
-    Compiler compiler = Compiler();
+    auto compiler = Compiler();
     compiler.compile(function_definition);
     compiler.compile(function_call);
 
@@ -234,7 +234,7 @@ TEST(compiler_functions, RecursiveFunction) {
                     }),
             });
 
-    Compiler compiler = Compiler();
+    auto compiler = Compiler();
     compiler.compile(expression);
 
     EXPECT_EQ(expected_result == compiler.program, true);

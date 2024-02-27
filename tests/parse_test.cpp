@@ -3,62 +3,62 @@
 #include <gtest/gtest.h>
 
 TEST(parse_test, ReturnNullWhenGivenNoTokens) {
-    auto actual = Parser::parse({});
+    const auto actual = Parser::parse({});
     EXPECT_EQ(actual == nullptr, true);
 }
 
 TEST(parse_test, ParseSingleToken) {
-    auto sample = {new Token(Token::Integer, "2")};
+    const auto sample = {new Token(Token::Integer, "2")};
 
-    auto expected = SyntaxTreeNode(Token(Token::Integer, "2"));
-    auto actual = *Parser::parse(sample);
+    const auto expected = SyntaxTreeNode(Token(Token::Integer, "2"));
+    const auto actual = *Parser::parse(sample);
 
     EXPECT_EQ(expected == actual, true);
 }
 
 TEST(parse_test, ParseSimpleOperation) {
     // ( + 1 2 )
-    auto sample = {
+    const auto sample = {
             new Token(Token::OpenBracket, "("),
             new Token(Token::Symbol, "+"),
             new Token(Token::Integer, "1"),
             new Token(Token::Integer, "2"),
             new Token(Token::ClosedBracket, ")"),
     };
-    auto expected = SyntaxTreeNode(
+    const auto expected = SyntaxTreeNode(
             Token(Token::Symbol, "+"),
             {
                     new SyntaxTreeNode(Token(Token::Integer, "1")),
                     new SyntaxTreeNode(Token(Token::Integer, "2")),
             });
 
-    auto actual = *Parser::parse(sample);
+    const auto actual = *Parser::parse(sample);
 
     EXPECT_EQ(actual == expected, true);
 }
 
 TEST(parse_test, ParseSimpleOperationWithStringArgument) {
     // ( print "Hello World" )
-    auto sample = {
+    const auto sample = {
             new Token(Token::OpenBracket, "("),
             new Token(Token::Symbol, "print"),
             new Token(Token::String, "\"Hello World\""),
             new Token(Token::ClosedBracket, ")"),
     };
-    auto expected = SyntaxTreeNode(
+    const auto expected = SyntaxTreeNode(
             Token(Token::Symbol, "print"),
             {
                     new SyntaxTreeNode(Token(Token::String, "\"Hello World\"")),
             });
 
-    auto actual = *Parser::parse(sample);
+    const auto actual = *Parser::parse(sample);
 
     EXPECT_EQ(actual == expected, true);
 }
 
 TEST(parse_test, ParseNestedOperation) {
     // ( + ( + 1 3 ) 2 )
-    auto sample = {
+    const auto sample = {
             new Token(Token::OpenBracket, "("),
             new Token(Token::Symbol, "+"),
             new Token(Token::OpenBracket, "("),
@@ -70,7 +70,7 @@ TEST(parse_test, ParseNestedOperation) {
             new Token(Token::ClosedBracket, ")"),
     };
 
-    auto expected = SyntaxTreeNode(
+    const auto expected = SyntaxTreeNode(
             Token(Token::Symbol, "+"),
             {
                     new SyntaxTreeNode(
@@ -82,14 +82,14 @@ TEST(parse_test, ParseNestedOperation) {
                     new SyntaxTreeNode(Token(Token::Integer, "2")),
             });
 
-    auto actual = *Parser::parse(sample);
+    const auto actual = *Parser::parse(sample);
 
     EXPECT_EQ(actual == expected, true);
 }
 
 TEST(parse_test, ParseDeeplyNestedOperation) {
     // ( + ( * 2 3 ) ( + ( * 1 2 ) 4 ) 7 )
-    auto sample = {
+    const auto sample = {
             new Token(Token::OpenBracket, "("),
             new Token(Token::Symbol, "+"),
             new Token(Token::OpenBracket, "("),
@@ -110,7 +110,7 @@ TEST(parse_test, ParseDeeplyNestedOperation) {
             new Token(Token::ClosedBracket, ")"),
     };
 
-    auto expected = SyntaxTreeNode(
+    const auto expected = SyntaxTreeNode(
             Token(Token::Symbol, "+"),
             {
                     new SyntaxTreeNode(
@@ -133,14 +133,14 @@ TEST(parse_test, ParseDeeplyNestedOperation) {
                     new SyntaxTreeNode(Token(Token::Integer, "7")),
             });
 
-    auto actual = *Parser::parse(sample);
+    const auto actual = *Parser::parse(sample);
 
     EXPECT_EQ(actual == expected, true);
 }
 
 TEST(parse_test, ShouldThrowExceptionsOnExtraParenthesis) {
     auto exceptionCaught = false;
-    auto expectedErrorMessage = "Unexpected parenthesis -> ')'";
+    const auto expectedErrorMessage = "Unexpected parenthesis -> ')'";
     std::string actualErrorMessage;
     int extraParenthesisLine;
     int extraParenthesisColumn;
@@ -176,7 +176,7 @@ TEST(parse_test, ShouldThrowExceptionsOnMissingOperator) {
     int line = 0;
     int column = 0;
     // ((+ 1 2))
-    const std::vector<Token *> sample = {
+    const std::vector sample = {
             new Token(Token::OpenBracket, "(", 1, 1),
             new Token(Token::OpenBracket, "(", 1, 2),
             new Token(Token::Symbol, "+", 1, 3),

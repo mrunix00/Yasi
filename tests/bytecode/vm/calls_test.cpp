@@ -10,7 +10,7 @@
 using namespace Bytecode;
 
 TEST(vm_calls_test, function_with_a_single_arg) {
-    auto program = Program({
+    const auto program = Program({
             new Segment({
                     new LoadLiteral(10),
                     new Call(1, 1),
@@ -31,7 +31,7 @@ TEST(vm_calls_test, function_with_a_single_arg) {
 }
 
 TEST(vm_calls_test, function_with_multiple_args) {
-    auto program = Program({
+    const auto program = Program({
             new Segment({
                     new LoadLiteral(50),
                     new LoadLiteral(10),

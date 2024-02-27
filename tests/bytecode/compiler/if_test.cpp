@@ -24,7 +24,7 @@ TEST(compiler_if, SimpleConditionalStatement) {
                     new SyntaxTreeNode(Token(20)),
             });
 
-    auto expected_result = Program(
+    const auto expected_result = Program(
             {
                     new Segment({
                             new LoadLiteral(20),
@@ -56,7 +56,7 @@ TEST(compiler_if, SimpleConditionWithElseClause) {
                     new SyntaxTreeNode(Token(10)),
             });
 
-    auto expected_result = Program(
+    const auto expected_result = Program(
             {
                     new Segment({
                             new LoadLiteral(20),

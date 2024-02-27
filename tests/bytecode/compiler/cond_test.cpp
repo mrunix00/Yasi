@@ -14,18 +14,18 @@ using namespace Bytecode;
 TEST(compiler_cond, CompileSimpleCondition) {
     // (cond (> 20 10) 20)
     const auto expression = SyntaxTreeNode(
-             Token(Token::Symbol, "cond"),
+            Token(Token::Symbol, "cond"),
             {
                     new SyntaxTreeNode(
-                             Token(Token::Symbol, ">"),
+                            Token(Token::Symbol, ">"),
                             {
-                                    new SyntaxTreeNode( Token(20)),
-                                    new SyntaxTreeNode( Token(10)),
+                                    new SyntaxTreeNode(Token(20)),
+                                    new SyntaxTreeNode(Token(10)),
                             }),
-                    new SyntaxTreeNode( Token(20)),
+                    new SyntaxTreeNode(Token(20)),
             });
 
-    auto expected_result = Program(
+    const auto expected_result = Program(
             {
                     new Segment({
                             new LoadLiteral(20),
@@ -45,19 +45,19 @@ TEST(compiler_cond, CompileSimpleCondition) {
 TEST(compiler_cond, SimpleConditionWithElseClause) {
     // (cond (> 20 10) 20 10)
     const auto expression = SyntaxTreeNode(
-             Token(Token::Symbol, "cond"),
+            Token(Token::Symbol, "cond"),
             {
                     new SyntaxTreeNode(
-                             Token(Token::Symbol, ">"),
+                            Token(Token::Symbol, ">"),
                             {
-                                    new SyntaxTreeNode( Token(20)),
-                                    new SyntaxTreeNode( Token(10)),
+                                    new SyntaxTreeNode(Token(20)),
+                                    new SyntaxTreeNode(Token(10)),
                             }),
-                    new SyntaxTreeNode( Token(20)),
-                    new SyntaxTreeNode( Token(10)),
+                    new SyntaxTreeNode(Token(20)),
+                    new SyntaxTreeNode(Token(10)),
             });
 
-    auto expected_result = Program(
+    const auto expected_result = Program(
             {
                     new Segment({
                             new LoadLiteral(20),

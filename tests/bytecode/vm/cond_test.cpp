@@ -10,7 +10,7 @@
 using namespace Bytecode;
 
 TEST(vm_cond_test, ShouldNotJumpOnTrueCondition) {
-    auto program = Program(
+    const auto program = Program(
             {
                     new Segment({
                             new LoadLiteral(20),
@@ -30,7 +30,7 @@ TEST(vm_cond_test, ShouldNotJumpOnTrueCondition) {
 }
 
 TEST(vm_cond_test, ShouldJumpOnFalseCondition) {
-    auto program = Program(
+    const auto program = Program(
             {
                     new Segment({
                             new LoadLiteral(10),
@@ -48,7 +48,7 @@ TEST(vm_cond_test, ShouldJumpOnFalseCondition) {
 }
 
 TEST(vm_conf_test, ShouldJumpToOppositeCondition) {
-    auto program = Program(
+    const auto program = Program(
             {
                     new Segment({
                             new LoadLiteral(20),

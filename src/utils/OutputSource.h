@@ -5,6 +5,7 @@
 
 class OutputSource {
 public:
+    virtual ~OutputSource() = default;
     virtual void out(std::string) = 0;
 };
 

@@ -2,11 +2,10 @@
 #include "utils/OutputSource.h"
 #include "utils/printAST.h"
 #include "gmock/gmock.h"
-#include <gmock/gmock.h>
 #include <gtest/gtest.h>
 #include <memory>
 
-class MockOutputSource : public OutputSource {
+class MockOutputSource final : public OutputSource {
 public:
     MOCK_METHOD(void, out, (std::string out), (override));
 };
@@ -20,7 +19,7 @@ TEST(print_ast_test, ShouldPrintSimpleAST) {
                     new SyntaxTreeNode(Token(Token::Integer, "1")),
                     new SyntaxTreeNode(Token(Token::Integer, "2")),
             });
-    std::shared_ptr<MockOutputSource> mockOutputSource(new MockOutputSource);
+    const std::shared_ptr<MockOutputSource> mockOutputSource(new MockOutputSource);
 
     EXPECT_CALL(*mockOutputSource, out("-> Node (+)\n"
                                        "\t-> Integer (1)\n"

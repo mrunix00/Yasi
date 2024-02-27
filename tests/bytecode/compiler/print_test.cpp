@@ -18,7 +18,7 @@ TEST(compiler_print, SimplePrintStatement) {
                     new SyntaxTreeNode(Token(12)),
             });
 
-    auto expected_result = Program({
+    const auto expected_result = Program({
             new Segment(
                     {
                             new LoadLiteral(12),
@@ -42,7 +42,7 @@ TEST(compiler_print, PrintMultipleArgs) {
                     new SyntaxTreeNode(Token(12)),
             });
 
-    auto expected_result = Program({
+    const auto expected_result = Program({
             new Segment(
                     {
                             new LoadLiteral(75),
@@ -67,7 +67,7 @@ TEST(compiler_print, PrintStrings) {
                     new SyntaxTreeNode(Token(Token::String, "Hello World!")),
             });
 
-    auto expected_result = Program({
+    const auto expected_result = Program({
             new Segment(
                     {
                             new LoadLiteral(new StringLiteral("Hello World!")),

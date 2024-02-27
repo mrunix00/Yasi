@@ -10,13 +10,13 @@ using namespace Bytecode;
 TEST(compiler_equals, CompileSimpleEqualityCheck) {
     // (= 12 74)
     const auto expression = SyntaxTreeNode(
-             Token(Token::Symbol, "="),
+            Token(Token::Symbol, "="),
             {
-                    new SyntaxTreeNode( Token(12)),
-                    new SyntaxTreeNode( Token(74)),
+                    new SyntaxTreeNode(Token(12)),
+                    new SyntaxTreeNode(Token(74)),
             });
 
-    auto expected_result = Program({
+    const auto expected_result = Program({
             new Segment({
                     new LoadLiteral(12),
                     new LoadLiteral(74),
@@ -33,14 +33,14 @@ TEST(compiler_equals, CompileSimpleEqualityCheck) {
 TEST(compiler_equals, CompileLongEqualityCheck) {
     // (= 12 74)
     const auto expression = SyntaxTreeNode(
-             Token(Token::Symbol, "="),
+            Token(Token::Symbol, "="),
             {
-                    new SyntaxTreeNode( Token(12)),
-                    new SyntaxTreeNode( Token(12)),
-                    new SyntaxTreeNode( Token(74)),
+                    new SyntaxTreeNode(Token(12)),
+                    new SyntaxTreeNode(Token(12)),
+                    new SyntaxTreeNode(Token(74)),
             });
 
-    auto expected_result = Program({
+    const auto expected_result = Program({
             new Segment({
                     new LoadLiteral(12),
                     new LoadLiteral(12),

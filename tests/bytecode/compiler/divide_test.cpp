@@ -16,7 +16,7 @@ TEST(compiler_divide, CompileSimpleDivision) {
                     new SyntaxTreeNode(Token(74)),
             });
 
-    auto expected_result = Program({
+    const auto expected_result = Program({
             new Segment({
                     new LoadLiteral(12),
                     new LoadLiteral(74),
@@ -39,7 +39,7 @@ TEST(compiler_divide, CompileLongDivision) {
                     new SyntaxTreeNode(Token(74)),
                     new SyntaxTreeNode(Token(17)),
             });
-    auto expected_result = Program(
+    const auto expected_result = Program(
             {
                     new Segment({
                             new LoadLiteral(12),
@@ -69,7 +69,7 @@ TEST(compiler_divide, CompileNestedDivision) {
                             }),
                     new SyntaxTreeNode(Token(43)),
             });
-    auto expected_result = Program(
+    const auto expected_result = Program(
             {
                     new Segment({
                             new LoadLiteral(23),

@@ -17,14 +17,14 @@ TEST(compiler_variables, GlobalVariableDefinition) {
                     new SyntaxTreeNode(Token(10)),
             });
 
-    auto expected_result = Program({
+    const auto expected_result = Program({
             new Segment({
                     new LoadLiteral(10),
                     new Store(new GlobalRegister(0)),
             }),
     });
 
-    Compiler compiler = Compiler();
+    auto compiler = Compiler();
     compiler.compile(expression);
 
     EXPECT_EQ(expected_result == compiler.program, true);
@@ -54,7 +54,7 @@ TEST(compiler_variables, MultipleGlobalVariablesDefinitions) {
             }),
     });
 
-    Compiler compiler = Compiler();
+    auto compiler = Compiler();
     compiler.compile(first_expression);
     compiler.compile(second_expression);
 
@@ -80,7 +80,7 @@ TEST(compiler_variables, UseGlobalVariableInAnExpression) {
             }),
     });
 
-    Compiler compiler = Compiler();
+    auto compiler = Compiler();
     compiler.compile(first_expression);
     compiler.compile(second_expression);
 

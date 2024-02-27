@@ -16,7 +16,7 @@ TEST(compiler_greater, CompileSimpleGreaterThanCheck) {
                     new SyntaxTreeNode(Token(74)),
             });
 
-    auto expected_result = Program({
+    const auto expected_result = Program({
             new Segment({
                     new LoadLiteral(12),
                     new LoadLiteral(74),
@@ -40,7 +40,7 @@ TEST(compiler_greater, CompileLongGreaterThanCheck) {
                     new SyntaxTreeNode(Token(74)),
             });
 
-    auto expected_result = Program({
+    const auto expected_result = Program({
             new Segment({
                     new LoadLiteral(12),
                     new LoadLiteral(12),

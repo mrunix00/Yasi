@@ -16,7 +16,7 @@ TEST(compiler_less, CompileSimpleLessThanCheck) {
                     new SyntaxTreeNode(Token(74)),
             });
 
-    auto expected_result = Program({
+    const auto expected_result = Program({
             new Segment({
                     new LoadLiteral(12),
                     new LoadLiteral(74),
@@ -40,7 +40,7 @@ TEST(compiler_less, CompileLongLessThanCheck) {
                     new SyntaxTreeNode(Token(74)),
             });
 
-    auto expected_result = Program({
+    const auto expected_result = Program({
             new Segment({
                     new LoadLiteral(12),
                     new LoadLiteral(12),
@@ -50,7 +50,7 @@ TEST(compiler_less, CompileLongLessThanCheck) {
             }),
     });
 
-    Compiler compiler = Compiler();
+    auto compiler = Compiler();
     compiler.compile(expression);
 
     EXPECT_EQ(expected_result == compiler.program, true);

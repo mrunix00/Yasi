@@ -16,7 +16,7 @@ TEST(compiler_subtract, CompileSimpleSubtraction) {
                     new SyntaxTreeNode(Token(32)),
             });
 
-    auto expected_result = Program({
+    const auto expected_result = Program({
             new Segment({
                     new LoadLiteral(100),
                     new LoadLiteral(32),
@@ -24,7 +24,7 @@ TEST(compiler_subtract, CompileSimpleSubtraction) {
             }),
     });
 
-    Compiler compiler = Compiler();
+    auto compiler = Compiler();
     compiler.compile(expression);
 
     EXPECT_EQ(expected_result == compiler.program, true);
@@ -39,7 +39,7 @@ TEST(compiler_subtract, CompileLongSubtraction) {
                     new SyntaxTreeNode(Token(60)),
                     new SyntaxTreeNode(Token(39)),
             });
-    auto expected_result = Program({
+    const auto expected_result = Program({
             new Segment({
                     new LoadLiteral(120),
                     new LoadLiteral(60),
@@ -49,7 +49,7 @@ TEST(compiler_subtract, CompileLongSubtraction) {
             }),
     });
 
-    Compiler compiler = Compiler();
+    auto compiler = Compiler();
     compiler.compile(expression);
 
     EXPECT_EQ(expected_result == compiler.program, true);
@@ -68,7 +68,7 @@ TEST(compiler_subtract, CompileNestedSubtraction) {
                             }),
                     new SyntaxTreeNode(Token(43)),
             });
-    auto expected_result = Program({
+    const auto expected_result = Program({
             new Segment({
                     new LoadLiteral(153),
                     new LoadLiteral(74),
@@ -78,7 +78,7 @@ TEST(compiler_subtract, CompileNestedSubtraction) {
             }),
     });
 
-    Compiler compiler = Compiler();
+    auto compiler = Compiler();
     compiler.compile(expression);
 
     EXPECT_EQ(expected_result == compiler.program, true);

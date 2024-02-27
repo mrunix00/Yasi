@@ -18,7 +18,7 @@ TEST(compiler_multiply, CompileSimpleMultiplication) {
                     new SyntaxTreeNode(Token(74)),
             });
 
-    auto expected_result = Program({
+    const auto expected_result = Program({
             new Segment({
                     new LoadLiteral(12),
                     new LoadLiteral(74),
@@ -26,7 +26,7 @@ TEST(compiler_multiply, CompileSimpleMultiplication) {
             }),
     });
 
-    Compiler compiler = Compiler();
+    auto compiler = Compiler();
     compiler.compile(expression);
 
     EXPECT_EQ(expected_result == compiler.program, true);
@@ -41,11 +41,11 @@ TEST(compiler_multiply, CompileSimpleMultiplicationWithOptimization) {
                     new SyntaxTreeNode(Token(74)),
             });
 
-    auto expected_result = Program({
+    const auto expected_result = Program({
             new Segment({new LoadLiteral(888)}),
     });
 
-    Compiler compiler = Compiler(true);
+    auto compiler = Compiler(true);
     compiler.compile(expression);
 
     EXPECT_EQ(expected_result == compiler.program, true);
@@ -77,7 +77,7 @@ TEST(compiler_multiply, IgnoreOptimizationWhenNotPossible) {
             }),
     });
 
-    Compiler compiler = Compiler(true);
+    auto compiler = Compiler(true);
     compiler.compile(first_expression);
     compiler.compile(second_expression);
 
@@ -93,7 +93,7 @@ TEST(compiler_multiply, CompileLongMultiplication) {
                     new SyntaxTreeNode(Token(74)),
                     new SyntaxTreeNode(Token(17)),
             });
-    auto expected_result = Program({
+    const auto expected_result = Program({
             new Segment({
                     new LoadLiteral(12),
                     new LoadLiteral(74),
@@ -103,7 +103,7 @@ TEST(compiler_multiply, CompileLongMultiplication) {
             }),
     });
 
-    Compiler compiler = Compiler();
+    auto compiler = Compiler();
     compiler.compile(expression);
 
     EXPECT_EQ(expected_result == compiler.program, true);
@@ -118,11 +118,11 @@ TEST(compiler_multiply, CompileLongMultiplicationWithOptimization) {
                     new SyntaxTreeNode(Token(74)),
                     new SyntaxTreeNode(Token(17)),
             });
-    auto expected_result = Program({
+    const auto expected_result = Program({
             new Segment({new LoadLiteral(15096)}),
     });
 
-    Compiler compiler = Compiler(true);
+    auto compiler = Compiler(true);
     compiler.compile(expression);
 
     EXPECT_EQ(expected_result == compiler.program, true);
@@ -141,7 +141,7 @@ TEST(compiler_multiply, CompileNestedMultiplication) {
                             }),
                     new SyntaxTreeNode(Token(43)),
             });
-    auto expected_result = Program({
+    const auto expected_result = Program({
             new Segment({
                     new LoadLiteral(23),
                     new LoadLiteral(74),
@@ -151,7 +151,7 @@ TEST(compiler_multiply, CompileNestedMultiplication) {
             }),
     });
 
-    Compiler compiler = Compiler();
+    auto compiler = Compiler();
     compiler.compile(expression);
 
     EXPECT_EQ(expected_result == compiler.program, true);
@@ -170,11 +170,11 @@ TEST(compiler_multiply, CompileNestedMultiplicationWithOptimization) {
                             }),
                     new SyntaxTreeNode(Token(43)),
             });
-    auto expected_result = Program({
+    const auto expected_result = Program({
             new Segment({new LoadLiteral(73186)}),
     });
 
-    Compiler compiler = Compiler(true);
+    auto compiler = Compiler(true);
     compiler.compile(expression);
 
     EXPECT_EQ(expected_result == compiler.program, true);

@@ -3,15 +3,15 @@
 #include <vector>
 
 TEST(lex_test, ShouldTokenizeSingleToken) {
-    std::string sample = "32";
-    std::vector<Token *> expected = {new Token(Token::Integer, "32")};
-    auto actual = Lexer::tokenize(sample);
+    const std::string sample = "32";
+    const std::vector expected = {new Token(Token::Integer, "32")};
+    const auto actual = Lexer::tokenize(sample);
     EXPECT_EQ(*expected[0] == *actual[0], true);
 }
 
 TEST(lex_test, ShouldTokenizeSingleChars) {
-    std::string sample = "(+ 1 2)";
-    std::vector<Token *> tokens = {
+    const std::string sample = "(+ 1 2)";
+    const std::vector tokens = {
             new Token(Token::OpenBracket, "("),
             new Token(Token::Symbol, "+"),
             new Token(Token::Integer, "1"),
@@ -19,7 +19,7 @@ TEST(lex_test, ShouldTokenizeSingleChars) {
             new Token(Token::ClosedBracket, ")"),
     };
 
-    auto result = Lexer::tokenize(sample);
+    const auto result = Lexer::tokenize(sample);
 
     EXPECT_EQ(tokens.size() == result.size(), true);
     for (int i = 0; i < tokens.size(); i++) {
@@ -28,8 +28,8 @@ TEST(lex_test, ShouldTokenizeSingleChars) {
 }
 
 TEST(lex_test, ShouldTokenizeMultipleChars) {
-    std::string sample = "(multiply 1 2)";
-    std::vector<Token *> tokens = {
+    const std::string sample = "(multiply 1 2)";
+    const std::vector tokens = {
             new Token(Token::OpenBracket, "("),
             new Token(Token::Symbol, "multiply"),
             new Token(Token::Integer, "1"),
@@ -37,7 +37,7 @@ TEST(lex_test, ShouldTokenizeMultipleChars) {
             new Token(Token::ClosedBracket, ")"),
     };
 
-    auto result = Lexer::tokenize(sample);
+    const auto result = Lexer::tokenize(sample);
 
     EXPECT_EQ(tokens.size() == result.size(), true);
     for (int i = 0; i < tokens.size(); i++) {
@@ -46,8 +46,8 @@ TEST(lex_test, ShouldTokenizeMultipleChars) {
 }
 
 TEST(lex_test, ShouldTokenizeLargeNumbers) {
-    std::string sample = "(+ 13 54)";
-    std::vector<Token *> tokens = {
+    const std::string sample = "(+ 13 54)";
+    const std::vector tokens = {
             new Token(Token::OpenBracket, "("),
             new Token(Token::Symbol, "+"),
             new Token(Token::Integer, "13"),
@@ -55,7 +55,7 @@ TEST(lex_test, ShouldTokenizeLargeNumbers) {
             new Token(Token::ClosedBracket, ")"),
     };
 
-    auto result = Lexer::tokenize(sample);
+    const auto result = Lexer::tokenize(sample);
 
     EXPECT_EQ(tokens.size() == result.size(), true);
     for (int i = 0; i < tokens.size(); i++) {
@@ -64,8 +64,8 @@ TEST(lex_test, ShouldTokenizeLargeNumbers) {
 }
 
 TEST(lex_test, ShouldTokenizeNegativeNumbers) {
-    std::string sample = "(+ 1 -1)";
-    std::vector<Token *> tokens = {
+    const std::string sample = "(+ 1 -1)";
+    const std::vector tokens = {
             new Token(Token::OpenBracket, "("),
             new Token(Token::Symbol, "+"),
             new Token(Token::Integer, "1"),
@@ -73,7 +73,7 @@ TEST(lex_test, ShouldTokenizeNegativeNumbers) {
             new Token(Token::ClosedBracket, ")"),
     };
 
-    auto result = Lexer::tokenize(sample);
+    const auto result = Lexer::tokenize(sample);
 
     EXPECT_EQ(tokens.size() == result.size(), true);
     for (int i = 0; i < tokens.size(); i++) {
@@ -82,15 +82,15 @@ TEST(lex_test, ShouldTokenizeNegativeNumbers) {
 }
 
 TEST(lex_test, StringsToken) {
-    std::string sample = "(print \"Hello World\")";
-    std::vector<Token *> expected = {
+    const std::string sample = "(print \"Hello World\")";
+    const std::vector expected = {
             new Token(Token::OpenBracket, "("),
             new Token(Token::Symbol, "print"),
             new Token(Token::String, "\"Hello World\""),
             new Token(Token::ClosedBracket, ")"),
     };
 
-    auto actual = Lexer::tokenize(sample);
+    const auto actual = Lexer::tokenize(sample);
 
     EXPECT_EQ(expected.size() == actual.size(), true);
     for (int i = 0; i < expected.size(); i++) {
@@ -100,7 +100,7 @@ TEST(lex_test, StringsToken) {
 
 TEST(lex_test, DecimalTokens) {
     const std::string sample = "(+ 1.2 3)";
-    const std::vector<Token *> expected = {
+    const std::vector expected = {
             new Token(Token::OpenBracket, "("),
             new Token(Token::Symbol, "+"),
             new Token(Token::Decimal, "1.2"),
@@ -108,7 +108,7 @@ TEST(lex_test, DecimalTokens) {
             new Token(Token::ClosedBracket, ")"),
     };
 
-    auto actual = Lexer::tokenize(sample);
+    const auto actual = Lexer::tokenize(sample);
 
     EXPECT_EQ(expected.size() == actual.size(), true);
     for (int i = 0; i < expected.size(); i++) {
@@ -117,8 +117,8 @@ TEST(lex_test, DecimalTokens) {
 }
 
 TEST(lex_test, ShouldLocateTokens) {
-    std::string sample = "(+ 12 54)";
-    auto tokens = Lexer::tokenize(sample);
+    const std::string sample = "(+ 12 54)";
+    const auto tokens = Lexer::tokenize(sample);
 
     EXPECT_EQ(tokens[0]->line == 1, true);
     EXPECT_EQ(tokens[0]->column, true);
@@ -137,8 +137,8 @@ TEST(lex_test, ShouldLocateTokens) {
 }
 
 TEST(lex_test, ShouldLocateTokensOnMultiLineExpressions) {
-    std::string sample = "(+\n1 2\n)";
-    auto tokens = Lexer::tokenize(sample);
+    const std::string sample = "(+\n1 2\n)";
+    const auto tokens = Lexer::tokenize(sample);
 
     EXPECT_EQ(tokens[0]->line == 1, true);
     EXPECT_EQ(tokens[0]->column == 1, true);
@@ -157,15 +157,15 @@ TEST(lex_test, ShouldLocateTokensOnMultiLineExpressions) {
 }
 
 TEST(lex_test, ShouldTokenizeAStringWithParenthesis) {
-    std::string sample = "(print \"fib(10)\")";
+    const std::string sample = "(print \"fib(10)\")";
 
-    std::vector<Token*> expected = {
+    const std::vector expected = {
             new Token(Token::OpenBracket, "("),
             new Token(Token::Symbol, "print"),
             new Token(Token::String, "\"fib(10)\""),
             new Token(Token::ClosedBracket, ")"),
     };
-    auto actual = Lexer::tokenize(sample);
+    const auto actual = Lexer::tokenize(sample);
 
     EXPECT_EQ(expected.size() == actual.size(), true);
     for (int i = 0; i < expected.size(); i++) {

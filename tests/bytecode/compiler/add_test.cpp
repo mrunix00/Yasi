@@ -19,7 +19,7 @@ TEST(compiler_add, CompileSimpleAddition) {
                     new SyntaxTreeNode(Token(74)),
             });
 
-    auto expected_result = Program({
+    const auto expected_result = Program({
             new Segment(
                     {
                             new LoadLiteral(12),
@@ -42,7 +42,7 @@ TEST(compiler_add, CompileSimpleAdditionWithOptimization) {
                     new SyntaxTreeNode(Token(74)),
             });
 
-    auto expected_result = Program({
+    const auto expected_result = Program({
             new Segment({new LoadLiteral(86)}),
     });
 
@@ -95,7 +95,7 @@ TEST(compiler_add, CompileLongAddition) {
                     new SyntaxTreeNode(Token(74)),
                     new SyntaxTreeNode(Token(17)),
             });
-    auto expected_result = Program(
+    const auto expected_result = Program(
             {
                     new Segment({
                             new LoadLiteral(12),
@@ -121,7 +121,7 @@ TEST(compiler_add, CompileLongAdditionWithOptimization) {
                     new SyntaxTreeNode(Token(74)),
                     new SyntaxTreeNode(Token(17)),
             });
-    auto expected_result = Program(
+    const auto expected_result = Program(
             {
                     new Segment({new LoadLiteral(103)}),
             });
@@ -145,7 +145,7 @@ TEST(compiler_add, CompileNestedAddition) {
                             }),
                     new SyntaxTreeNode(Token(43)),
             });
-    auto expected_result = Program(
+    const auto expected_result = Program(
             {
                     new Segment({
                             new LoadLiteral(23),
@@ -175,7 +175,7 @@ TEST(compiler_add, CompileNestedAdditionWithOptimization) {
                             }),
                     new SyntaxTreeNode(Token(43)),
             });
-    auto expected_result = Program(
+    const auto expected_result = Program(
             {
                     new Segment({new LoadLiteral(140)}),
             });
@@ -190,10 +190,10 @@ TEST(compiler_add, CompileAddtionWithDecimalNumbers) {
     const auto expression = SyntaxTreeNode(
             Token(Token::Symbol, "+"),
             {
-                    new SyntaxTreeNode(Token((float) 3.14)),
+                    new SyntaxTreeNode(Token(static_cast<float>(3.14))),
                     new SyntaxTreeNode(Token(43)),
             });
-    auto expected_result = Program({new Segment({
+    const auto expected_result = Program({new Segment({
             new LoadLiteral(new DecimalNumberLiteral(3.14)),
             new LoadLiteral(43),
             new Add(),
