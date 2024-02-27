@@ -13,26 +13,34 @@ namespace Bytecode {
         std::vector<StackObject *> program_stack;
         std::vector<StackObject *> global_registers;
         std::vector<std::vector<StackObject *>> local_registers;
-        std::vector<StackFrame> call_stack;
 
     public:
         VM() {
                 local_registers.emplace_back();
                 call_stack.emplace_back();
         };
-        [[nodiscard]] StackObject *stackTop() const;
-        void stackPush(StackObject *object);
+        [[nodiscard]] inline StackObject *stackTop() const {
+            if (program_stack.empty()) return nullptr;
+            return program_stack.back();
+        }
+        inline void stackPush(StackObject *object) {
+            program_stack.push_back(object);
+        }
         void jump(size_t);
-        StackObject* stackPop();
+        inline StackObject* stackPop() {
+            auto object = program_stack.back();
+            program_stack.pop_back();
+            return object;
+        }
         void clearStack();
         void setGlobal(size_t i, StackObject *sObject);
         [[nodiscard]] StackObject* getGlobal(size_t i) const;
         void newStackFrame(size_t segment);
         void popStackFrame();
         void setLocal(size_t i, StackObject *sObject);
-        StackObject* getLocal(size_t i);
-        size_t getCurrentLine();
-        void nextLine();
-        size_t getCurrentSegment();
+        inline StackObject* getLocal(size_t i) {
+            return local_registers[local_registers.size() - 1][i];
+        }
+        std::vector<StackFrame> call_stack;
     };
 }// namespace Bytecode

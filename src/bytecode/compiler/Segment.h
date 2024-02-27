@@ -14,7 +14,7 @@ namespace Bytecode {
         explicit Segment(const std::vector<Instruction *> &instructions)
             : instructions(instructions) {}
         ~Segment() {
-            for (auto instruction: instructions)
+            for (const auto instruction: instructions)
                 delete instruction;
         }
 

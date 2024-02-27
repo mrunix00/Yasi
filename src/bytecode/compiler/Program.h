@@ -16,7 +16,7 @@ namespace Bytecode {
 
         Program() : segments({new Segment({})}){};
         ~Program() {
-            for (auto segment: segments)
+            for (const auto segment: segments)
                 delete segment;
         }
         explicit Program(const std::vector<Segment *> &segments) : segments(segments){};

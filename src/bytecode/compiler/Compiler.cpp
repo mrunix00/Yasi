@@ -32,11 +32,11 @@ namespace Bytecode {
     };
 
     void Compiler::compile(const SyntaxTreeNode &tree) {
-        Compiler::compile(tree, program.segments[0]);
+        compile(tree, program.segments[0]);
     }
 
     void Compiler::compile(const SyntaxTreeNode &tree, Segment *segment) {
-        Compiler::compile(tree, segment, segment->instructions);
+        compile(tree, segment, segment->instructions);
     }
 
     void Compiler::compile(const SyntaxTreeNode &tree,
@@ -69,8 +69,8 @@ namespace Bytecode {
                     if (program.find_function(tree.token.token) != -1) {
                         for (const auto &argument: tree.children)
                             compile(*argument, segment, instructions);
-                        auto called_segment = program.find_function(tree.token.asString());
-                        auto args = program.segments[called_segment]->variables_table.size();
+                        const auto called_segment = program.find_function(tree.token.asString());
+                        const auto args = program.segments[called_segment]->variables_table.size();
                         instructions.push_back(new Call(called_segment, args));
                         return;
                     }

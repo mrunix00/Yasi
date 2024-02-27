@@ -1,18 +1,5 @@
 #include "VM.h"
 namespace Bytecode {
-    StackObject* VM::stackTop() const {
-        if (program_stack.empty()) return nullptr;
-        return program_stack.back();
-    }
-    void VM::stackPush(StackObject *object) {
-        program_stack.push_back(object);
-    }
-    StackObject* VM::stackPop() {
-        auto object = program_stack.back();
-        program_stack.pop_back();
-        return object;
-    }
-
     void VM::setGlobal(const size_t i, StackObject *sObject) {
         if (global_registers.size() < i)
             global_registers.at(i) = sObject;
@@ -46,18 +33,6 @@ namespace Bytecode {
             registers->push_back(sObject);
     }
 
-    StackObject *VM::getLocal(size_t i) {
-        return local_registers[local_registers.size() - 1][i];
-    }
-    size_t VM::getCurrentLine() {
-        return call_stack.back().current_line;
-    }
-    size_t VM::getCurrentSegment() {
-        return call_stack.back().segment;
-    }
-    void VM::nextLine() {
-        call_stack.back().current_line++;
-    }
     void VM::popStackFrame() {
         if (!call_stack.empty())
             call_stack.pop_back();
