@@ -23,8 +23,8 @@ public:
     bool operator==(const SyntaxTreeNode &node) const {
         if (token == node.token) {
             for (auto i = 0; i < children.size(); i++) {
-                auto child1 = *node.children[i];
-                if (auto child2 = *children[i]; child1 != child2)
+                auto child1 = node.children[i];
+                if (auto child2 = children[i]; *child1 != *child2)
                     return false;
             }
             return true;
