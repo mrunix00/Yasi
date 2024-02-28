@@ -10,9 +10,6 @@ namespace Bytecode {
         return global_registers.at(i);
     }
 
-    void VM::jump(size_t line) {
-        call_stack.back().current_line = line - 1;
-    }
     void VM::clearStack() {
         program_stack.clear();
     }

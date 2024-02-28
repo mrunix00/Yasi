@@ -26,7 +26,9 @@ namespace Bytecode {
         inline void stackPush(StackObject *object) {
             program_stack.push_back(object);
         }
-        void jump(size_t);
+        inline void jump(size_t line) {
+            call_stack.back().current_line = line - 1;
+        }
         inline StackObject* stackPop() {
             auto object = program_stack.back();
             program_stack.pop_back();
