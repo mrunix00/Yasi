@@ -3,6 +3,7 @@ project(Yasi)
 
 set(CMAKE_CXX_STANDARD 17)
 
+add_compile_options(-O3)
 add_library(linenoise libs/linenoise/linenoise.c)
 
 include_directories(src)
