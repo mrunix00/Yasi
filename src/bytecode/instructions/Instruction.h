@@ -13,6 +13,7 @@ namespace Bytecode {
         Subtract,
         Divide,
         Multiply,
+        Not,
         Store,
         StoreGlobal,
         Equals,
