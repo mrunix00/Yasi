@@ -7,4 +7,3 @@
 void print_ast(OutputSource *outputSource, const SyntaxTreeNode &ast);
 
 #endif
-

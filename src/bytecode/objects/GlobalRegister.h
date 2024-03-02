@@ -5,6 +5,7 @@
 namespace Bytecode {
     class GlobalRegister : public Register {
         size_t reg;
+
     public:
         explicit GlobalRegister(size_t reg) : reg(reg) {
             type = RegisterType::GlobalRegister;
@@ -14,7 +15,7 @@ namespace Bytecode {
             return "$g" + std::to_string(reg);
         }
 
-        StackObject* get(VM *vm) override {
+        StackObject *get(VM *vm) override {
             return new StackObject(vm->getGlobal(reg)->literal->copy());
         }
 
@@ -28,4 +29,4 @@ namespace Bytecode {
                    ((GlobalRegister *) &r)->reg == reg;
         }
     };
-}
+}// namespace Bytecode

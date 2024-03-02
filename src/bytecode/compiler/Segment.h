@@ -22,7 +22,7 @@ namespace Bytecode {
             return variables_table[name] = variables_table.size();
         }
 
-        LocalRegister* find_variable(const std::string &name) {
+        LocalRegister *find_variable(const std::string &name) {
             if (variables_table.find(name) != variables_table.end()) return new LocalRegister(variables_table[name]);
             return nullptr;
         }

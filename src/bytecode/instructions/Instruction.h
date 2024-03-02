@@ -6,7 +6,6 @@
 namespace Bytecode {
     enum class InstructionType {
         Unknown,
-        LoadGlobal,
         LoadLiteral,
         Load,
         Add,
@@ -15,7 +14,6 @@ namespace Bytecode {
         Multiply,
         Not,
         Store,
-        StoreGlobal,
         Equals,
         GreaterThan,
         LessThan,

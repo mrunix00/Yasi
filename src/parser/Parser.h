@@ -4,5 +4,5 @@
 
 class Parser {
 public:
-    static SyntaxTreeNode* parse(const std::vector<Token*> &tokens);
+    static SyntaxTreeNode *parse(const std::vector<Token *> &tokens);
 };

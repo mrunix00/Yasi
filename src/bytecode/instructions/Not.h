@@ -11,7 +11,7 @@ namespace Bytecode {
 
         void execute(VM *vm) override {
             const auto object = vm->stackPop();
-            const auto boolean = ((BooleanLiteral*) object->literal)->asBoolean();
+            const auto boolean = ((BooleanLiteral *) object->literal)->asBoolean();
             const auto return_object = new StackObject(new BooleanLiteral(!boolean));
             vm->stackPush(return_object);
         }
@@ -24,4 +24,4 @@ namespace Bytecode {
             return instruction.type == type;
         }
     };
-}
+}// namespace Bytecode

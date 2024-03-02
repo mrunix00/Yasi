@@ -17,7 +17,7 @@ namespace Bytecode::BuiltinFunctions {
                     if (!arg->children.empty()) {
                         auto part = std::vector<Instruction *>();
                         compiler.compile(*arg, segment, part);
-                        result *= ((NumberLiteral*) static_cast<LoadLiteral *>(part[0])->literal)->asNumber();
+                        result *= ((NumberLiteral *) static_cast<LoadLiteral *>(part[0])->literal)->asNumber();
                     } else {
                         result *= arg->token.asInteger();
                     }

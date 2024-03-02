@@ -6,6 +6,6 @@
 #include <vector>
 
 void printTokens(OutputSource *outputSource,
-                 const std::vector<Token*> &tokens);
+                 const std::vector<Token *> &tokens);
 
 #endif

@@ -7,7 +7,7 @@ namespace Bytecode {
     public:
         Literal *literal;
         ~StackObject() { delete literal; }
-        explicit StackObject(Literal *literal) : literal(literal) {};
+        explicit StackObject(Literal *literal) : literal(literal){};
 
         bool operator==(const StackObject &so) const {
             return *so.literal == *literal;

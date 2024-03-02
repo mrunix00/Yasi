@@ -13,6 +13,5 @@ namespace Bytecode::BuiltinFunctions {
                 Compiler &compiler,
                 std::vector<Instruction *> &instructions,
                 Segment *) = 0;
-
     };
 }// namespace Bytecode::BuiltinFunctions

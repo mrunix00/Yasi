@@ -1,9 +1,9 @@
 #pragma once
 
-#include "Register.h"
-#include "StringLiteral.h"
 #include "BooleanLiteral.h"
 #include "NumberLiteral.h"
+#include "Register.h"
+#include "StringLiteral.h"
 #include <iostream>
 
 namespace Bytecode {

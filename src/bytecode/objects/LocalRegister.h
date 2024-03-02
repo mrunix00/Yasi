@@ -5,6 +5,7 @@
 namespace Bytecode {
     class LocalRegister : public Register {
         size_t reg;
+
     public:
         explicit LocalRegister(size_t reg) : reg(reg) {
             type = RegisterType::LocalRegister;
@@ -14,7 +15,7 @@ namespace Bytecode {
             return "$r" + std::to_string(reg);
         }
 
-        StackObject* get(VM *vm) override {
+        StackObject *get(VM *vm) override {
             return new StackObject(vm->getLocal(reg)->literal->copy());
         }
 
@@ -25,4 +26,4 @@ namespace Bytecode {
                    ((LocalRegister *) &r)->reg == reg;
         }
     };
-}
+}// namespace Bytecode
