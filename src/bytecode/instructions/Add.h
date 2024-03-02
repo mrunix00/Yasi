@@ -1,7 +1,6 @@
 #pragma once
 
 #include "bytecode/instructions/Instruction.h"
-#include "bytecode/objects/DecimalNumberLiteral.h"
 #include "bytecode/objects/NumberLiteral.h"
 
 namespace Bytecode {
@@ -11,21 +10,9 @@ namespace Bytecode {
         void execute(VM *vm) override {
             const auto object1 = vm->stackPop();
             const auto object2 = vm->stackPop();
-            StackObject *result;
-            if (object1->literal->type == Literal::Number &&
-                object2->literal->type == Literal::Number) {
-                result = new StackObject(new NumberLiteral(
-                        ((NumberLiteral *) object2->literal)->asNumber() +
-                        ((NumberLiteral *) object1->literal)->asNumber()));
-            } else {
-                result = new StackObject(new DecimalNumberLiteral(
-                        (object2->literal->type == Literal::DecimalNumber
-                                 ? ((DecimalNumberLiteral *) object2->literal)->asDecimalNumber()
-                                 : ((NumberLiteral *) object2->literal)->asNumber()) +
-                        (object1->literal->type == Literal::DecimalNumber
-                                 ? ((DecimalNumberLiteral *) object1->literal)->asDecimalNumber()
-                                 : ((NumberLiteral *) object1->literal)->asNumber())));
-            }
+            auto *result = new StackObject(new NumberLiteral(
+                    ((NumberLiteral *) object2->literal)->asNumber() +
+                    ((NumberLiteral *) object1->literal)->asNumber()));
             delete object1;
             delete object2;
             vm->stackPush(result);

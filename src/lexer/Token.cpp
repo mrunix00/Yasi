@@ -47,9 +47,9 @@ int Token::asInteger() const {
     return integer;
 }
 
-float Token::asDecimal() const {
+double Token::asDecimal() const {
     if (type == Integer)
-        return static_cast<float>(integer);
+        return static_cast<double>(integer);
     return decimal;
 }
 

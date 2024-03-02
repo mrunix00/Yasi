@@ -1,7 +1,6 @@
 #pragma once
 
 #include "bytecode/instructions/Instruction.h"
-#include "bytecode/objects/DecimalNumberLiteral.h"
 #include "bytecode/objects/NumberLiteral.h"
 
 namespace Bytecode {
@@ -9,9 +8,9 @@ namespace Bytecode {
     public:
         Literal *literal;
 
-        explicit LoadLiteral(int64_t integer) {
+        explicit LoadLiteral(double value) {
             type = InstructionType::LoadLiteral;
-            literal = new NumberLiteral(integer);
+            literal = new NumberLiteral(value);
         };
 
         explicit LoadLiteral(Literal *literal) : literal(literal) {}

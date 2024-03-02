@@ -26,14 +26,13 @@ TEST(vm_multiply_test, ShouldMultiplyTwoLiterals) {
 TEST(vm_multiply_test, ShouldMultiplyTwoDecimalNumbers) {
     const auto program = Program({
             new Segment({
-                    new LoadLiteral(new DecimalNumberLiteral(3.1415)),
-                    new LoadLiteral(new DecimalNumberLiteral(1.1)),
+                    new LoadLiteral(3.1415),
+                    new LoadLiteral(1.1),
                     new Multiply(),
             }),
     });
 
-    const auto expected_result = new StackObject(
-            new DecimalNumberLiteral(3.45565));
+    const auto expected_result = new StackObject(new NumberLiteral(3.45565));
 
     auto interpreter = Interpreter();
     interpreter.execute(program);
@@ -44,14 +43,13 @@ TEST(vm_multiply_test, ShouldMultiplyTwoDecimalNumbers) {
 TEST(vm_multiply_test, ShouldMultiplyDecimalAndIntegerNumbers) {
     const auto program = Program({
             new Segment({
-                    new LoadLiteral(new DecimalNumberLiteral(3.1415)),
+                    new LoadLiteral(3.1415),
                     new LoadLiteral(2),
                     new Multiply(),
             }),
     });
 
-    const auto expected_result = new StackObject(
-            new DecimalNumberLiteral(6.283));
+    const auto expected_result = new StackObject(new NumberLiteral(6.283));
 
     auto interpreter = Interpreter();
     interpreter.execute(program);

@@ -16,7 +16,7 @@ TEST(vm_divide_test, ShouldDivideTwoLiterals) {
             }),
     });
 
-    const auto expected_result = new StackObject(new DecimalNumberLiteral(15));
+    const auto expected_result = new StackObject(new NumberLiteral(15));
 
     auto interpreter = Interpreter();
     interpreter.execute(program);
@@ -27,14 +27,13 @@ TEST(vm_divide_test, ShouldDivideTwoLiterals) {
 TEST(vm_divide_test, ShouldDivideTwoDecimalNumbers) {
     const auto program = Program({
             new Segment({
-                    new LoadLiteral(new DecimalNumberLiteral(4.5)),
-                    new LoadLiteral(new DecimalNumberLiteral(1.5)),
+                    new LoadLiteral(4.5),
+                    new LoadLiteral(1.5),
                     new Divide(),
             }),
     });
 
-    const auto expected_result = new StackObject(
-            new DecimalNumberLiteral(3));
+    const auto expected_result = new StackObject(new NumberLiteral(3));
 
     auto interpreter = Interpreter();
     interpreter.execute(program);
@@ -45,14 +44,13 @@ TEST(vm_divide_test, ShouldDivideTwoDecimalNumbers) {
 TEST(vm_divide_test, ShouldAddDecimalAndIntegerNumbers) {
     const auto program = Program({
             new Segment({
-                    new LoadLiteral(new DecimalNumberLiteral(4.5)),
+                    new LoadLiteral(4.5),
                     new LoadLiteral(2),
                     new Divide(),
             }),
     });
 
-    const auto expected_result = new StackObject(
-            new DecimalNumberLiteral(2.25));
+    const auto expected_result = new StackObject(new NumberLiteral(2.25));
 
     auto interpreter = Interpreter();
     interpreter.execute(program);

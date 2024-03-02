@@ -43,8 +43,8 @@ TEST(vm_equals_test, ShouldReturnFalseOnInequality) {
 TEST(vm_equals_test, ShouldCompareTwoDecimalNumbersAndReturnTrueOnEquality) {
     const auto program = Program({
             new Segment({
-                    new LoadLiteral(new DecimalNumberLiteral(3.5)),
-                    new LoadLiteral(new DecimalNumberLiteral(3.5)),
+                    new LoadLiteral(3.5),
+                    new LoadLiteral(3.5),
                     new Equals(),
             }),
     });
@@ -60,8 +60,8 @@ TEST(vm_equals_test, ShouldCompareTwoDecimalNumbersAndReturnTrueOnEquality) {
 TEST(vm_equals_test, ShouldCompareTwoDecimalNumbersAndReturnFalseOnInequality) {
     const auto program = Program({
             new Segment({
-                    new LoadLiteral(new DecimalNumberLiteral(3.5)),
-                    new LoadLiteral(new DecimalNumberLiteral(3.14)),
+                    new LoadLiteral(3.5),
+                    new LoadLiteral(3.14),
                     new Equals(),
             }),
     });

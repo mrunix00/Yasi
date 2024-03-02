@@ -26,14 +26,13 @@ TEST(vm_subtract_test, ShouldSubtractTwoLiterals) {
 TEST(vm_subtract_test, ShouldSubtractTwoDecimalNumbers) {
     const auto program = Program({
             new Segment({
-                    new LoadLiteral(new DecimalNumberLiteral(3.1415)),
-                    new LoadLiteral(new DecimalNumberLiteral(1.1)),
+                    new LoadLiteral(3.1415),
+                    new LoadLiteral(1.1),
                     new Subtract(),
             }),
     });
 
-    const auto expected_result = new StackObject(
-            new DecimalNumberLiteral(2.0415));
+    const auto expected_result = new StackObject(new NumberLiteral(2.0415));
 
     auto interpreter = Interpreter();
     interpreter.execute(program);
@@ -41,17 +40,16 @@ TEST(vm_subtract_test, ShouldSubtractTwoDecimalNumbers) {
     EXPECT_EQ(*interpreter.vm.stackTop() == *expected_result, true);
 }
 
-TEST(vm_multiply_test, ShouldSubtractDecimalAndIntegerNumbers) {
+TEST(vm_subtract_test, ShouldSubtractDecimalAndIntegerNumbers) {
     const auto program = Program({
             new Segment({
-                    new LoadLiteral(new DecimalNumberLiteral(3.1415)),
+                    new LoadLiteral(3.1415),
                     new LoadLiteral(2),
                     new Subtract(),
             }),
     });
 
-    const auto expected_result = new StackObject(
-            new DecimalNumberLiteral(1.1415));
+    const auto expected_result = new StackObject(new NumberLiteral(1.1415));
 
     auto interpreter = Interpreter();
     interpreter.execute(program);

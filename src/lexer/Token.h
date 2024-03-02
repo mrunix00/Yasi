@@ -5,7 +5,7 @@
 class Token {
 protected:
     int integer{};
-    float decimal{};
+    double decimal{};
 
 public:
     enum TokenType {
@@ -34,12 +34,12 @@ public:
     explicit Token(const int token)
         : integer(token), type(Integer) {}
 
-    explicit Token(const float token)
+    explicit Token(const double token)
         : decimal(token), type(Decimal) {}
 
     [[nodiscard]] int asInteger() const;
-    [[nodiscard]] float asDecimal() const;
-    std::string asString() const;
+    [[nodiscard]] double asDecimal() const;
+    [[nodiscard]] std::string asString() const;
 
     bool operator==(const Token &object) const;
 };

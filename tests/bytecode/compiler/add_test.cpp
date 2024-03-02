@@ -190,11 +190,11 @@ TEST(compiler_add, CompileAddtionWithDecimalNumbers) {
     const auto expression = SyntaxTreeNode(
             Token(Token::Symbol, "+"),
             {
-                    new SyntaxTreeNode(Token(static_cast<float>(3.14))),
+                    new SyntaxTreeNode(Token(static_cast<double>(3.14))),
                     new SyntaxTreeNode(Token(43)),
             });
     const auto expected_result = Program({new Segment({
-            new LoadLiteral(new DecimalNumberLiteral(3.14)),
+            new LoadLiteral(3.14),
             new LoadLiteral(43),
             new Add(),
     })});

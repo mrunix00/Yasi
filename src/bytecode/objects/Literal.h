@@ -10,7 +10,6 @@ namespace Bytecode {
             None,
             Number,
             Boolean,
-            DecimalNumber,
             String,
         };
         Type type = None;

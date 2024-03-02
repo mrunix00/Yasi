@@ -49,7 +49,7 @@ TEST(instruction_to_string, load) {
 
 TEST(instruction_to_string, load_literal) {
     const auto instruction = LoadLiteral(69);
-    const auto expected_result = "LoadLiteral d69";
+    const auto expected_result = "LoadLiteral 69";
     const auto actual_result = instruction.toString();
     EXPECT_EQ(expected_result, actual_result);
 }

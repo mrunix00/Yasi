@@ -30,7 +30,7 @@ namespace Bytecode {
             {"if", new BuiltinFunctions::If},
             {"cond", new BuiltinFunctions::Cond},
             {"print", new BuiltinFunctions::Print},
-            {"not", new BuiltinFunctions::Not}
+            {"not", new BuiltinFunctions::Not},
     };
 
     void Compiler::compile(const SyntaxTreeNode &tree) {
@@ -49,9 +49,7 @@ namespace Bytecode {
                 instructions.push_back(new LoadLiteral(tree.token.asInteger()));
                 break;
             case Token::Decimal:
-                instructions.push_back(
-                        new LoadLiteral(
-                                new DecimalNumberLiteral(tree.token.asDecimal())));
+                instructions.push_back(new LoadLiteral(tree.token.asDecimal()));
                 break;
             case Token::String:
                 instructions.push_back(

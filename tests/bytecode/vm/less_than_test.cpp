@@ -43,8 +43,8 @@ TEST(vm_less_than, ShouldReturnFalseWhenNotLessThan) {
 TEST(vm_less_than, ShouldCompareTwoDecimalNumbersAndReturnTrueWhenLessThan) {
     const auto program = Program({
             new Segment({
-                    new LoadLiteral(new DecimalNumberLiteral(3.4)),
-                    new LoadLiteral(new DecimalNumberLiteral(3.5)),
+                    new LoadLiteral(3.4),
+                    new LoadLiteral(3.5),
                     new LessThan(),
             }),
     });
@@ -60,8 +60,8 @@ TEST(vm_less_than, ShouldCompareTwoDecimalNumbersAndReturnTrueWhenLessThan) {
 TEST(vm_less_than, ShouldCompareTwoDecimalNumbersAndReturnFalseWhenNotLessThan) {
     const auto program = Program({
             new Segment({
-                    new LoadLiteral(new DecimalNumberLiteral(3.14)),
-                    new LoadLiteral(new DecimalNumberLiteral(3.01)),
+                    new LoadLiteral(3.14),
+                    new LoadLiteral(3.01),
                     new LessThan(),
             }),
     });
