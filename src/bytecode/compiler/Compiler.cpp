@@ -15,7 +15,6 @@
 #include "bytecode/instructions/Call.h"
 #include "bytecode/instructions/Load.h"
 #include "bytecode/instructions/LoadLiteral.h"
-#include "bytecode/objects/StringLiteral.h"
 
 namespace Bytecode {
     static std::unordered_map<std::string, BuiltinFunctions::Function *> builtin_instructions = {
@@ -50,7 +49,7 @@ namespace Bytecode {
                 break;
             case Token::String:
                 instructions.push_back(
-                        new LoadLiteral(new StringLiteral(tree.token.asString())));
+                        new LoadLiteral(tree.token.asString()));
                 break;
             case Token::Symbol:
                 if (tree.children.empty()) {

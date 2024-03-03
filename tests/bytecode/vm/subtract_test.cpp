@@ -15,12 +15,12 @@ TEST(vm_subtract_test, ShouldSubtractTwoLiterals) {
             }),
     });
 
-    const auto expected_result = NumberLiteral(10);
+    const auto expected_result = StackObject((double) 10);
 
     auto interpreter = Interpreter();
     interpreter.execute(program);
 
-    EXPECT_EQ(*interpreter.vm.stackTop() == expected_result, true);
+    EXPECT_EQ(interpreter.vm.program_stack.top(), expected_result);
 }
 
 TEST(vm_subtract_test, ShouldSubtractTwoDecimalNumbers) {
@@ -32,12 +32,12 @@ TEST(vm_subtract_test, ShouldSubtractTwoDecimalNumbers) {
             }),
     });
 
-    const auto expected_result = NumberLiteral(2.0415);
+    const auto expected_result = StackObject(2.0415);
 
     auto interpreter = Interpreter();
     interpreter.execute(program);
 
-    EXPECT_EQ(*interpreter.vm.stackTop() == expected_result, true);
+    EXPECT_EQ(interpreter.vm.program_stack.top(), expected_result);
 }
 
 TEST(vm_subtract_test, ShouldSubtractDecimalAndIntegerNumbers) {
@@ -49,10 +49,10 @@ TEST(vm_subtract_test, ShouldSubtractDecimalAndIntegerNumbers) {
             }),
     });
 
-    const auto expected_result = NumberLiteral(1.1415);
+    const auto expected_result = StackObject(1.1415);
 
     auto interpreter = Interpreter();
     interpreter.execute(program);
 
-    EXPECT_EQ(*interpreter.vm.stackTop() == expected_result, true);
+    EXPECT_EQ(interpreter.vm.program_stack.top(), expected_result);
 }

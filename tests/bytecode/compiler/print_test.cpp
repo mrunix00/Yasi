@@ -4,7 +4,6 @@
 #include "bytecode/instructions/LoadLiteral.h"
 #include "bytecode/instructions/Store.h"
 #include "bytecode/objects/StdOutRegister.h"
-#include "bytecode/objects/StringLiteral.h"
 #include "lexer/Token.h"
 #include "parser/SyntaxTreeNode.h"
 #include <gtest/gtest.h>
@@ -23,7 +22,7 @@ TEST(compiler_print, SimplePrintStatement) {
                     {
                             new LoadLiteral(12),
                             new Store(new StdOutRegister()),
-                            new LoadLiteral(new StringLiteral("\n")),
+                            new LoadLiteral("\n"),
                             new Store(new StdOutRegister()),
                     }),
     });
@@ -49,7 +48,7 @@ TEST(compiler_print, PrintMultipleArgs) {
                             new Store(new StdOutRegister()),
                             new LoadLiteral(12),
                             new Store(new StdOutRegister()),
-                            new LoadLiteral(new StringLiteral("\n")),
+                            new LoadLiteral("\n"),
                             new Store(new StdOutRegister()),
                     }),
     });
@@ -70,9 +69,9 @@ TEST(compiler_print, PrintStrings) {
     const auto expected_result = Program({
             new Segment(
                     {
-                            new LoadLiteral(new StringLiteral("Hello World!")),
+                            new LoadLiteral("Hello World!"),
                             new Store(new StdOutRegister()),
-                            new LoadLiteral(new StringLiteral("\n")),
+                            new LoadLiteral("\n"),
                             new Store(new StdOutRegister()),
                     }),
     });

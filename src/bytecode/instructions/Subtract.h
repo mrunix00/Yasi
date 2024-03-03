@@ -7,14 +7,10 @@ namespace Bytecode {
     public:
         Subtract() { type = InstructionType::Subtract; };
         void execute(VM *vm) override {
-            const auto object2 = vm->stackPop();
-            const auto object1 = vm->stackPop();
-            auto *result = new NumberLiteral(
-                    ((NumberLiteral *) object1)->asNumber() -
-                    ((NumberLiteral *) object2)->asNumber());
-            vm->stackPush(result);
-            delete object1;
-            delete object2;
+            const auto object2 = vm->program_stack.pop();
+            const auto object1 = vm->program_stack.pop();
+            double result = object1.asNumber() - object2.asNumber();
+            vm->program_stack.push(result);
         }
         [[nodiscard]] std::string toString() const override { return "Subtract"; }
         bool operator==(const Instruction &instruction) const override {

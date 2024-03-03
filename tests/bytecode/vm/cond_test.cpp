@@ -21,12 +21,12 @@ TEST(vm_cond_test, ShouldNotJumpOnTrueCondition) {
                     }),
             });
 
-    const auto expected_result = NumberLiteral(20);
+    const auto expected_result = StackObject((double) 20);
 
     auto interpreter = Interpreter();
     interpreter.execute(program);
 
-    EXPECT_EQ(*interpreter.vm.stackTop() == expected_result, true);
+    EXPECT_EQ(interpreter.vm.program_stack.top(), expected_result);
 }
 
 TEST(vm_cond_test, ShouldJumpOnFalseCondition) {
@@ -44,7 +44,7 @@ TEST(vm_cond_test, ShouldJumpOnFalseCondition) {
     auto interpreter = Interpreter();
     interpreter.execute(program);
 
-    EXPECT_EQ(interpreter.vm.stackTop() == nullptr, true);
+    EXPECT_EQ(interpreter.vm.program_stack.top(), StackObject());
 }
 
 TEST(vm_conf_test, ShouldJumpToOppositeCondition) {
@@ -61,10 +61,10 @@ TEST(vm_conf_test, ShouldJumpToOppositeCondition) {
                     }),
             });
 
-    const auto expected_result = NumberLiteral(20);
+    const auto expected_result = StackObject((double) 20);
 
     auto interpreter = Interpreter();
     interpreter.execute(program);
 
-    EXPECT_EQ(*interpreter.vm.stackTop() == expected_result, true);
+    EXPECT_EQ(interpreter.vm.program_stack.top(), expected_result);
 }

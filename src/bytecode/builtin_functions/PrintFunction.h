@@ -15,7 +15,7 @@ namespace Bytecode::BuiltinFunctions {
                 compiler.compile(*arg, segment, instructions);
                 instructions.push_back(new Store(new StdOutRegister()));
             }
-            instructions.push_back(new LoadLiteral(new StringLiteral("\n")));
+            instructions.push_back(new LoadLiteral("\n"));
             instructions.push_back(new Store(new StdOutRegister()));
         };
     };

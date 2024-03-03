@@ -13,12 +13,12 @@ TEST(vm_load_test, ShouldLoadLiteralIntoStack) {
             new Segment({new LoadLiteral(10)}),
     });
 
-    const auto expected_result = NumberLiteral(10);
+    const auto expected_result = StackObject((double) 10);
 
     auto interpreter = Interpreter();
     interpreter.execute(program);
 
-    EXPECT_EQ(*interpreter.vm.stackTop() == expected_result, true);
+    EXPECT_EQ(interpreter.vm.program_stack.top(), expected_result);
 }
 
 TEST(vm_load_test, ShouldLoadGlobalVariableIntoStack) {
@@ -30,10 +30,10 @@ TEST(vm_load_test, ShouldLoadGlobalVariableIntoStack) {
             }),
     });
 
-    const auto expected_result = NumberLiteral(10);
+    const auto expected_result = StackObject((double) 10);
 
     auto interpreter = Interpreter();
     interpreter.execute(program);
 
-    EXPECT_EQ(*interpreter.vm.stackTop() == expected_result, true);
+    EXPECT_EQ(interpreter.vm.program_stack.top(), expected_result);
 }

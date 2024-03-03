@@ -10,10 +10,8 @@ namespace Bytecode {
         }
 
         void execute(VM *vm) override {
-            const auto object = vm->stackPop();
-            const auto boolean = ((BooleanLiteral *) object)->asBoolean();
-            const auto return_object = new BooleanLiteral(!boolean);
-            vm->stackPush(return_object);
+            const auto object = vm->program_stack.pop();
+            vm->program_stack.push(!object.asBoolean());
         }
 
         [[nodiscard]] std::string toString() const override {

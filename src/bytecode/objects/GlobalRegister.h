@@ -15,12 +15,12 @@ namespace Bytecode {
             return "$g" + std::to_string(reg);
         }
 
-        StackObject *get(VM *vm) override {
-            return vm->getGlobal(reg)->copy();
+        StackObject get(VM *vm) override {
+            return vm->getGlobal(reg);
         }
 
         void store(VM *vm) override {
-            auto object = vm->stackPop();
+            auto object = vm->program_stack.pop();
             vm->setGlobal(reg, object);
         }
 

@@ -22,12 +22,12 @@ TEST(vm_calls_test, function_with_a_single_arg) {
             }),
     });
 
-    const auto expected_result = NumberLiteral(100);
+    const auto expected_result = StackObject((double) 100);
 
     auto interpreter = Interpreter();
     interpreter.execute(program);
 
-    EXPECT_EQ(*interpreter.vm.stackTop() == expected_result, true);
+    EXPECT_EQ(interpreter.vm.program_stack.top(), expected_result);
 }
 
 TEST(vm_calls_test, function_with_multiple_args) {
@@ -44,10 +44,10 @@ TEST(vm_calls_test, function_with_multiple_args) {
             }),
     });
 
-    const auto expected_result = NumberLiteral(40);
+    const auto expected_result = StackObject((double) 40);
 
     auto interpreter = Interpreter();
     interpreter.execute(program);
 
-    EXPECT_EQ(*interpreter.vm.stackTop() == expected_result, true);
+    EXPECT_EQ(interpreter.vm.program_stack.top(), expected_result);
 }

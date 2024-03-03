@@ -16,12 +16,12 @@ TEST(vm_divide_test, ShouldDivideTwoLiterals) {
             }),
     });
 
-    const auto expected_result = NumberLiteral(15);
+    const auto expected_result = StackObject((double) 15);
 
     auto interpreter = Interpreter();
     interpreter.execute(program);
 
-    EXPECT_EQ(*interpreter.vm.stackTop() == expected_result, true);
+    EXPECT_EQ(interpreter.vm.program_stack.top(), expected_result);
 }
 
 TEST(vm_divide_test, ShouldDivideTwoDecimalNumbers) {
@@ -33,12 +33,12 @@ TEST(vm_divide_test, ShouldDivideTwoDecimalNumbers) {
             }),
     });
 
-    const auto expected_result = NumberLiteral(3);
+    const auto expected_result = StackObject((double) 3);
 
     auto interpreter = Interpreter();
     interpreter.execute(program);
 
-    EXPECT_EQ(*interpreter.vm.stackTop() == expected_result, true);
+    EXPECT_EQ(interpreter.vm.program_stack.top(), expected_result);
 }
 
 TEST(vm_divide_test, ShouldAddDecimalAndIntegerNumbers) {
@@ -50,10 +50,10 @@ TEST(vm_divide_test, ShouldAddDecimalAndIntegerNumbers) {
             }),
     });
 
-    const auto expected_result = NumberLiteral(2.25);
+    const auto expected_result = StackObject(2.25);
 
     auto interpreter = Interpreter();
     interpreter.execute(program);
 
-    EXPECT_EQ(*interpreter.vm.stackTop() == expected_result, true);
+    EXPECT_EQ(interpreter.vm.program_stack.top(), expected_result);
 }
