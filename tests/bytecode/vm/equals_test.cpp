@@ -15,12 +15,12 @@ TEST(vm_equals_test, ShouldReturnTrueOnEquality) {
             }),
     });
 
-    const auto expected_result = BooleanLiteral(true);
+    const auto expected_result = StackObject(true);
 
     auto interpreter = Interpreter();
     interpreter.execute(program);
 
-    EXPECT_EQ(*interpreter.vm.stackTop() == expected_result, true);
+    EXPECT_EQ(interpreter.vm.program_stack.top(), expected_result);
 }
 
 TEST(vm_equals_test, ShouldReturnFalseOnInequality) {
@@ -32,12 +32,12 @@ TEST(vm_equals_test, ShouldReturnFalseOnInequality) {
             }),
     });
 
-    const auto expected_result = BooleanLiteral(false);
+    const auto expected_result = StackObject(false);
 
     auto interpreter = Interpreter();
     interpreter.execute(program);
 
-    EXPECT_EQ(*interpreter.vm.stackTop() == expected_result, true);
+    EXPECT_EQ(interpreter.vm.program_stack.top(), expected_result);
 }
 
 TEST(vm_equals_test, ShouldCompareTwoDecimalNumbersAndReturnTrueOnEquality) {
@@ -49,12 +49,12 @@ TEST(vm_equals_test, ShouldCompareTwoDecimalNumbersAndReturnTrueOnEquality) {
             }),
     });
 
-    const auto expected_result = BooleanLiteral(true);
+    const auto expected_result = StackObject(true);
 
     auto interpreter = Interpreter();
     interpreter.execute(program);
 
-    EXPECT_EQ(*interpreter.vm.stackTop() == expected_result, true);
+    EXPECT_EQ(interpreter.vm.program_stack.top(), expected_result);
 }
 
 TEST(vm_equals_test, ShouldCompareTwoDecimalNumbersAndReturnFalseOnInequality) {
@@ -66,10 +66,10 @@ TEST(vm_equals_test, ShouldCompareTwoDecimalNumbersAndReturnFalseOnInequality) {
             }),
     });
 
-    const auto expected_result = BooleanLiteral(false);
+    const auto expected_result = StackObject(false);
 
     auto interpreter = Interpreter();
     interpreter.execute(program);
 
-    EXPECT_EQ(*interpreter.vm.stackTop() == expected_result, true);
+    EXPECT_EQ(interpreter.vm.program_stack.top(), expected_result);
 }

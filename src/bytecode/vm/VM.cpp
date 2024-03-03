@@ -1,17 +1,13 @@
 #include "VM.h"
 namespace Bytecode {
-    void VM::setGlobal(const size_t i, StackObject *sObject) {
+    void VM::setGlobal(const size_t i, StackObject sObject) {
         if (global_registers.size() < i)
             global_registers.at(i) = sObject;
         else if (global_registers.size() == i)
             global_registers.push_back(sObject);
     }
-    StackObject* VM::getGlobal(const size_t i) const {
+    StackObject VM::getGlobal(const size_t i) const {
         return global_registers.at(i);
-    }
-
-    void VM::clearStack() {
-        program_stack.clear();
     }
 
     void VM::newStackFrame(size_t segment) {
@@ -22,7 +18,7 @@ namespace Bytecode {
         call_stack.emplace_back(stackFrame);
     }
 
-    void VM::setLocal(size_t i, StackObject *sObject) {
+    void VM::setLocal(size_t i, StackObject sObject) {
         auto registers = &local_registers[local_registers.size() - 1];
         if (registers->size() < i)
             registers->at(i) = sObject;
@@ -34,8 +30,6 @@ namespace Bytecode {
         if (!call_stack.empty())
             call_stack.pop_back();
         if (!local_registers.empty()) {
-            for (auto r : local_registers.back())
-                delete r;
             local_registers.pop_back();
         }
     }

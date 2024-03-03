@@ -15,12 +15,12 @@ TEST(vm_less_than, ShouldReturnTrueWhenLessThan) {
             }),
     });
 
-    const auto expected_result = BooleanLiteral(true);
+    const auto expected_result = StackObject(true);
 
     auto interpreter = Interpreter();
     interpreter.execute(program);
 
-    EXPECT_EQ(*interpreter.vm.stackTop() == expected_result, true);
+    EXPECT_EQ(interpreter.vm.program_stack.top(), expected_result);
 }
 
 TEST(vm_less_than, ShouldReturnFalseWhenNotLessThan) {
@@ -32,12 +32,12 @@ TEST(vm_less_than, ShouldReturnFalseWhenNotLessThan) {
             }),
     });
 
-    const auto expected_result = BooleanLiteral(false);
+    const auto expected_result = StackObject(false);
 
     auto interpreter = Interpreter();
     interpreter.execute(program);
 
-    EXPECT_EQ(*interpreter.vm.stackTop() == expected_result, true);
+    EXPECT_EQ(interpreter.vm.program_stack.top(), expected_result);
 }
 
 TEST(vm_less_than, ShouldCompareTwoDecimalNumbersAndReturnTrueWhenLessThan) {
@@ -49,12 +49,12 @@ TEST(vm_less_than, ShouldCompareTwoDecimalNumbersAndReturnTrueWhenLessThan) {
             }),
     });
 
-    const auto expected_result = BooleanLiteral(true);
+    const auto expected_result = StackObject(true);
 
     auto interpreter = Interpreter();
     interpreter.execute(program);
 
-    EXPECT_EQ(*interpreter.vm.stackTop() == expected_result, true);
+    EXPECT_EQ(interpreter.vm.program_stack.top(), expected_result);
 }
 
 TEST(vm_less_than, ShouldCompareTwoDecimalNumbersAndReturnFalseWhenNotLessThan) {
@@ -66,10 +66,10 @@ TEST(vm_less_than, ShouldCompareTwoDecimalNumbersAndReturnFalseWhenNotLessThan) 
             }),
     });
 
-    const auto expected_result = BooleanLiteral(false);
+    const auto expected_result = StackObject(false);
 
     auto interpreter = Interpreter();
     interpreter.execute(program);
 
-    EXPECT_EQ(*interpreter.vm.stackTop() == expected_result, true);
+    EXPECT_EQ(interpreter.vm.program_stack.top(), expected_result);
 }

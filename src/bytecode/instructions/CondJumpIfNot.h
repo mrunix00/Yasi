@@ -1,6 +1,7 @@
 #pragma once
+
 #include "Instruction.h"
-#include "bytecode/objects/BooleanLiteral.h"
+
 namespace Bytecode {
     class CondJumpIfNot final : public Instruction {
         size_t line;
@@ -8,10 +9,9 @@ namespace Bytecode {
     public:
         explicit CondJumpIfNot(const size_t line) : line(line) { type = InstructionType::CondJumpIfNot; }
         void execute(VM *vm) override {
-            const auto cond = vm->stackPop();
-            if (!((BooleanLiteral *) cond)->asBoolean())
+            const auto cond = vm->program_stack.pop();
+            if (!cond.asBoolean())
                 vm->jump(line);
-            delete cond;
         }
         [[nodiscard]] std::string toString() const override {
             return "CondJumpIfNot " + std::to_string(line);

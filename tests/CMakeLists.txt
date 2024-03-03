@@ -20,6 +20,7 @@ file(
         SRCS
         ../src/bytecode/compiler/*.cpp
         ../src/bytecode/vm/*.cpp
+        ../src/bytecode/objects/*.cpp
         ../src/lexer/*.cpp
         ../src/parser/*.cpp
         ../src/tokens/*.cpp

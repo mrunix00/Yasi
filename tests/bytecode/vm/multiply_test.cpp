@@ -15,12 +15,12 @@ TEST(vm_multiply_test, ShouldMultiplyTwoLiterals) {
             }),
     });
 
-    const auto expected_result = NumberLiteral(200);
+    const auto expected_result = StackObject((double) 200);
 
     auto interpreter = Interpreter();
     interpreter.execute(program);
 
-    EXPECT_EQ(*interpreter.vm.stackTop() == expected_result, true);
+    EXPECT_EQ(interpreter.vm.program_stack.top(), expected_result);
 }
 
 TEST(vm_multiply_test, ShouldMultiplyTwoDecimalNumbers) {
@@ -32,12 +32,12 @@ TEST(vm_multiply_test, ShouldMultiplyTwoDecimalNumbers) {
             }),
     });
 
-    const auto expected_result = NumberLiteral(3.45565);
+    const auto expected_result = StackObject(3.45565);
 
     auto interpreter = Interpreter();
     interpreter.execute(program);
 
-    EXPECT_EQ(*interpreter.vm.stackTop() == expected_result, true);
+    EXPECT_EQ(interpreter.vm.program_stack.top(), expected_result);
 }
 
 TEST(vm_multiply_test, ShouldMultiplyDecimalAndIntegerNumbers) {
@@ -49,10 +49,10 @@ TEST(vm_multiply_test, ShouldMultiplyDecimalAndIntegerNumbers) {
             }),
     });
 
-    const auto expected_result = NumberLiteral(6.283);
+    const auto expected_result = StackObject(6.283);
 
     auto interpreter = Interpreter();
     interpreter.execute(program);
 
-    EXPECT_EQ(*interpreter.vm.stackTop() == expected_result, true);
+    EXPECT_EQ(interpreter.vm.program_stack.top(), expected_result);
 }

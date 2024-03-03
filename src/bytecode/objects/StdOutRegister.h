@@ -1,9 +1,6 @@
 #pragma once
 
-#include "BooleanLiteral.h"
-#include "NumberLiteral.h"
 #include "Register.h"
-#include "StringLiteral.h"
 #include <iostream>
 
 namespace Bytecode {
@@ -13,26 +10,30 @@ namespace Bytecode {
             return "#stdout";
         }
 
-        StackObject *get(VM *vm) override {
-            return nullptr;
+        StackObject get(VM *vm) override {
+            return StackObject{};
         }
 
         void store(VM *vm) override {
-            const auto stackObject = vm->stackPop();
-            switch (stackObject->type) {
-                case StackObject::Boolean:
-                    std::cout << (((BooleanLiteral *) stackObject)->asBoolean()
+            const auto stackObject = vm->program_stack.pop();
+            switch (stackObject.type) {
+                case Boolean:
+                    std::cout << (stackObject.asBoolean()
                                           ? std::string("#true")
                                           : std::string("#false"));
                     break;
-                case StackObject::Number:
-                    std::cout << ((NumberLiteral *) stackObject)->asNumber();
+                case Number:
+                    std::cout << stackObject.asNumber();
                     break;
-                case StackObject::String:
-                    std::cout << ((StringLiteral *) stackObject)->asString();
-                    break;
+                case String: {
+                    const std::string string = stackObject.asString();
+                    if (string[0] == '"' && string.back() == '"')
+                        std::cout << string.substr(1, string.size() - 2);
+                    else
+                        std::cout << string;
+                } break;
                 default:
-                    std::cout << stackObject->toString();
+                    break;
             }
         }
 

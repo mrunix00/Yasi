@@ -15,8 +15,8 @@ namespace Bytecode {
             return "$r" + std::to_string(reg);
         }
 
-        StackObject *get(VM *vm) override {
-            return vm->getLocal(reg)->copy();
+        StackObject get(VM *vm) override {
+            return vm->getLocal(reg);
         }
 
         void store(VM *vm) override {}

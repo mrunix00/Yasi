@@ -1,5 +1,4 @@
 #include "bytecode/compiler/Compiler.h"
-#include "bytecode/objects/NumberLiteral.h"
 #include "bytecode/vm/Interpreter.h"
 #include "exceptions/SyntaxError.h"
 #include "lexer/Lexer.h"
@@ -23,10 +22,12 @@ struct options {
 void exec_program(const std::string &program, struct options opts) {
     static auto *stdOut = new StdOut;
     const auto expressions = break_lines(program);
+    static auto compiler = Bytecode::Compiler(opts.compilerOptimization);
+    static auto interpreter = Bytecode::Interpreter();
 
-    for (const auto &expression: expressions) {
-        auto tokens = Lexer::tokenize(expression);
-        try {
+    try {
+        for (const auto &expression: expressions) {
+            auto tokens = Lexer::tokenize(expression);
             if (opts.displayTokens) {
                 printTokens(stdOut, tokens);
             }
@@ -36,7 +37,7 @@ void exec_program(const std::string &program, struct options opts) {
                 print_ast(stdOut, *ast);
             }
 
-            static auto compiler = Bytecode::Compiler(opts.compilerOptimization);
+
             compiler.compile(*ast);
             delete ast;
 
@@ -48,24 +49,21 @@ void exec_program(const std::string &program, struct options opts) {
                     std::cout << '\n';
                 }
             }
-
-            static auto interpreter = Bytecode::Interpreter();
-            interpreter.execute(compiler.program);
-
-            if (interpreter.vm.stackTop() == nullptr)
-                continue;
-
-            if (interpreter.vm.stackTop()->type == Bytecode::StackObject::Type::Number)
-                std::cout << ((Bytecode::NumberLiteral *) interpreter.vm.stackTop())->asNumber() << '\n';
-            else
-                std::cout << interpreter.vm.stackTop()->toString() << '\n';
-
-            interpreter.vm.clearStack();
-        } catch (SyntaxError &error) {
-            std::cout << "SyntaxError (" << error.line
-                      << ':' << error.column << "): "
-                      << error.message << '\n';
         }
+
+        interpreter.execute(compiler.program);
+
+        const auto stackTop = interpreter.vm.program_stack.top();
+        if (stackTop.type == Bytecode::ObjectType::None)
+            return;
+        if (stackTop.type == Bytecode::ObjectType::Number)
+            std::cout << stackTop.asNumber() << '\n';
+
+        interpreter.vm.program_stack.clear();
+    } catch (SyntaxError &error) {
+        std::cout << "SyntaxError (" << error.line
+                  << ':' << error.column << "): "
+                  << error.message << '\n';
     }
 }
 
