@@ -1,8 +1,8 @@
 #pragma once
 
-#include "Literal.h"
+#include "StackObject.h"
 namespace Bytecode {
-    class BooleanLiteral : public Literal {
+    class BooleanLiteral : public StackObject {
         bool boolean;
 
     public:
@@ -12,7 +12,7 @@ namespace Bytecode {
 
         [[nodiscard]] bool asBoolean() const { return boolean; }
 
-        [[nodiscard]] Literal *copy() const override {
+        [[nodiscard]] StackObject *copy() const override {
             return new BooleanLiteral(boolean);
         }
 
@@ -20,7 +20,7 @@ namespace Bytecode {
             return "#" + (boolean ? std::string("true") : std::string("false"));
         }
 
-        bool operator==(const Literal &l) const override {
+        bool operator==(const StackObject &l) const override {
             return type == Type::Boolean &&
                    ((BooleanLiteral *) &l)->boolean == boolean;
         }

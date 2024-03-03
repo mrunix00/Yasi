@@ -9,7 +9,7 @@ namespace Bytecode {
         explicit CondJumpIfNot(const size_t line) : line(line) { type = InstructionType::CondJumpIfNot; }
         void execute(VM *vm) override {
             const auto cond = vm->stackPop();
-            if (!((BooleanLiteral *) cond->literal)->asBoolean())
+            if (!((BooleanLiteral *) cond)->asBoolean())
                 vm->jump(line);
             delete cond;
         }

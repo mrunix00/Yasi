@@ -55,10 +55,10 @@ void exec_program(const std::string &program, struct options opts) {
             if (interpreter.vm.stackTop() == nullptr)
                 continue;
 
-            if (interpreter.vm.stackTop()->literal->type == Bytecode::Literal::Type::Number)
-                std::cout << ((Bytecode::NumberLiteral *) interpreter.vm.stackTop()->literal)->asNumber() << '\n';
+            if (interpreter.vm.stackTop()->type == Bytecode::StackObject::Type::Number)
+                std::cout << ((Bytecode::NumberLiteral *) interpreter.vm.stackTop())->asNumber() << '\n';
             else
-                std::cout << interpreter.vm.stackTop()->literal->toString() << '\n';
+                std::cout << interpreter.vm.stackTop()->toString() << '\n';
 
             interpreter.vm.clearStack();
         } catch (SyntaxError &error) {

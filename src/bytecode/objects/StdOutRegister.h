@@ -18,21 +18,21 @@ namespace Bytecode {
         }
 
         void store(VM *vm) override {
-            const auto literal = vm->stackPop()->literal;
-            switch (literal->type) {
-                case Literal::Boolean:
-                    std::cout << (((BooleanLiteral *) literal)->asBoolean()
+            const auto stackObject = vm->stackPop();
+            switch (stackObject->type) {
+                case StackObject::Boolean:
+                    std::cout << (((BooleanLiteral *) stackObject)->asBoolean()
                                           ? std::string("#true")
                                           : std::string("#false"));
                     break;
-                case Literal::Number:
-                    std::cout << ((NumberLiteral *) literal)->asNumber();
+                case StackObject::Number:
+                    std::cout << ((NumberLiteral *) stackObject)->asNumber();
                     break;
-                case Literal::String:
-                    std::cout << ((StringLiteral *) literal)->asString();
+                case StackObject::String:
+                    std::cout << ((StringLiteral *) stackObject)->asString();
                     break;
                 default:
-                    std::cout << literal->toString();
+                    std::cout << stackObject->toString();
             }
         }
 

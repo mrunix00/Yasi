@@ -1,10 +1,10 @@
 #pragma once
 
-#include "Literal.h"
+#include "StackObject.h"
 #include <utility>
 
 namespace Bytecode {
-    class StringLiteral : public Literal {
+    class StringLiteral : public StackObject {
         std::string value;
 
     public:
@@ -18,7 +18,7 @@ namespace Bytecode {
 
         [[nodiscard]] std::string asString() const { return value; }
 
-        [[nodiscard]] Literal *copy() const override {
+        [[nodiscard]] StackObject *copy() const override {
             return new StringLiteral(value);
         }
 
@@ -27,7 +27,7 @@ namespace Bytecode {
             return '"' + value + '"';
         }
 
-        bool operator==(const Literal &l) const override {
+        bool operator==(const StackObject &l) const override {
             return type == Type::String &&
                    ((StringLiteral *) &l)->value == value;
         }

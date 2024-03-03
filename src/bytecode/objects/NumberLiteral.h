@@ -1,12 +1,12 @@
 #pragma once
 
-#include "Literal.h"
+#include "StackObject.h"
 #include <cstdint>
 #include <limits>
 #include <sstream>
 
 namespace Bytecode {
-    class NumberLiteral : public Literal {
+    class NumberLiteral : public StackObject {
         double number;
 
     public:
@@ -16,7 +16,7 @@ namespace Bytecode {
 
         [[nodiscard]] double asNumber() const { return number; }
 
-        [[nodiscard]] Literal *copy() const override {
+        [[nodiscard]] StackObject *copy() const override {
             return new NumberLiteral(number);
         }
 
@@ -26,7 +26,7 @@ namespace Bytecode {
             return s.str();
         }
 
-        bool operator==(const Literal &l) const override {
+        bool operator==(const StackObject &l) const override {
             if (type == Type::Number) {
                 return std::abs(((NumberLiteral *) &l)->number - number) <
                        (std::numeric_limits<double>::epsilon() * 10);

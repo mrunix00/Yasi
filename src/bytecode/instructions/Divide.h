@@ -10,9 +10,9 @@ namespace Bytecode {
         void execute(VM *vm) override {
             const auto object1 = vm->stackPop();
             const auto object2 = vm->stackPop();
-            auto *result = new StackObject(new NumberLiteral(
-                    ((NumberLiteral *) object2->literal)->asNumber() /
-                    ((NumberLiteral *) object1->literal)->asNumber()));
+            auto *result = new NumberLiteral(
+                    ((NumberLiteral *) object2)->asNumber() /
+                    ((NumberLiteral *) object1)->asNumber());
             vm->stackPush(result);
         }
         [[nodiscard]] std::string toString() const override { return "Divide"; }

@@ -11,9 +11,9 @@ namespace Bytecode {
         void execute(VM *vm) override {
             const auto object2 = vm->stackPop();
             const auto object1 = vm->stackPop();
-            auto *result = new StackObject(new BooleanLiteral(
-                    ((NumberLiteral *) object1->literal)->asNumber() >
-                    ((NumberLiteral *) object2->literal)->asNumber()));
+            auto *result = new BooleanLiteral(
+                    ((NumberLiteral *) object1)->asNumber() >
+                    ((NumberLiteral *) object2)->asNumber());
             vm->stackPush(result);
             delete object1;
             delete object2;

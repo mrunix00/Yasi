@@ -15,12 +15,12 @@ TEST(vm_greater_than, ShouldReturnTrueWhenGreaterThan) {
             }),
     });
 
-    const auto expected_result = new StackObject(new BooleanLiteral(true));
+    const auto expected_result = BooleanLiteral(true);
 
     auto interpreter = Interpreter();
     interpreter.execute(program);
 
-    EXPECT_EQ(*interpreter.vm.stackTop() == *expected_result, true);
+    EXPECT_EQ(*interpreter.vm.stackTop() == expected_result, true);
 }
 
 TEST(vm_greater_than, ShouldReturnFalseWhenNotGreaterThan) {
@@ -32,12 +32,12 @@ TEST(vm_greater_than, ShouldReturnFalseWhenNotGreaterThan) {
             }),
     });
 
-    const auto expected_result = new StackObject(new BooleanLiteral(false));
+    const auto expected_result = BooleanLiteral(false);
 
     auto interpreter = Interpreter();
     interpreter.execute(program);
 
-    EXPECT_EQ(*interpreter.vm.stackTop() == *expected_result, true);
+    EXPECT_EQ(*interpreter.vm.stackTop() == expected_result, true);
 }
 
 TEST(vm_greater_than, ShouldCompareTwoDecimalNumbersAndReturnTrueWhenGreaterThan) {
@@ -49,12 +49,12 @@ TEST(vm_greater_than, ShouldCompareTwoDecimalNumbersAndReturnTrueWhenGreaterThan
             }),
     });
 
-    const auto expected_result = new StackObject(new BooleanLiteral(true));
+    const auto expected_result = BooleanLiteral(true);
 
     auto interpreter = Interpreter();
     interpreter.execute(program);
 
-    EXPECT_EQ(*interpreter.vm.stackTop() == *expected_result, true);
+    EXPECT_EQ(*interpreter.vm.stackTop() == expected_result, true);
 }
 
 TEST(vm_greater_than, ShouldCompareTwoDecimalNumbersAndReturnFalseWhenNotGreaterThan) {
@@ -66,10 +66,10 @@ TEST(vm_greater_than, ShouldCompareTwoDecimalNumbersAndReturnFalseWhenNotGreater
             }),
     });
 
-    const auto expected_result = new StackObject(new BooleanLiteral(false));
+    const auto expected_result = BooleanLiteral(false);
 
     auto interpreter = Interpreter();
     interpreter.execute(program);
 
-    EXPECT_EQ(*interpreter.vm.stackTop() == *expected_result, true);
+    EXPECT_EQ(*interpreter.vm.stackTop() == expected_result, true);
 }

@@ -16,7 +16,7 @@ namespace Bytecode {
         }
 
         StackObject *get(VM *vm) override {
-            return new StackObject(vm->getLocal(reg)->literal->copy());
+            return vm->getLocal(reg)->copy();
         }
 
         void store(VM *vm) override {}

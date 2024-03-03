@@ -6,17 +6,17 @@
 namespace Bytecode {
     class LoadLiteral final : public Instruction {
     public:
-        Literal *literal;
+        StackObject *literal;
 
         explicit LoadLiteral(double value) {
             type = InstructionType::LoadLiteral;
             literal = new NumberLiteral(value);
         };
 
-        explicit LoadLiteral(Literal *literal) : literal(literal) {}
+        explicit LoadLiteral(StackObject *literal) : literal(literal) {}
 
         void execute(VM *vm) override {
-            vm->stackPush(new StackObject(literal->copy()));
+            vm->stackPush(literal->copy());
         }
         [[nodiscard]] std::string toString() const override {
             return "LoadLiteral " + literal->toString();

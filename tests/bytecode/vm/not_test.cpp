@@ -18,12 +18,12 @@ TEST(vm_not_test, ShouldNegateATrueCondition) {
             }),
     });
 
-    const auto expected_result = new StackObject(new BooleanLiteral(false));
+    const auto expected_result = BooleanLiteral(false);
 
     auto interpreter = Interpreter();
     interpreter.execute(program);
 
-    EXPECT_EQ(*interpreter.vm.stackTop() == *expected_result, true);
+    EXPECT_EQ(*interpreter.vm.stackTop() == expected_result, true);
 }
 
 TEST(vm_not_test, ShouldNegateAFalseCondition) {
@@ -36,10 +36,10 @@ TEST(vm_not_test, ShouldNegateAFalseCondition) {
             }),
     });
 
-    const auto expected_result = new StackObject(new BooleanLiteral(true));
+    const auto expected_result = BooleanLiteral(true);
 
     auto interpreter = Interpreter();
     interpreter.execute(program);
 
-    EXPECT_EQ(*interpreter.vm.stackTop() == *expected_result, true);
+    EXPECT_EQ(*interpreter.vm.stackTop() == expected_result, true);
 }
