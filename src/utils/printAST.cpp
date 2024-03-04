@@ -13,9 +13,8 @@ std::string parse_ast(const SyntaxTreeNode &ast, int level) {
         output = tabs + "Node (" + ast.token.token + ")\n";
     } else {
         std::string type;
-        if (ast.token.type == Token::Integer) type = "Integer";
-        else if (ast.token.type == Token::Decimal)
-            type = "Decimal";
+        if (ast.token.type == Token::Number)
+            type = "Number";
         else if (ast.token.type == Token::String)
             type = "String";
         else
@@ -30,6 +29,6 @@ std::string parse_ast(const SyntaxTreeNode &ast, int level) {
     return output;
 }
 
-void print_ast(OutputSource *outputSource, const SyntaxTreeNode& ast) {
+void print_ast(OutputSource *outputSource, const SyntaxTreeNode &ast) {
     outputSource->out(parse_ast(ast, 0));
 }

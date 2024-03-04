@@ -45,11 +45,8 @@ namespace Bytecode {
                            Segment *segment,
                            std::vector<Instruction *> &instructions) {
         switch (tree.token.type) {
-            case Token::Integer:
-                instructions.push_back(new LoadLiteral(tree.token.asInteger()));
-                break;
-            case Token::Decimal:
-                instructions.push_back(new LoadLiteral(tree.token.asDecimal()));
+            case Token::Number:
+                instructions.push_back(new LoadLiteral(tree.token.asNumber()));
                 break;
             case Token::String:
                 instructions.push_back(

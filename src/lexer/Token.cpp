@@ -1,6 +1,7 @@
 #include "Token.h"
 #include <limits>
 #include <sstream>
+#include <utility>
 
 Token::Token(
         const TokenType type,
@@ -9,10 +10,8 @@ Token::Token(
     : type(type),
       token(token),
       line(line), column(column) {
-    if (type == Token::Integer) {
-        integer = std::stoi(token);
-    } else if (type == Token::Decimal) {
-        decimal = std::stof(token);
+    if (type == Token::Number) {
+        number = std::stof(token);
     }
 }
 
@@ -21,46 +20,32 @@ Token::Token(
         const std::string &token)
     : type(type),
       token(token) {
-    if (type == Integer) {
-        integer = std::stoi(token);
-    } else if (type == Decimal) {
-        decimal = std::stof(token);
+    if (type == Token::Number) {
+        number = std::stof(token);
     }
 }
 
 std::string Token::asString() const {
     if (type != String) {
-        if (type == Integer) {
-            return std::to_string(integer);
-        } else if (type == Decimal) {
+        if (type == Number) {
             std::stringstream s;
-            s << decimal;
+            s << number;
             return s.str();
         }
     }
     return token;
 }
 
-int Token::asInteger() const {
-    if (type == Decimal)
-        return static_cast<int>(decimal);
-    return integer;
-}
-
-double Token::asDecimal() const {
-    if (type == Integer)
-        return static_cast<double>(integer);
-    return decimal;
+double Token::asNumber() const {
+    return number;
 }
 
 bool Token::operator==(const Token &object) const {
     switch (type) {
         case Invalid:
             return true;
-        case Integer:
-            return object.asInteger() == asInteger();
-        case Decimal:
-            return (object.asDecimal() - asDecimal()) < std::numeric_limits<double>::epsilon();
+        case Number:
+            return (object.asNumber() - asNumber()) < std::numeric_limits<double>::epsilon();
         case Boolean:
             return object.token[1] == token[1];
         default:

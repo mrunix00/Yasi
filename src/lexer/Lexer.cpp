@@ -20,12 +20,10 @@ std::vector<Token *> Lexer::tokenize(const std::string &line) {
         currentColumn++;
 
         if (!currentToken.empty()) {
-            if (std::regex_match(currentToken, std::regex("[+-]?[0-9]+"))) {
-                result.emplace_back(new Token(Token::Integer, currentToken,
-                                              currentLine, currentColumn));
-            } else if (std::regex_match(currentToken,
-                                        std::regex("-?[0-9]+([\\.][0-9]+)?"))) {
-                result.emplace_back(new Token(Token::Decimal, currentToken,
+            if (std::regex_match(
+                        currentToken,
+                        std::regex(R"(^[+-]?((\d+(\.\d+)?)|(\.\d+))$)"))) {
+                result.emplace_back(new Token(Token::Number, currentToken,
                                               currentLine, currentColumn));
             } else if (c != '"') {
                 result.emplace_back(new Token(Token::Symbol, currentToken,

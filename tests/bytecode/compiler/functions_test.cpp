@@ -106,7 +106,7 @@ TEST(compiler_functions, SimpleFunctionCall) {
     const auto function_call = SyntaxTreeNode(
             Token(Token::Symbol, "square"),
             {
-                    new SyntaxTreeNode(Token(Token::Integer, "15")),
+                    new SyntaxTreeNode(Token(Token::Number, "15")),
             });
 
     const auto expected_result = Program(

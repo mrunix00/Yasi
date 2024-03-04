@@ -4,16 +4,14 @@
 
 class Token {
 protected:
-    int integer{};
-    double decimal{};
+    double number{};
 
 public:
     enum TokenType {
         OpenBracket,
         ClosedBracket,
         Symbol,
-        Integer,
-        Decimal,
+        Number,
         String,
         Boolean,
         Invalid
@@ -31,14 +29,10 @@ public:
     Token(TokenType type, const std::string &token,
           int line, int column);
 
-    explicit Token(const int token)
-        : integer(token), type(Integer) {}
-
     explicit Token(const double token)
-        : decimal(token), type(Decimal) {}
+        : number(token), type(Number) {}
 
-    [[nodiscard]] int asInteger() const;
-    [[nodiscard]] double asDecimal() const;
+    [[nodiscard]] double asNumber() const;
     [[nodiscard]] std::string asString() const;
 
     bool operator==(const Token &object) const;

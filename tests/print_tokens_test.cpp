@@ -14,8 +14,8 @@ TEST(print_tokens, ShouldPrintTokens) {
     const std::vector sample = {
             new Token(Token::OpenBracket, "("),
             new Token(Token::Symbol, "+"),
-            new Token(Token::Integer, "1"),
-            new Token(Token::Integer, "2"),
+            new Token(Token::Number, "1"),
+            new Token(Token::Number, "2"),
             new Token(Token::ClosedBracket, ")"),
     };
 

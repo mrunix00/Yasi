@@ -6,7 +6,7 @@ void printTokens(OutputSource *outputSource,
     for (const auto &token: tokens) {
         switch (token->type) {
             case Token::String:
-            case Token::Integer:
+            case Token::Number:
                 output += token->token + ", ";
                 break;
             default:

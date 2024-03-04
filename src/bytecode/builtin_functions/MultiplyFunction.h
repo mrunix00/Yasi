@@ -12,14 +12,14 @@ namespace Bytecode::BuiltinFunctions {
                 std::vector<Instruction *> &instructions,
                 Segment *segment) override {
             if (compiler.optimization && is_optimizable(args)) {
-                int64_t result = 1;
+                double result = 1;
                 for (const auto arg: args) {
                     if (!arg->children.empty()) {
                         auto part = std::vector<Instruction *>();
                         compiler.compile(*arg, segment, part);
-                        result *= ((NumberLiteral *) static_cast<LoadLiteral *>(part[0])->literal)->asNumber();
+                        result *= ((NumberLiteral *) ((LoadLiteral *) part[0])->literal)->asNumber();
                     } else {
-                        result *= arg->token.asInteger();
+                        result *= arg->token.asNumber();
                     }
                 }
                 instructions.push_back(new LoadLiteral(result));

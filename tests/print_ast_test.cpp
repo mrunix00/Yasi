@@ -16,14 +16,14 @@ TEST(print_ast_test, ShouldPrintSimpleAST) {
     const auto ast = new SyntaxTreeNode(
             Token(Token::Symbol, "+"),
             {
-                    new SyntaxTreeNode(Token(Token::Integer, "1")),
-                    new SyntaxTreeNode(Token(Token::Integer, "2")),
+                    new SyntaxTreeNode(Token(Token::Number, "1")),
+                    new SyntaxTreeNode(Token(Token::Number, "2")),
             });
     const std::shared_ptr<MockOutputSource> mockOutputSource(new MockOutputSource);
 
     EXPECT_CALL(*mockOutputSource, out("-> Node (+)\n"
-                                       "\t-> Integer (1)\n"
-                                       "\t-> Integer (2)\n"));
+                                       "\t-> Number (1)\n"
+                                       "\t-> Number (2)\n"));
     print_ast(mockOutputSource.get(), *ast);
 }
 
@@ -35,16 +35,16 @@ TEST(print_ast_test, ShouldPrintNestedAST) {
                     new SyntaxTreeNode(
                             Token(Token::Symbol, "*"),
                             {
-                                    new SyntaxTreeNode(Token(Token::Integer, "5")),
-                                    new SyntaxTreeNode(Token(Token::Integer, "2")),
+                                    new SyntaxTreeNode(Token(Token::Number, "5")),
+                                    new SyntaxTreeNode(Token(Token::Number, "2")),
                             }),
-                    new SyntaxTreeNode(Token(Token::Integer, "4")),
+                    new SyntaxTreeNode(Token(Token::Number, "4")),
             });
     const std::string expectedOutput = "-> Node (+)\n"
                                        "\t-> Node (*)\n"
-                                       "\t\t-> Integer (5)\n"
-                                       "\t\t-> Integer (2)\n"
-                                       "\t-> Integer (4)\n";
+                                       "\t\t-> Number (5)\n"
+                                       "\t\t-> Number (2)\n"
+                                       "\t-> Number (4)\n";
 
     std::shared_ptr<MockOutputSource> mockOutputSource(new MockOutputSource);
 

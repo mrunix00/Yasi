@@ -4,7 +4,7 @@
 
 TEST(lex_test, ShouldTokenizeSingleToken) {
     const std::string sample = "32";
-    const std::vector expected = {new Token(Token::Integer, "32")};
+    const std::vector expected = {new Token(Token::Number, "32")};
     const auto actual = Lexer::tokenize(sample);
     EXPECT_EQ(*expected[0] == *actual[0], true);
 }
@@ -14,8 +14,8 @@ TEST(lex_test, ShouldTokenizeSingleChars) {
     const std::vector tokens = {
             new Token(Token::OpenBracket, "("),
             new Token(Token::Symbol, "+"),
-            new Token(Token::Integer, "1"),
-            new Token(Token::Integer, "2"),
+            new Token(Token::Number, "1"),
+            new Token(Token::Number, "2"),
             new Token(Token::ClosedBracket, ")"),
     };
 
@@ -32,8 +32,8 @@ TEST(lex_test, ShouldTokenizeMultipleChars) {
     const std::vector tokens = {
             new Token(Token::OpenBracket, "("),
             new Token(Token::Symbol, "multiply"),
-            new Token(Token::Integer, "1"),
-            new Token(Token::Integer, "2"),
+            new Token(Token::Number, "1"),
+            new Token(Token::Number, "2"),
             new Token(Token::ClosedBracket, ")"),
     };
 
@@ -50,8 +50,8 @@ TEST(lex_test, ShouldTokenizeLargeNumbers) {
     const std::vector tokens = {
             new Token(Token::OpenBracket, "("),
             new Token(Token::Symbol, "+"),
-            new Token(Token::Integer, "13"),
-            new Token(Token::Integer, "54"),
+            new Token(Token::Number, "13"),
+            new Token(Token::Number, "54"),
             new Token(Token::ClosedBracket, ")"),
     };
 
@@ -68,8 +68,8 @@ TEST(lex_test, ShouldTokenizeNegativeNumbers) {
     const std::vector tokens = {
             new Token(Token::OpenBracket, "("),
             new Token(Token::Symbol, "+"),
-            new Token(Token::Integer, "1"),
-            new Token(Token::Integer, "-1"),
+            new Token(Token::Number, "1"),
+            new Token(Token::Number, "-1"),
             new Token(Token::ClosedBracket, ")"),
     };
 
@@ -103,8 +103,8 @@ TEST(lex_test, DecimalTokens) {
     const std::vector expected = {
             new Token(Token::OpenBracket, "("),
             new Token(Token::Symbol, "+"),
-            new Token(Token::Decimal, "1.2"),
-            new Token(Token::Integer, "3"),
+            new Token(Token::Number, "1.2"),
+            new Token(Token::Number, "3"),
             new Token(Token::ClosedBracket, ")"),
     };
 

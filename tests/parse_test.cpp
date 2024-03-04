@@ -8,9 +8,9 @@ TEST(parse_test, ReturnNullWhenGivenNoTokens) {
 }
 
 TEST(parse_test, ParseSingleToken) {
-    const auto sample = {new Token(Token::Integer, "2")};
+    const auto sample = {new Token(Token::Number, "2")};
 
-    const auto expected = SyntaxTreeNode(Token(Token::Integer, "2"));
+    const auto expected = SyntaxTreeNode(Token(Token::Number, "2"));
     const auto actual = *Parser::parse(sample);
 
     EXPECT_EQ(expected == actual, true);
@@ -21,15 +21,15 @@ TEST(parse_test, ParseSimpleOperation) {
     const auto sample = {
             new Token(Token::OpenBracket, "("),
             new Token(Token::Symbol, "+"),
-            new Token(Token::Integer, "1"),
-            new Token(Token::Integer, "2"),
+            new Token(Token::Number, "1"),
+            new Token(Token::Number, "2"),
             new Token(Token::ClosedBracket, ")"),
     };
     const auto expected = SyntaxTreeNode(
             Token(Token::Symbol, "+"),
             {
-                    new SyntaxTreeNode(Token(Token::Integer, "1")),
-                    new SyntaxTreeNode(Token(Token::Integer, "2")),
+                    new SyntaxTreeNode(Token(Token::Number, "1")),
+                    new SyntaxTreeNode(Token(Token::Number, "2")),
             });
 
     const auto actual = *Parser::parse(sample);
@@ -63,10 +63,10 @@ TEST(parse_test, ParseNestedOperation) {
             new Token(Token::Symbol, "+"),
             new Token(Token::OpenBracket, "("),
             new Token(Token::Symbol, "+"),
-            new Token(Token::Integer, "1"),
-            new Token(Token::Integer, "3"),
+            new Token(Token::Number, "1"),
+            new Token(Token::Number, "3"),
             new Token(Token::ClosedBracket, ")"),
-            new Token(Token::Integer, "2"),
+            new Token(Token::Number, "2"),
             new Token(Token::ClosedBracket, ")"),
     };
 
@@ -76,10 +76,10 @@ TEST(parse_test, ParseNestedOperation) {
                     new SyntaxTreeNode(
                             Token(Token::Symbol, "+"),
                             {
-                                    new SyntaxTreeNode(Token(Token::Integer, "1")),
-                                    new SyntaxTreeNode(Token(Token::Integer, "3")),
+                                    new SyntaxTreeNode(Token(Token::Number, "1")),
+                                    new SyntaxTreeNode(Token(Token::Number, "3")),
                             }),
-                    new SyntaxTreeNode(Token(Token::Integer, "2")),
+                    new SyntaxTreeNode(Token(Token::Number, "2")),
             });
 
     const auto actual = *Parser::parse(sample);
@@ -94,19 +94,19 @@ TEST(parse_test, ParseDeeplyNestedOperation) {
             new Token(Token::Symbol, "+"),
             new Token(Token::OpenBracket, "("),
             new Token(Token::Symbol, "*"),
-            new Token(Token::Integer, "2"),
-            new Token(Token::Integer, "3"),
+            new Token(Token::Number, "2"),
+            new Token(Token::Number, "3"),
             new Token(Token::ClosedBracket, ")"),
             new Token(Token::OpenBracket, "("),
             new Token(Token::Symbol, "+"),
             new Token(Token::OpenBracket, "("),
             new Token(Token::Symbol, "*"),
-            new Token(Token::Integer, "1"),
-            new Token(Token::Integer, "2"),
+            new Token(Token::Number, "1"),
+            new Token(Token::Number, "2"),
             new Token(Token::ClosedBracket, ")"),
-            new Token(Token::Integer, "4"),
+            new Token(Token::Number, "4"),
             new Token(Token::ClosedBracket, ")"),
-            new Token(Token::Integer, "7"),
+            new Token(Token::Number, "7"),
             new Token(Token::ClosedBracket, ")"),
     };
 
@@ -116,8 +116,8 @@ TEST(parse_test, ParseDeeplyNestedOperation) {
                     new SyntaxTreeNode(
                             Token(Token::Symbol, "*"),
                             {
-                                    new SyntaxTreeNode(Token(Token::Integer, "2")),
-                                    new SyntaxTreeNode(Token(Token::Integer, "3")),
+                                    new SyntaxTreeNode(Token(Token::Number, "2")),
+                                    new SyntaxTreeNode(Token(Token::Number, "3")),
                             }),
                     new SyntaxTreeNode(
                             Token(Token::Symbol, "+"),
@@ -125,12 +125,12 @@ TEST(parse_test, ParseDeeplyNestedOperation) {
                                     new SyntaxTreeNode(
                                             Token(Token::Symbol, "*"),
                                             {
-                                                    new SyntaxTreeNode(Token(Token::Integer, "1")),
-                                                    new SyntaxTreeNode(Token(Token::Integer, "2")),
+                                                    new SyntaxTreeNode(Token(Token::Number, "1")),
+                                                    new SyntaxTreeNode(Token(Token::Number, "2")),
                                             }),
-                                    new SyntaxTreeNode(Token(Token::Integer, "4")),
+                                    new SyntaxTreeNode(Token(Token::Number, "4")),
                             }),
-                    new SyntaxTreeNode(Token(Token::Integer, "7")),
+                    new SyntaxTreeNode(Token(Token::Number, "7")),
             });
 
     const auto actual = *Parser::parse(sample);
@@ -149,8 +149,8 @@ TEST(parse_test, ShouldThrowExceptionsOnExtraParenthesis) {
     const std::vector<Token *> sample = {
             new Token(Token::OpenBracket, "(", 1, 1),
             new Token(Token::Symbol, "+", 1, 2),
-            new Token(Token::Integer, "1", 1, 4),
-            new Token(Token::Integer, "2", 1, 6),
+            new Token(Token::Number, "1", 1, 4),
+            new Token(Token::Number, "2", 1, 6),
             new Token(Token::ClosedBracket, ")", 1, 8),
             new Token(Token::ClosedBracket, ")", 1, 9),
     };
@@ -180,8 +180,8 @@ TEST(parse_test, ShouldThrowExceptionsOnMissingOperator) {
             new Token(Token::OpenBracket, "(", 1, 1),
             new Token(Token::OpenBracket, "(", 1, 2),
             new Token(Token::Symbol, "+", 1, 3),
-            new Token(Token::Integer, "1", 1, 5),
-            new Token(Token::Integer, "2", 1, 7),
+            new Token(Token::Number, "1", 1, 5),
+            new Token(Token::Number, "2", 1, 7),
             new Token(Token::ClosedBracket, ")", 1, 8),
             new Token(Token::ClosedBracket, ")", 1, 9),
     };
