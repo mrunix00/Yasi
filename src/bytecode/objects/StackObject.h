@@ -47,7 +47,7 @@ namespace Bytecode {
             return data.boolean;
         }
 
-        inline bool operator==(StackObject o) const {
+        bool operator==(StackObject o) const {
             if (o.type == type) {
                 switch (type) {
                     case None:
@@ -66,30 +66,5 @@ namespace Bytecode {
             return false;
         }
         uint8_t type;
-    };
-
-    class Stack {
-        uint8_t *stackData;
-        uint8_t *stackTop;
-        size_t capacity;
-        size_t used;
-
-    public:
-        Stack() {
-            capacity = 1024;
-            stackData = (uint8_t *) malloc(capacity);
-            stackTop = stackData;
-            used = 0;
-        }
-
-        void push(ObjectType, uint8_t *data, size_t amount);
-        void push(double data);
-        void push(bool data);
-        void push(const std::string &data);
-
-        StackObject pop();
-        StackObject top();
-
-        void clear();
     };
 }// namespace Bytecode

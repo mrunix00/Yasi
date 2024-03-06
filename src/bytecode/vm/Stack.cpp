@@ -1,5 +1,4 @@
-#include "StackObject.h"
-#include <cstring>
+#include "Stack.h"
 
 namespace Bytecode {
     void Stack::push(ObjectType type, uint8_t *data, size_t amount) {
@@ -89,4 +88,4 @@ namespace Bytecode {
         stackTop = stackData;
         used = 0;
     }
-}// namespace Bytecode
+}

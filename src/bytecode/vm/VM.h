@@ -1,5 +1,6 @@
 #pragma once
 
+#include "Stack.h"
 #include "bytecode/objects/StackObject.h"
 #include <cstddef>
 #include <vector>
