@@ -88,4 +88,18 @@ namespace Bytecode {
         stackTop = stackData;
         used = 0;
     }
-}
+
+    void Stack::push(const StackObject &object) {
+        switch (object.type) {
+            case ObjectType::Boolean:
+                push(object.asBoolean());
+                break;
+            case ObjectType::Number:
+                push(object.asNumber());
+                break;
+            case ObjectType::String:
+                push(object.asString());
+                break;
+        }
+    }
+}// namespace Bytecode

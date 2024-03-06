@@ -15,10 +15,7 @@ namespace Bytecode {
 
         void execute(VM *vm) override {
             const auto literal = reg->get(vm);
-            const auto number = literal.asNumber();
-            vm->program_stack.push((ObjectType) literal.type,
-                                   (uint8_t *) &number,
-                                   8);
+            vm->program_stack.push(literal);
         }
 
         [[nodiscard]] std::string toString() const override {

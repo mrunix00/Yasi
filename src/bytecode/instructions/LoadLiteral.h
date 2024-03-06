@@ -1,7 +1,7 @@
 #pragma once
 
-#include <sstream>
 #include "bytecode/instructions/Instruction.h"
+#include <sstream>
 
 namespace Bytecode {
     class LoadLiteral final : public Instruction {
@@ -21,21 +21,13 @@ namespace Bytecode {
         explicit LoadLiteral(StackObject *literal) : literal(literal) {}
 
         void execute(VM *vm) override {
-            switch (literal->type) {
-                case ObjectType::Number:
-                    vm->program_stack.push(literal->asNumber());
-                    break;
-                case ObjectType::String:
-                    vm->program_stack.push(std::string(literal->asString()));
-                    break;
-                case ObjectType::Boolean:
-                    vm->program_stack.push(literal->asBoolean());
-                    break;
-            }
+            vm->program_stack.push(*literal);
         }
+
         [[nodiscard]] std::string toString() const override {
             return "LoadLiteral " + literal->toString();
         }
+
         bool operator==(const Instruction &instruction) const override {
             return instruction.type == type &&
                    *(dynamic_cast<const LoadLiteral *>(&instruction)->literal) == *literal;

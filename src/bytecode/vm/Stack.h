@@ -20,6 +20,7 @@ namespace Bytecode {
         }
 
         void push(ObjectType, uint8_t *data, size_t amount);
+        void push(const StackObject &);
         void push(double data);
         void push(bool data);
         void push(const std::string &data);

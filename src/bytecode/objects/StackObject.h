@@ -25,6 +25,8 @@ namespace Bytecode {
         union Data data;
 
     public:
+        uint8_t type;
+
         explicit StackObject() = default;
         explicit StackObject(double number)
             : data({number}), type(ObjectType::Number){};
@@ -86,6 +88,5 @@ namespace Bytecode {
             }
             return false;
         }
-        uint8_t type;
     };
 }// namespace Bytecode
