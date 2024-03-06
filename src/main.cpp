@@ -54,10 +54,8 @@ void exec_program(const std::string &program, struct options opts) {
         interpreter.execute(compiler.program);
 
         const auto stackTop = interpreter.vm.program_stack.top();
-        if (stackTop.type == Bytecode::ObjectType::None)
-            return;
-        if (stackTop.type == Bytecode::ObjectType::Number)
-            std::cout << stackTop.asNumber() << '\n';
+        if (stackTop.type != Bytecode::ObjectType::None)
+            std::cout << stackTop.toString() << '\n';
 
         interpreter.vm.program_stack.clear();
     } catch (SyntaxError &error) {

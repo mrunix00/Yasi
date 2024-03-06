@@ -4,6 +4,7 @@
 #include <cstdlib>
 #include <cstring>
 #include <limits>
+#include <sstream>
 #include <string>
 #include <vector>
 
@@ -45,6 +46,26 @@ namespace Bytecode {
 
         [[nodiscard]] inline bool asBoolean() const {
             return data.boolean;
+        }
+
+        [[nodiscard]] std::string toString() const {
+            std::stringstream s;
+            switch (type) {
+                case Boolean:
+                    return asBoolean() ? std::string("#true")
+                                       : std::string("#false");
+                case Number:
+                    s << asNumber();
+                    return s.str();
+                case String: {
+                    std::string string = asString();
+                    return string[0] == '"' && string.back() == '"'
+                                   ? string.substr(1, string.size() - 2)
+                                   : string;
+                }
+                default:
+                    return "";
+            }
         }
 
         bool operator==(StackObject o) const {

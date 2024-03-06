@@ -31,27 +31,10 @@ namespace Bytecode {
                 case ObjectType::Boolean:
                     vm->program_stack.push(literal->asBoolean());
                     break;
-                default:
-                    throw std::exception();
             }
         }
         [[nodiscard]] std::string toString() const override {
-            std::string value;
-            std::stringstream s;
-            switch (literal->type) {
-                case ObjectType::Number:
-                    s << literal->asNumber();
-                    value = s.str();
-                    break;
-                case ObjectType::String:
-                    value = std::string(literal->asString());
-                    break;
-                case ObjectType::Boolean:
-                    value = literal->asBoolean()
-                                    ? std::string("true")
-                                    : std::string("false");
-            }
-            return "LoadLiteral " + value;
+            return "LoadLiteral " + literal->toString();
         }
         bool operator==(const Instruction &instruction) const override {
             return instruction.type == type &&
