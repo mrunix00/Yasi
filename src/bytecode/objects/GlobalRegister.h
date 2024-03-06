@@ -3,11 +3,11 @@
 #include "Register.h"
 
 namespace Bytecode {
-    class GlobalRegister : public Register {
+    class GlobalRegister final : public Register {
         size_t reg;
 
     public:
-        explicit GlobalRegister(size_t reg) : reg(reg) {
+        explicit GlobalRegister(const size_t reg) : reg(reg) {
             type = RegisterType::GlobalRegister;
         }
 

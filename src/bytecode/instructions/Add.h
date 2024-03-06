@@ -9,7 +9,7 @@ namespace Bytecode {
         void execute(VM *vm) override {
             const auto object2 = vm->program_stack.pop();
             const auto object1 = vm->program_stack.pop();
-            double result = object1.asNumber() + object2.asNumber();
+            const double result = object1.asNumber() + object2.asNumber();
             vm->program_stack.push(result);
         }
         [[nodiscard]] std::string toString() const override { return "Add"; }

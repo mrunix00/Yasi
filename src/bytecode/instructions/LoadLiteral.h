@@ -8,7 +8,7 @@ namespace Bytecode {
     public:
         StackObject *literal;
 
-        explicit LoadLiteral(double value) {
+        explicit LoadLiteral(const double value) {
             type = InstructionType::LoadLiteral;
             literal = new StackObject(value);
         };

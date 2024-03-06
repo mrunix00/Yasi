@@ -18,20 +18,13 @@ namespace Bytecode {
         Stack program_stack;
         std::vector<StackFrame> call_stack;
 
-        VM() {
-            local_registers.emplace_back();
-            call_stack.emplace_back();
-        };
-        inline void jump(size_t line) {
-            call_stack.back().current_line = line - 1;
-        }
+        VM();
+        void jump(size_t line);
         void setGlobal(size_t i, StackObject sObject);
         [[nodiscard]] StackObject getGlobal(size_t i) const;
         void newStackFrame(size_t segment);
         void popStackFrame();
         void setLocal(size_t i, StackObject sObject);
-        inline StackObject getLocal(size_t i) {
-            return local_registers[local_registers.size() - 1][i];
-        }
+        [[nodiscard]] StackObject getLocal(size_t i) const ;
     };
 }// namespace Bytecode

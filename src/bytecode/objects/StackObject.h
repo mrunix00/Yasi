@@ -22,31 +22,31 @@ namespace Bytecode {
             char *string;
             bool boolean;
         };
-        union Data data;
+        Data data;
 
     public:
         uint8_t type;
 
         explicit StackObject() = default;
-        explicit StackObject(double number)
-            : data({number}), type(ObjectType::Number){};
-        explicit StackObject(bool boolean)
-            : type(ObjectType::Boolean) { data.boolean = boolean; };
+        explicit StackObject(const double number)
+            : data({number}), type(Number){};
+        explicit StackObject(const bool boolean)
+            : type(Boolean) { data.boolean = boolean; };
         explicit StackObject(const std::string &str)
-            : type(ObjectType::String) {
+            : type(String) {
             // TODO: This is a dumb workaround, fix it later
             data.string = strdup(str.c_str());
         };
 
-        [[nodiscard]] inline std::string asString() const {
+        [[nodiscard]] std::string asString() const {
             return data.string;
         }
 
-        [[nodiscard]] inline double asNumber() const {
+        [[nodiscard]] double asNumber() const {
             return data.number;
         }
 
-        [[nodiscard]] inline bool asBoolean() const {
+        [[nodiscard]] bool asBoolean() const {
             return data.boolean;
         }
 
@@ -70,7 +70,7 @@ namespace Bytecode {
             }
         }
 
-        bool operator==(StackObject o) const {
+        bool operator==(const StackObject o) const {
             if (o.type == type) {
                 switch (type) {
                     case None:

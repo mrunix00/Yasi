@@ -9,8 +9,8 @@ namespace Bytecode {
     public:
         explicit CondJumpIfNot(const size_t line) : line(line) { type = InstructionType::CondJumpIfNot; }
         void execute(VM *vm) override {
-            const auto cond = vm->program_stack.pop();
-            if (!cond.asBoolean())
+            if (const auto cond = vm->program_stack.pop();
+                !cond.asBoolean())
                 vm->jump(line);
         }
         [[nodiscard]] std::string toString() const override {

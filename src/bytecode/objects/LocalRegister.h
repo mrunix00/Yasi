@@ -3,7 +3,7 @@
 #include "Register.h"
 
 namespace Bytecode {
-    class LocalRegister : public Register {
+    class LocalRegister final : public Register {
         size_t reg;
 
     public:

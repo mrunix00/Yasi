@@ -7,6 +7,7 @@
 namespace Bytecode {
     class Register {
     protected:
+        ~Register() = default;
         enum RegisterType {
             LocalRegister,
             GlobalRegister,
