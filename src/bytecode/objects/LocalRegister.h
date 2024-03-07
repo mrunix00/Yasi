@@ -16,7 +16,7 @@ namespace Bytecode {
         }
 
         StackObject get(VM *vm) override {
-            return vm->getLocal(reg);
+            return vm->call_stack.getLocal(reg);
         }
 
         void store(VM *vm) override {}

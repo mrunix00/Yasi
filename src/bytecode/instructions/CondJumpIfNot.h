@@ -11,7 +11,7 @@ namespace Bytecode {
         void execute(VM *vm) override {
             if (const auto cond = vm->program_stack.pop();
                 !cond.asBoolean())
-                vm->jump(line);
+                vm->call_stack.jump(line);
         }
         [[nodiscard]] std::string toString() const override {
             return "CondJumpIfNot " + std::to_string(line);

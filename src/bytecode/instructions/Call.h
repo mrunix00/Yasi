@@ -10,9 +10,9 @@ namespace Bytecode {
         explicit Call(const size_t segment, const size_t args)
             : segment(segment), args(args) { type = InstructionType::Call; }
         void execute(VM *vm) override {
-            vm->newStackFrame(segment);
+            vm->call_stack.newStackFrame(segment);
             for (auto i = args - 1; i + 1 != 0; i--) {
-                vm->setLocal(i, vm->program_stack.pop());
+                vm->call_stack.setLocal(i, vm->program_stack.pop());
             }
         }
         [[nodiscard]] std::string toString() const override {
