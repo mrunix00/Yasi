@@ -26,12 +26,10 @@ namespace Bytecode {
     }
 
     void VM::setLocal(const size_t i, const StackObject sObject) {
-        if (const auto registers = &local_registers.back();
-            registers->size() < i) {
-            registers->at(i) = sObject;
-        } else if (registers->size() == i) {
-            registers->push_back(sObject);
-        }
+        const auto registers = &local_registers.back();
+        while (registers->size() < i + 1)
+            registers->emplace_back();
+        registers->at(i) = sObject;
     }
 
     void VM::popStackFrame() {
