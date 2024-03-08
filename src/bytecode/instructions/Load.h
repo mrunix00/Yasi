@@ -14,8 +14,7 @@ namespace Bytecode {
         }
 
         void execute(VM *vm) override {
-            const auto literal = reg->get(vm);
-            vm->program_stack.push(literal);
+            vm->program_stack.push(reg->get(vm));
         }
 
         [[nodiscard]] std::string toString() const override {
