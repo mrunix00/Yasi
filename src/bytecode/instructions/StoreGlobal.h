@@ -5,23 +5,23 @@
 #include <string>
 
 namespace Bytecode {
-    class Store final : public Instruction {
-        Register *reg;
+    class StoreGlobal final : public Instruction {
+        size_t reg;
 
     public:
-        explicit Store(Register *reg) : reg(reg) {
-            type = InstructionType::Store;
+        explicit StoreGlobal(size_t reg) : reg(reg) {
+            type = InstructionType::StoreGlobal;
         }
 
         void execute(VM *vm) override {
-            reg->store(vm);
+            vm->setGlobal(0, vm->program_stack.pop());
         }
         [[nodiscard]] std::string toString() const override {
-            return "Store " + reg->toString();
+            return "Store $r" + std::to_string(reg);
         }
         bool operator==(const Instruction &instruction) const override {
             return instruction.type == type &&
-                   *(dynamic_cast<const Store *>(&instruction)->reg) == *reg;
+                   dynamic_cast<const StoreGlobal *>(&instruction)->reg == reg;
         }
     };
 }// namespace Bytecode

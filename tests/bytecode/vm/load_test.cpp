@@ -2,7 +2,7 @@
 #include "bytecode/instructions/LoadGlobal.h"
 #include "bytecode/instructions/LoadLiteral.h"
 #include "bytecode/instructions/Store.h"
-#include "bytecode/objects/GlobalRegister.h"
+#include "bytecode/instructions/StoreGlobal.h"
 #include "bytecode/objects/StackObject.h"
 #include "bytecode/vm/Interpreter.h"
 #include <gtest/gtest.h>
@@ -26,7 +26,7 @@ TEST(vm_load_test, ShouldLoadGlobalVariableIntoStack) {
     const auto program = Program({
             new Segment({
                     new LoadLiteral(10),
-                    new Store(new GlobalRegister(0)),
+                    new StoreGlobal(0),
                     new LoadGlobal(0),
             }),
     });

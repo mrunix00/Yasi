@@ -1,7 +1,6 @@
 #pragma once
 
 #include "Instruction.h"
-#include "bytecode/objects/LocalRegister.h"
 #include "bytecode/objects/Register.h"
 
 namespace Bytecode {

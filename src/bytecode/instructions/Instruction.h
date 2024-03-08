@@ -21,6 +21,8 @@ namespace Bytecode {
         CondJumpIfNot,
         Jump,
         LoadGlobal,
+        StoreLocal,
+        StoreGlobal,
     };
 
     class Instruction {

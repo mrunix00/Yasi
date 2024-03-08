@@ -6,7 +6,7 @@
 #include "bytecode/instructions/LoadLiteral.h"
 #include "bytecode/instructions/LoadLocal.h"
 #include "bytecode/instructions/Multiply.h"
-#include "bytecode/instructions/Store.h"
+#include "bytecode/instructions/StoreLocal.h"
 #include "bytecode/instructions/Subtract.h"
 #include <gtest/gtest.h>
 
@@ -55,8 +55,8 @@ TEST(instruction_to_string, load_literal) {
 }
 
 TEST(instruction_to_string, store) {
-    const auto instruction = Store(new LocalRegister(12));
-    const auto expected_result = "Store $r12";
+    const auto instruction = StoreLocal(12);
+    const auto expected_result = "StoreLocal $r12";
     const auto actual_result = instruction.toString();
     EXPECT_EQ(expected_result, actual_result);
 }
