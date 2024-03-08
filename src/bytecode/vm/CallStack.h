@@ -7,9 +7,10 @@
 #include <vector>
 
 namespace Bytecode {
-    struct StackFrame {
+    struct alignas(4) StackFrame {
         uint32_t segment;
         uint32_t current_line;
+        uint32_t args;
     };
 
     class CallStack {
@@ -17,7 +18,7 @@ namespace Bytecode {
         size_t stackframe_capacity;
         size_t stackframe_used;
 
-        StackObject **local_registers;
+        StackObject *local_registers;
         size_t local_registers_capacity;
         size_t local_registers_used;
 
@@ -28,12 +29,12 @@ namespace Bytecode {
             stackframe_capacity = 512;
             local_registers_capacity = 512;
             local_registers_used = 0;
-            local_registers = (StackObject **) malloc(local_registers_capacity *
-                                                      sizeof(StackObject *));
+            local_registers = (StackObject *) malloc(local_registers_capacity *
+                                                     sizeof(StackObject));
             stack = (StackFrame *) malloc(stackframe_capacity * sizeof(StackFrame));
             stackTop = stack;
             stackframe_used = 0;
-            newStackFrame(0, 0);
+            newStackFrame(0);
             stackTop->current_line++;
         }
 
@@ -41,8 +42,8 @@ namespace Bytecode {
             free(stack);
         }
 
-        void newStackFrame(uint32_t segment, uint32_t args) {
-            newStackFrame(segment, args, nullptr);
+        void newStackFrame(uint32_t segment) {
+            newStackFrame(segment, 0, nullptr);
         }
 
         void newStackFrame(uint32_t segment, uint32_t args, Stack *program_stack) {
@@ -51,26 +52,30 @@ namespace Bytecode {
                 stack = (StackFrame *) realloc(stack, stackframe_capacity);
             }
             stackTop = stack + stackframe_used;
-            stack[stackframe_used++] = StackFrame{segment, static_cast<uint32_t>(-1)};
+            stack[stackframe_used++] = StackFrame{
+                    segment,
+                    static_cast<uint32_t>(-1),
+                    args,
+            };
 
-            if (local_registers_used + 1 > local_registers_capacity) {
+            if (local_registers_used + args > local_registers_capacity) {
                 local_registers_capacity *= 2;
-                local_registers = (StackObject **)
+                local_registers = (StackObject *)
                         realloc(local_registers, local_registers_capacity *
-                                                         sizeof(StackObject *));
+                                                         sizeof(StackObject));
             }
-            local_registers[local_registers_used++] = (StackObject *) malloc(
-                    args * sizeof(StackObject));
+            local_registers_used += args;
 
             for (auto i = args - 1; i + 1 != 0; i--)
                 setLocal(i, program_stack->pop());
         }
 
         void popStackFrame() {
+            if (local_registers_used != 0 &&
+                ((int) (local_registers_used - stackTop->args)) >= 0)
+                local_registers_used -= stackTop->args;
             if (stackframe_used != 0)
                 stackframe_used--;
-            if (local_registers_used != 0)
-                local_registers_used--;
             stackTop = stack + stackframe_used - 1;
         }
 
@@ -79,7 +84,7 @@ namespace Bytecode {
         }
 
         StackObject getLocal(size_t reg) {
-            return local_registers[local_registers_used - 1][reg];
+            return local_registers[local_registers_used - stackTop->args + reg];
         }
 
         void setLocal(size_t reg, StackObject sObject);
