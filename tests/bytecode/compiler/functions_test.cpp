@@ -6,8 +6,8 @@
 #include "bytecode/instructions/CondJumpIfNot.h"
 #include "bytecode/instructions/Equals.h"
 #include "bytecode/instructions/Jump.h"
-#include "bytecode/instructions/Load.h"
 #include "bytecode/instructions/LoadLiteral.h"
+#include "bytecode/instructions/LoadLocal.h"
 #include "bytecode/instructions/Multiply.h"
 #include "bytecode/instructions/Subtract.h"
 #include "parser/SyntaxTreeNode.h"
@@ -37,8 +37,8 @@ TEST(compiler_functions, SimpleFunctionDefinition) {
             {
                     new Segment({}),
                     new Segment({
-                            new Load(new LocalRegister(0)),
-                            new Load(new LocalRegister(0)),
+                            new LoadLocal(0),
+                            new LoadLocal(0),
                             new Multiply(),
                     }),
             });
@@ -72,8 +72,8 @@ TEST(compiler_functions, FunctionDefinitionWithMultipleArgs) {
             {
                     new Segment({}),
                     new Segment({
-                            new Load(new LocalRegister(0)),
-                            new Load(new LocalRegister(1)),
+                            new LoadLocal(0),
+                            new LoadLocal(1),
                             new Add(),
                     }),
             });
@@ -116,8 +116,8 @@ TEST(compiler_functions, SimpleFunctionCall) {
                             new Call(1, 1),
                     }),
                     new Segment({
-                            new Load(new LocalRegister(0)),
-                            new Load(new LocalRegister(0)),
+                            new LoadLocal(0),
+                            new LoadLocal(0),
                             new Multiply(),
                     }),
             });
@@ -164,8 +164,8 @@ TEST(compiler_functions, FunctionWithMultipleArgsCall) {
                             new Call(1, 2),
                     }),
                     new Segment({
-                            new Load(new LocalRegister(0)),
-                            new Load(new LocalRegister(1)),
+                            new LoadLocal(0),
+                            new LoadLocal(1),
                             new Add(),
                     }),
             });
@@ -219,14 +219,14 @@ TEST(compiler_functions, RecursiveFunction) {
             {
                     new Segment({}),
                     new Segment({
-                            new Load(new LocalRegister(0)),
+                            new LoadLocal(0),
                             new LoadLiteral(1),
                             new Equals(),
                             new CondJumpIfNot(6),
                             new LoadLiteral(1),
                             new Jump(12),
-                            new Load(new LocalRegister(0)),
-                            new Load(new LocalRegister(0)),
+                            new LoadLocal(0),
+                            new LoadLocal(0),
                             new LoadLiteral(1),
                             new Subtract(),
                             new Call(1, 1),
@@ -276,13 +276,13 @@ TEST(compiler_functions, MultipleFunctionsDefinitions) {
             {
                     new Segment({}),
                     new Segment({
-                            new Load(new LocalRegister(0)),
-                            new Load(new LocalRegister(0)),
+                            new LoadLocal(0),
+                            new LoadLocal(0),
                             new Multiply(),
                     }),
                     new Segment({
-                            new Load(new LocalRegister(0)),
-                            new Load(new LocalRegister(1)),
+                            new LoadLocal(0),
+                            new LoadLocal(1),
                             new Multiply(),
                     }),
             });

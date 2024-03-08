@@ -13,8 +13,9 @@
 #include "bytecode/builtin_functions/PrintFunction.h"
 #include "bytecode/builtin_functions/SubtractFunction.h"
 #include "bytecode/instructions/Call.h"
-#include "bytecode/instructions/Load.h"
+#include "bytecode/instructions/LoadGlobal.h"
 #include "bytecode/instructions/LoadLiteral.h"
+#include "bytecode/instructions/LoadLocal.h"
 
 namespace Bytecode {
     static std::unordered_map<std::string, BuiltinFunctions::Function *> builtin_instructions = {
@@ -53,12 +54,12 @@ namespace Bytecode {
                 break;
             case Token::Symbol:
                 if (tree.children.empty()) {
-                    if (segment->find_variable(tree.token.token) != nullptr) {
-                        instructions.push_back(new Load(segment->find_variable(tree.token.asString())));
+                    if (segment->find_variable(tree.token.token) != -1) {
+                        instructions.push_back(new LoadLocal(segment->find_variable(tree.token.asString())));
                         return;
                     }
-                    if (program.find_global(tree.token.token) != nullptr) {
-                        instructions.push_back(new Load(program.find_global(tree.token.asString())));
+                    if (program.find_global(tree.token.token) != -1) {
+                        instructions.push_back(new LoadGlobal(program.find_global(tree.token.asString())));
                         return;
                     }
                 } else {

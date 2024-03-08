@@ -1,8 +1,8 @@
 #include "bytecode/compiler/Compiler.h"
-#include "bytecode/instructions/Instruction.h"
-#include "bytecode/instructions/Load.h"
+#include "bytecode/instructions/LoadGlobal.h"
 #include "bytecode/instructions/LoadLiteral.h"
 #include "bytecode/instructions/Store.h"
+#include "bytecode/objects/GlobalRegister.h"
 #include "parser/SyntaxTreeNode.h"
 #include <gtest/gtest.h>
 
@@ -76,7 +76,7 @@ TEST(compiler_variables, UseGlobalVariableInAnExpression) {
             new Segment({
                     new LoadLiteral(10),
                     new Store(new GlobalRegister(0)),
-                    new Load(new GlobalRegister(0)),
+                    new LoadGlobal(0),
             }),
     });
 

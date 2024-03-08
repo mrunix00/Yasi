@@ -3,8 +3,8 @@
 #include "bytecode/instructions/Equals.h"
 #include "bytecode/instructions/GreaterThan.h"
 #include "bytecode/instructions/LessThan.h"
-#include "bytecode/instructions/Load.h"
 #include "bytecode/instructions/LoadLiteral.h"
+#include "bytecode/instructions/LoadLocal.h"
 #include "bytecode/instructions/Multiply.h"
 #include "bytecode/instructions/Store.h"
 #include "bytecode/instructions/Subtract.h"
@@ -41,8 +41,8 @@ TEST(instruction_to_string, divide) {
 }
 
 TEST(instruction_to_string, load) {
-    const auto instruction = Load(new LocalRegister(1));
-    const auto expected_result = "Load $r1";
+    const auto instruction = LoadLocal(1);
+    const auto expected_result = "LoadLocal $r1";
     const auto actual_result = instruction.toString();
     EXPECT_EQ(expected_result, actual_result);
 }

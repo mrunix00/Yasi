@@ -1,7 +1,6 @@
 #include "bytecode/compiler/Compiler.h"
 #include "bytecode/instructions/Add.h"
-#include "bytecode/instructions/Instruction.h"
-#include "bytecode/instructions/Load.h"
+#include "bytecode/instructions/LoadGlobal.h"
 #include "bytecode/instructions/LoadLiteral.h"
 #include "bytecode/instructions/Store.h"
 #include "bytecode/objects/GlobalRegister.h"
@@ -73,7 +72,7 @@ TEST(compiler_add, DontOptimizeIfNotPossible) {
                     {
                             new LoadLiteral(12),
                             new Store(new GlobalRegister(0)),
-                            new Load(new GlobalRegister(0)),
+                            new LoadGlobal(0),
                             new LoadLiteral(74),
                             new Add(),
                     }),

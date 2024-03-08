@@ -20,6 +20,7 @@ namespace Bytecode {
         Call,
         CondJumpIfNot,
         Jump,
+        LoadGlobal,
     };
 
     class Instruction {

@@ -1,7 +1,7 @@
 #include "bytecode/compiler/Program.h"
 #include "bytecode/instructions/Call.h"
-#include "bytecode/instructions/Load.h"
 #include "bytecode/instructions/LoadLiteral.h"
+#include "bytecode/instructions/LoadLocal.h"
 #include "bytecode/instructions/Multiply.h"
 #include "bytecode/instructions/Subtract.h"
 #include "bytecode/vm/Interpreter.h"
@@ -16,8 +16,8 @@ TEST(vm_calls_test, function_with_a_single_arg) {
                     new Call(1, 1),
             }),
             new Segment({
-                    new Load(new LocalRegister(0)),
-                    new Load(new LocalRegister(0)),
+                    new LoadLocal(0),
+                    new LoadLocal(0),
                     new Multiply(),
             }),
     });
@@ -38,8 +38,8 @@ TEST(vm_calls_test, function_with_multiple_args) {
                     new Call(1, 2),
             }),
             new Segment({
-                    new Load(new LocalRegister(0)),
-                    new Load(new LocalRegister(1)),
+                    new LoadLocal(0),
+                    new LoadLocal(1),
                     new Subtract(),
             }),
     });

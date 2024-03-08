@@ -5,24 +5,24 @@
 #include "bytecode/objects/Register.h"
 
 namespace Bytecode {
-    class Load final : public Instruction {
-        Register *reg;
+    class LoadLocal final : public Instruction {
+        size_t reg;
 
     public:
-        explicit Load(Register *reg) : reg(reg) {
+        explicit LoadLocal(size_t reg) : reg(reg) {
             type = InstructionType::Load;
         }
 
         void execute(VM *vm) override {
-            vm->program_stack.push(reg->get(vm));
+            vm->program_stack.push(vm->call_stack.getLocal(reg));
         }
 
         [[nodiscard]] std::string toString() const override {
-            return "Load " + reg->toString();
+            return "LoadLocal $r" + std::to_string(reg);
         }
         bool operator==(const Instruction &instruction) const override {
             return instruction.type == type &&
-                   *(dynamic_cast<const Load *>(&instruction)->reg) == *reg;
+                   dynamic_cast<const LoadLocal *>(&instruction)->reg == reg;
         }
     };
 }// namespace Bytecode
