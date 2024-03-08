@@ -4,10 +4,10 @@
 
 namespace Bytecode {
     class LoadGlobal final : public Instruction {
-        size_t reg;
+        uint32_t reg;
 
     public:
-        explicit LoadGlobal(size_t reg) : reg(reg) {
+        explicit LoadGlobal(uint32_t reg) : reg(reg) {
             type = InstructionType::LoadGlobal;
         }
 

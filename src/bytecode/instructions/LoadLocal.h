@@ -5,10 +5,10 @@
 
 namespace Bytecode {
     class LoadLocal final : public Instruction {
-        size_t reg;
+        uint32_t reg;
 
     public:
-        explicit LoadLocal(size_t reg) : reg(reg) {
+        explicit LoadLocal(uint32_t reg) : reg(reg) {
             type = InstructionType::Load;
         }
 
