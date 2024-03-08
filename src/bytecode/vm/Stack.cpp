@@ -6,11 +6,19 @@ namespace Bytecode {
             capacity *= 2;
             stackData = (uint8_t *) realloc(stackData, capacity);
         }
-        if (type == ObjectType::String) {
-            char *str = strdup((char *) data);
-            memcpy(stackTop, &str, amount);
-        } else
-            memcpy(stackTop, data, amount);
+        switch (type) {
+            case String:
+                *((char **) stackTop) = strdup((char *) data);
+                break;
+            case Number:
+                *((double *) stackTop) = *((double*) data);
+                break;
+            case Boolean:
+                *stackTop = *data;
+                break;
+            default:
+                break;
+        }
         stackTop += amount;
         *(stackTop++) = type;
         used += amount + 1;
