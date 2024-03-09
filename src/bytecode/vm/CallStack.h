@@ -4,10 +4,9 @@
 #include "bytecode/objects/StackObject.h"
 #include <cstdint>
 #include <cstdlib>
-#include <vector>
 
 namespace Bytecode {
-    struct alignas(4) StackFrame {
+    struct StackFrame {
         uint32_t segment;
         uint32_t current_line;
         uint32_t args;
@@ -42,11 +41,11 @@ namespace Bytecode {
             free(stack);
         }
 
-        void newStackFrame(uint32_t segment) {
+        void newStackFrame(const uint32_t segment) {
             newStackFrame(segment, 0, nullptr);
         }
 
-        void newStackFrame(uint32_t segment, uint32_t args, Stack *program_stack) {
+        void newStackFrame(const uint32_t segment, const uint32_t args, Stack *program_stack) {
             if (stackframe_used + 1 > stackframe_capacity) {
                 stackframe_capacity *= 2;
                 stack = (StackFrame *) realloc(stack, stackframe_capacity);
@@ -79,14 +78,10 @@ namespace Bytecode {
             stackTop = stack + stackframe_used - 1;
         }
 
-        void jump(size_t line) {
-            stack[stackframe_used - 1].current_line = line - 1;
-        }
-
-        StackObject getLocal(size_t reg) {
+        [[nodiscard]] StackObject getLocal(const size_t reg) const {
             return local_registers[local_registers_used - stackTop->args + reg];
         }
 
-        void setLocal(size_t reg, StackObject sObject);
+        void setLocal(size_t reg, StackObject sObject) const;
     };
 }// namespace Bytecode

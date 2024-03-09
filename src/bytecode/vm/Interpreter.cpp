@@ -72,10 +72,10 @@ namespace Bytecode {
                     case InstructionType::CondJumpIfNot:
                         if (const auto cond = vm.program_stack.pop();
                             !cond.asBoolean())
-                            vm.call_stack.jump(currentInstruction->param);
+                            vm.call_stack.stackTop->current_line = currentInstruction->param - 1;
                         break;
                     case InstructionType::Jump:
-                        vm.call_stack.jump(currentInstruction->param);
+                        vm.call_stack.stackTop->current_line = currentInstruction->param - 1;
                         break;
                     case InstructionType::Call:
                         vm.call_stack.newStackFrame(
