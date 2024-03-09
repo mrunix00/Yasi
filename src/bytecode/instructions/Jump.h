@@ -3,19 +3,18 @@
 #include "Instruction.h"
 namespace Bytecode {
     class Jump final : public Instruction {
-        size_t line;
-
     public:
-        explicit Jump(const size_t line) : line(line) { type = InstructionType::Jump; }
-        void execute(VM *vm) override {
-            vm->call_stack.jump(line);
+        explicit Jump(const size_t line) {
+            this->param = line;
+            type = InstructionType::Jump;
         }
+        void execute(VM *vm) override {}
         [[nodiscard]] std::string toString() const override {
-            return "Jump " + std::to_string(line);
+            return "Jump " + std::to_string(param);
         }
         bool operator==(const Instruction &instruction) const override {
             return instruction.type == type &&
-                   dynamic_cast<const Jump *>(&instruction)->line == line;
+                   dynamic_cast<const Jump *>(&instruction)->param == param;
         }
     };
 }// namespace Bytecode

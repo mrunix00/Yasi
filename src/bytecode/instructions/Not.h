@@ -9,10 +9,7 @@ namespace Bytecode {
             type = InstructionType::Not;
         }
 
-        void execute(VM *vm) override {
-            const auto object = vm->program_stack.pop();
-            vm->program_stack.push(!object.asBoolean());
-        }
+        void execute(VM *vm) override {}
 
         [[nodiscard]] std::string toString() const override {
             return "Not";

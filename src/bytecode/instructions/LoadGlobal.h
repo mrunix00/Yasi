@@ -4,23 +4,20 @@
 
 namespace Bytecode {
     class LoadGlobal final : public Instruction {
-        uint32_t reg;
-
     public:
-        explicit LoadGlobal(uint32_t reg) : reg(reg) {
+        explicit LoadGlobal(const uint32_t reg) {
+            this->reg = reg;
             type = InstructionType::LoadGlobal;
         }
 
-        void execute(VM *vm) override {
-            vm->program_stack.push(vm->getGlobal(reg));
-        }
+        void execute(VM *vm) override {}
 
         [[nodiscard]] std::string toString() const override {
             return "LoadGlobal $g" + std::to_string(reg);
         }
         bool operator==(const Instruction &instruction) const override {
             return instruction.type == type &&
-                   (dynamic_cast<const LoadGlobal *>(&instruction)->reg) == reg;
+                   instruction.reg == reg;
         }
     };
 }

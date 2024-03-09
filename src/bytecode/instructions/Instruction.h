@@ -7,7 +7,8 @@ namespace Bytecode {
     enum class InstructionType {
         Unknown,
         LoadLiteral,
-        Load,
+        LoadLocal,
+        LoadGlobal,
         Add,
         Subtract,
         Divide,
@@ -20,15 +21,15 @@ namespace Bytecode {
         Call,
         CondJumpIfNot,
         Jump,
-        LoadGlobal,
-        StoreLocal,
         StoreGlobal,
     };
 
     class Instruction {
-
     public:
         InstructionType type;
+        uint32_t reg{};
+        uint32_t param{};
+        StackObject literal{};
         Instruction() : type(InstructionType::Unknown){};
         virtual ~Instruction() = default;
         [[nodiscard]] virtual std::string toString() const = 0;

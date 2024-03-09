@@ -6,12 +6,7 @@ namespace Bytecode {
     class Subtract final : public Instruction {
     public:
         Subtract() { type = InstructionType::Subtract; };
-        void execute(VM *vm) override {
-            const auto object2 = vm->program_stack.pop();
-            const auto object1 = vm->program_stack.pop();
-            const double result = object1.asNumber() - object2.asNumber();
-            vm->program_stack.push(result);
-        }
+        void execute(VM *vm) override {}
         [[nodiscard]] std::string toString() const override { return "Subtract"; }
         bool operator==(const Instruction &instruction) const override {
             return instruction.type == type;

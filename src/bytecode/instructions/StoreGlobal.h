@@ -6,16 +6,14 @@
 
 namespace Bytecode {
     class StoreGlobal final : public Instruction {
-        size_t reg;
 
     public:
-        explicit StoreGlobal(size_t reg) : reg(reg) {
+        explicit StoreGlobal(const size_t reg) {
+            this->reg = reg;
             type = InstructionType::StoreGlobal;
         }
 
-        void execute(VM *vm) override {
-            vm->setGlobal(0, vm->program_stack.pop());
-        }
+        void execute(VM *vm) override {}
         [[nodiscard]] std::string toString() const override {
             return "Store $r" + std::to_string(reg);
         }

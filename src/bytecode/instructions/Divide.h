@@ -6,12 +6,7 @@ namespace Bytecode {
     class Divide final : public Instruction {
     public:
         Divide() { type = InstructionType::Divide; };
-        void execute(VM *vm) override {
-            const auto object2 = vm->program_stack.pop();
-            const auto object1 = vm->program_stack.pop();
-            const double result = object1.asNumber() / object2.asNumber();
-            vm->program_stack.push(result);
-        }
+        void execute(VM *vm) override {}
         [[nodiscard]] std::string toString() const override { return "Divide"; }
         bool operator==(const Instruction &instruction) const override {
             return instruction.type == type;
