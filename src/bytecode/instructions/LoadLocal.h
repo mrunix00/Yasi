@@ -10,8 +10,6 @@ namespace Bytecode {
             this->reg = reg;
         }
 
-        void execute(VM *vm) override {}
-
         [[nodiscard]] std::string toString() const override {
             return "LoadLocal $r" + std::to_string(reg);
         }

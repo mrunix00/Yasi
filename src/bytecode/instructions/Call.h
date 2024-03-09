@@ -9,7 +9,6 @@ namespace Bytecode {
             this->param = args;
             type = InstructionType::Call;
         }
-        void execute(VM *vm) override {}
         [[nodiscard]] std::string toString() const override {
             return "Call :" + std::to_string(reg);
         }

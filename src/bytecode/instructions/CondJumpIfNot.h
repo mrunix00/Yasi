@@ -9,7 +9,6 @@ namespace Bytecode {
             param = line;
             type = InstructionType::CondJumpIfNot;
         }
-        void execute(VM *vm) override {}
         [[nodiscard]] std::string toString() const override {
             return "CondJumpIfNot " + std::to_string(param);
         }

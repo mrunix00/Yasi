@@ -20,8 +20,6 @@ namespace Bytecode {
             this->literal = *literal;
         }
 
-        void execute(VM *vm) override {}
-
         [[nodiscard]] std::string toString() const override {
             return "LoadLiteral " + literal.toString();
         }

@@ -10,8 +10,6 @@ namespace Bytecode {
             type = InstructionType::LoadGlobal;
         }
 
-        void execute(VM *vm) override {}
-
         [[nodiscard]] std::string toString() const override {
             return "LoadGlobal $g" + std::to_string(reg);
         }

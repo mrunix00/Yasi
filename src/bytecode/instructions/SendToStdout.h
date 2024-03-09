@@ -7,7 +7,6 @@ namespace Bytecode {
         explicit SendToStdout() {
             type = InstructionType::SendToStdout;
         }
-        void execute(VM *vm) override {}
         [[nodiscard]] std::string toString() const override {
             return "SendToStdout";
         }

@@ -8,7 +8,6 @@ namespace Bytecode {
             this->param = line;
             type = InstructionType::Jump;
         }
-        void execute(VM *vm) override {}
         [[nodiscard]] std::string toString() const override {
             return "Jump " + std::to_string(param);
         }
