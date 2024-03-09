@@ -22,6 +22,7 @@ namespace Bytecode {
         CondJumpIfNot,
         Jump,
         StoreGlobal,
+        SendToStdout,
     };
 
     class Instruction {

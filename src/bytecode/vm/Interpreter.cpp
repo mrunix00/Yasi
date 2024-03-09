@@ -1,5 +1,7 @@
 #include "Interpreter.h"
 
+#include <iostream>
+
 namespace Bytecode {
     void Interpreter::execute(const Program &program) {
         while (true) {
@@ -67,9 +69,6 @@ namespace Bytecode {
                     case InstructionType::StoreGlobal:
                         vm.setGlobal(currentInstruction->reg, vm.program_stack.pop());
                         break;
-                    case InstructionType::Store:
-                        currentInstruction->execute(&vm);
-                        break;
                     case InstructionType::CondJumpIfNot:
                         if (const auto cond = vm.program_stack.pop();
                             !cond.asBoolean())
@@ -84,7 +83,11 @@ namespace Bytecode {
                                 currentInstruction->param,
                                 &vm.program_stack);
                         break;
-                    default:;
+                    case InstructionType::SendToStdout:
+                        std::cout << vm.program_stack.pop().toString();
+                        break;
+                    default:
+                        throw;
                 }
             }
             vm.call_stack.stackTop->current_line++;

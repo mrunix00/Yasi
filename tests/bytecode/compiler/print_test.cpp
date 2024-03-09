@@ -2,8 +2,7 @@
 #include "bytecode/compiler/Program.h"
 #include "bytecode/compiler/Segment.h"
 #include "bytecode/instructions/LoadLiteral.h"
-#include "bytecode/instructions/Store.h"
-#include "bytecode/objects/StdOutRegister.h"
+#include "bytecode/instructions/SendToStdout.h"
 #include "lexer/Token.h"
 #include "parser/SyntaxTreeNode.h"
 #include <gtest/gtest.h>
@@ -21,9 +20,9 @@ TEST(compiler_print, SimplePrintStatement) {
             new Segment(
                     {
                             new LoadLiteral(12),
-                            new Store(new StdOutRegister()),
+                            new SendToStdout(),
                             new LoadLiteral("\n"),
-                            new Store(new StdOutRegister()),
+                            new SendToStdout(),
                     }),
     });
 
@@ -45,11 +44,11 @@ TEST(compiler_print, PrintMultipleArgs) {
             new Segment(
                     {
                             new LoadLiteral(75),
-                            new Store(new StdOutRegister()),
+                            new SendToStdout(),
                             new LoadLiteral(12),
-                            new Store(new StdOutRegister()),
+                            new SendToStdout(),
                             new LoadLiteral("\n"),
-                            new Store(new StdOutRegister()),
+                            new SendToStdout(),
                     }),
     });
 
@@ -70,9 +69,9 @@ TEST(compiler_print, PrintStrings) {
             new Segment(
                     {
                             new LoadLiteral("Hello World!"),
-                            new Store(new StdOutRegister()),
+                            new SendToStdout(),
                             new LoadLiteral("\n"),
-                            new Store(new StdOutRegister()),
+                            new SendToStdout(),
                     }),
     });
 

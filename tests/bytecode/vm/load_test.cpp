@@ -1,7 +1,6 @@
 #include "bytecode/compiler/Program.h"
 #include "bytecode/instructions/LoadGlobal.h"
 #include "bytecode/instructions/LoadLiteral.h"
-#include "bytecode/instructions/Store.h"
 #include "bytecode/instructions/StoreGlobal.h"
 #include "bytecode/objects/StackObject.h"
 #include "bytecode/vm/Interpreter.h"

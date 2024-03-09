@@ -1,12 +1,10 @@
 #pragma once
 
 #include "Instruction.h"
-#include "bytecode/objects/Register.h"
 #include <string>
 
 namespace Bytecode {
     class StoreGlobal final : public Instruction {
-
     public:
         explicit StoreGlobal(const size_t reg) {
             this->reg = reg;
@@ -19,7 +17,7 @@ namespace Bytecode {
         }
         bool operator==(const Instruction &instruction) const override {
             return instruction.type == type &&
-                   dynamic_cast<const StoreGlobal *>(&instruction)->reg == reg;
+                   instruction.reg == reg;
         }
     };
 }// namespace Bytecode

@@ -1,7 +1,6 @@
 #pragma once
 
 #include "Function.h"
-#include "bytecode/instructions/Store.h"
 #include "bytecode/instructions/StoreGlobal.h"
 
 namespace Bytecode::BuiltinFunctions {
