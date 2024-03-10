@@ -4,7 +4,6 @@
 #include "lexer/Lexer.h"
 #include "parser/Parser.h"
 #include "read.hpp"
-#include "utils/StdOut.h"
 #include "utils/break_lines.h"
 #include "utils/printAST.h"
 #include "utils/printTokens.h"
@@ -20,7 +19,6 @@ struct options {
 };
 
 void exec_program(const std::string &program, struct options opts) {
-    static auto *stdOut = new StdOut;
     const auto expressions = break_lines(program);
     static auto compiler = Bytecode::Compiler(opts.compilerOptimization);
     static auto interpreter = Bytecode::Interpreter();
@@ -29,12 +27,12 @@ void exec_program(const std::string &program, struct options opts) {
         for (const auto &expression: expressions) {
             auto tokens = Lexer::tokenize(expression);
             if (opts.displayTokens) {
-                printTokens(stdOut, tokens);
+                printTokens(tokens);
             }
 
             const auto ast = Parser::parse(tokens);
             if (opts.displayAST && ast != nullptr) {
-                print_ast(stdOut, *ast);
+                print_ast(*ast);
             }
 
 

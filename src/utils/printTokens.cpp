@@ -1,7 +1,7 @@
 #include "printTokens.h"
+#include <iostream>
 
-void printTokens(OutputSource *outputSource,
-                 const std::vector<Token*> &tokens) {
+void printTokens(const std::vector<Token*> &tokens) {
     std::string output = "[";
     for (const auto &token: tokens) {
         switch (token->type) {
@@ -16,5 +16,5 @@ void printTokens(OutputSource *outputSource,
     output.erase(output.size() - 2, 2);
     output = output + ']';
     
-    outputSource->out(output);
+    std::cout << output << '\n';
 }

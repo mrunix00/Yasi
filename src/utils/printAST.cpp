@@ -1,5 +1,5 @@
-#include "printAST.h"
 #include "parser/SyntaxTreeNode.h"
+#include <iostream>
 #include <string>
 
 std::string parse_ast(const SyntaxTreeNode &ast, int level) {
@@ -29,6 +29,6 @@ std::string parse_ast(const SyntaxTreeNode &ast, int level) {
     return output;
 }
 
-void print_ast(OutputSource *outputSource, const SyntaxTreeNode &ast) {
-    outputSource->out(parse_ast(ast, 0));
+void print_ast(const SyntaxTreeNode &ast) {
+    std::cout << parse_ast(ast, 0);
 }
