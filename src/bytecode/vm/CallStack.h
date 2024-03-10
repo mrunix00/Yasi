@@ -34,6 +34,7 @@ namespace Bytecode {
             stackTop = stack;
             stackframe_used = 0;
             newStackFrame(0);
+            stackTop->current_line++;
         }
 
         ~CallStack() {
@@ -50,7 +51,11 @@ namespace Bytecode {
                 stack = (StackFrame *) realloc(stack, stackframe_capacity);
             }
             stackTop = stack + stackframe_used;
-            stack[stackframe_used++] = StackFrame{segment, 0, args};
+            stack[stackframe_used++] = StackFrame{
+                    segment,
+                    static_cast<uint32_t>(-1),
+                    args,
+            };
 
             if (local_registers_used + args > local_registers_capacity) {
                 local_registers_capacity *= 2;
