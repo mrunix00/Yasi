@@ -11,7 +11,7 @@ Token::Token(
       token(token),
       line(line), column(column) {
     if (type == Token::Number) {
-        number = std::stof(token);
+        number = std::stod(token);
     }
 }
 
@@ -21,7 +21,7 @@ Token::Token(
     : type(type),
       token(token) {
     if (type == Token::Number) {
-        number = std::stof(token);
+        number = std::stod(token);
     }
 }
 
@@ -52,4 +52,3 @@ bool Token::operator==(const Token &object) const {
             return object.token == token;
     }
 }
-
