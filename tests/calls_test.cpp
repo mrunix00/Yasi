@@ -1,6 +1,6 @@
 #include "boilerplate.h"
 
-TEST(vm_calls_test, function_with_a_single_arg) {
+TEST(calls_test, function_with_a_single_arg) {
     const auto program =
             "(define (square x) (* x x))\n"
             "(square 10)";
@@ -11,7 +11,7 @@ TEST(vm_calls_test, function_with_a_single_arg) {
     EXPECT_EQ(actual_result, expected_result);
 }
 
-TEST(vm_calls_test, function_with_multiple_args) {
+TEST(calls_test, function_with_multiple_args) {
     const auto program =
             "(define (subtract x y) (- x y))\n"
             "(subtract 50 10)";

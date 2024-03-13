@@ -1,6 +1,6 @@
 #include "boilerplate.h"
 
-TEST(vm_multiply_test, ShouldMultiplyTwoLiterals) {
+TEST(multiply_test, ShouldMultiplyTwoLiterals) {
     const auto program = "(* 20 10)";
 
     const auto expected_result = StackObject((double) 200);
@@ -9,7 +9,7 @@ TEST(vm_multiply_test, ShouldMultiplyTwoLiterals) {
     EXPECT_EQ(actual_result, expected_result);
 }
 
-TEST(vm_multiply_test, ShouldMultiplyTwoDecimalNumbers) {
+TEST(multiply_test, ShouldMultiplyTwoDecimalNumbers) {
     const auto program = "(* 3.1415 1.1)";
 
     const auto expected_result = StackObject(3.45565);
@@ -18,7 +18,7 @@ TEST(vm_multiply_test, ShouldMultiplyTwoDecimalNumbers) {
     EXPECT_EQ(actual_result, expected_result);
 }
 
-TEST(vm_multiply_test, ShouldMultiplyDecimalAndIntegerNumbers) {
+TEST(multiply_test, ShouldMultiplyDecimalAndIntegerNumbers) {
     const auto program = "(* 3.1415 2)";
 
     const auto expected_result = StackObject(6.283);
