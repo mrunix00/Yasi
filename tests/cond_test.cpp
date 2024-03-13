@@ -26,3 +26,21 @@ TEST(vm_conf_test, ShouldJumpToOppositeCondition) {
 
     EXPECT_EQ(actual_result, expected_result);
 }
+
+TEST(vm_cond_test, ShouldTestMultipleCases) {
+    const auto program = "(cond (= 20 10) 20 (= 10 10) 10)";
+
+    const auto expected_result = StackObject((double) 10);
+    const auto actual_result = run_program(program);
+
+    EXPECT_EQ(actual_result, expected_result);
+}
+
+TEST(vm_cond_test, ShouldFallbackToDefaultCase) {
+    const auto program = "(cond (= 20 5) 20 (= 10 5) 10 5)";
+
+    const auto expected_result = StackObject((double) 5);
+    const auto actual_result = run_program(program);
+
+    EXPECT_EQ(actual_result, expected_result);
+}
