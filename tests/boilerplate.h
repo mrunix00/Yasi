@@ -12,11 +12,9 @@ inline StackObject run_program(const std::string &program) {
     const auto instructions = break_lines(program);
     auto compiled_program = Program();
     for (const auto &instruction: instructions) {
-        auto tokens = Lexer::tokenize(instruction);
-        const auto ast = Parser::parse(tokens);
-        ast->compile(compiled_program.segments[0],
-                     compiled_program,
-                     compiled_program.segments[0]->instructions);
+        auto tokens = tokenize(instruction);
+        const auto ast = parse(tokens);
+        ast->compile(compiled_program);
         delete ast;
     }
 

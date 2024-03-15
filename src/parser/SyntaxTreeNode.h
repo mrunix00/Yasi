@@ -15,7 +15,10 @@ public:
     };
     Type type = None;
     virtual void compile(Bytecode::Segment *, Bytecode::Program &,
-                         std::vector<Bytecode::Instruction *> &) {}
+                         std::vector<Bytecode::Instruction *> &) = 0;
+    void compile(Bytecode::Program &program) {
+        compile(program.segments[0], program, program.segments[0]->instructions);
+    }
     virtual ~SyntaxTreeNode() = default;
     virtual bool operator==(const SyntaxTreeNode &op) const = 0;
 };
@@ -29,7 +32,6 @@ public:
     }
 
     [[nodiscard]] std::string getName() const { return token.token; }
-    [[nodiscard]] Token::TokenType getType() const { return token.type; }
 
     void compile(Bytecode::Segment *segment, Bytecode::Program &program,
                  std::vector<Bytecode::Instruction *> &instructions) override;
@@ -57,7 +59,7 @@ public:
                  std::vector<Bytecode::Instruction *> &instructions) override;
 
     bool operator==(const SyntaxTreeNode &op) const override {
-        if (type != op.type || !(((Expression *) &op)->function == function) ||
+        if (type != op.type || ((Expression *) &op)->function != function ||
             ((Expression *) &op)->args.size() != args.size())
             return false;
 

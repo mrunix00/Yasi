@@ -5,7 +5,7 @@
 TEST(lex_test, ShouldTokenizeSingleToken) {
     const std::string sample = "32";
     const std::vector expected = {new Token(Token::Number, "32")};
-    const auto actual = Lexer::tokenize(sample);
+    const auto actual = tokenize(sample);
     EXPECT_EQ(*expected[0] == *actual[0], true);
 }
 
@@ -19,7 +19,7 @@ TEST(lex_test, ShouldTokenizeSingleChars) {
             new Token(Token::ClosedBracket, ")"),
     };
 
-    const auto result = Lexer::tokenize(sample);
+    const auto result = tokenize(sample);
 
     EXPECT_EQ(tokens.size() == result.size(), true);
     for (int i = 0; i < tokens.size(); i++) {
@@ -37,7 +37,7 @@ TEST(lex_test, ShouldTokenizeMultipleChars) {
             new Token(Token::ClosedBracket, ")"),
     };
 
-    const auto result = Lexer::tokenize(sample);
+    const auto result = tokenize(sample);
 
     EXPECT_EQ(tokens.size() == result.size(), true);
     for (int i = 0; i < tokens.size(); i++) {
@@ -55,7 +55,7 @@ TEST(lex_test, ShouldTokenizeLargeNumbers) {
             new Token(Token::ClosedBracket, ")"),
     };
 
-    const auto result = Lexer::tokenize(sample);
+    const auto result = tokenize(sample);
 
     EXPECT_EQ(tokens.size() == result.size(), true);
     for (int i = 0; i < tokens.size(); i++) {
@@ -73,7 +73,7 @@ TEST(lex_test, ShouldTokenizeNegativeNumbers) {
             new Token(Token::ClosedBracket, ")"),
     };
 
-    const auto result = Lexer::tokenize(sample);
+    const auto result = tokenize(sample);
 
     EXPECT_EQ(tokens.size() == result.size(), true);
     for (int i = 0; i < tokens.size(); i++) {
@@ -90,7 +90,7 @@ TEST(lex_test, StringsToken) {
             new Token(Token::ClosedBracket, ")"),
     };
 
-    const auto actual = Lexer::tokenize(sample);
+    const auto actual = tokenize(sample);
 
     EXPECT_EQ(expected.size() == actual.size(), true);
     for (int i = 0; i < expected.size(); i++) {
@@ -108,7 +108,7 @@ TEST(lex_test, DecimalTokens) {
             new Token(Token::ClosedBracket, ")"),
     };
 
-    const auto actual = Lexer::tokenize(sample);
+    const auto actual = tokenize(sample);
 
     EXPECT_EQ(expected.size() == actual.size(), true);
     for (int i = 0; i < expected.size(); i++) {
@@ -118,7 +118,7 @@ TEST(lex_test, DecimalTokens) {
 
 TEST(lex_test, ShouldLocateTokens) {
     const std::string sample = "(+ 12 54)";
-    const auto tokens = Lexer::tokenize(sample);
+    const auto tokens = tokenize(sample);
 
     EXPECT_EQ(tokens[0]->line == 1, true);
     EXPECT_EQ(tokens[0]->column, true);
@@ -138,7 +138,7 @@ TEST(lex_test, ShouldLocateTokens) {
 
 TEST(lex_test, ShouldLocateTokensOnMultiLineExpressions) {
     const std::string sample = "(+\n1 2\n)";
-    const auto tokens = Lexer::tokenize(sample);
+    const auto tokens = tokenize(sample);
 
     EXPECT_EQ(tokens[0]->line == 1, true);
     EXPECT_EQ(tokens[0]->column == 1, true);
@@ -165,7 +165,7 @@ TEST(lex_test, ShouldTokenizeAStringWithParenthesis) {
             new Token(Token::String, "\"fib(10)\""),
             new Token(Token::ClosedBracket, ")"),
     };
-    const auto actual = Lexer::tokenize(sample);
+    const auto actual = tokenize(sample);
 
     EXPECT_EQ(expected.size() == actual.size(), true);
     for (int i = 0; i < expected.size(); i++) {

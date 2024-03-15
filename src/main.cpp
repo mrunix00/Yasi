@@ -21,20 +21,18 @@ void exec_program(const std::string &program, struct options opts) {
 
     try {
         for (const auto &expression: expressions) {
-            auto tokens = Lexer::tokenize(expression);
+            auto tokens = tokenize(expression);
             if (opts.displayTokens) {
                 printTokens(tokens);
             }
 
-            const auto ast = Parser::parse(tokens);
+            const auto ast = parse(tokens);
 
-            ast->compile(compiled_bytecode.segments[0],
-                         compiled_bytecode,
-                         compiled_bytecode.segments[0]->instructions);
+            ast->compile(compiled_bytecode);
             delete ast;
 
-            if ((opts.dumpBytecode) && ast != nullptr) {
-                for (size_t i = 0; i < compiled_bytecode.segments.size() && opts.dumpBytecode; i++) {
+            if (opts.dumpBytecode) {
+                for (size_t i = 0; i < compiled_bytecode.segments.size(); i++) {
                     std::cout << ':' << i << '\n';
                     for (size_t j = 0; j < compiled_bytecode.segments[i]->instructions.size(); j++)
                         std::cout << j << '\t' << compiled_bytecode.segments[i]->instructions[j]->toString() << '\n';

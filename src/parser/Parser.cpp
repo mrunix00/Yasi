@@ -2,7 +2,7 @@
 #include "exceptions/SyntaxError.h"
 #include <stack>
 
-SyntaxTreeNode *Parser::parse(const std::vector<Token *> &tokens) {
+SyntaxTreeNode *parse(const std::vector<Token *> &tokens) {
     std::stack<Token> operators_stack;
     std::stack<std::vector<SyntaxTreeNode *>> nodes_stack;
 

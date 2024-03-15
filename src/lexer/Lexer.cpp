@@ -1,7 +1,7 @@
 #include "Lexer.h"
 #include <regex>
 
-std::vector<Token *> Lexer::tokenize(const std::string &line) {
+std::vector<Token *> tokenize(const std::string &line) {
     std::vector<Token *> result;
     std::string currentToken;
     int currentLine = 1;

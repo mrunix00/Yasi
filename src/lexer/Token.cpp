@@ -1,43 +1,27 @@
 #include "Token.h"
 #include <limits>
-#include <sstream>
 #include <utility>
 
 Token::Token(
         const TokenType type,
-        const std::string &token,
+        std::string token,
         const int line, const int column)
     : type(type),
-      token(token),
-      line(line), column(column) {
-    if (type == Token::Number) {
-        number = std::stod(token);
-    }
-}
+      token(std::move(token)),
+      line(line), column(column) {}
 
 Token::Token(
         const TokenType type,
-        const std::string &token)
+        std::string token)
     : type(type),
-      token(token) {
-    if (type == Token::Number) {
-        number = std::stod(token);
-    }
-}
+      token(std::move(token)) {}
 
 std::string Token::asString() const {
-    if (type != String) {
-        if (type == Number) {
-            std::stringstream s;
-            s << number;
-            return s.str();
-        }
-    }
     return token;
 }
 
 double Token::asNumber() const {
-    return number;
+    return std::stod(token);
 }
 
 bool Token::operator==(const Token &object) const {
@@ -51,4 +35,8 @@ bool Token::operator==(const Token &object) const {
         default:
             return object.token == token;
     }
+}
+
+bool Token::operator!=(const Token &object) const {
+    return !operator==(object);
 }

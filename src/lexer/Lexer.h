@@ -5,7 +5,4 @@
 #include <string>
 #include <vector>
 
-class Lexer {
-public:
-    static std::vector<Token *> tokenize(const std::string &line);
-};
+std::vector<Token *> tokenize(const std::string &line);

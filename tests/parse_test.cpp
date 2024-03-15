@@ -3,7 +3,7 @@
 #include <gtest/gtest.h>
 
 TEST(parse_test, ReturnNullWhenGivenNoTokens) {
-    const auto actual = Parser::parse({});
+    const auto actual = parse({});
     EXPECT_EQ(actual == nullptr, true);
 }
 
@@ -11,7 +11,7 @@ TEST(parse_test, ParseSingleToken) {
     auto sample = {new Token(Token::Number, "2")};
 
     auto expected = TokenNode(Token(Token::Number, "2"));
-    auto actual = Parser::parse(sample);
+    auto actual = parse(sample);
 
     EXPECT_EQ(expected == *actual, true);
 }
@@ -32,7 +32,7 @@ TEST(parse_test, ParseSimpleOperation) {
                     new TokenNode(Token(Token::Number, "2")),
             });
 
-    const auto actual = Parser::parse(sample);
+    const auto actual = parse(sample);
 
     EXPECT_EQ(*actual == expected, true);
 }
@@ -51,7 +51,7 @@ TEST(parse_test, ParseSimpleOperationWithStringArgument) {
                     new TokenNode(Token(Token::String, "\"Hello World\"")),
             });
 
-    const auto actual = Parser::parse(sample);
+    const auto actual = parse(sample);
 
     EXPECT_EQ(*actual == expected, true);
 }
@@ -82,7 +82,7 @@ TEST(parse_test, ParseNestedOperation) {
                     new TokenNode(Token(Token::Number, "2")),
             });
 
-    const auto actual = Parser::parse(sample);
+    const auto actual = parse(sample);
 
     EXPECT_EQ(*actual == expected, true);
 }
@@ -133,7 +133,7 @@ TEST(parse_test, ParseDeeplyNestedOperation) {
                     new TokenNode(Token(Token::Number, "7")),
             });
 
-    const auto actual = Parser::parse(sample);
+    const auto actual = parse(sample);
 
     EXPECT_EQ(*actual == expected, true);
 }
@@ -156,7 +156,7 @@ TEST(parse_test, ShouldThrowExceptionsOnExtraParenthesis) {
     };
 
     try {
-        Parser::parse(sample);
+        parse(sample);
     } catch (SyntaxError &error) {
         exceptionCaught = true;
         actualErrorMessage = error.message;
@@ -187,7 +187,7 @@ TEST(parse_test, ShouldThrowExceptionsOnMissingOperator) {
     };
 
     try {
-        Parser::parse(sample);
+        parse(sample);
     } catch (SyntaxError &error) {
         exceptionCaught = true;
         errorMessage = error.message;
@@ -213,7 +213,7 @@ TEST(parse_test, ShouldThrowExceptionsOnEmptyParenthesis) {
     };
 
     try {
-        Parser::parse(sample);
+        parse(sample);
     } catch (SyntaxError &error) {
         exceptionCaught = true;
         errorMessage = error.message;
