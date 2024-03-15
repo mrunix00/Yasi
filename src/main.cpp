@@ -1,4 +1,3 @@
-#include "bytecode/compiler/Compiler.h"
 #include "bytecode/vm/Interpreter.h"
 #include "exceptions/SyntaxError.h"
 #include "lexer/Lexer.h"
@@ -15,12 +14,11 @@ struct options {
     bool displayTokens = false;
     bool displayAST = false;
     bool dumpBytecode = false;
-    bool compilerOptimization = false;
 };
 
 void exec_program(const std::string &program, struct options opts) {
     const auto expressions = break_lines(program);
-    static auto compiler = Bytecode::Compiler(opts.compilerOptimization);
+    static auto compiled_bytecode = Bytecode::Program();
     static auto interpreter = Bytecode::Interpreter();
 
     try {
@@ -36,20 +34,22 @@ void exec_program(const std::string &program, struct options opts) {
             }
 
 
-            compiler.compile(*ast);
+            ast->compile(compiled_bytecode.segments[0],
+                         compiled_bytecode,
+                         compiled_bytecode.segments[0]->instructions);
             delete ast;
 
             if ((opts.dumpBytecode) && ast != nullptr) {
-                for (size_t i = 0; i < compiler.program.segments.size() && opts.dumpBytecode; i++) {
+                for (size_t i = 0; i < compiled_bytecode.segments.size() && opts.dumpBytecode; i++) {
                     std::cout << ':' << i << '\n';
-                    for (size_t j = 0; j < compiler.program.segments[i]->instructions.size(); j++)
-                        std::cout << j << '\t' << compiler.program.segments[i]->instructions[j]->toString() << '\n';
+                    for (size_t j = 0; j < compiled_bytecode.segments[i]->instructions.size(); j++)
+                        std::cout << j << '\t' << compiled_bytecode.segments[i]->instructions[j]->toString() << '\n';
                     std::cout << '\n';
                 }
             }
         }
 
-        interpreter.execute(compiler.program);
+        interpreter.execute(compiled_bytecode);
 
         const auto stackTop = interpreter.vm.program_stack.top();
         if (stackTop.type != Bytecode::ObjectType::None)
@@ -77,9 +77,6 @@ int main(int argc, char *argv[]) {
                 break;
             case 'd':
                 opts.dumpBytecode = true;
-                break;
-            case 'O':
-                opts.compilerOptimization = true;
                 break;
             default:
                 break;

@@ -7,10 +7,10 @@ namespace Bytecode::BuiltinFunctions {
     class Not final : public Function {
         void compile(
                 const std::vector<SyntaxTreeNode *> &args,
-                Compiler &compiler,
+                Program &program,
                 std::vector<Instruction *> &instructions,
                 Segment *segment) override {
-            compiler.compile(*args[0], segment, instructions);
+            args[0]->compile(segment, program, instructions);
             instructions.push_back(new Bytecode::Not());
         }
     };

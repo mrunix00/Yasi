@@ -8,7 +8,7 @@ namespace Bytecode::BuiltinFunctions {
     class Cond : public Function {
         void compile(
                 const std::vector<SyntaxTreeNode *> &args,
-                Compiler &compiler,
+                Program &program,
                 std::vector<Instruction *> &instructions,
                 Segment *result) override {
             typedef std::vector<Instruction *> fresh_instructions;
@@ -19,14 +19,14 @@ namespace Bytecode::BuiltinFunctions {
             for (size_t i = 0; i < args.size() && (args.size() - i) >= 2; i += 2) {
                 fresh_instructions condition;
                 fresh_instructions condition_success;
-                compiler.compile(*args[i], result, condition);
-                compiler.compile(*args[i + 1], result, condition_success);
+                args[i]->compile(result, program, condition);
+                args[i+1]->compile(result, program, condition_success);
                 conditions.push_back(condition);
                 cond_success.push_back(condition_success);
             }
 
             if (args.size() % 2) {
-                compiler.compile(*args.back(), result, default_case);
+                args.back()->compile(result, program, default_case);
             }
 
             size_t end = instructions.size() + default_case.size() - default_case.empty();

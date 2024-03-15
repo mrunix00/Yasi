@@ -1,6 +1,5 @@
 #pragma once
 
-#include "bytecode/compiler/Compiler.h"
 #include "parser/SyntaxTreeNode.h"
 #include <vector>
 
@@ -10,7 +9,7 @@ namespace Bytecode::BuiltinFunctions {
         virtual ~Function() = default;
         virtual void compile(
                 const std::vector<SyntaxTreeNode *> &args,
-                Compiler &compiler,
+                Program &program,
                 std::vector<Instruction *> &instructions,
                 Segment *) = 0;
     };

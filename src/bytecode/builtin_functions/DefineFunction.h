@@ -7,19 +7,20 @@ namespace Bytecode::BuiltinFunctions {
     class Define final : public Function {
         void compile(
                 const std::vector<SyntaxTreeNode *> &args,
-                Compiler &compiler,
+                Program &program,
                 std::vector<Instruction *> &instructions,
                 Segment *result) override {
-            if (args[1]->children.empty()) {
-                compiler.compile(*args[1], result, instructions);
-                const auto reg = compiler.program.declare_global(args[0]->token.token);
+            if (args[1]->type == SyntaxTreeNode::TokenNode) {
+                args[1]->compile(result, program, instructions);
+                const auto reg = program.declare_global(
+                        ((TokenNode *) args[0])->getName());
                 instructions.push_back(new StoreGlobal(reg));
             } else {
                 auto segment = new Segment({});
-                compiler.program.declare_function(args[0]->token.asString(), segment);
-                for (auto argument: args[0]->children)
-                    segment->declare_variable(argument->token.asString());
-                compiler.compile(*args[1], segment);
+                program.declare_function(((Expression *) args[0])->getName(), segment);
+                for (auto argument: ((Expression *) args[0])->getArgs())
+                    segment->declare_variable(((TokenNode *) argument)->getName());
+                args[1]->compile(segment, program, segment->instructions);
             }
         }
     };

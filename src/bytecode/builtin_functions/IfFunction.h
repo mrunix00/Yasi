@@ -8,15 +8,16 @@ namespace Bytecode::BuiltinFunctions {
     class If : public Function {
         void compile(
                 const std::vector<SyntaxTreeNode *> &args,
-                Compiler &compiler,
+                Program &program,
                 std::vector<Instruction *> &instructions,
                 Segment *result) override {
             std::vector<Instruction *> condition_success;
             std::vector<Instruction *> condition_failure;
-            compiler.compile(*args[0], result);
+            args[0]->compile(result, program, instructions);
 
-            compiler.compile(*args[1], result, condition_success);
-            if (args.size() == 3) compiler.compile(*args[2], result, condition_failure);
+            args[1]->compile(result, program, condition_success);
+            if (args.size() == 3)
+                args[2]->compile(result, program, condition_failure);
 
             result->instructions.push_back(
                     new CondJumpIfNot(

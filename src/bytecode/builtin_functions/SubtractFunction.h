@@ -7,14 +7,14 @@ namespace Bytecode::BuiltinFunctions {
     class Subtract : public Function {
         void compile(
                 const std::vector<SyntaxTreeNode *> &args,
-                Compiler &compiler,
+                Program &program,
                 std::vector<Instruction *> &instructions,
                 Segment *result) override {
-            compiler.compile(*args[0], result, instructions);
-            compiler.compile(*args[1], result, instructions);
+            args[0]->compile(result, program, instructions);
+            args[1]->compile(result, program, instructions);
             instructions.push_back(new Bytecode::Subtract());
             for (int i = 2; i < args.size(); i++) {
-                compiler.compile(*args[i], result, instructions);
+                args[i]->compile(result, program, instructions);
                 instructions.push_back(new Bytecode::Subtract());
             }
         }

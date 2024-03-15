@@ -1,36 +1,21 @@
 #pragma once
 
 #include "Function.h"
-#include "bytecode/compiler/CompilerUtils.h"
 #include "bytecode/instructions/Multiply.h"
 
 namespace Bytecode::BuiltinFunctions {
     class Multiply final : public Function {
         void compile(
                 const std::vector<SyntaxTreeNode *> &args,
-                Compiler &compiler,
+                Program& program,
                 std::vector<Instruction *> &instructions,
                 Segment *segment) override {
-            if (compiler.optimization && is_optimizable(args)) {
-                double result = 1;
-                for (const auto arg: args) {
-                    if (!arg->children.empty()) {
-                        auto part = std::vector<Instruction *>();
-                        compiler.compile(*arg, segment, part);
-                        result *= (((LoadLiteral *) part[0])->literal).asNumber();
-                    } else {
-                        result *= arg->token.asNumber();
-                    }
-                }
-                instructions.push_back(new LoadLiteral(result));
-            } else {
-                compiler.compile(*args[0], segment, instructions);
-                compiler.compile(*args[1], segment, instructions);
+            args[0]->compile(segment, program, instructions);
+            args[1]->compile(segment, program, instructions);
+            instructions.push_back(new Bytecode::Multiply());
+            for (int i = 2; i < args.size(); i++) {
+                args[i]->compile(segment, program, instructions);
                 instructions.push_back(new Bytecode::Multiply());
-                for (int i = 2; i < args.size(); i++) {
-                    compiler.compile(*args[i], segment, instructions);
-                    instructions.push_back(new Bytecode::Multiply());
-                }
             }
         }
     };

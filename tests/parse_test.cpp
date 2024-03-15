@@ -8,12 +8,12 @@ TEST(parse_test, ReturnNullWhenGivenNoTokens) {
 }
 
 TEST(parse_test, ParseSingleToken) {
-    const auto sample = {new Token(Token::Number, "2")};
+    auto sample = {new Token(Token::Number, "2")};
 
-    const auto expected = SyntaxTreeNode(Token(Token::Number, "2"));
-    const auto actual = *Parser::parse(sample);
+    auto expected = TokenNode(Token(Token::Number, "2"));
+    auto actual = Parser::parse(sample);
 
-    EXPECT_EQ(expected == actual, true);
+    EXPECT_EQ(expected == *actual, true);
 }
 
 TEST(parse_test, ParseSimpleOperation) {
@@ -25,16 +25,16 @@ TEST(parse_test, ParseSimpleOperation) {
             new Token(Token::Number, "2"),
             new Token(Token::ClosedBracket, ")"),
     };
-    const auto expected = SyntaxTreeNode(
+    const auto expected = Expression(
             Token(Token::Symbol, "+"),
             {
-                    new SyntaxTreeNode(Token(Token::Number, "1")),
-                    new SyntaxTreeNode(Token(Token::Number, "2")),
+                    new TokenNode(Token(Token::Number, "1")),
+                    new TokenNode(Token(Token::Number, "2")),
             });
 
-    const auto actual = *Parser::parse(sample);
+    const auto actual = Parser::parse(sample);
 
-    EXPECT_EQ(actual == expected, true);
+    EXPECT_EQ(*actual == expected, true);
 }
 
 TEST(parse_test, ParseSimpleOperationWithStringArgument) {
@@ -45,15 +45,15 @@ TEST(parse_test, ParseSimpleOperationWithStringArgument) {
             new Token(Token::String, "\"Hello World\""),
             new Token(Token::ClosedBracket, ")"),
     };
-    const auto expected = SyntaxTreeNode(
+    const auto expected = Expression(
             Token(Token::Symbol, "print"),
             {
-                    new SyntaxTreeNode(Token(Token::String, "\"Hello World\"")),
+                    new TokenNode(Token(Token::String, "\"Hello World\"")),
             });
 
-    const auto actual = *Parser::parse(sample);
+    const auto actual = Parser::parse(sample);
 
-    EXPECT_EQ(actual == expected, true);
+    EXPECT_EQ(*actual == expected, true);
 }
 
 TEST(parse_test, ParseNestedOperation) {
@@ -70,21 +70,21 @@ TEST(parse_test, ParseNestedOperation) {
             new Token(Token::ClosedBracket, ")"),
     };
 
-    const auto expected = SyntaxTreeNode(
+    const auto expected = Expression(
             Token(Token::Symbol, "+"),
             {
-                    new SyntaxTreeNode(
+                    new Expression(
                             Token(Token::Symbol, "+"),
                             {
-                                    new SyntaxTreeNode(Token(Token::Number, "1")),
-                                    new SyntaxTreeNode(Token(Token::Number, "3")),
+                                    new TokenNode(Token(Token::Number, "1")),
+                                    new TokenNode(Token(Token::Number, "3")),
                             }),
-                    new SyntaxTreeNode(Token(Token::Number, "2")),
+                    new TokenNode(Token(Token::Number, "2")),
             });
 
-    const auto actual = *Parser::parse(sample);
+    const auto actual = Parser::parse(sample);
 
-    EXPECT_EQ(actual == expected, true);
+    EXPECT_EQ(*actual == expected, true);
 }
 
 TEST(parse_test, ParseDeeplyNestedOperation) {
@@ -110,32 +110,32 @@ TEST(parse_test, ParseDeeplyNestedOperation) {
             new Token(Token::ClosedBracket, ")"),
     };
 
-    const auto expected = SyntaxTreeNode(
+    const auto expected = Expression(
             Token(Token::Symbol, "+"),
             {
-                    new SyntaxTreeNode(
+                    new Expression(
                             Token(Token::Symbol, "*"),
                             {
-                                    new SyntaxTreeNode(Token(Token::Number, "2")),
-                                    new SyntaxTreeNode(Token(Token::Number, "3")),
+                                    new TokenNode(Token(Token::Number, "2")),
+                                    new TokenNode(Token(Token::Number, "3")),
                             }),
-                    new SyntaxTreeNode(
+                    new Expression(
                             Token(Token::Symbol, "+"),
                             {
-                                    new SyntaxTreeNode(
+                                    new Expression(
                                             Token(Token::Symbol, "*"),
                                             {
-                                                    new SyntaxTreeNode(Token(Token::Number, "1")),
-                                                    new SyntaxTreeNode(Token(Token::Number, "2")),
+                                                    new TokenNode(Token(Token::Number, "1")),
+                                                    new TokenNode(Token(Token::Number, "2")),
                                             }),
-                                    new SyntaxTreeNode(Token(Token::Number, "4")),
+                                    new TokenNode(Token(Token::Number, "4")),
                             }),
-                    new SyntaxTreeNode(Token(Token::Number, "7")),
+                    new TokenNode(Token(Token::Number, "7")),
             });
 
-    const auto actual = *Parser::parse(sample);
+    const auto actual = Parser::parse(sample);
 
-    EXPECT_EQ(actual == expected, true);
+    EXPECT_EQ(*actual == expected, true);
 }
 
 TEST(parse_test, ShouldThrowExceptionsOnExtraParenthesis) {

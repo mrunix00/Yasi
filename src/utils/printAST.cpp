@@ -9,22 +9,35 @@ std::string parse_ast(const SyntaxTreeNode &ast, int level) {
     for (int i = 0; i < level; i++) tabs += "\t";
     tabs = tabs + "-> ";
 
-    if (!ast.children.empty()) {
-        output = tabs + "Node (" + ast.token.token + ")\n";
+    if (ast.type == SyntaxTreeNode::Expression) {
+        output = tabs + "Expression (" + ((Expression *) &ast)->getName() + ")\n";
     } else {
         std::string type;
-        if (ast.token.type == Token::Number)
+        if (((TokenNode*) &ast)->getType() == Token::Number)
             type = "Number";
-        else if (ast.token.type == Token::String)
+        else if (((TokenNode*) &ast)->getType() == Token::String)
             type = "String";
         else
             type = "Symbol";
-        return tabs + type + " (" + ast.token.token + ")\n";
+        return tabs + type + " (" + ((TokenNode*) &ast)->getName() + ")\n";
     }
 
-    for (const auto child: ast.children) {
-        output += parse_ast(*child, level + 1);
-    }
+    //    if (!ast.children.empty()) {
+    //        output = tabs + "Node (" + ast.token.token + ")\n";
+    //    } else {
+    //        std::string type;
+    //        if (ast.token.type == Token::Number)
+    //            type = "Number";
+    //        else if (ast.token.type == Token::String)
+    //            type = "String";
+    //        else
+    //            type = "Symbol";
+    //        return tabs + type + " (" + ast.token.token + ")\n";
+    //    }
+    //
+//        for (const auto child: ast.) {
+//            output += parse_ast(*child, level + 1);
+//        }
 
     return output;
 }
