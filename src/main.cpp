@@ -4,7 +4,6 @@
 #include "parser/Parser.h"
 #include "read.hpp"
 #include "utils/break_lines.h"
-#include "utils/printAST.h"
 #include "utils/printTokens.h"
 #include <fstream>
 #include <getopt.h>
@@ -12,7 +11,6 @@
 
 struct options {
     bool displayTokens = false;
-    bool displayAST = false;
     bool dumpBytecode = false;
 };
 
@@ -29,10 +27,6 @@ void exec_program(const std::string &program, struct options opts) {
             }
 
             const auto ast = Parser::parse(tokens);
-            if (opts.displayAST && ast != nullptr) {
-                print_ast(*ast);
-            }
-
 
             ast->compile(compiled_bytecode.segments[0],
                          compiled_bytecode,
@@ -67,13 +61,10 @@ int main(int argc, char *argv[]) {
     struct options opts;
 
     int opt;
-    while ((opt = getopt(argc, argv, "atbdO")) != -1) {
+    while ((opt = getopt(argc, argv, "tbdO")) != -1) {
         switch (opt) {
             case 't':
                 opts.displayTokens = true;
-                break;
-            case 'a':
-                opts.displayAST = true;
                 break;
             case 'd':
                 opts.dumpBytecode = true;
