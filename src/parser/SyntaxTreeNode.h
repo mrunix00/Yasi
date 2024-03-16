@@ -12,6 +12,7 @@ public:
         None,
         TokenNode,
         Expression,
+        CondExpression,
     };
     Type type = None;
     virtual void compile(Bytecode::Segment *, Bytecode::Program &,
@@ -43,7 +44,6 @@ public:
 };
 
 class Expression : public SyntaxTreeNode {
-    Token function;
     std::vector<SyntaxTreeNode *> args;
 
 public:
@@ -70,4 +70,29 @@ public:
 
         return true;
     }
+    Token function;
+};
+
+class CondExpression final : public SyntaxTreeNode {
+    // This is a cursed way to organize this part of code
+    // TODO: refactor this piece of shit
+public:
+    struct Case {
+        SyntaxTreeNode *condition;
+        SyntaxTreeNode *result;
+    };
+private:
+    std::vector<Case> cases;
+    SyntaxTreeNode *default_case;
+public:
+    CondExpression(std::vector<Case> cases,
+                   SyntaxTreeNode *default_case)
+        : cases(std::move(cases)), default_case(default_case) {
+        type = Type::CondExpression;
+    }
+
+    void compile(Bytecode::Segment *segment, Bytecode::Program &program,
+                 std::vector<Bytecode::Instruction *> &instructions) override;
+
+    bool operator==(const SyntaxTreeNode &op) const override;
 };

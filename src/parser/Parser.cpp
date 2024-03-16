@@ -31,8 +31,26 @@ SyntaxTreeNode *parse(const std::vector<Token *> &tokens) {
             nodes_stack.pop();
             if (nodes_stack.empty())
                 nodes_stack.emplace();
-            nodes_stack.top().emplace_back(
-                    new Expression(operators_stack.top(), args));
+            if (operators_stack.top().token == "cond") {
+                std::vector<CondExpression::Case> cases;
+                SyntaxTreeNode* default_case = nullptr;
+                for (auto arg: args) {
+                    auto expression = (Expression *) arg;
+                    if (expression->function.token == "else") {
+                        default_case = expression->getArgs()[0];
+                        continue;
+                    }
+                    cases.push_back({
+                            expression->getArgs()[0],
+                            new TokenNode(expression->function),
+                    });
+                }
+                nodes_stack.top().emplace_back(
+                        new CondExpression(cases, default_case));
+            } else {
+                nodes_stack.top().emplace_back(
+                        new Expression(operators_stack.top(), args));
+            }
             operators_stack.pop();// pop the operator
             operators_stack.pop();// pop the bracket
         } else {

@@ -1,6 +1,5 @@
 #include "SyntaxTreeNode.h"
 #include "bytecode/builtin_functions/AddFunction.h"
-#include "bytecode/builtin_functions/CondFunction.h"
 #include "bytecode/builtin_functions/DefineFunction.h"
 #include "bytecode/builtin_functions/DivideFunction.h"
 #include "bytecode/builtin_functions/EqualsFunction.h"
@@ -59,7 +58,6 @@ void Expression::compile(
             {">", new Bytecode::BuiltinFunctions::GreaterThan},
             {"define", new Bytecode::BuiltinFunctions::Define},
             {"if", new Bytecode::BuiltinFunctions::If},
-            {"cond", new Bytecode::BuiltinFunctions::Cond},
             {"print", new Bytecode::BuiltinFunctions::Print},
             {"not", new Bytecode::BuiltinFunctions::Not},
     };
@@ -78,4 +76,72 @@ void Expression::compile(
                 instructions,
                 segment);
     }
+}
+
+void CondExpression::compile(
+        Bytecode::Segment *result,
+        Bytecode::Program &program,
+        std::vector<Bytecode::Instruction *> &instructions) {
+    typedef std::vector<Bytecode::Instruction *> fresh_instructions;
+    std::vector<fresh_instructions> conditions_instructions;
+    std::vector<fresh_instructions> cond_success_instructions;
+    fresh_instructions default_case_instructions;
+
+    for (const auto current_case: cases) {
+        fresh_instructions condition;
+        fresh_instructions condition_success;
+        current_case.condition->compile(result, program, condition);
+        current_case.result->compile(result, program, condition_success);
+        conditions_instructions.push_back(condition);
+        cond_success_instructions.push_back(condition_success);
+    }
+
+    if (default_case != nullptr) {
+        default_case->compile(result, program, default_case_instructions);
+    }
+
+    size_t end = instructions.size() +
+                 default_case_instructions.size() -
+                 default_case_instructions.empty();
+    for (size_t i = 0; i < conditions_instructions.size(); i++) {
+        end += conditions_instructions[i].size();
+        end += cond_success_instructions[i].size();
+        end += 2;
+    }
+
+    for (size_t i = 0; i < conditions_instructions.size(); i++) {
+        for (const auto instruction: conditions_instructions[i])
+            result->instructions.push_back(instruction);
+        result->instructions.push_back(
+                new Bytecode::CondJumpIfNot(
+                        result->instructions.size() +
+                        cond_success_instructions[i].size() +
+                        2 - default_case_instructions.empty()));
+
+        for (const auto instruction: cond_success_instructions[i])
+            result->instructions.push_back(instruction);
+
+        if (!default_case_instructions.empty())
+            result->instructions.push_back(new Bytecode::Jump(end));
+    }
+
+    for (const auto instruction: default_case_instructions)
+        result->instructions.push_back(instruction);
+}
+
+bool CondExpression::operator==(const SyntaxTreeNode &op) const {
+    if (auto other = dynamic_cast<const CondExpression *>(&op)) {
+        if (type != other->type || cases.size() != other->cases.size())
+            return false;
+        for (auto i = 0; i < cases.size(); i++)
+            if (!(*cases[i].condition == *other->cases[i].condition) ||
+                !(*cases[i].result == *other->cases[i].result))
+                return false;
+        if ((default_case == nullptr) != (other->default_case == nullptr))
+            return false;
+        if (default_case && other->default_case)
+            return *default_case == *other->default_case;
+        return true;
+    }
+    return false;
 }

@@ -95,6 +95,81 @@ TEST(parse_test, ParseDeeplyNestedOperation) {
     EXPECT_EQ(*actual == expected, true);
 }
 
+TEST(parse_test, ShouldParseASimpleCondStatement) {
+    const auto sample = "(cond ((= x 1) 2))";
+
+    const auto expected = CondExpression(
+            {
+                    {
+                            new Expression(
+                                    Token(Token::Symbol, "="),
+                                    {
+                                            new TokenNode(Token(Token::Symbol, "x")),
+                                            new TokenNode(Token(Token::Number, "1")),
+                                    }),
+                            new TokenNode(Token(Token::Number, "2")),
+                    },
+            },
+            nullptr);
+
+    const auto actual = parse(tokenize(sample));
+
+    EXPECT_EQ(*actual == expected, true);
+}
+
+TEST(parse_test, ShouldParseACondStatementWithDefaultCase) {
+    const auto sample = "(cond ((= 1 1) 1) (else 2))";
+
+    const auto expected = CondExpression(
+            {
+                    {
+                            new Expression(
+                                    Token(Token::Symbol, "="),
+                                    {
+                                            new TokenNode(Token(Token::Number, "1")),
+                                            new TokenNode(Token(Token::Number, "1")),
+                                    }),
+                            new TokenNode(Token(Token::Number, "1")),
+                    },
+            },
+            new TokenNode(Token(Token::Number, "2")));
+
+    const auto actual = parse(tokenize(sample));
+
+    EXPECT_EQ(*actual == expected, true);
+}
+
+TEST(parse_test, ShouldParseACondStatement) {
+    const auto sample = "(cond ((= 1 1) 1) ((= 2 2) 2) (else 3))";
+
+    const auto expected = CondExpression(
+            {
+                    {
+                            new Expression(
+                                    Token(Token::Symbol, "="),
+                                    {
+                                            new TokenNode(Token(Token::Number, "1")),
+                                            new TokenNode(Token(Token::Number, "1")),
+                                    }),
+                            new TokenNode(Token(Token::Number, "1")),
+                    },
+                    {
+                            new Expression(
+                                    Token(Token::Symbol, "="),
+                                    {
+                                            new TokenNode(Token(Token::Number, "2")),
+                                            new TokenNode(Token(Token::Number, "2")),
+                                    }),
+                            new TokenNode(Token(Token::Number, "2")),
+                    },
+            },
+            new TokenNode(Token(Token::Number, "3")));
+
+    const auto actual = parse(tokenize(sample));
+
+    EXPECT_EQ(*actual == expected, true);
+}
+
 TEST(parse_test, ShouldThrowExceptionsOnExtraParenthesis) {
     auto exceptionCaught = false;
     const auto expectedErrorMessage = "Unexpected parenthesis -> ')'";
