@@ -44,6 +44,11 @@ void TokenNode::compile(
     }
 }
 
+bool TokenNode::operator==(const SyntaxTreeNode &op) const {
+    return type == op.type &&
+           ((TokenNode *) &op)->token == token;
+}
+
 void Expression::compile(
         Bytecode::Segment *segment,
         Bytecode::Program &program,
@@ -76,6 +81,19 @@ void Expression::compile(
                 instructions,
                 segment);
     }
+}
+
+bool Expression::operator==(const SyntaxTreeNode &op) const {
+    if (type != op.type || ((Expression *) &op)->function != function ||
+        ((Expression *) &op)->args.size() != args.size())
+        return false;
+
+    for (auto i = 0; i < args.size(); i++) {
+        if (!(*args[i] == *((Expression *) &op)->args[i]))
+            return false;
+    }
+
+    return true;
 }
 
 void CondExpression::compile(

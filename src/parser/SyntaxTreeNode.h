@@ -37,10 +37,7 @@ public:
     void compile(Bytecode::Segment *segment, Bytecode::Program &program,
                  std::vector<Bytecode::Instruction *> &instructions) override;
 
-    bool operator==(const SyntaxTreeNode &op) const override {
-        return type == op.type &&
-               ((TokenNode *) &op)->token == token;
-    }
+    bool operator==(const SyntaxTreeNode &op) const override;
 };
 
 class Expression : public SyntaxTreeNode {
@@ -58,18 +55,7 @@ public:
     void compile(Bytecode::Segment *segment, Bytecode::Program &program,
                  std::vector<Bytecode::Instruction *> &instructions) override;
 
-    bool operator==(const SyntaxTreeNode &op) const override {
-        if (type != op.type || ((Expression *) &op)->function != function ||
-            ((Expression *) &op)->args.size() != args.size())
-            return false;
-
-        for (auto i = 0; i < args.size(); i++) {
-            if (!(*args[i] == *((Expression *) &op)->args[i]))
-                return false;
-        }
-
-        return true;
-    }
+    bool operator==(const SyntaxTreeNode &op) const override;
     Token function;
 };
 
@@ -81,9 +67,11 @@ public:
         SyntaxTreeNode *condition;
         SyntaxTreeNode *result;
     };
+
 private:
     std::vector<Case> cases;
     SyntaxTreeNode *default_case;
+
 public:
     CondExpression(std::vector<Case> cases,
                    SyntaxTreeNode *default_case)
