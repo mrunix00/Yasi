@@ -170,6 +170,45 @@ TEST(parse_test, ShouldParseACondStatement) {
     EXPECT_EQ(*actual == expected, true);
 }
 
+TEST(parse_test, ShouldParseALambdaExpressionWithOneArgument) {
+    const auto sample = "(lambda (x) (+ x 1))";
+
+    const auto expected = LambdaExpression(
+            {
+                    new TokenNode(Token(Token::Symbol, "x")),
+            },
+            new Expression(
+                    Token(Token::Symbol, "+"),
+                    {
+                            new TokenNode(Token(Token::Symbol, "x")),
+                            new TokenNode(Token(Token::Number, "1")),
+                    }));
+
+    const auto actual = parse(tokenize(sample));
+
+    EXPECT_EQ(*actual == expected, true);
+}
+
+TEST(parse_test, ShouldParseALambdaExpressionWithMultipleArguments) {
+    const auto sample = "(lambda (x y) (+ x y))";
+
+    const auto expected = LambdaExpression(
+            {
+                    new TokenNode(Token(Token::Symbol, "x")),
+                    new TokenNode(Token(Token::Symbol, "y")),
+            },
+            new Expression(
+                    Token(Token::Symbol, "+"),
+                    {
+                            new TokenNode(Token(Token::Symbol, "x")),
+                            new TokenNode(Token(Token::Symbol, "y")),
+                    }));
+
+    const auto actual = parse(tokenize(sample));
+
+    EXPECT_EQ(*actual == expected, true);
+}
+
 TEST(parse_test, ShouldThrowExceptionsOnExtraParenthesis) {
     auto exceptionCaught = false;
     const auto expectedErrorMessage = "Unexpected parenthesis -> ')'";

@@ -13,6 +13,7 @@ public:
         TokenNode,
         Expression,
         CondExpression,
+        LambdaExpression,
     };
     Type type = None;
     virtual void compile(Bytecode::Segment *, Bytecode::Program &,
@@ -79,6 +80,19 @@ public:
         type = Type::CondExpression;
     }
 
+    void compile(Bytecode::Segment *segment, Bytecode::Program &program,
+                 std::vector<Bytecode::Instruction *> &instructions) override;
+
+    bool operator==(const SyntaxTreeNode &op) const override;
+};
+
+class LambdaExpression final : public SyntaxTreeNode {
+    std::vector<SyntaxTreeNode *> args;
+    SyntaxTreeNode *definition;
+
+public:
+    LambdaExpression(std::vector<SyntaxTreeNode *> args,
+                     SyntaxTreeNode *definition);
     void compile(Bytecode::Segment *segment, Bytecode::Program &program,
                  std::vector<Bytecode::Instruction *> &instructions) override;
 

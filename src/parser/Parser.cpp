@@ -33,7 +33,7 @@ SyntaxTreeNode *parse(const std::vector<Token *> &tokens) {
                 nodes_stack.emplace();
             if (operators_stack.top().token == "cond") {
                 std::vector<CondExpression::Case> cases;
-                SyntaxTreeNode* default_case = nullptr;
+                SyntaxTreeNode *default_case = nullptr;
                 for (auto arg: args) {
                     auto expression = (Expression *) arg;
                     if (expression->function.token == "else") {
@@ -47,6 +47,15 @@ SyntaxTreeNode *parse(const std::vector<Token *> &tokens) {
                 }
                 nodes_stack.top().emplace_back(
                         new CondExpression(cases, default_case));
+            } else if (operators_stack.top().token == "lambda") {
+                std::vector<SyntaxTreeNode *> arguments;
+                arguments.push_back(new TokenNode(((Expression *) args[0])->function));
+                for (auto arg: ((Expression *) args[0])->getArgs())
+                    arguments.push_back((TokenNode *) arg);
+                nodes_stack.top().emplace_back(
+                        new LambdaExpression(
+                                arguments,
+                                args.back()));
             } else {
                 nodes_stack.top().emplace_back(
                         new Expression(operators_stack.top(), args));

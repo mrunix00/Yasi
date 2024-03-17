@@ -163,3 +163,27 @@ bool CondExpression::operator==(const SyntaxTreeNode &op) const {
     }
     return false;
 }
+
+LambdaExpression::LambdaExpression(
+        std::vector<SyntaxTreeNode *> args,
+        SyntaxTreeNode *definition) : args(std::move(args)), definition(definition) {
+    type = Type::LambdaExpression;
+}
+
+bool LambdaExpression::operator==(const SyntaxTreeNode &op) const {
+    if (auto other = dynamic_cast<const LambdaExpression *>(&op)) {
+        if (type != other->type || args.size() != other->args.size())
+            return false;
+        for (auto i = 0; i < args.size(); i++)
+            if (!(*args[i] == *other->args[i]))
+                return false;
+        return *definition == *other->definition;
+    }
+    return false;
+}
+
+void LambdaExpression::compile(
+        Bytecode::Segment *segment,
+        Bytecode::Program &program,
+        std::vector<Bytecode::Instruction *> &instructions) {
+}
