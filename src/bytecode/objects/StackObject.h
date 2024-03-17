@@ -14,11 +14,13 @@ namespace Bytecode {
         Number,
         Boolean,
         String,
+        Lambda,
     };
 
     class StackObject {
         union Data {
             double number;
+            size_t reg;
             char *string;
             bool boolean;
         };
@@ -28,6 +30,8 @@ namespace Bytecode {
         uint8_t type;
 
         explicit StackObject() = default;
+        explicit StackObject(const size_t segment)
+            : type(Lambda) { data.reg = segment; };
         explicit StackObject(const double number)
             : data({number}), type(Number){};
         explicit StackObject(const bool boolean)
@@ -50,6 +54,10 @@ namespace Bytecode {
             return data.boolean;
         }
 
+        [[nodiscard]] size_t asLambda() const {
+            return data.reg;
+        }
+
         [[nodiscard]] std::string toString() const {
             std::stringstream s;
             switch (type) {
@@ -65,6 +73,8 @@ namespace Bytecode {
                                    ? string.substr(1, string.size() - 2)
                                    : string;
                 }
+                case Lambda:
+                    return ":" + std::to_string(data.reg);
                 default:
                     return "";
             }

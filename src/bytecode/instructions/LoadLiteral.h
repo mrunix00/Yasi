@@ -18,6 +18,7 @@ namespace Bytecode {
 
         explicit LoadLiteral(const StackObject *literal){
             this->literal = *literal;
+            type = InstructionType::LoadLiteral;
         }
 
         [[nodiscard]] std::string toString() const override {

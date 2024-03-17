@@ -8,6 +8,10 @@ namespace Bytecode {
         segments.push_back(segment);
         return segments_table[name] = segments_table.size() + 1;
     }
+    size_t Program::declare_lambda(Segment *segment) {
+        segments.push_back(segment);
+        return segments.size() - 1;
+    }
     size_t Program::find_function(const std::string &name) {
         if (segments_table.find(name) == segments_table.end()) return -1;
         return segments_table[name];
@@ -26,5 +30,4 @@ namespace Bytecode {
                 return false;
         return true;
     }
-
 }// namespace Bytecode

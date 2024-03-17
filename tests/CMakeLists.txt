@@ -28,9 +28,7 @@ file(
         ./*.cpp
 )
 
-add_executable(all_tests ${SRCS}
-        parse_test.cpp
-        lexer_test.cpp)
+add_executable(all_tests ${SRCS})
 
 target_link_libraries(all_tests GTest::gtest_main GTest::gmock_main)
 

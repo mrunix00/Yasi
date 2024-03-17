@@ -12,6 +12,7 @@
 #include "bytecode/builtin_functions/PrintFunction.h"
 #include "bytecode/builtin_functions/SubtractFunction.h"
 #include "bytecode/instructions/Call.h"
+#include "bytecode/instructions/CallLambda.h"
 #include "bytecode/instructions/LoadGlobal.h"
 #include "bytecode/instructions/LoadLocal.h"
 
@@ -67,7 +68,21 @@ void Expression::compile(
             {"not", new Bytecode::BuiltinFunctions::Not},
     };
 
-    if (program.find_function(function.token) != -1) {
+    if (program.find_global(function.token) != -1) {
+        for (const auto &argument: args)
+            argument->compile(segment, program, instructions);
+        instructions.push_back(new Bytecode::LoadGlobal(
+                program.find_global(function.token)));
+        instructions.push_back(new Bytecode::CallLambda(args.size()));
+        return;
+    } else if (segment->find_variable(function.token) != -1) {
+        for (const auto &argument: args)
+            argument->compile(segment, program, instructions);
+        instructions.push_back(new Bytecode::LoadLocal(
+                segment->find_variable(function.token)));
+        instructions.push_back(new Bytecode::CallLambda(args.size()));
+        return;
+    } else if (program.find_function(function.token) != -1) {
         for (const auto &argument: args)
             argument->compile(segment, program, instructions);
         const auto called_segment = program.find_function(function.asString());
@@ -183,7 +198,14 @@ bool LambdaExpression::operator==(const SyntaxTreeNode &op) const {
 }
 
 void LambdaExpression::compile(
-        Bytecode::Segment *segment,
+        Bytecode::Segment *result,
         Bytecode::Program &program,
         std::vector<Bytecode::Instruction *> &instructions) {
+    auto segment = new Bytecode::Segment({});
+    size_t reg = program.declare_lambda(segment);
+    for (auto argument: args)
+        segment->declare_variable(((class TokenNode *) argument)->getName());
+    definition->compile(segment, program, segment->instructions);
+    instructions.push_back(
+            new Bytecode::LoadLiteral(new Bytecode::StackObject(reg)));
 }

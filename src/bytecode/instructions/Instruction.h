@@ -23,6 +23,7 @@ namespace Bytecode {
         Jump,
         StoreGlobal,
         SendToStdout,
+        CallLambda,
     };
 
     class Instruction {

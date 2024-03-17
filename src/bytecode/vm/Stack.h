@@ -34,6 +34,9 @@ namespace Bytecode {
                 case Boolean:
                     *stackTop = *data;
                     break;
+                case Lambda:
+                    *((size_t *) stackTop) = *((size_t *) data);
+                    break;
                 default:
                     break;
             }
@@ -60,6 +63,12 @@ namespace Bytecode {
                  sizeof(char *));
         }
 
+        void push(const size_t lambda) {
+            push(ObjectType::Lambda,
+                 (uint8_t *) &lambda,
+                 sizeof(size_t));
+        }
+
         void push(const StackObject &object) {
             switch (object.type) {
                 case ObjectType::Boolean:
@@ -70,6 +79,9 @@ namespace Bytecode {
                     break;
                 case ObjectType::String:
                     push(object.asString());
+                    break;
+                case ObjectType::Lambda:
+                    push(object.asLambda());
                     break;
             }
         }
@@ -89,6 +101,10 @@ namespace Bytecode {
                 case ObjectType::String:
                     size = sizeof(char *);
                     object = StackObject(std::string(*((char **) (stackTop - size))));
+                    break;
+                case ObjectType::Lambda:
+                    size = sizeof(size_t);
+                    object = StackObject(*((size_t *) (stackTop - size)));
                     break;
                 default:
                     size = -1;
