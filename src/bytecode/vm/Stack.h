@@ -117,10 +117,10 @@ namespace Bytecode {
         }
 
         StackObject top() {
-            uint8_t type = *(stackTop - 1);
-
             if (!used)
                 return StackObject{};
+
+            uint8_t type = *(stackTop - 1);
 
             StackObject object{};
             size_t size;
