@@ -15,6 +15,7 @@
 #include "bytecode/instructions/CallLambda.h"
 #include "bytecode/instructions/LoadGlobal.h"
 #include "bytecode/instructions/LoadLocal.h"
+#include "exceptions/SyntaxError.h"
 
 void TokenNode::compile(
         Bytecode::Segment *segment,
@@ -83,6 +84,13 @@ void Expression::compile(
         instructions.push_back(new Bytecode::CallLambda(args.size()));
         return;
     } else if (program.find_function(function.token) != -1) {
+        if (args.size() != program.segments[program.find_function(function.token)]->variables_table.size())
+            throw SyntaxError(
+                    "Invalid number of arguments for function \"" + function.token +
+                            "\", Expected " + std::to_string(program.segments[program.find_function(function.token)]->variables_table.size()) +
+                            ", got " + std::to_string(args.size()),
+                    function.line,
+                    function.column);
         for (const auto &argument: args)
             argument->compile(segment, program, instructions);
         const auto called_segment = program.find_function(function.asString());
@@ -95,6 +103,11 @@ void Expression::compile(
                 program,
                 instructions,
                 segment);
+    } else {
+        throw SyntaxError(
+                "Undefined function -> " + function.token,
+                function.line,
+                function.column);
     }
 }
 

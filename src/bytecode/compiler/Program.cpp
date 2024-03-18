@@ -6,7 +6,7 @@ namespace Bytecode {
     }
     size_t Program::declare_function(const std::string &name, Segment *segment) {
         segments.push_back(segment);
-        return segments_table[name] = segments_table.size() + 1;
+        return segments_table[name] = segments.size() - 1;
     }
     size_t Program::declare_lambda(Segment *segment) {
         segments.push_back(segment);
