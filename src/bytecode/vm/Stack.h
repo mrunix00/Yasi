@@ -23,6 +23,7 @@ namespace Bytecode {
             if ((used + amount + 1) > capacity) {
                 capacity *= 2;
                 stackData = (uint8_t *) realloc(stackData, capacity);
+                stackTop = stackData + used;
             }
             switch (type) {
                 case String:

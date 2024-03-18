@@ -48,7 +48,7 @@ namespace Bytecode {
         void newStackFrame(const uint32_t segment, const uint32_t args, Stack *program_stack) {
             if (stackframe_used + 1 > stackframe_capacity) {
                 stackframe_capacity *= 2;
-                stack = (StackFrame *) realloc(stack, stackframe_capacity);
+                stack = (StackFrame *) realloc(stack, stackframe_capacity * sizeof(StackFrame));
             }
             stackTop = stack + stackframe_used;
             stack[stackframe_used++] = StackFrame{
