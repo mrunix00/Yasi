@@ -1,4 +1,5 @@
 #include "boilerplate.h"
+#include "exceptions/SyntaxError.h"
 
 TEST(variables_test, ShouldAssignAValueToAVariable) {
     const auto program =
@@ -21,4 +22,21 @@ TEST(variables_test, ShouldAssignTwoValuesToTwoVariablesAndSumThem) {
     const auto actual_result = run_program(program);
 
     EXPECT_EQ(actual_result, expected_result);
+}
+
+TEST(variables_test, ShouldThrowAnErrorOnUndefinedVariable) {
+    const auto program = "(+ x 10)";
+
+    bool errorIsThrown = false;
+    std::string errorMessage;
+
+    try {
+        run_program(program);
+    } catch (const SyntaxError& e) {
+        errorIsThrown = true;
+        errorMessage = e.message;
+    }
+
+    EXPECT_TRUE(errorIsThrown);
+    EXPECT_EQ(errorMessage, "Undefined variable -> x");
 }

@@ -34,12 +34,14 @@ void TokenNode::compile(
             if (segment->find_variable(token.token) != -1) {
                 instructions.push_back(new Bytecode::LoadLocal(
                         segment->find_variable(token.asString())));
-                return;
-            }
-            if (program.find_global(token.token) != -1) {
+            } else if (program.find_global(token.token) != -1) {
                 instructions.push_back(new Bytecode::LoadGlobal(
                         program.find_global(token.asString())));
-                return;
+            } else {
+                throw SyntaxError(
+                        "Undefined variable -> " + token.token,
+                        token.line,
+                        token.column);
             }
         default:
             break;
