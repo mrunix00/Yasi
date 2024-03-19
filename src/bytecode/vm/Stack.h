@@ -3,6 +3,7 @@
 #include "bytecode/objects/StackObject.h"
 #include <cstdint>
 #include <cstdlib>
+#include <iostream>
 
 namespace Bytecode {
     class Stack {
@@ -15,6 +16,10 @@ namespace Bytecode {
         Stack() {
             capacity = 1024;
             stackData = (uint8_t *) malloc(capacity);
+            if (stackData == nullptr) {
+                std::cerr << "Failed to allocate memory for the stack!" << std::endl;
+                exit(1);
+            }
             stackTop = stackData;
             used = 0;
         }
@@ -22,7 +27,12 @@ namespace Bytecode {
         void push(ObjectType type, uint8_t *data, size_t amount) {
             if ((used + amount + 1) > capacity) {
                 capacity *= 2;
-                stackData = (uint8_t *) realloc(stackData, capacity);
+                auto temp = (uint8_t *) realloc(stackData, capacity);
+                if (temp == nullptr) {
+                    std::cerr << "Failed to allocate memory for the stack!" << std::endl;
+                    exit(1);
+                }
+                stackData = temp;
                 stackTop = stackData + used;
             }
             switch (type) {
