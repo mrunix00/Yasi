@@ -47,7 +47,8 @@ SyntaxTreeNode *parse(const std::vector<Token *> &tokens) {
                 }
                 nodes_stack.top().emplace_back(
                         new CondExpression(cases, default_case));
-            } else if (operators_stack.top().token == "lambda") {
+            } else if (operators_stack.top().token == "lambda" ||
+                       operators_stack.top().token == "λ") {
                 std::vector<SyntaxTreeNode *> arguments;
                 arguments.push_back(new TokenNode(((Expression *) args[0])->function));
                 for (auto arg: ((Expression *) args[0])->getArgs())

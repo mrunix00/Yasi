@@ -189,6 +189,25 @@ TEST(parse_test, ShouldParseALambdaExpressionWithOneArgument) {
     EXPECT_EQ(*actual == expected, true);
 }
 
+TEST(parse_test, ShouldParseALambdaExpressionWithLambdaSymbol) {
+    const auto sample = "(λ (x) (+ x 1))";
+
+    const auto expected = LambdaExpression(
+            {
+                    new TokenNode(Token(Token::Symbol, "x")),
+            },
+            new Expression(
+                    Token(Token::Symbol, "+"),
+                    {
+                            new TokenNode(Token(Token::Symbol, "x")),
+                            new TokenNode(Token(Token::Number, "1")),
+                    }));
+
+    const auto actual = parse(tokenize(sample));
+
+    EXPECT_EQ(*actual == expected, true);
+}
+
 TEST(parse_test, ShouldParseALambdaExpressionWithMultipleArguments) {
     const auto sample = "(lambda (x y) (+ x y))";
 
