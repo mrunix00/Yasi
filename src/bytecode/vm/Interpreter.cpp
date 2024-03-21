@@ -30,6 +30,10 @@ void Bytecode::Interpreter::execute(const Program &program) {
             case InstructionType::Subtract: {
                 const auto object2 = vm.program_stack.pop();
                 const auto object1 = vm.program_stack.pop();
+                if (object1.type != ObjectType::Number ||
+                    object2.type != ObjectType::Number) {
+                    throw SyntaxError("Invalid argument type for function \"-\", Expected number, got string");
+                }
                 vm.program_stack.push(object1.asNumber() - object2.asNumber());
             } break;
             case InstructionType::Multiply: {
