@@ -103,5 +103,13 @@ namespace Bytecode {
         void setLocal(const size_t reg, const StackObject sObject) const {
             local_registers[local_registers_used - stackTop->args + reg] = sObject;
         }
+
+        void clear() {
+            stackTop = stack;
+            stackframe_used = 0;
+            local_registers_used = 0;
+            newStackFrame(0);
+            stackTop->current_line++;
+        }
     };
 }// namespace Bytecode

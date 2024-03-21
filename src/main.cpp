@@ -49,6 +49,9 @@ void exec_program(const std::string &program, struct options opts) {
 
         interpreter.vm.program_stack.clear();
     } catch (SyntaxError &error) {
+        delete compiled_bytecode.segments[0];
+        compiled_bytecode.segments[0] = new Bytecode::Segment({});
+        interpreter.vm.call_stack.clear();
         std::cout << "SyntaxError (" << error.line
                   << ':' << error.column << "): "
                   << error.message << '\n';
