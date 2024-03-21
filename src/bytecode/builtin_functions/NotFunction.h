@@ -10,6 +10,10 @@ namespace Bytecode::BuiltinFunctions {
                 Program &program,
                 std::vector<Instruction *> &instructions,
                 Segment *segment) override {
+            if (args.size() != 1) {
+                throw SyntaxError("Invalid number of arguments for function \"not\", Expected 1, got "
+                                  + std::to_string(args.size()));
+            }
             args[0]->compile(segment, program, instructions);
             instructions.push_back(new Bytecode::Not());
         }
