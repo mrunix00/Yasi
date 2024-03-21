@@ -25,19 +25,22 @@ void Bytecode::Interpreter::execute(const Program &program) {
                     object2.type != ObjectType::Number) {
                     throw SyntaxError("Invalid argument type for function \"+\", Expected number, got string");
                 }
-                vm.program_stack.push(
-                        object1.asNumber() + object2.asNumber());
+                vm.program_stack.push(object1.asNumber() + object2.asNumber());
             } break;
             case InstructionType::Subtract: {
                 const auto object2 = vm.program_stack.pop();
                 const auto object1 = vm.program_stack.pop();
                 vm.program_stack.push(object1.asNumber() - object2.asNumber());
             } break;
-            case InstructionType::Multiply:
-                vm.program_stack.push(
-                        vm.program_stack.pop().asNumber() *
-                        vm.program_stack.pop().asNumber());
-                break;
+            case InstructionType::Multiply: {
+                const auto object2 = vm.program_stack.pop();
+                const auto object1 = vm.program_stack.pop();
+                if (object1.type != ObjectType::Number ||
+                    object2.type != ObjectType::Number) {
+                    throw SyntaxError("Invalid argument type for function \"*\", Expected number, got string");
+                }
+                vm.program_stack.push(object1.asNumber() * object2.asNumber());
+            } break;
             case InstructionType::Divide: {
                 const auto object2 = vm.program_stack.pop();
                 const auto object1 = vm.program_stack.pop();
