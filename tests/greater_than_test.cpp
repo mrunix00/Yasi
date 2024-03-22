@@ -63,3 +63,20 @@ TEST(greater_than_test, ShouldThrowAnErrorWhenNoArgsWereFound) {
     EXPECT_EQ(message, "Invalid number of arguments for function \">\", Expected at least 1, got 0");
 }
 
+TEST(greater_than_test, ShouldThrowAnErrorWhenAStringIsGivenAsAnArgument) {
+    const auto program = "(> 10 \"Hello World\")";
+
+    bool errorIsThrown = false;
+    std::string message;
+
+    try {
+        run_program(program);
+    } catch (const SyntaxError& e) {
+        errorIsThrown = true;
+        message = e.message;
+    }
+
+    EXPECT_TRUE(errorIsThrown);
+    EXPECT_EQ(message, "Invalid argument type for function \">\", Expected number, got string");
+}
+

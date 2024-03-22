@@ -52,3 +52,12 @@ TEST(not_test, ShouldThrowAnErrorWhenMoreThanOneArgIsGiven) {
     EXPECT_TRUE(errorIsThrown);
     EXPECT_EQ(message, "Invalid number of arguments for function \"not\", Expected 1, got 2");
 }
+
+TEST(not_test, ShouldReturnFalseWhenGivenNonBoolean) {
+    const auto program = "(not 10)";
+
+    const auto expected_result = StackObject(false);
+    const auto actual_result = run_program(program);
+
+    EXPECT_EQ(actual_result, expected_result);
+}

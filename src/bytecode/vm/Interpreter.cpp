@@ -46,7 +46,7 @@ void Bytecode::Interpreter::execute(const Program &program) {
                 vm.program_stack.push(object1.asNumber() * object2.asNumber());
             } break;
             case InstructionType::Divide: {
-                 const auto object2 = vm.program_stack.pop();
+                const auto object2 = vm.program_stack.pop();
                 const auto object1 = vm.program_stack.pop();
                 if (object1.type != ObjectType::Number ||
                     object2.type != ObjectType::Number) {
@@ -60,21 +60,37 @@ void Bytecode::Interpreter::execute(const Program &program) {
             case InstructionType::Equals: {
                 const auto object2 = vm.program_stack.pop();
                 const auto object1 = vm.program_stack.pop();
+                if (object1.type != ObjectType::Number ||
+                    object2.type != ObjectType::Number) {
+                    throw SyntaxError("Invalid argument type for function \"=\", Expected number, got string");
+                }
                 vm.program_stack.push(object1.asNumber() == object2.asNumber());
             } break;
             case InstructionType::LessThan: {
                 const auto object2 = vm.program_stack.pop();
                 const auto object1 = vm.program_stack.pop();
+                if (object1.type != ObjectType::Number ||
+                    object2.type != ObjectType::Number) {
+                    throw SyntaxError("Invalid argument type for function \"<\", Expected number, got string");
+                }
                 vm.program_stack.push(object1.asNumber() < object2.asNumber());
             } break;
             case InstructionType::GreaterThan: {
                 const auto object2 = vm.program_stack.pop();
                 const auto object1 = vm.program_stack.pop();
+                if (object1.type != ObjectType::Number ||
+                    object2.type != ObjectType::Number) {
+                    throw SyntaxError("Invalid argument type for function \">\", Expected number, got string");
+                }
                 vm.program_stack.push(object1.asNumber() > object2.asNumber());
             } break;
-            case InstructionType::Not:
-                vm.program_stack.push(!vm.program_stack.pop().asBoolean());
-                break;
+            case InstructionType::Not: {
+                const auto object = vm.program_stack.pop();
+                if (object.type != ObjectType::Boolean)
+                    vm.program_stack.push(false);
+                else
+                    vm.program_stack.push(!object.asBoolean());
+            } break;
             case InstructionType::LoadLiteral:
                 vm.program_stack.push(currentInstruction->literal);
                 break;
