@@ -98,33 +98,31 @@ namespace Bytecode {
         }
         StackObject pop() {
             uint8_t type = *(--stackTop);
-            StackObject object{};
             size_t size;
             switch (type) {
                 case ObjectType::Boolean:
                     size = 1;
-                    object = StackObject(*((bool *) (stackTop - size)));
-                    break;
+                    used = used - size - 1;
+                    stackTop -= size;
+                    return StackObject(*((bool *) stackTop));
                 case ObjectType::Number:
                     size = sizeof(double);
-                    object = StackObject(*((double *) (stackTop - size)));
-                    break;
+                    stackTop -= size;
+                    used = used - size - 1;
+                    return StackObject(*((double *) stackTop));
                 case ObjectType::String:
                     size = sizeof(char *);
-                    object = StackObject(std::string(*((char **) (stackTop - size))));
-                    break;
+                    stackTop -= size;
+                    used = used - size - 1;
+                    return StackObject(std::string(*((char **) stackTop)));
                 case ObjectType::Lambda:
                     size = sizeof(size_t);
-                    object = StackObject(*((size_t *) (stackTop - size)));
-                    break;
+                    stackTop -= size;
+                    used = used - size - 1;
+                    return StackObject(*((size_t *) stackTop));
                 default:
-                    size = -1;
+                    return StackObject{};
             }
-
-            stackTop -= size;
-            used = used - size - 1;
-
-            return object;
         }
 
         StackObject top() {
