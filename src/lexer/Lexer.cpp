@@ -7,9 +7,19 @@ std::vector<Token *> tokenize(const std::string &line) {
     int currentLine = 1;
     int currentLineChar = 0;
     int currentColumn = 0;
+    bool is_a_comment = false;
 
     for (const auto c: line + "\n") {
         currentLineChar++;
+
+        if (c == ';')
+            is_a_comment = true;
+
+        if (is_a_comment && c != '\n')
+            continue;
+
+        if (c == '\n')
+            is_a_comment = false;
 
         if (((c == '(' || c == ')') && currentToken[0] == '"') ||
             (c != '(' && c != ')' && (c != ' ' || currentToken[0] == '"') &&
@@ -33,6 +43,7 @@ std::vector<Token *> tokenize(const std::string &line) {
                 result.emplace_back(new Token(Token::String, currentToken,
                                               currentLine, currentColumn));
             }
+
             if (c == '\n') {
                 currentLine++;
                 currentLineChar = 0;

@@ -2,6 +2,28 @@
 #include <gtest/gtest.h>
 #include <vector>
 
+TEST(lex_test, ShouldIgnoreComments) {
+    const std::string sample = "(+ 1 2) ; This is a comment\n"
+                               "(+ 3 4)";
+    const std::vector expected = {
+            new Token(Token::OpenBracket, "("),
+            new Token(Token::Symbol, "+"),
+            new Token(Token::Number, "1"),
+            new Token(Token::Number, "2"),
+            new Token(Token::ClosedBracket, ")"),
+            new Token(Token::OpenBracket, "("),
+            new Token(Token::Symbol, "+"),
+            new Token(Token::Number, "3"),
+            new Token(Token::Number, "4"),
+            new Token(Token::ClosedBracket, ")"),
+    };
+    const auto actual = tokenize(sample);
+
+    EXPECT_EQ(expected.size(), actual.size());
+    for (auto token: actual)
+        EXPECT_EQ(*token == *token, true);
+}
+
 TEST(lex_test, ShouldTokenizeSingleToken) {
     const std::string sample = "32";
     const std::vector expected = {new Token(Token::Number, "32")};
