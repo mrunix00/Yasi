@@ -19,11 +19,12 @@ namespace Bytecode {
         GreaterThan,
         LessThan,
         Call,
+        CallLambda,
         CondJumpIfNot,
         Jump,
         StoreGlobal,
         SendToStdout,
-        CallLambda,
+        ReadFromStdin,
     };
 
     class Instruction {

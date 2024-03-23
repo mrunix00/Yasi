@@ -10,6 +10,7 @@
 #include "bytecode/builtin_functions/MultiplyFunction.h"
 #include "bytecode/builtin_functions/NotFunction.h"
 #include "bytecode/builtin_functions/PrintFunction.h"
+#include "bytecode/builtin_functions/ReadFunction.h"
 #include "bytecode/builtin_functions/SubtractFunction.h"
 #include "bytecode/instructions/Call.h"
 #include "bytecode/instructions/CallLambda.h"
@@ -68,6 +69,7 @@ void Expression::compile(
             {"define", new Bytecode::BuiltinFunctions::Define},
             {"if", new Bytecode::BuiltinFunctions::If},
             {"print", new Bytecode::BuiltinFunctions::Print},
+            {"read", new Bytecode::BuiltinFunctions::Read},
             {"not", new Bytecode::BuiltinFunctions::Not},
     };
 

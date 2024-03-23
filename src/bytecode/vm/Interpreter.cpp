@@ -1,6 +1,7 @@
 #include "Interpreter.h"
 #include "exceptions/SyntaxError.h"
 
+#include <algorithm>
 #include <iostream>
 
 void Bytecode::Interpreter::execute(const Program &program) {
@@ -129,6 +130,16 @@ void Bytecode::Interpreter::execute(const Program &program) {
             case InstructionType::SendToStdout:
                 std::cout << vm.program_stack.pop().toString();
                 break;
+            case InstructionType::ReadFromStdin: {
+                std::string input;
+                std::getline(std::cin, input);
+                char *p;
+                double number = std::strtod(input.c_str(), &p);
+                if (*p)
+                    vm.program_stack.push(input);
+                else
+                    vm.program_stack.push(number);
+            } break;
             default:
                 throw;
         }
