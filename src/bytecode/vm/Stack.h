@@ -35,26 +35,29 @@ namespace Bytecode {
                 stackData = temp;
                 stackTop = stackData + used;
             }
+            uint8_t *localStackTop = stackTop;
             switch (type) {
                 case String:
-                    *((char **) stackTop) = strdup((char *) data);
+                    *((char **) localStackTop) = strdup((char *) data);
                     break;
                 case Number:
-                    *((double *) stackTop) = *((double *) data);
+                    *((double *) localStackTop) = *((double *) data);
                     break;
                 case Boolean:
-                    *stackTop = *data;
+                    *localStackTop = *data;
                     break;
                 case Lambda:
-                    *((size_t *) stackTop) = *((size_t *) data);
+                    *((size_t *) localStackTop) = *((size_t *) data);
                     break;
                 default:
                     break;
             }
-            stackTop += amount;
-            *(stackTop++) = type;
+            localStackTop += amount;
+            *(localStackTop++) = type;
             used += amount + 1;
+            stackTop = localStackTop;
         }
+
 
         void push(double number) {
             push(ObjectType::Number,
@@ -98,27 +101,22 @@ namespace Bytecode {
         }
         StackObject pop() {
             uint8_t type = *(--stackTop);
-            size_t size;
             switch (type) {
                 case ObjectType::Boolean:
-                    size = 1;
-                    used = used - size - 1;
-                    stackTop -= size;
+                    used = used - 2;
+                    stackTop--;
                     return StackObject(*((bool *) stackTop));
                 case ObjectType::Number:
-                    size = sizeof(double);
-                    stackTop -= size;
-                    used = used - size - 1;
+                    stackTop -= sizeof(double);
+                    used = used - sizeof(double) - 1;
                     return StackObject(*((double *) stackTop));
                 case ObjectType::String:
-                    size = sizeof(char *);
-                    stackTop -= size;
-                    used = used - size - 1;
+                    stackTop -= sizeof(char *);
+                    used = used - sizeof(char *) - 1;
                     return StackObject(std::string(*((char **) stackTop)));
                 case ObjectType::Lambda:
-                    size = sizeof(size_t);
-                    stackTop -= size;
-                    used = used - size - 1;
+                    stackTop -= sizeof(size_t);
+                    used = used - sizeof(size_t) - 1;
                     return StackObject(*((size_t *) stackTop));
                 default:
                     return StackObject{};
@@ -132,18 +130,14 @@ namespace Bytecode {
             uint8_t type = *(stackTop - 1);
 
             StackObject object{};
-            size_t size;
 
             switch (type) {
-                case ObjectType::Boolean:
-                    size = 1;
-                    return StackObject(*((bool *) (stackTop - size - 1)));
+                case ObjectType::Boolean:;
+                    return StackObject(*((bool *) (stackTop - 2)));
                 case ObjectType::Number:
-                    size = sizeof(double);
-                    return StackObject(*((double *) (stackTop - size - 1)));
+                    return StackObject(*((double *) (stackTop - sizeof(double) - 1)));
                 case ObjectType::String:
-                    size = sizeof(char *);
-                    return StackObject(std::string(*((char **) (stackTop - size - 1))));
+                    return StackObject(std::string(*((char **) (stackTop - sizeof(char *) - 1))));
                 default:
                     return object;
             }
