@@ -26,6 +26,7 @@ namespace Bytecode {
         SendToStdout,
         ReadFromStdin,
         Or,
+        And,
     };
 
     class Instruction {

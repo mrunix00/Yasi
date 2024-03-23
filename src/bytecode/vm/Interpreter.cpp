@@ -149,6 +149,15 @@ void Bytecode::Interpreter::execute(const Program &program) {
                 }
                 vm.program_stack.push(object1.asBoolean() || object2.asBoolean());
             } break;
+            case InstructionType::And: {
+                const auto object2 = vm.program_stack.pop();
+                const auto object1 = vm.program_stack.pop();
+                if (object1.type != ObjectType::Boolean ||
+                    object2.type != ObjectType::Boolean) {
+                    throw SyntaxError("Invalid argument type for function \"and\", Expected boolean, got string");
+                }
+                vm.program_stack.push(object1.asBoolean() && object2.asBoolean());
+            } break;
             default:
                 throw;
         }

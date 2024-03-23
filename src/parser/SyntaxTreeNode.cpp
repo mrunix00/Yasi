@@ -1,5 +1,6 @@
 #include "SyntaxTreeNode.h"
 #include "bytecode/builtin_functions/AddFunction.h"
+#include "bytecode/builtin_functions/AndFunction.h"
 #include "bytecode/builtin_functions/DefineFunction.h"
 #include "bytecode/builtin_functions/DivideFunction.h"
 #include "bytecode/builtin_functions/EqualsFunction.h"
@@ -73,6 +74,7 @@ void Expression::compile(
             {"read", new Bytecode::BuiltinFunctions::Read},
             {"not", new Bytecode::BuiltinFunctions::Not},
             {"or", new Bytecode::BuiltinFunctions::Or},
+            {"and", new Bytecode::BuiltinFunctions::And}
     };
 
     if (program.find_global(function.token) != -1) {
