@@ -9,6 +9,7 @@
 #include "bytecode/builtin_functions/LessThanFunction.h"
 #include "bytecode/builtin_functions/MultiplyFunction.h"
 #include "bytecode/builtin_functions/NotFunction.h"
+#include "bytecode/builtin_functions/OrFunction.h"
 #include "bytecode/builtin_functions/PrintFunction.h"
 #include "bytecode/builtin_functions/ReadFunction.h"
 #include "bytecode/builtin_functions/SubtractFunction.h"
@@ -71,6 +72,7 @@ void Expression::compile(
             {"print", new Bytecode::BuiltinFunctions::Print},
             {"read", new Bytecode::BuiltinFunctions::Read},
             {"not", new Bytecode::BuiltinFunctions::Not},
+            {"or", new Bytecode::BuiltinFunctions::Or},
     };
 
     if (program.find_global(function.token) != -1) {

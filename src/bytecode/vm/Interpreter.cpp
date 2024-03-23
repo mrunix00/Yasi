@@ -140,6 +140,15 @@ void Bytecode::Interpreter::execute(const Program &program) {
                 else
                     vm.program_stack.push(number);
             } break;
+            case InstructionType::Or: {
+                const auto object2 = vm.program_stack.pop();
+                const auto object1 = vm.program_stack.pop();
+                if (object1.type != ObjectType::Boolean ||
+                    object2.type != ObjectType::Boolean) {
+                    throw SyntaxError("Invalid argument type for function \"or\", Expected boolean, got string");
+                }
+                vm.program_stack.push(object1.asBoolean() || object2.asBoolean());
+            } break;
             default:
                 throw;
         }

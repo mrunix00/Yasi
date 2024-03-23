@@ -25,6 +25,7 @@ namespace Bytecode {
         StoreGlobal,
         SendToStdout,
         ReadFromStdin,
+        Or,
     };
 
     class Instruction {
