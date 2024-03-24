@@ -3,6 +3,7 @@
 #include <cstdint>
 #include <cstdlib>
 #include <cstring>
+#include <iomanip>
 #include <limits>
 #include <sstream>
 #include <string>
@@ -59,14 +60,19 @@ namespace Bytecode {
         }
 
         [[nodiscard]] std::string toString() const {
-            std::stringstream s;
             switch (type) {
                 case Boolean:
                     return asBoolean() ? std::string("#true")
                                        : std::string("#false");
-                case Number:
-                    s << asNumber();
-                    return s.str();
+                case Number: {
+                    std::ostringstream s;
+                    s.precision(std::numeric_limits<double>::digits10);
+                    s << std::fixed << asNumber();
+                    std::string str = s.str();
+                    str.erase(str.find_last_not_of('0') + 1);
+                    str.erase(str.find_last_not_of('.') + 1);
+                    return str;
+                }
                 case String: {
                     std::string string = asString();
                     return string[0] == '"' && string.back() == '"'
