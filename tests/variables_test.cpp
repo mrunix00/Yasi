@@ -24,6 +24,17 @@ TEST(variables_test, ShouldAssignTwoValuesToTwoVariablesAndSumThem) {
     EXPECT_EQ(actual_result, expected_result);
 }
 
+TEST(variables_test, ShouldDefineAVariableWithAnExpression) {
+    const auto program =
+            "(define x (+ 10 20))"
+            "(+ x 10)";
+
+    const auto expected_result = StackObject((double) 40);
+    const auto actual_result = run_program(program);
+
+    EXPECT_EQ(actual_result, expected_result);
+}
+
 TEST(variables_test, ShouldThrowAnErrorOnUndefinedVariable) {
     const auto program = "(+ x 10)";
 

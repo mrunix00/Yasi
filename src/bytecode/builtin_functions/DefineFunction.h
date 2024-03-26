@@ -10,13 +10,12 @@ namespace Bytecode::BuiltinFunctions {
                 Program &program,
                 std::vector<Instruction *> &instructions,
                 Segment *result) override {
-            if (args[1]->type == SyntaxTreeNode::TokenNode ||
-                args[1]->type == SyntaxTreeNode::LambdaExpression) {
+            if (args[0]->type == SyntaxTreeNode::TokenNode) {
                 args[1]->compile(result, program, instructions);
                 const auto reg = program.declare_global(
                         ((TokenNode *) args[0])->getName());
                 instructions.push_back(new StoreGlobal(reg));
-            } else if (args[1]->type == SyntaxTreeNode::Expression) {
+            } else if (args[0]->type == SyntaxTreeNode::Expression) {
                 auto segment = new Segment({});
                 program.declare_function(((Expression *) args[0])->getName(), segment);
                 for (auto argument: ((Expression *) args[0])->getArgs())
