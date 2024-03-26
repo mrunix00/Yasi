@@ -35,6 +35,26 @@ TEST(variables_test, ShouldDefineAVariableWithAnExpression) {
     EXPECT_EQ(actual_result, expected_result);
 }
 
+TEST(variables_test, ShouldDisplayAVariableValueWhenCalled) {
+    const auto program =
+            "(define x 10)"
+            "x";
+
+    const auto expected_result = StackObject((double) 10);
+    const auto actual_result = run_program(program);
+
+    EXPECT_EQ(actual_result, expected_result);
+}
+
+TEST(variables_test, ShouldDisplayALiteralWhenItsCalled) {
+    const auto program = "10";
+
+    const auto expected_result = StackObject((double) 10);
+    const auto actual_result = run_program(program);
+
+    EXPECT_EQ(actual_result, expected_result);
+}
+
 TEST(variables_test, ShouldThrowAnErrorOnUndefinedVariable) {
     const auto program = "(+ x 10)";
 
@@ -43,7 +63,7 @@ TEST(variables_test, ShouldThrowAnErrorOnUndefinedVariable) {
 
     try {
         run_program(program);
-    } catch (const SyntaxError& e) {
+    } catch (const SyntaxError &e) {
         errorIsThrown = true;
         errorMessage = e.message;
     }
