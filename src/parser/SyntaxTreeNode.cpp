@@ -16,7 +16,10 @@
 #include "bytecode/builtin_functions/SubtractFunction.h"
 #include "bytecode/instructions/Call.h"
 #include "bytecode/instructions/CallLambda.h"
+#include "bytecode/instructions/CondJumpIfNot.h"
+#include "bytecode/instructions/Jump.h"
 #include "bytecode/instructions/LoadGlobal.h"
+#include "bytecode/instructions/LoadLiteral.h"
 #include "bytecode/instructions/LoadLocal.h"
 #include "exceptions/SyntaxError.h"
 

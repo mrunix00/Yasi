@@ -19,6 +19,7 @@ file(
         GLOB_RECURSE
         SRCS
         ../src/bytecode/compiler/*.cpp
+        ../src/bytecode/builtin_functions/*.cpp
         ../src/bytecode/vm/*.cpp
         ../src/bytecode/objects/*.cpp
         ../src/lexer/*.cpp
