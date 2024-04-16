@@ -33,3 +33,15 @@ TEST(lambda_test, ShouldPassLambdaAsArgument) {
 
     EXPECT_EQ(actual_result, expected_result);
 }
+
+TEST(lambda_test, RecursiveLambdaFunction) {
+    const auto expression =
+            "(define fib (lambda (n)"
+            "(if (< n 2) n (+ (fib (- n 1)) (fib (- n 2))))))"
+            "(fib 10)";
+
+    const auto expected_result = StackObject((double) 55);
+    const auto actual_result = run_program(expression);
+
+    EXPECT_EQ(actual_result, expected_result);
+}

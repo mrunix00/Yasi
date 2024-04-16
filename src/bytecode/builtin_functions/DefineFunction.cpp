@@ -8,9 +8,9 @@ namespace Bytecode::BuiltinFunctions {
             std::vector<Instruction *> &instructions,
             Segment *result) {
         if (args[0]->type == SyntaxTreeNode::TokenNode) {
-            args[1]->compile(result, program, instructions);
             const auto reg = program.declare_global(
                     ((TokenNode *) args[0])->getName());
+            args[1]->compile(result, program, instructions);
             instructions.push_back(new StoreGlobal(reg));
         } else if (args[0]->type == SyntaxTreeNode::Expression) {
             auto segment = new Segment({});
