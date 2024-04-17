@@ -1,3 +1,4 @@
+#include "bytecode/instructions/Return.h"
 #include "bytecode/vm/Interpreter.h"
 #include "exceptions/SyntaxError.h"
 #include "lexer/Lexer.h"
@@ -31,16 +32,16 @@ void exec_program(const std::string &program, struct options opts) {
             ast->compile(compiled_bytecode);
             delete ast;
 
-            if (opts.dumpBytecode) {
-                for (size_t i = 0; i < compiled_bytecode.segments.size(); i++) {
-                    std::cout << ':' << i << '\n';
-                    for (size_t j = 0; j < compiled_bytecode.segments[i]->instructions.size(); j++)
-                        std::cout << j << '\t' << compiled_bytecode.segments[i]->instructions[j]->toString() << '\n';
-                    std::cout << '\n';
-                }
-            }
         }
 
+        if (opts.dumpBytecode) {
+            for (size_t i = 0; i < compiled_bytecode.segments.size(); i++) {
+                std::cout << ':' << i << '\n';
+                for (size_t j = 0; j < compiled_bytecode.segments[i]->instructions.size(); j++)
+                    std::cout << j << '\t' << compiled_bytecode.segments[i]->instructions[j]->toString() << '\n';
+                std::cout << '\n';
+            }
+        }
         interpreter.execute(compiled_bytecode);
 
         const auto stackTop = interpreter.vm.program_stack.top();
