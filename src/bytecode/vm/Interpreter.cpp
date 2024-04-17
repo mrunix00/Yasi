@@ -9,11 +9,12 @@ void Bytecode::Interpreter::execute(const Program &program) {
     for (;; stackTop->current_line++) {
         const auto currentSegment =
                 program.segments[stackTop->segment];
+        if (stackTop->segment == 0
+            && stackTop->current_line == currentSegment->instructions.size())
+            return;
         const auto currentInstruction =
                 currentSegment->instructions[stackTop->current_line];
-        if (stackTop->segment == 0
-            && currentSegment->instructions.size() == stackTop->current_line)
-            return;
+
         switch (currentInstruction->type) {
             case InstructionType::Add: {
                 const auto object2 = vm.program_stack.pop();
