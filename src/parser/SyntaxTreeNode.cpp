@@ -21,6 +21,7 @@
 #include "bytecode/instructions/LoadGlobal.h"
 #include "bytecode/instructions/LoadLiteral.h"
 #include "bytecode/instructions/LoadLocal.h"
+#include "bytecode/instructions/Return.h"
 #include "exceptions/SyntaxError.h"
 
 void TokenNode::compile(
@@ -230,6 +231,7 @@ void LambdaExpression::compile(
     for (auto argument: args)
         segment->declare_variable(((class TokenNode *) argument)->getName());
     definition->compile(segment, program, segment->instructions);
+    segment->instructions.push_back(new Bytecode::Return());
     instructions.push_back(
             new Bytecode::LoadLiteral(new Bytecode::StackObject(reg)));
 }

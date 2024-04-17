@@ -6,18 +6,14 @@
 
 void Bytecode::Interpreter::execute(const Program &program) {
     const auto &stackTop = vm.call_stack.stackTop;
-    for (; stackTop->segment != 0 ||
-           stackTop->current_line !=
-                   program.segments[0]->instructions.size();
-         stackTop->current_line++) {
+    for (;; stackTop->current_line++) {
         const auto currentSegment =
                 program.segments[stackTop->segment];
         const auto currentInstruction =
                 currentSegment->instructions[stackTop->current_line];
-        if (stackTop->current_line == currentSegment->instructions.size()) {
-            vm.call_stack.popStackFrame();
-            continue;
-        }
+        if (stackTop->segment == 0
+            && currentSegment->instructions.size() == stackTop->current_line)
+            return;
         switch (currentInstruction->type) {
             case InstructionType::Add: {
                 const auto object2 = vm.program_stack.pop();
@@ -158,6 +154,9 @@ void Bytecode::Interpreter::execute(const Program &program) {
                 }
                 vm.program_stack.push(object1.asBoolean() && object2.asBoolean());
             } break;
+            case InstructionType::Return:
+                vm.call_stack.popStackFrame();
+                break;
             default:
                 throw;
         }

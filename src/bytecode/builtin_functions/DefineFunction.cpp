@@ -1,4 +1,5 @@
 #include "DefineFunction.h"
+#include "bytecode/instructions/Return.h"
 #include "bytecode/instructions/StoreGlobal.h"
 
 namespace Bytecode::BuiltinFunctions {
@@ -18,6 +19,7 @@ namespace Bytecode::BuiltinFunctions {
             for (auto argument: ((Expression *) args[0])->getArgs())
                 segment->declare_variable(((TokenNode *) argument)->getName());
             args[1]->compile(segment, program, segment->instructions);
+            segment->instructions.push_back(new Bytecode::Return());
         }
     }
 }// namespace Bytecode::BuiltinFunctions
