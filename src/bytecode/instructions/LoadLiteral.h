@@ -16,12 +16,17 @@ namespace Bytecode {
             literal = StackObject(value);
         };
 
-        explicit LoadLiteral(const StackObject *literal){
+        explicit LoadLiteral(const StackObject *literal) {
             this->literal = *literal;
             type = InstructionType::LoadLiteral;
         }
 
         [[nodiscard]] std::string toString() const override {
+            if (literal.type == ObjectType::String) {
+                std::string str = literal.toString();
+                if (str == "\n") str = "\\n";
+                return "LoadLiteral " + std::string("\"") + str + std::string("\"");
+            }
             return "LoadLiteral " + literal.toString();
         }
 
