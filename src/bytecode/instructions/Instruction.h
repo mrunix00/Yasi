@@ -32,6 +32,7 @@ namespace Bytecode {
         Decrement,
         AddRI,
         SubtractRI,
+        LessThanRI,
     };
 
     class Instruction {

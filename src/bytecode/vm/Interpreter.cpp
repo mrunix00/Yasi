@@ -1,5 +1,6 @@
 #include "Interpreter.h"
 #include "bytecode/instructions/AddRI.h"
+#include "bytecode/instructions/LessThanRI.h"
 #include "bytecode/instructions/SubtractRI.h"
 #include "exceptions/SyntaxError.h"
 
@@ -94,6 +95,15 @@ void Bytecode::Interpreter::execute(const Program &program) {
                     throw SyntaxError("Invalid argument type for function \"<\", Expected number, got string");
                 }
                 vm.program_stack.push(object1.asNumber() < object2.asNumber());
+            } break;
+            case InstructionType::LessThanRI: {
+                const auto object2 = ((LessThanRI *) currentInstruction)->number;
+                const auto object1 = vm.call_stack.getLocal(
+                        ((LessThanRI *) currentInstruction)->rg);
+                if (object1.type != ObjectType::Number) {
+                    throw SyntaxError("Invalid argument type for function \"-\", Expected number, got string");
+                }
+                vm.program_stack.push(object1.asNumber() < object2);
             } break;
             case InstructionType::GreaterThan: {
                 const auto object2 = vm.program_stack.pop();
