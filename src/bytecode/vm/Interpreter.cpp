@@ -16,6 +16,12 @@ void Bytecode::Interpreter::execute(const Program &program) {
                 currentSegment->instructions[stackTop->current_line];
 
         switch (currentInstruction->type) {
+            case InstructionType::Increment:
+                vm.program_stack.push(vm.program_stack.pop().asNumber() + 1);
+                break;
+            case InstructionType::Decrement:
+                vm.program_stack.push(vm.program_stack.pop().asNumber() - 1);
+                break;
             case InstructionType::Add: {
                 const auto object2 = vm.program_stack.pop();
                 const auto object1 = vm.program_stack.pop();

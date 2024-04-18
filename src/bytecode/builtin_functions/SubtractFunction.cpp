@@ -1,4 +1,5 @@
 #include "SubtractFunction.h"
+#include "bytecode/instructions/Decrement.h"
 #include "bytecode/instructions/LoadLiteral.h"
 #include "bytecode/instructions/Subtract.h"
 #include "exceptions/SyntaxError.h"
@@ -8,6 +9,20 @@ namespace Bytecode::BuiltinFunctions {
                            Program &program,
                            std::vector<Instruction *> &instructions,
                            Segment *result) {
+        if (args[1]->type == SyntaxTreeNode::TokenNode &&
+            ((TokenNode*) args[1])->getName() == "1") {
+            args[0]->compile(result, program, instructions);
+            instructions.push_back(new Bytecode::Decrement());
+            return;
+        }
+
+        if (args[0]->type == SyntaxTreeNode::TokenNode &&
+            ((TokenNode*) args[0])->getName() == "1") {
+            args[1]->compile(result, program, instructions);
+            instructions.push_back(new Bytecode::Decrement());
+            return;
+        }
+
         if (args.empty()) {
             throw SyntaxError(
                     "Invalid number of arguments for function \"-\", Expected at least 1, got 0",

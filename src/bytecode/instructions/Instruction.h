@@ -28,6 +28,8 @@ namespace Bytecode {
         Or,
         And,
         Return,
+        Increment,
+        Decrement,
     };
 
     class Instruction {
