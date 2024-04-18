@@ -26,7 +26,6 @@ public:
 };
 
 class TokenNode final : public SyntaxTreeNode {
-    Token token;
 
 public:
     explicit TokenNode(Token token) : token(std::move(token)) {
@@ -39,6 +38,7 @@ public:
                  std::vector<Bytecode::Instruction *> &instructions) override;
 
     bool operator==(const SyntaxTreeNode &op) const override;
+    Token token;
 };
 
 class Expression : public SyntaxTreeNode {

@@ -1,4 +1,6 @@
 #include "Interpreter.h"
+#include "bytecode/instructions/AddRI.h"
+#include "bytecode/instructions/SubtractRI.h"
 #include "exceptions/SyntaxError.h"
 
 #include <algorithm>
@@ -9,8 +11,7 @@ void Bytecode::Interpreter::execute(const Program &program) {
     for (;; stackTop->current_line++) {
         const auto currentSegment =
                 program.segments[stackTop->segment];
-        if (stackTop->segment == 0
-            && stackTop->current_line == currentSegment->instructions.size())
+        if (stackTop->segment == 0 && stackTop->current_line == currentSegment->instructions.size())
             return;
         const auto currentInstruction =
                 currentSegment->instructions[stackTop->current_line];
@@ -31,6 +32,12 @@ void Bytecode::Interpreter::execute(const Program &program) {
                 }
                 vm.program_stack.push(object1.asNumber() + object2.asNumber());
             } break;
+            case InstructionType::AddRI: {
+                const auto object1 = ((AddRI *) currentInstruction)->number;
+                const auto object2 = vm.call_stack.getLocal(
+                        ((AddRI *) currentInstruction)->rg);
+                vm.program_stack.push(object1 + object2.asNumber());
+            } break;
             case InstructionType::Subtract: {
                 const auto object2 = vm.program_stack.pop();
                 const auto object1 = vm.program_stack.pop();
@@ -39,6 +46,15 @@ void Bytecode::Interpreter::execute(const Program &program) {
                     throw SyntaxError("Invalid argument type for function \"-\", Expected number, got string");
                 }
                 vm.program_stack.push(object1.asNumber() - object2.asNumber());
+            } break;
+            case InstructionType::SubtractRI: {
+                const auto object2 = ((SubtractRI *) currentInstruction)->number;
+                const auto object1 = vm.call_stack.getLocal(
+                        ((SubtractRI *) currentInstruction)->rg);
+                if (object1.type != ObjectType::Number) {
+                    throw SyntaxError("Invalid argument type for function \"-\", Expected number, got string");
+                }
+                vm.program_stack.push(object1.asNumber() - object2);
             } break;
             case InstructionType::Multiply: {
                 const auto object2 = vm.program_stack.pop();

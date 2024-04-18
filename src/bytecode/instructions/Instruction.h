@@ -30,6 +30,8 @@ namespace Bytecode {
         Return,
         Increment,
         Decrement,
+        AddRI,
+        SubtractRI,
     };
 
     class Instruction {
