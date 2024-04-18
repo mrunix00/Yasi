@@ -1,6 +1,7 @@
 #include "SubtractFunction.h"
 #include "bytecode/instructions/AddRI.h"
 #include "bytecode/instructions/Decrement.h"
+#include "bytecode/instructions/DecrementR.h"
 #include "bytecode/instructions/LoadLiteral.h"
 #include "bytecode/instructions/Subtract.h"
 #include "bytecode/instructions/SubtractRI.h"
@@ -25,6 +26,11 @@ namespace Bytecode::BuiltinFunctions {
 
         if (args[1]->type == SyntaxTreeNode::TokenNode &&
             ((TokenNode *) args[1])->getName() == "1") {
+            if (args[0]->type == SyntaxTreeNode::TokenNode &&
+                result->find_variable(((TokenNode *) args[0])->getName()) != -1) {
+                instructions.push_back(new Bytecode::DecrementR(result->find_variable(((TokenNode *) args[0])->getName())));
+                return;
+            }
             args[0]->compile(result, program, instructions);
             instructions.push_back(new Bytecode::Decrement());
             return;

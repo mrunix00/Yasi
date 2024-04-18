@@ -24,6 +24,10 @@ void Bytecode::Interpreter::execute(const Program &program) {
             case InstructionType::Decrement:
                 vm.program_stack.push(vm.program_stack.pop().asNumber() - 1);
                 break;
+            case InstructionType::DecrementR: {
+                double number = vm.call_stack.getLocal(((AddRI *) currentInstruction)->rg).asNumber();
+                vm.program_stack.push(number - 1);
+            } break;
             case InstructionType::Add: {
                 const auto object2 = vm.program_stack.pop();
                 const auto object1 = vm.program_stack.pop();
