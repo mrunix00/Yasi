@@ -25,15 +25,5 @@ namespace Bytecode {
             if (variables_table.find(name) != variables_table.end()) return variables_table[name];
             return -1;
         }
-
-        bool operator==(const Segment &segment) const {
-            if (segment.instructions.size() != instructions.size())
-                return false;
-            for (size_t i = 0; i < instructions.size(); i++) {
-                if (!(*instructions[i] == *segment.instructions[i]))
-                    return false;
-            }
-            return true;
-        }
     };
 }// namespace Bytecode

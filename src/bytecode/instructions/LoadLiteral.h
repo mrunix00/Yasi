@@ -7,32 +7,27 @@ namespace Bytecode {
     class LoadLiteral final : public Instruction {
     public:
         explicit LoadLiteral(const double value) {
-            type = InstructionType::LoadLiteral;
-            literal = StackObject(value);
+            type = Instruction::LoadLiteral;
+            params.i_param = {StackObject(value)};
         };
 
         explicit LoadLiteral(const std::string &value) {
             type = InstructionType::LoadLiteral;
-            literal = StackObject(value);
+            params.i_param = {StackObject(value)};
         };
 
         explicit LoadLiteral(const StackObject *literal) {
-            this->literal = *literal;
+            params.i_param = {*literal};
             type = InstructionType::LoadLiteral;
         }
 
         [[nodiscard]] std::string toString() const override {
-            if (literal.type == ObjectType::String) {
-                std::string str = literal.toString();
+            if (params.i_param.intermediate.type == ObjectType::String) {
+                std::string str = params.i_param.intermediate.toString();
                 if (str == "\n") str = "\\n";
                 return "LoadLiteral " + std::string("\"") + str + std::string("\"");
             }
-            return "LoadLiteral " + literal.toString();
-        }
-
-        bool operator==(const Instruction &instruction) const override {
-            return instruction.type == type &&
-                   dynamic_cast<const LoadLiteral *>(&instruction)->literal == literal;
+            return "LoadLiteral " + params.i_param.intermediate.toString();
         }
     };
 }// namespace Bytecode

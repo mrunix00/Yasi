@@ -7,15 +7,11 @@ namespace Bytecode {
     class StoreGlobal final : public Instruction {
     public:
         explicit StoreGlobal(const size_t reg) {
-            this->reg = reg;
+            params.r_param = {reg};
             type = InstructionType::StoreGlobal;
         }
         [[nodiscard]] std::string toString() const override {
-            return "Store $r" + std::to_string(reg);
-        }
-        bool operator==(const Instruction &instruction) const override {
-            return instruction.type == type &&
-                   instruction.reg == reg;
+            return "Store $r" + std::to_string(params.r_param.reg);
         }
     };
 }// namespace Bytecode

@@ -1,7 +1,4 @@
 #include "Interpreter.h"
-#include "bytecode/instructions/AddRI.h"
-#include "bytecode/instructions/LessThanRI.h"
-#include "bytecode/instructions/SubtractRI.h"
 #include "exceptions/SyntaxError.h"
 
 #include <algorithm>
@@ -18,17 +15,17 @@ void Bytecode::Interpreter::execute(const Program &program) {
                 currentSegment->instructions[stackTop->current_line];
 
         switch (currentInstruction->type) {
-            case InstructionType::Increment:
+            case Instruction::Increment:
                 vm.program_stack.push(vm.program_stack.pop().asNumber() + 1);
                 break;
-            case InstructionType::Decrement:
+            case Instruction::Decrement:
                 vm.program_stack.push(vm.program_stack.pop().asNumber() - 1);
                 break;
-            case InstructionType::DecrementR: {
-                double number = vm.call_stack.getLocal(((AddRI *) currentInstruction)->rg).asNumber();
+            case Instruction::DecrementR: {
+                double number = vm.call_stack.getLocal(currentInstruction->params.r_param.reg).asNumber();
                 vm.program_stack.push(number - 1);
             } break;
-            case InstructionType::Add: {
+            case Instruction::Add: {
                 const auto object2 = vm.program_stack.pop();
                 const auto object1 = vm.program_stack.pop();
                 if (object1.type != ObjectType::Number ||
@@ -37,13 +34,18 @@ void Bytecode::Interpreter::execute(const Program &program) {
                 }
                 vm.program_stack.push(object1.asNumber() + object2.asNumber());
             } break;
-            case InstructionType::AddRI: {
-                const auto object1 = ((AddRI *) currentInstruction)->number;
+            case Instruction::AddRI: {
+                const auto object1 =
+                        currentInstruction->params.ri_params.intermediate;
                 const auto object2 = vm.call_stack.getLocal(
-                        ((AddRI *) currentInstruction)->rg);
-                vm.program_stack.push(object1 + object2.asNumber());
+                        currentInstruction->params.ri_params.reg);
+                if (object1.type != ObjectType::Number ||
+                    object2.type != ObjectType::Number) {
+                    throw SyntaxError("Invalid argument type for function \"+\", Expected number, got string");
+                }
+                vm.program_stack.push(object1.asNumber() + object2.asNumber());
             } break;
-            case InstructionType::Subtract: {
+            case Instruction::Subtract: {
                 const auto object2 = vm.program_stack.pop();
                 const auto object1 = vm.program_stack.pop();
                 if (object1.type != ObjectType::Number ||
@@ -52,16 +54,18 @@ void Bytecode::Interpreter::execute(const Program &program) {
                 }
                 vm.program_stack.push(object1.asNumber() - object2.asNumber());
             } break;
-            case InstructionType::SubtractRI: {
-                const auto object2 = ((SubtractRI *) currentInstruction)->number;
+            case Instruction::SubtractRI: {
+                const auto object2 =
+                        currentInstruction->params.ri_params.intermediate;
                 const auto object1 = vm.call_stack.getLocal(
-                        ((SubtractRI *) currentInstruction)->rg);
-                if (object1.type != ObjectType::Number) {
+                        currentInstruction->params.ri_params.reg);
+                if (object1.type != ObjectType::Number ||
+                    object2.type != ObjectType::Number) {
                     throw SyntaxError("Invalid argument type for function \"-\", Expected number, got string");
                 }
-                vm.program_stack.push(object1.asNumber() - object2);
+                vm.program_stack.push(object1.asNumber() - object2.asNumber());
             } break;
-            case InstructionType::Multiply: {
+            case Instruction::Multiply: {
                 const auto object2 = vm.program_stack.pop();
                 const auto object1 = vm.program_stack.pop();
                 if (object1.type != ObjectType::Number ||
@@ -70,7 +74,7 @@ void Bytecode::Interpreter::execute(const Program &program) {
                 }
                 vm.program_stack.push(object1.asNumber() * object2.asNumber());
             } break;
-            case InstructionType::Divide: {
+            case Instruction::Divide: {
                 const auto object2 = vm.program_stack.pop();
                 const auto object1 = vm.program_stack.pop();
                 if (object1.type != ObjectType::Number ||
@@ -82,7 +86,7 @@ void Bytecode::Interpreter::execute(const Program &program) {
                 }
                 vm.program_stack.push(object1.asNumber() / object2.asNumber());
             } break;
-            case InstructionType::Equals: {
+            case Instruction::Equals: {
                 const auto object2 = vm.program_stack.pop();
                 const auto object1 = vm.program_stack.pop();
                 if (object1.type != ObjectType::Number ||
@@ -91,7 +95,7 @@ void Bytecode::Interpreter::execute(const Program &program) {
                 }
                 vm.program_stack.push(object1.asNumber() == object2.asNumber());
             } break;
-            case InstructionType::LessThan: {
+            case Instruction::LessThan: {
                 const auto object2 = vm.program_stack.pop();
                 const auto object1 = vm.program_stack.pop();
                 if (object1.type != ObjectType::Number ||
@@ -100,16 +104,18 @@ void Bytecode::Interpreter::execute(const Program &program) {
                 }
                 vm.program_stack.push(object1.asNumber() < object2.asNumber());
             } break;
-            case InstructionType::LessThanRI: {
-                const auto object2 = ((LessThanRI *) currentInstruction)->number;
+            case Instruction::LessThanRI: {
+                const auto object2 =
+                        currentInstruction->params.ri_params.intermediate;
                 const auto object1 = vm.call_stack.getLocal(
-                        ((LessThanRI *) currentInstruction)->rg);
-                if (object1.type != ObjectType::Number) {
-                    throw SyntaxError("Invalid argument type for function \"-\", Expected number, got string");
+                        currentInstruction->params.ri_params.reg);
+                if (object1.type != ObjectType::Number ||
+                    object2.type != ObjectType::Number) {
+                    throw SyntaxError("Invalid argument type for function \"<\", Expected number, got string");
                 }
-                vm.program_stack.push(object1.asNumber() < object2);
+                vm.program_stack.push(object1.asNumber() < object2.asNumber());
             } break;
-            case InstructionType::GreaterThan: {
+            case Instruction::GreaterThan: {
                 const auto object2 = vm.program_stack.pop();
                 const auto object1 = vm.program_stack.pop();
                 if (object1.type != ObjectType::Number ||
@@ -118,52 +124,52 @@ void Bytecode::Interpreter::execute(const Program &program) {
                 }
                 vm.program_stack.push(object1.asNumber() > object2.asNumber());
             } break;
-            case InstructionType::Not: {
+            case Instruction::Not: {
                 const auto object = vm.program_stack.pop();
                 if (object.type != ObjectType::Boolean)
                     vm.program_stack.push(false);
                 else
                     vm.program_stack.push(!object.asBoolean());
             } break;
-            case InstructionType::LoadLiteral:
-                vm.program_stack.push(currentInstruction->literal);
+            case Instruction::LoadLiteral:
+                vm.program_stack.push(currentInstruction->params.i_param.intermediate);
                 break;
-            case InstructionType::LoadLocal:
+            case Instruction::LoadLocal:
                 vm.program_stack.push(vm.call_stack.getLocal(
-                        currentInstruction->reg));
+                        currentInstruction->params.r_param.reg));
                 break;
-            case InstructionType::LoadGlobal:
+            case Instruction::LoadGlobal:
                 vm.program_stack.push(vm.getGlobal(
-                        currentInstruction->reg));
+                        currentInstruction->params.r_param.reg));
                 break;
-            case InstructionType::StoreGlobal:
-                vm.setGlobal(currentInstruction->reg, vm.program_stack.pop());
+            case Instruction::StoreGlobal:
+                vm.setGlobal(currentInstruction->params.r_param.reg, vm.program_stack.pop());
                 break;
-            case InstructionType::CondJumpIfNot:
+            case Instruction::CondJumpIfNot:
                 if (const auto cond = vm.program_stack.pop();
                     !cond.asBoolean())
-                    stackTop->current_line = currentInstruction->param - 1;
+                    stackTop->current_line = currentInstruction->params.r_param.reg - 1;
                 break;
-            case InstructionType::Jump:
-                stackTop->current_line = currentInstruction->param - 1;
+            case Instruction::Jump:
+                stackTop->current_line = currentInstruction->params.r_param.reg - 1;
                 break;
-            case InstructionType::Call:
+            case Instruction::Call:
                 vm.call_stack.newStackFrame(
-                        currentInstruction->reg,
-                        currentInstruction->param,
+                        currentInstruction->params.ri_params.reg,
+                        currentInstruction->params.ri_params.intermediate.asLambda(),
                         &vm.program_stack);
                 break;
-            case InstructionType::CallLambda: {
+            case Instruction::CallLambda: {
                 const auto lambda = vm.program_stack.pop();
                 vm.call_stack.newStackFrame(
                         lambda.asLambda(),
-                        currentInstruction->param,
+                        currentInstruction->params.r_param.reg,
                         &vm.program_stack);
             } break;
-            case InstructionType::SendToStdout:
+            case Instruction::SendToStdout:
                 std::cout << vm.program_stack.pop().toString();
                 break;
-            case InstructionType::ReadFromStdin: {
+            case Instruction::ReadFromStdin: {
                 std::string input;
                 std::getline(std::cin, input);
                 char *p;
@@ -173,7 +179,7 @@ void Bytecode::Interpreter::execute(const Program &program) {
                 else
                     vm.program_stack.push(number);
             } break;
-            case InstructionType::Or: {
+            case Instruction::Or: {
                 const auto object2 = vm.program_stack.pop();
                 const auto object1 = vm.program_stack.pop();
                 if (object1.type != ObjectType::Boolean ||
@@ -182,7 +188,7 @@ void Bytecode::Interpreter::execute(const Program &program) {
                 }
                 vm.program_stack.push(object1.asBoolean() || object2.asBoolean());
             } break;
-            case InstructionType::And: {
+            case Instruction::And: {
                 const auto object2 = vm.program_stack.pop();
                 const auto object1 = vm.program_stack.pop();
                 if (object1.type != ObjectType::Boolean ||
@@ -191,7 +197,7 @@ void Bytecode::Interpreter::execute(const Program &program) {
                 }
                 vm.program_stack.push(object1.asBoolean() && object2.asBoolean());
             } break;
-            case InstructionType::Return:
+            case Instruction::Return:
                 vm.call_stack.popStackFrame();
                 break;
             default:

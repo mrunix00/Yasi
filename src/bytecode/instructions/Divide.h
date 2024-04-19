@@ -7,8 +7,5 @@ namespace Bytecode {
     public:
         Divide() { type = InstructionType::Divide; };
         [[nodiscard]] std::string toString() const override { return "Divide"; }
-        bool operator==(const Instruction &instruction) const override {
-            return instruction.type == type;
-        }
     };
 }// namespace Bytecode

@@ -80,7 +80,7 @@ namespace Bytecode {
                                    : string;
                 }
                 case Lambda:
-                    return ":" + std::to_string(data.reg);
+                    return std::to_string(data.reg);
                 default:
                     return "";
             }

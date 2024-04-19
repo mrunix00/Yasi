@@ -4,47 +4,52 @@
 #include <string>
 
 namespace Bytecode {
-    enum class InstructionType {
-        Unknown,
-        LoadLiteral,
-        LoadLocal,
-        LoadGlobal,
-        Add,
-        Subtract,
-        Divide,
-        Multiply,
-        Not,
-        Store,
-        Equals,
-        GreaterThan,
-        LessThan,
-        Call,
-        CallLambda,
-        CondJumpIfNot,
-        Jump,
-        StoreGlobal,
-        SendToStdout,
-        ReadFromStdin,
-        Or,
-        And,
-        Return,
-        Increment,
-        Decrement,
-        AddRI,
-        SubtractRI,
-        LessThanRI,
-        DecrementR,
-    };
-
-    class Instruction {
-    public:
-        InstructionType type;
-        uint32_t reg{};
-        uint32_t param{};
-        StackObject literal{};
+    struct Instruction {
+        enum InstructionType : uint8_t {
+            Unknown,
+            LoadLiteral,
+            LoadLocal,
+            LoadGlobal,
+            Add,
+            Subtract,
+            Divide,
+            Multiply,
+            Not,
+            Equals,
+            GreaterThan,
+            LessThan,
+            Call,
+            CallLambda,
+            CondJumpIfNot,
+            Jump,
+            StoreGlobal,
+            SendToStdout,
+            ReadFromStdin,
+            Or,
+            And,
+            Return,
+            Increment,
+            Decrement,
+            AddRI,
+            SubtractRI,
+            LessThanRI,
+            DecrementR,
+        } type;
+        union params {
+            struct RI_Params {
+                size_t reg;
+                StackObject intermediate;
+            } ri_params;
+            struct R_Param {
+                size_t reg;
+            } r_param;
+            struct I_param {
+                StackObject intermediate;
+            } i_param;
+            void *none;
+        } params{.none = nullptr};
         Instruction() : type(InstructionType::Unknown){};
         virtual ~Instruction() = default;
         [[nodiscard]] virtual std::string toString() const = 0;
-        virtual bool operator==(const Instruction &instruction) const = 0;
     };
 }// namespace Bytecode

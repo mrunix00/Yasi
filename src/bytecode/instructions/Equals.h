@@ -7,8 +7,5 @@ namespace Bytecode {
     public:
         Equals() { type = InstructionType::Equals; };
         [[nodiscard]] std::string toString() const override { return "Equals"; }
-        bool operator==(const Instruction &instruction) const override {
-            return instruction.type == type;
-        }
     };
 }// namespace Bytecode

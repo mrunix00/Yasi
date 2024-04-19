@@ -7,8 +7,5 @@ namespace Bytecode {
     public:
         GreaterThan() { type = InstructionType::GreaterThan; };
         [[nodiscard]] std::string toString() const override { return "GreaterThan"; }
-        bool operator==(const Instruction &instruction) const override {
-            return instruction.type == type;
-        }
     };
 }// namespace Bytecode

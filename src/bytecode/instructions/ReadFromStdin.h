@@ -7,11 +7,6 @@ namespace Bytecode {
         explicit ReadFromStdin() {
             type = InstructionType::ReadFromStdin;
         }
-        [[nodiscard]] std::string toString() const override {
-            return "ReadFromStdin";
-        }
-        bool operator==(const Instruction &instruction) const override {
-            return instruction.type == type;
-        }
+        [[nodiscard]] std::string toString() const override { return "ReadFromStdin"; }
     };
-}
+}// namespace Bytecode

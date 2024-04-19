@@ -5,16 +5,12 @@
 namespace Bytecode {
     class CondJumpIfNot final : public Instruction {
     public:
-        explicit CondJumpIfNot(const uint32_t line) {
-            param = line;
+        explicit CondJumpIfNot(const size_t line) {
+            params.r_param = {line};
             type = InstructionType::CondJumpIfNot;
         }
         [[nodiscard]] std::string toString() const override {
-            return "CondJumpIfNot " + std::to_string(param);
-        }
-        bool operator==(const Instruction &instruction) const override {
-            return instruction.type == type &&
-                   param == instruction.param;
+            return "CondJumpIfNot " + std::to_string(params.r_param.reg);
         }
     };
 }// namespace Bytecode

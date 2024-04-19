@@ -5,15 +5,13 @@
 namespace Bytecode {
     class AddRI final : public Instruction {
     public:
-        uint32_t rg;
-        double number;
-        AddRI(uint32_t rg, double number)
-            : rg(rg), number(number) { type = InstructionType::AddRI; }
-        [[nodiscard]] std::string toString() const override {
-            return "AddRI $r" + std::to_string(rg) + ", " + StackObject(number).toString();
+        AddRI(uint32_t rg, double number) {
+            type = InstructionType::AddRI;
+            params = {rg, StackObject(number)};
         }
-        bool operator==(const Instruction &instruction) const override {
-            return instruction.type == type;
+        [[nodiscard]] std::string toString() const override {
+            return "AddRI $r" + std::to_string(params.ri_params.reg) +
+                   ", " + params.ri_params.intermediate.toString();
         }
     };
 }// namespace Bytecode
