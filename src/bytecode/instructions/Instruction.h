@@ -50,6 +50,7 @@ namespace Bytecode {
         } params{.none = nullptr};
         Instruction() : type(InstructionType::Unknown){};
         virtual ~Instruction() = default;
+        virtual void execute(VM &vm) = 0;
         [[nodiscard]] virtual std::string toString() const = 0;
     };
 }// namespace Bytecode

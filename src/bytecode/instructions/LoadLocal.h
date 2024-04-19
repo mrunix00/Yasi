@@ -9,7 +9,9 @@ namespace Bytecode {
             type = InstructionType::LoadLocal;
             params.r_param = {reg};
         }
-
+        void execute(Bytecode::VM &vm) override {
+            vm.program_stack.push(vm.call_stack.getLocal(params.r_param.reg));
+        }
         [[nodiscard]] std::string toString() const override {
             return "LoadLocal $r" + std::to_string(params.r_param.reg);
         }

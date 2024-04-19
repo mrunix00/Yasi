@@ -25,7 +25,5 @@ namespace Bytecode {
         size_t declare_lambda(Segment *);
         size_t find_global(const std::string &);
         size_t find_function(const std::string &);
-
-        bool operator==(const Program &program) const;
     };
 }// namespace Bytecode

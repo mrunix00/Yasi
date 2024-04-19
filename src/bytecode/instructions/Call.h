@@ -8,6 +8,12 @@ namespace Bytecode {
             params.ri_params = {.reg = segment, .intermediate = StackObject(args)};
             type = InstructionType::Call;
         }
+        void execute(Bytecode::VM &vm) override {
+            vm.call_stack.newStackFrame(
+                    params.ri_params.reg,
+                    params.ri_params.intermediate.asLambda(),
+                    &vm.program_stack);
+        }
         [[nodiscard]] std::string toString() const override {
             return "Call :" + std::to_string(params.ri_params.reg) +
                    ", " + params.ri_params.intermediate.toString();

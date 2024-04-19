@@ -21,6 +21,10 @@ namespace Bytecode {
             type = InstructionType::LoadLiteral;
         }
 
+        void execute(Bytecode::VM &vm) override {
+            vm.program_stack.push(params.i_param.intermediate);
+        }
+
         [[nodiscard]] std::string toString() const override {
             if (params.i_param.intermediate.type == ObjectType::String) {
                 std::string str = params.i_param.intermediate.toString();

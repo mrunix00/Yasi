@@ -10,6 +10,9 @@ namespace Bytecode {
             params.r_param = {reg};
             type = InstructionType::StoreGlobal;
         }
+        void execute(Bytecode::VM &vm) override {
+            vm.setGlobal(params.r_param.reg, vm.program_stack.pop());
+        }
         [[nodiscard]] std::string toString() const override {
             return "Store $r" + std::to_string(params.r_param.reg);
         }
