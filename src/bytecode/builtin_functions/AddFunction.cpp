@@ -2,6 +2,7 @@
 #include "AddFunction.h"
 #include "bytecode/instructions/Add.h"
 #include "bytecode/instructions/AddRI.h"
+#include "bytecode/instructions/AddRR.h"
 #include "bytecode/instructions/Increment.h"
 #include "exceptions/SyntaxError.h"
 
@@ -53,6 +54,16 @@ namespace Bytecode::BuiltinFunctions {
                         new Bytecode::AddRI(
                                 segment->find_variable(((TokenNode *) args[1])->getName()),
                                 ((TokenNode *) args[0])->token.asNumber()));
+                return;
+            }
+            if (((TokenNode *) args[0])->token.type == Token::Symbol &&
+                ((TokenNode *) args[1])->token.type == Token::Symbol &&
+                segment->find_variable(((TokenNode *) args[0])->getName()) != -1 &&
+                segment->find_variable(((TokenNode *) args[1])->getName()) != -1) {
+                instructions.push_back(
+                        new Bytecode::AddRR(
+                                segment->find_variable(((TokenNode *) args[0])->getName()),
+                                segment->find_variable(((TokenNode *) args[1])->getName())));
                 return;
             }
         }

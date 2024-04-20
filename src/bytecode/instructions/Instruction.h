@@ -37,12 +37,17 @@ namespace Bytecode {
             EqualsRI,
             GreaterThanRI,
             MultiplyRI,
+            AddRR,
         } type;
         union params {
             struct RI_Params {
                 size_t reg;
                 StackObject intermediate;
             } ri_params;
+            struct RR_Params {
+                size_t reg1;
+                size_t reg2;
+            } rr_params;
             struct R_Param {
                 size_t reg;
             } r_param;
