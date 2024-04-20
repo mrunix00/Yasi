@@ -10,8 +10,11 @@ namespace Bytecode {
             type = InstructionType::DecrementR;
         }
         void execute(Bytecode::VM &vm) override {
-            double number = vm.call_stack.getLocal(params.r_param.reg).asNumber();
-            vm.program_stack.push(number - 1);
+            const auto number = vm.call_stack.getLocal(params.r_param.reg);
+            if (number.type != ObjectType::Number) {
+                throw SyntaxError("Invalid argument type for function \"-\", Expected number, got string");
+            }
+            vm.program_stack.push(number.asNumber() - 1);
         }
         [[nodiscard]] std::string toString() const override {
             return "DecrementR $r" + std::to_string(params.r_param.reg);
