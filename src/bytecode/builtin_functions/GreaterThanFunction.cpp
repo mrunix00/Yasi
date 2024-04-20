@@ -1,5 +1,6 @@
 #include "GreaterThanFunction.h"
 #include "bytecode/instructions/GreaterThan.h"
+#include "bytecode/instructions/GreaterThanRI.h"
 #include "bytecode/instructions/LoadLiteral.h"
 #include "exceptions/SyntaxError.h"
 
@@ -16,6 +17,19 @@ namespace Bytecode::BuiltinFunctions {
             instructions.push_back(new LoadLiteral(new StackObject(true)));
             return;
         }
+        if (args[0]->type == SyntaxTreeNode::TokenNode &&
+            args[1]->type == SyntaxTreeNode::TokenNode &&
+            segment->find_variable(((TokenNode *) args[0])->getName()) != -1) {
+            if (((TokenNode *) args[0])->token.type == Token::Symbol &&
+                ((TokenNode *) args[1])->token.type == Token::Number) {
+                instructions.push_back(
+                        new Bytecode::GreaterThanRI(
+                                segment->find_variable(((TokenNode *) args[0])->getName()),
+                                ((TokenNode *) args[1])->token.asNumber()));
+                return;
+            }
+        }
+
         args[0]->compile(segment, program, instructions);
         args[1]->compile(segment, program, instructions);
         instructions.push_back(new Bytecode::GreaterThan());
