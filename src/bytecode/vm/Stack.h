@@ -1,6 +1,6 @@
 #pragma once
 
-#include "bytecode/objects/StackObject.h"
+#include "StackObject.h"
 #include <cstdint>
 #include <cstdlib>
 #include <iostream>
