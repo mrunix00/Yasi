@@ -21,4 +21,11 @@ namespace Bytecode {
             return globals_table[name];
         return -1;
     }
+    void Program::declare_constant(const std::string &name, StackObject object) {
+        constants_table[name] = object;
+    }
+    StackObject *Program::find_constant(const std::string &name) {
+        if (constants_table.find(name) == constants_table.end()) return nullptr;
+        return &constants_table[name];
+    }
 }// namespace Bytecode

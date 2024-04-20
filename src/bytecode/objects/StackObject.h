@@ -1,5 +1,6 @@
 #pragma once
 
+#include "lexer/Token.h"
 #include <cstdint>
 #include <cstdlib>
 #include <cstring>
@@ -42,6 +43,25 @@ namespace Bytecode {
             // TODO: This is a dumb workaround, fix it later
             data.string = strdup(str.c_str());
         };
+        explicit StackObject(const Token &token) {
+            switch (token.type) {
+                case Token::Number:
+                    type = Number;
+                    data = {token.asNumber()};
+                    break;
+                case Token::Boolean:
+                    type = Boolean;
+                    data = {.boolean = token.token == "#true"};
+                    break;
+                case Token::String:
+                    type = String;
+                    data = {.string = strdup(token.token.c_str())};
+                    break;
+                default:
+                    type = None;
+                    break;
+            }
+        }
 
         [[nodiscard]] std::string asString() const {
             return data.string;

@@ -11,6 +11,13 @@ namespace Bytecode::BuiltinFunctions {
         if (args[0]->type == SyntaxTreeNode::TokenNode) {
             const auto reg = program.declare_global(
                     ((TokenNode *) args[0])->getName());
+            if (args[1]->type == SyntaxTreeNode::TokenNode &&
+                ((TokenNode *) args[1])->token.type != Token::Symbol) {
+                program.declare_constant(
+                        ((TokenNode *) args[0])->getName(),
+                        StackObject(((TokenNode *) args[1])->token));
+                return;
+            }
             args[1]->compile(result, program, instructions);
             instructions.push_back(new StoreGlobal(reg));
         } else if (args[0]->type == SyntaxTreeNode::Expression) {

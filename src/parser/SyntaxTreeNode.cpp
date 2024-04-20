@@ -38,7 +38,10 @@ void TokenNode::compile(
                     new Bytecode::LoadLiteral(token.asString()));
             break;
         case Token::Symbol:
-            if (segment->find_variable(token.token) != -1) {
+            if (program.find_constant(token.token) != nullptr) {
+                instructions.push_back(new Bytecode::LoadLiteral(
+                        program.find_constant(token.token)));
+            } else if (segment->find_variable(token.token) != -1) {
                 instructions.push_back(new Bytecode::LoadLocal(
                         segment->find_variable(token.asString())));
             } else if (program.find_global(token.token) != -1) {
@@ -78,8 +81,7 @@ void Expression::compile(
             {"read", new Bytecode::BuiltinFunctions::Read},
             {"not", new Bytecode::BuiltinFunctions::Not},
             {"or", new Bytecode::BuiltinFunctions::Or},
-            {"and", new Bytecode::BuiltinFunctions::And}
-    };
+            {"and", new Bytecode::BuiltinFunctions::And}};
 
     if (program.find_global(function.token) != -1) {
         for (const auto &argument: args)
