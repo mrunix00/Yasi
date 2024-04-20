@@ -1,3 +1,4 @@
+#include "bytecode/compiler/Optimizer.h"
 #include "bytecode/instructions/Return.h"
 #include "bytecode/vm/Interpreter.h"
 #include "exceptions/SyntaxError.h"
@@ -33,6 +34,13 @@ void exec_program(const std::string &program, struct options opts) {
             delete ast;
 
         }
+
+        for (size_t i = 1; i < compiled_bytecode.segments.size(); i++) {
+            const auto segment = compiled_bytecode.segments[i];
+            if (Bytecode::Optimizer::is_tail_recursive(*segment, i))
+                Bytecode::Optimizer::optimize_tail_calls(*segment);
+        }
+
 
         if (opts.dumpBytecode) {
             for (size_t i = 0; i < compiled_bytecode.segments.size(); i++) {

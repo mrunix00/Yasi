@@ -38,6 +38,7 @@ namespace Bytecode {
             GreaterThanRI,
             MultiplyRI,
             AddRR,
+            StoreLocal,
         } type;
         union params {
             struct RI_Params {
