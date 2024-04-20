@@ -34,6 +34,7 @@ namespace Bytecode {
             SubtractRI,
             LessThanRI,
             DecrementR,
+            EqualsRI,
         } type;
         union params {
             struct RI_Params {
