@@ -12,7 +12,7 @@ namespace Bytecode {
         void execute(Bytecode::VM &vm) override {
             const auto lambda = vm.program_stack.pop();
             vm.call_stack.newStackFrame(
-                    lambda.asLambda(),
+                    lambda.data.reg,
                     params.r_param.reg,
                     &vm.program_stack);
         }

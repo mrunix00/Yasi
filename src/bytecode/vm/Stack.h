@@ -86,16 +86,16 @@ namespace Bytecode {
         void push(const StackObject &object) {
             switch (object.type) {
                 case ObjectType::Boolean:
-                    push(object.asBoolean());
+                    push(object.data.boolean);
                     break;
                 case ObjectType::Number:
-                    push(object.asNumber());
+                    push(object.data.number);
                     break;
                 case ObjectType::String:
-                    push(object.asString());
+                    push(std::string(object.data.string));
                     break;
                 case ObjectType::Lambda:
-                    push(object.asLambda());
+                    push(object.data.reg);
                     break;
             }
         }

@@ -11,7 +11,7 @@ namespace Bytecode {
             if (object.type != ObjectType::Boolean)
                 vm.program_stack.push(false);
             else
-                vm.program_stack.push(!object.asBoolean());
+                vm.program_stack.push(!object.data.boolean);
         }
         [[nodiscard]] std::string toString() const override { return "Not"; }
     };

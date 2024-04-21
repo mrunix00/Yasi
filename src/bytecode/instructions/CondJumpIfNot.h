@@ -11,7 +11,7 @@ namespace Bytecode {
         }
         void execute(Bytecode::VM &vm) override {
             if (const auto cond = vm.program_stack.pop();
-                !cond.asBoolean())
+                !cond.data.boolean)
                 vm.call_stack.stackTop->current_line = params.r_param.reg - 1;
         }
         [[nodiscard]] std::string toString() const override {

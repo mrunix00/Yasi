@@ -100,7 +100,7 @@ namespace Bytecode {
             return local_registers[local_registers_used - stackTop->args + reg];
         }
 
-        void setLocal(const size_t reg, const StackObject sObject) const {
+        void setLocal(const size_t reg, const StackObject &sObject) const {
             local_registers[local_registers_used - stackTop->args + reg] = sObject;
         }
 

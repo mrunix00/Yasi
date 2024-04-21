@@ -14,10 +14,10 @@ namespace Bytecode {
                 object2.type != ObjectType::Number) {
                 throw SyntaxError("Invalid argument type for function \"/\", Expected number, got string");
             }
-            if (object2.asNumber() == 0) {
+            if (object2.data.number == 0) {
                 throw SyntaxError("Division by zero", 0, 0);
             }
-            vm.program_stack.push(object1.asNumber() / object2.asNumber());
+            vm.program_stack.push(object1.data.number / object2.data.number);
         }
         [[nodiscard]] std::string toString() const override { return "Divide"; }
     };

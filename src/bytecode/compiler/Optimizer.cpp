@@ -13,7 +13,7 @@ bool Bytecode::Optimizer::is_tail_recursive(const Bytecode::Segment &segment, si
 void Bytecode::Optimizer::optimize_tail_calls(Segment &segment) {
     auto &instructions = segment.instructions;
     const size_t number_of_args = instructions[instructions.size() - 2]
-                                          ->params.ri_params.intermediate.asLambda();
+                                          ->params.ri_params.intermediate.data.reg;
     const size_t old_number_of_instructions = instructions.size() - 1;
     instructions.pop_back();// Remove the Return instruction
     instructions.pop_back();// Remove the Call instruction

@@ -11,7 +11,7 @@ namespace Bytecode {
         void execute(Bytecode::VM &vm) override {
             vm.call_stack.newStackFrame(
                     params.ri_params.reg,
-                    params.ri_params.intermediate.asLambda(),
+                    params.ri_params.intermediate.data.reg,
                     &vm.program_stack);
         }
         [[nodiscard]] std::string toString() const override {

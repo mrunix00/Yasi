@@ -14,7 +14,7 @@ namespace Bytecode {
                 object2.type != ObjectType::Boolean) {
                 throw SyntaxError("Invalid argument type for function \"and\", Expected boolean, got string");
             }
-            vm.program_stack.push(object1.asBoolean() && object2.asBoolean());
+            vm.program_stack.push(object1.data.boolean && object2.data.boolean);
         }
         [[nodiscard]] std::string toString() const override {
             return "And";

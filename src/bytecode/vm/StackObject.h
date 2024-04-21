@@ -19,30 +19,24 @@ namespace Bytecode {
         Lambda,
     };
 
-    class StackObject {
+    struct StackObject {
+        uint8_t type;
         union Data {
             double number;
             size_t reg;
             char *string;
             bool boolean;
-        };
-        Data data;
-
-    public:
-        uint8_t type;
+        } data;
 
         explicit StackObject() = default;
         explicit StackObject(const size_t segment)
-            : type(Lambda) { data.reg = segment; };
+            : type(Lambda), data({.reg = segment}){};
         explicit StackObject(const double number)
             : data({number}), type(Number){};
         explicit StackObject(const bool boolean)
-            : type(Boolean) { data.boolean = boolean; };
+            : type(Boolean), data({.boolean = boolean}) {};
         explicit StackObject(const std::string &str)
-            : type(String) {
-            // TODO: This is a dumb workaround, fix it later
-            data.string = strdup(str.c_str());
-        };
+            : type(String), data({.string = strdup(str.c_str())}){};
         explicit StackObject(const Token &token) {
             switch (token.type) {
                 case Token::Number:
@@ -63,38 +57,22 @@ namespace Bytecode {
             }
         }
 
-        [[nodiscard]] std::string asString() const {
-            return data.string;
-        }
-
-        [[nodiscard]] double asNumber() const {
-            return data.number;
-        }
-
-        [[nodiscard]] bool asBoolean() const {
-            return data.boolean;
-        }
-
-        [[nodiscard]] size_t asLambda() const {
-            return data.reg;
-        }
-
         [[nodiscard]] std::string toString() const {
             switch (type) {
                 case Boolean:
-                    return asBoolean() ? std::string("#true")
-                                       : std::string("#false");
+                    return data.boolean ? std::string("#true")
+                                        : std::string("#false");
                 case Number: {
                     std::ostringstream s;
                     s.precision(std::numeric_limits<double>::digits10);
-                    s << std::fixed << asNumber();
+                    s << std::fixed << data.number;
                     std::string str = s.str();
                     str.erase(str.find_last_not_of('0') + 1);
                     str.erase(str.find_last_not_of('.') + 1);
                     return str;
                 }
                 case String: {
-                    std::string string = asString();
+                    std::string string = data.string;
                     return string[0] == '"' && string.back() == '"'
                                    ? string.substr(1, string.size() - 2)
                                    : string;
