@@ -34,7 +34,7 @@ namespace Bytecode {
         explicit StackObject(const double number)
             : data({number}), type(Number){};
         explicit StackObject(const bool boolean)
-            : type(Boolean), data({.boolean = boolean}) {};
+            : type(Boolean), data({.boolean = boolean}){};
         explicit StackObject(const std::string &str)
             : type(String), data({.string = strdup(str.c_str())}){};
         explicit StackObject(const Token &token) {

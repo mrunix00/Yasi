@@ -1,6 +1,6 @@
 #pragma once
 
-#include "bytecode/instructions/Instruction.h"
+#include "Instruction.h"
 #include <unordered_map>
 #include <vector>
 

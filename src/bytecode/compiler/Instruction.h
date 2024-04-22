@@ -6,18 +6,30 @@
 namespace Bytecode {
     struct Instruction {
         enum InstructionType : uint8_t {
-            Unknown,
+            Invalid,
             LoadLiteral,
-            LoadLocal,
             LoadGlobal,
+            LoadLocal,
             Add,
+            AddRI,
+            AddRR,
             Subtract,
-            Divide,
+            SubtractRI,
+            SubtractRR,
             Multiply,
-            Not,
+            MultiplyRI,
+            MultiplyRR,
+            Divide,
+            Increment,
+            Decrement,
+            DecrementR,
             Equals,
-            GreaterThan,
+            EqualsRI,
             LessThan,
+            LessThanRI,
+            GreaterThan,
+            GreaterThanRI,
+            Not,
             Call,
             CallLambda,
             CondJumpIfNot,
@@ -28,20 +40,10 @@ namespace Bytecode {
             Or,
             And,
             Return,
-            Increment,
-            Decrement,
-            AddRI,
-            SubtractRI,
-            LessThanRI,
-            DecrementR,
-            EqualsRI,
-            GreaterThanRI,
-            MultiplyRI,
-            AddRR,
             StoreLocal,
-        } type;
-        union params {
-            struct RI_Params {
+        } type = Invalid;
+        union {
+            struct RI_PARAMS {
                 size_t reg;
                 StackObject intermediate;
             } ri_params;
@@ -52,14 +54,10 @@ namespace Bytecode {
             struct R_Param {
                 size_t reg;
             } r_param;
-            struct I_param {
+            struct I_Param {
                 StackObject intermediate;
             } i_param;
             void *none;
         } params{.none = nullptr};
-        Instruction() : type(InstructionType::Unknown){};
-        virtual ~Instruction() = default;
-        virtual void execute(VM &vm) = 0;
-        [[nodiscard]] virtual std::string toString() const = 0;
     };
 }// namespace Bytecode

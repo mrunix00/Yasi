@@ -1,6 +1,4 @@
 #include "PrintFunction.h"
-#include "bytecode/instructions/LoadLiteral.h"
-#include "bytecode/instructions/SendToStdout.h"
 
 namespace Bytecode::BuiltinFunctions {
     void Print::compile(
@@ -10,9 +8,12 @@ namespace Bytecode::BuiltinFunctions {
             Segment *segment) {
         for (const auto arg: args) {
             arg->compile(segment, program, instructions);
-            instructions.push_back(new SendToStdout());
+            instructions.push_back(new (Instruction){Instruction::SendToStdout});
         }
-        instructions.push_back(new LoadLiteral("\n"));
-        instructions.push_back(new SendToStdout());
+        instructions.push_back(new (Instruction){
+                Instruction::LoadLiteral,
+                {.i_param = {StackObject(std::string("\n"))}},
+        });
+        instructions.push_back(new (Instruction){Instruction::SendToStdout});
     };
 }// namespace Bytecode::BuiltinFunctions

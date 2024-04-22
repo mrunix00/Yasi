@@ -1,9 +1,5 @@
 
 #include "AddFunction.h"
-#include "bytecode/instructions/Add.h"
-#include "bytecode/instructions/AddRI.h"
-#include "bytecode/instructions/AddRR.h"
-#include "bytecode/instructions/Increment.h"
 #include "exceptions/SyntaxError.h"
 
 namespace Bytecode::BuiltinFunctions {
@@ -25,14 +21,14 @@ namespace Bytecode::BuiltinFunctions {
         if (args[1]->type == SyntaxTreeNode::TokenNode &&
             ((TokenNode *) args[1])->getName() == "1") {
             args[0]->compile(segment, program, instructions);
-            instructions.push_back(new Bytecode::Increment());
+            instructions.push_back(new (Instruction){Instruction::Increment});
             return;
         }
 
         if (args[0]->type == SyntaxTreeNode::TokenNode &&
             ((TokenNode *) args[0])->getName() == "1") {
             args[1]->compile(segment, program, instructions);
-            instructions.push_back(new Bytecode::Increment());
+            instructions.push_back(new (Instruction){Instruction::Increment});
             return;
         }
 
@@ -41,40 +37,47 @@ namespace Bytecode::BuiltinFunctions {
             if (((TokenNode *) args[0])->token.type == Token::Symbol &&
                 ((TokenNode *) args[1])->token.type == Token::Number &&
                 segment->find_variable(((TokenNode *) args[0])->getName()) != -1) {
-                instructions.push_back(
-                        new Bytecode::AddRI(
-                                segment->find_variable(((TokenNode *) args[0])->getName()),
-                                ((TokenNode *) args[1])->token.asNumber()));
+                instructions.push_back(new (Instruction){
+                        Instruction::AddRI,
+                        {.ri_params = {
+                                 segment->find_variable(((TokenNode *) args[0])->getName()),
+                                 StackObject(((TokenNode *) args[1])->token)}},
+                });
                 return;
             }
             if (((TokenNode *) args[0])->token.type == Token::Number &&
                 ((TokenNode *) args[1])->token.type == Token::Symbol &&
                 segment->find_variable(((TokenNode *) args[1])->getName()) != -1) {
-                instructions.push_back(
-                        new Bytecode::AddRI(
-                                segment->find_variable(((TokenNode *) args[1])->getName()),
-                                ((TokenNode *) args[0])->token.asNumber()));
+                instructions.push_back(new (Instruction){
+                        Instruction::AddRI,
+                        {.ri_params = {
+                                 segment->find_variable(((TokenNode *) args[1])->getName()),
+                                 StackObject(((TokenNode *) args[0])->token)}},
+                });
                 return;
             }
             if (((TokenNode *) args[0])->token.type == Token::Symbol &&
                 ((TokenNode *) args[1])->token.type == Token::Symbol &&
                 segment->find_variable(((TokenNode *) args[0])->getName()) != -1 &&
                 segment->find_variable(((TokenNode *) args[1])->getName()) != -1) {
-                instructions.push_back(
-                        new Bytecode::AddRR(
-                                segment->find_variable(((TokenNode *) args[0])->getName()),
-                                segment->find_variable(((TokenNode *) args[1])->getName())));
+                instructions.push_back(new (Instruction){
+                        Instruction::AddRR,
+                        {.rr_params = {
+                                 segment->find_variable(((TokenNode *) args[0])->getName()),
+                                 segment->find_variable(((TokenNode *) args[1])->getName()),
+                         }},
+                });
                 return;
             }
         }
 
         args[0]->compile(segment, program, instructions);
         args[1]->compile(segment, program, instructions);
-        instructions.push_back(new Bytecode::Add());
+        instructions.push_back(new (Instruction){Instruction::Add});
 
         for (int i = 2; i < args.size(); i++) {
             args[i]->compile(segment, program, instructions);
-            instructions.push_back(new Bytecode::Add());
+            instructions.push_back(new (Instruction){Instruction::Add});
         }
     }
 }// namespace Bytecode::BuiltinFunctions

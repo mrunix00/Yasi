@@ -1,7 +1,4 @@
 #include "Optimizer.h"
-#include "bytecode/instructions/Jump.h"
-#include "bytecode/instructions/Return.h"
-#include "bytecode/instructions/StoreLocal.h"
 
 bool Bytecode::Optimizer::is_tail_recursive(const Bytecode::Segment &segment, size_t id) {
     const auto &instructions = segment.instructions;
@@ -18,9 +15,15 @@ void Bytecode::Optimizer::optimize_tail_calls(Segment &segment) {
     instructions.pop_back();// Remove the Return instruction
     instructions.pop_back();// Remove the Call instruction
     for (size_t i = number_of_args - 1; i != -1; i--)
-        instructions.push_back(new Bytecode::StoreLocal(i));
-    instructions.push_back(new Bytecode::Jump(0));
-    instructions.push_back(new Bytecode::Return());
+        instructions.push_back(new (Instruction) {
+                Instruction::StoreGlobal,
+                {.r_param = {i}},
+        });
+    instructions.push_back(new (Instruction){
+            Instruction::Jump,
+            {.r_param = {1}},
+    });
+    instructions.push_back(new (Instruction){Instruction::Return});
 
     // Update jump locations
     for (auto &instruction: instructions) {

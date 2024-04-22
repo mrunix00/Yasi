@@ -1,10 +1,4 @@
 #include "SubtractFunction.h"
-#include "bytecode/instructions/AddRI.h"
-#include "bytecode/instructions/Decrement.h"
-#include "bytecode/instructions/DecrementR.h"
-#include "bytecode/instructions/LoadLiteral.h"
-#include "bytecode/instructions/Subtract.h"
-#include "bytecode/instructions/SubtractRI.h"
 #include "exceptions/SyntaxError.h"
 
 namespace Bytecode::BuiltinFunctions {
@@ -18,9 +12,12 @@ namespace Bytecode::BuiltinFunctions {
                     0,
                     0);
         } else if (args.size() == 1) {
-            instructions.push_back(new LoadLiteral((double) 0));
+            instructions.push_back(new (Instruction){
+                    Instruction::LoadLiteral,
+                    {.i_param = {StackObject((double) 0)}},
+            });
             args[0]->compile(result, program, instructions);
-            instructions.push_back(new Bytecode::Subtract());
+            instructions.push_back(new (Instruction){Instruction::Subtract});
             return;
         }
 
@@ -28,18 +25,21 @@ namespace Bytecode::BuiltinFunctions {
             ((TokenNode *) args[1])->getName() == "1") {
             if (args[0]->type == SyntaxTreeNode::TokenNode &&
                 result->find_variable(((TokenNode *) args[0])->getName()) != -1) {
-                instructions.push_back(new Bytecode::DecrementR(result->find_variable(((TokenNode *) args[0])->getName())));
+                instructions.push_back(new (Instruction){
+                        Instruction::DecrementR,
+                        {.r_param = {result->find_variable(((TokenNode *) args[0])->getName())}},
+                });
                 return;
             }
             args[0]->compile(result, program, instructions);
-            instructions.push_back(new Bytecode::Decrement());
+            instructions.push_back(new (Instruction){Instruction::Decrement});
             return;
         }
 
         if (args[0]->type == SyntaxTreeNode::TokenNode &&
             ((TokenNode *) args[0])->getName() == "1") {
             args[1]->compile(result, program, instructions);
-            instructions.push_back(new Bytecode::Decrement());
+            instructions.push_back(new (Instruction){Instruction::Decrement});
             return;
         }
 
@@ -49,20 +49,22 @@ namespace Bytecode::BuiltinFunctions {
             result->find_variable(((TokenNode *) args[0])->getName()) != -1) {
             if (((TokenNode *) args[0])->token.type == Token::Symbol &&
                 ((TokenNode *) args[1])->token.type == Token::Number) {
-                instructions.push_back(
-                        new Bytecode::SubtractRI(
-                                result->find_variable(((TokenNode *) args[0])->getName()),
-                                ((TokenNode *) args[1])->token.asNumber()));
+                instructions.push_back(new (Instruction){
+                        Instruction::SubtractRI,
+                        {.ri_params = {
+                                 result->find_variable(((TokenNode *) args[0])->getName()),
+                                 StackObject(((TokenNode *) args[1])->token)}},
+                });
                 return;
             }
         }
 
         args[0]->compile(result, program, instructions);
         args[1]->compile(result, program, instructions);
-        instructions.push_back(new Bytecode::Subtract());
+        instructions.push_back(new (Instruction){Instruction::Subtract});
         for (int i = 2; i < args.size(); i++) {
             args[i]->compile(result, program, instructions);
-            instructions.push_back(new Bytecode::Subtract());
+            instructions.push_back(new (Instruction){Instruction::Subtract});
         }
     }
 }// namespace Bytecode::BuiltinFunctions

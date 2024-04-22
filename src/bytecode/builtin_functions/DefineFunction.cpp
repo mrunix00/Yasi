@@ -1,6 +1,4 @@
 #include "DefineFunction.h"
-#include "bytecode/instructions/Return.h"
-#include "bytecode/instructions/StoreGlobal.h"
 
 namespace Bytecode::BuiltinFunctions {
     void Define::compile(
@@ -19,14 +17,14 @@ namespace Bytecode::BuiltinFunctions {
                 return;
             }
             args[1]->compile(result, program, instructions);
-            instructions.push_back(new StoreGlobal(reg));
+            instructions.push_back(new (Instruction){Instruction::StoreGlobal, {.r_param = {reg}}});
         } else if (args[0]->type == SyntaxTreeNode::Expression) {
             auto segment = new Segment({});
             program.declare_function(((Expression *) args[0])->getName(), segment);
             for (auto argument: ((Expression *) args[0])->getArgs())
                 segment->declare_variable(((TokenNode *) argument)->getName());
             args[1]->compile(segment, program, segment->instructions);
-            segment->instructions.push_back(new Bytecode::Return());
+            segment->instructions.push_back(new (Instruction){Instruction::Return});
         }
     }
 }// namespace Bytecode::BuiltinFunctions

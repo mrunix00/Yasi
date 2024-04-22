@@ -1,6 +1,4 @@
 #include "MultiplyFunction.h"
-#include "bytecode/instructions/Multiply.h"
-#include "bytecode/instructions/MultiplyRI.h"
 #include "exceptions/SyntaxError.h"
 
 namespace Bytecode::BuiltinFunctions {
@@ -23,29 +21,33 @@ namespace Bytecode::BuiltinFunctions {
             if (((TokenNode *) args[0])->token.type == Token::Symbol &&
                 ((TokenNode *) args[1])->token.type == Token::Number &&
                 segment->find_variable(((TokenNode *) args[0])->getName()) != -1) {
-                instructions.push_back(
-                        new Bytecode::MultiplyRI(
-                                segment->find_variable(((TokenNode *) args[0])->getName()),
-                                ((TokenNode *) args[1])->token.asNumber()));
+                instructions.push_back(new (Instruction){
+                        Instruction::MultiplyRI,
+                        {.ri_params = {
+                                 segment->find_variable(((TokenNode *) args[0])->getName()),
+                                 StackObject(((TokenNode *) args[1])->token),
+                         }}});
                 return;
             }
             if (((TokenNode *) args[0])->token.type == Token::Number &&
                 ((TokenNode *) args[1])->token.type == Token::Symbol &&
                 segment->find_variable(((TokenNode *) args[1])->getName()) != -1) {
-                instructions.push_back(
-                        new Bytecode::MultiplyRI(
-                                segment->find_variable(((TokenNode *) args[1])->getName()),
-                                ((TokenNode *) args[0])->token.asNumber()));
+                instructions.push_back(new (Instruction){
+                        Instruction::MultiplyRI,
+                        {.ri_params = {
+                                 segment->find_variable(((TokenNode *) args[1])->getName()),
+                                 StackObject(((TokenNode *) args[0])->token),
+                         }}});
                 return;
             }
         }
 
         args[0]->compile(segment, program, instructions);
         args[1]->compile(segment, program, instructions);
-        instructions.push_back(new Bytecode::Multiply());
+        instructions.push_back(new (Instruction){Instruction::Multiply});
         for (int i = 2; i < args.size(); i++) {
             args[i]->compile(segment, program, instructions);
-            instructions.push_back(new Bytecode::Multiply());
+            instructions.push_back(new (Instruction){Instruction::Multiply});
         }
     }
 }// namespace Bytecode::BuiltinFunctions

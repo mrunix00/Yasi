@@ -14,14 +14,6 @@
 #include "bytecode/builtin_functions/PrintFunction.h"
 #include "bytecode/builtin_functions/ReadFunction.h"
 #include "bytecode/builtin_functions/SubtractFunction.h"
-#include "bytecode/instructions/Call.h"
-#include "bytecode/instructions/CallLambda.h"
-#include "bytecode/instructions/CondJumpIfNot.h"
-#include "bytecode/instructions/Jump.h"
-#include "bytecode/instructions/LoadGlobal.h"
-#include "bytecode/instructions/LoadLiteral.h"
-#include "bytecode/instructions/LoadLocal.h"
-#include "bytecode/instructions/Return.h"
 #include "exceptions/SyntaxError.h"
 
 void TokenNode::compile(
@@ -30,23 +22,29 @@ void TokenNode::compile(
         std::vector<Bytecode::Instruction *> &instructions) {
     switch (token.type) {
         case Token::Number:
-            instructions.push_back(
-                    new Bytecode::LoadLiteral(token.asNumber()));
-            break;
         case Token::String:
-            instructions.push_back(
-                    new Bytecode::LoadLiteral(token.asString()));
+        case Token::Boolean:
+            instructions.push_back(new (Bytecode::Instruction){
+                    Bytecode::Instruction::LoadLiteral,
+                    {.i_param = {Bytecode::StackObject(token)}},
+            });
             break;
         case Token::Symbol:
             if (program.find_constant(token.token) != nullptr) {
-                instructions.push_back(new Bytecode::LoadLiteral(
-                        program.find_constant(token.token)));
+                instructions.push_back(new (Bytecode::Instruction){
+                        Bytecode::Instruction::LoadLiteral,
+                        {.i_param = {*program.find_constant(token.token)}},
+                });
             } else if (segment->find_variable(token.token) != -1) {
-                instructions.push_back(new Bytecode::LoadLocal(
-                        segment->find_variable(token.asString())));
+                instructions.push_back(new (Bytecode::Instruction){
+                        Bytecode::Instruction::LoadLocal,
+                        {.r_param = {segment->find_variable(token.token)}},
+                });
             } else if (program.find_global(token.token) != -1) {
-                instructions.push_back(new Bytecode::LoadGlobal(
-                        program.find_global(token.asString())));
+                instructions.push_back(new (Bytecode::Instruction){
+                        Bytecode::Instruction::LoadGlobal,
+                        {.r_param = {program.find_global(token.token)}},
+                });
             } else {
                 throw SyntaxError(
                         "Undefined variable -> " + token.token,
@@ -86,16 +84,26 @@ void Expression::compile(
     if (program.find_global(function.token) != -1) {
         for (const auto &argument: args)
             argument->compile(segment, program, instructions);
-        instructions.push_back(new Bytecode::LoadGlobal(
-                program.find_global(function.token)));
-        instructions.push_back(new Bytecode::CallLambda(args.size()));
+        instructions.push_back(new (Bytecode::Instruction){
+                Bytecode::Instruction::LoadGlobal,
+                {.r_param = {program.find_global(function.token)}},
+        });
+        instructions.push_back(new (Bytecode::Instruction){
+                Bytecode::Instruction::CallLambda,
+                {.r_param = {args.size()}},
+        });
         return;
     } else if (segment->find_variable(function.token) != -1) {
         for (const auto &argument: args)
             argument->compile(segment, program, instructions);
-        instructions.push_back(new Bytecode::LoadLocal(
-                segment->find_variable(function.token)));
-        instructions.push_back(new Bytecode::CallLambda(args.size()));
+        instructions.push_back(new (Bytecode::Instruction){
+                Bytecode::Instruction::LoadLocal,
+                {.r_param = {segment->find_variable(function.token)}},
+        });
+        instructions.push_back(new (Bytecode::Instruction){
+                Bytecode::Instruction::CallLambda,
+                {.r_param = {args.size()}},
+        });
         return;
     } else if (program.find_function(function.token) != -1) {
         if (args.size() != program.segments[program.find_function(function.token)]->variables_table.size())
@@ -107,9 +115,12 @@ void Expression::compile(
                     function.column);
         for (const auto &argument: args)
             argument->compile(segment, program, instructions);
-        const auto called_segment = program.find_function(function.asString());
+        const auto called_segment = program.find_function(function.token);
         const auto arguments = program.segments[called_segment]->variables_table.size();
-        instructions.push_back(new Bytecode::Call(called_segment, arguments));
+        instructions.push_back(new (Bytecode::Instruction){
+                Bytecode::Instruction::Call,
+                {.ri_params = {called_segment, Bytecode::StackObject(arguments)}},
+        });
         return;
     } else if (builtin_instructions.find(function.token) != builtin_instructions.end()) {
         builtin_instructions[function.token]->compile(
@@ -172,17 +183,21 @@ void CondExpression::compile(
     for (size_t i = 0; i < conditions_instructions.size(); i++) {
         for (const auto instruction: conditions_instructions[i])
             result->instructions.push_back(instruction);
-        result->instructions.push_back(
-                new Bytecode::CondJumpIfNot(
-                        result->instructions.size() +
-                        cond_success_instructions[i].size() +
-                        2 - default_case_instructions.empty()));
+        result->instructions.push_back(new (Bytecode::Instruction){
+                Bytecode::Instruction::CondJumpIfNot,
+                {.r_param = {result->instructions.size() +
+                             cond_success_instructions[i].size() +
+                             2 - default_case_instructions.empty()}},
+        });
 
         for (const auto instruction: cond_success_instructions[i])
             result->instructions.push_back(instruction);
 
         if (!default_case_instructions.empty())
-            result->instructions.push_back(new Bytecode::Jump(end));
+            result->instructions.push_back(new (Bytecode::Instruction){
+                    Bytecode::Instruction::Jump,
+                    {.r_param = {end}},
+            });
     }
 
     for (const auto instruction: default_case_instructions)
@@ -233,7 +248,11 @@ void LambdaExpression::compile(
     for (auto argument: args)
         segment->declare_variable(((class TokenNode *) argument)->getName());
     definition->compile(segment, program, segment->instructions);
-    segment->instructions.push_back(new Bytecode::Return());
-    instructions.push_back(
-            new Bytecode::LoadLiteral(new Bytecode::StackObject(reg)));
+    segment->instructions.push_back(new (Bytecode::Instruction){
+            Bytecode::Instruction::Return,
+    });
+    instructions.push_back(new (Bytecode::Instruction){
+            Bytecode::Instruction::LoadLiteral,
+            {.i_param = {Bytecode::StackObject(reg)}},
+    });
 }

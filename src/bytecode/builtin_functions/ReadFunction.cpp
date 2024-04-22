@@ -1,5 +1,4 @@
 #include "ReadFunction.h"
-#include "bytecode/instructions/ReadFromStdin.h"
 #include "exceptions/SyntaxError.h"
 
 namespace Bytecode::BuiltinFunctions {
@@ -13,6 +12,6 @@ namespace Bytecode::BuiltinFunctions {
                     "Invalid number of arguments for function \"read\", Expected 0, got " +
                     std::to_string(args.size()));
         }
-        instructions.push_back(new ReadFromStdin());
+        instructions.push_back(new (Instruction){Instruction::ReadFromStdin});
     };
 }// namespace Bytecode::BuiltinFunctions

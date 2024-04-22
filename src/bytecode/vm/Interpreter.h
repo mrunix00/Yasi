@@ -4,10 +4,8 @@
 #include "bytecode/compiler/Program.h"
 
 namespace Bytecode {
-    class Interpreter {
-    public:
+    struct Interpreter {
         VM vm;
-        Interpreter() = default;
         void execute(const Program &program);
     };
 }// namespace Bytecode

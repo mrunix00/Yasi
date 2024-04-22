@@ -27,7 +27,6 @@ public:
           int line, int column);
 
     [[nodiscard]] double asNumber() const;
-    [[nodiscard]] std::string asString() const;
 
     bool operator==(const Token &object) const;
 

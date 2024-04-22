@@ -16,10 +16,6 @@ Token::Token(
     : type(type),
       token(std::move(token)) {}
 
-std::string Token::asString() const {
-    return token;
-}
-
 double Token::asNumber() const {
     return std::stod(token);
 }

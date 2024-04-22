@@ -1,5 +1,4 @@
 #include "NotFunction.h"
-#include "bytecode/instructions/Not.h"
 #include "exceptions/SyntaxError.h"
 
 namespace Bytecode::BuiltinFunctions {
@@ -12,6 +11,6 @@ namespace Bytecode::BuiltinFunctions {
                               + std::to_string(args.size()));
         }
         args[0]->compile(segment, program, instructions);
-        instructions.push_back(new Bytecode::Not());
+        instructions.push_back(new (Instruction){Instruction::Not});
     }
 }// namespace Bytecode::BuiltinFunctions

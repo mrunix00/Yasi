@@ -1,5 +1,4 @@
 #include "AndFunction.h"
-#include "bytecode/instructions/And.h"
 #include "exceptions/SyntaxError.h"
 
 namespace Bytecode::BuiltinFunctions {
@@ -12,10 +11,10 @@ namespace Bytecode::BuiltinFunctions {
         args[0]->compile(segment, program, instructions);
         if (args.size() == 1) return;
         args[1]->compile(segment, program, instructions);
-        instructions.push_back(new Bytecode::And());
+        instructions.push_back(new (Instruction){Instruction::And});
         for (int i = 2; i < args.size(); i++) {
             args[i]->compile(segment, program, instructions);
-            instructions.push_back(new Bytecode::And());
+            instructions.push_back(new (Instruction){Instruction::And});
         }
     }
 }// namespace Bytecode::BuiltinFunctions
