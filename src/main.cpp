@@ -14,6 +14,7 @@
 struct options {
     bool displayTokens = false;
     bool dumpBytecode = false;
+    bool tailCallOptimization = true;
 };
 
 void exec_program(const std::string &program, struct options opts) {
@@ -32,14 +33,14 @@ void exec_program(const std::string &program, struct options opts) {
 
             ast->compile(compiled_bytecode);
             delete ast;
-
         }
 
-        for (size_t i = 1; i < compiled_bytecode.segments.size(); i++) {
-            const auto segment = compiled_bytecode.segments[i];
-            if (Bytecode::Optimizer::is_tail_recursive(*segment, i))
-                Bytecode::Optimizer::optimize_tail_calls(*segment);
-        }
+        if (opts.tailCallOptimization)
+            for (size_t i = 1; i < compiled_bytecode.segments.size(); i++) {
+                const auto segment = compiled_bytecode.segments[i];
+                if (Bytecode::Optimizer::is_tail_recursive(*segment, i))
+                    Bytecode::Optimizer::optimize_tail_calls(*segment);
+            }
 
         if (opts.dumpBytecode)
             dump_bytecode(compiled_bytecode);
@@ -65,13 +66,16 @@ int main(int argc, char *argv[]) {
     struct options opts;
 
     int opt;
-    while ((opt = getopt(argc, argv, "tbdO")) != -1) {
+    while ((opt = getopt(argc, argv, "tdU")) != -1) {
         switch (opt) {
             case 't':
                 opts.displayTokens = true;
                 break;
             case 'd':
                 opts.dumpBytecode = true;
+                break;
+            case 'U':
+                opts.tailCallOptimization = false;
                 break;
             default:
                 break;
