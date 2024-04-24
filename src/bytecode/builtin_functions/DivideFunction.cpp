@@ -23,6 +23,30 @@ namespace Bytecode::BuiltinFunctions {
             instructions.push_back(new (Instruction){Instruction::Divide});
             return;
         }
+        if (args[0]->type == SyntaxTreeNode::TokenNode &&
+            args[1]->type == SyntaxTreeNode::TokenNode &&
+            segment->find_variable(((TokenNode *) args[0])->getName()) != -1) {
+            if (((TokenNode *) args[0])->token.type == Token::Symbol &&
+                ((TokenNode *) args[1])->token.type == Token::Number) {
+                instructions.push_back(new (Instruction){
+                        Instruction::DivideRI,
+                        {.ri_params = {
+                                 segment->find_variable(((TokenNode *) args[0])->getName()),
+                                 StackObject(((TokenNode *) args[1])->token)}},
+                });
+                return;
+            }
+            if (((TokenNode *) args[0])->token.type == Token::Symbol &&
+                ((TokenNode *) args[1])->token.type == Token::Symbol) {
+                instructions.push_back(new (Instruction){
+                        Instruction::DivideRR,
+                        {.rr_params = {
+                                 segment->find_variable(((TokenNode *) args[0])->getName()),
+                                 segment->find_variable(((TokenNode *) args[1])->getName())}},
+                });
+                return;
+            }
+        }
         args[0]->compile(segment, program, instructions);
         args[1]->compile(segment, program, instructions);
         instructions.push_back(new (Instruction){Instruction::Divide});

@@ -47,6 +47,12 @@ void print_instruction(const Bytecode::Instruction &instruction) {
         case Bytecode::Instruction::Divide:
             std::cout << "Divide\n";
             break;
+        case Bytecode::Instruction::DivideRI:
+            std::cout << "DivideRI $r" << instruction.params.ri_params.reg << " " << instruction.params.ri_params.intermediate.toString() << '\n';
+            break;
+        case Bytecode::Instruction::DivideRR:
+            std::cout << "DivideRR $r" << instruction.params.rr_params.reg1 << " $r" << instruction.params.rr_params.reg2 << '\n';
+            break;
         case Bytecode::Instruction::Increment:
             std::cout << "Increment\n";
             break;

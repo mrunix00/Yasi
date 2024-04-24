@@ -20,6 +20,8 @@ namespace Bytecode {
             MultiplyRI,
             MultiplyRR,
             Divide,
+            DivideRI,
+            DivideRR,
             Increment,
             Decrement,
             DecrementR,
