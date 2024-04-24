@@ -16,12 +16,12 @@ void Bytecode::Optimizer::optimize_tail_calls(Segment &segment) {
     instructions.pop_back();// Remove the Call instruction
     for (size_t i = number_of_args - 1; i != -1; i--)
         instructions.push_back(new (Instruction) {
-                Instruction::StoreGlobal,
+                Instruction::StoreLocal,
                 {.r_param = {i}},
         });
     instructions.push_back(new (Instruction){
             Instruction::Jump,
-            {.r_param = {1}},
+            {.r_param = {0}},
     });
     instructions.push_back(new (Instruction){Instruction::Return});
 
