@@ -121,8 +121,10 @@ void print_instruction(const Bytecode::Instruction &instruction) {
 void dump_bytecode(const Bytecode::Program &program) {
     for (size_t i = 0; i < program.segments.size(); i++) {
         std::cout << "Segment :" << i << "\n";
-        for (const auto &instruction: program.segments[i]->instructions)
-            print_instruction(*instruction);
+        for (size_t j = 0; j < program.segments[i]->instructions.size(); j++) {
+            std::cout << j << '\t';
+            print_instruction(*program.segments[i]->instructions[j]);
+        }
         std::cout << '\n';
     }
 }
