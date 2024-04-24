@@ -40,6 +40,17 @@ namespace Bytecode::BuiltinFunctions {
                          }}});
                 return;
             }
+            if (((TokenNode *) args[0])->token.type == Token::Symbol &&
+                ((TokenNode *) args[1])->token.type == Token::Symbol &&
+                segment->find_variable(((TokenNode *) args[1])->getName()) != -1) {
+                instructions.push_back(new (Instruction){
+                        Instruction::MultiplyRR,
+                        {.rr_params = {
+                                 segment->find_variable(((TokenNode *) args[0])->getName()),
+                                 segment->find_variable(((TokenNode *) args[1])->getName()),
+                         }}});
+                return;
+            }
         }
 
         args[0]->compile(segment, program, instructions);
