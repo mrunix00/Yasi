@@ -252,6 +252,11 @@ void Bytecode::Interpreter::execute(const Program &program) {
                         currentInstruction->params.r_param.reg,
                         &vm.program_stack);
             } break;
+            case Instruction::TailCall: {
+                for (size_t i = currentInstruction->params.r_param.reg; i != 0; i--)
+                    vm.call_stack.setLocal(i - 1, vm.program_stack.pop());
+                vm.call_stack.stackTop->current_line = -1;
+            } break;
             case Instruction::Return:
                 vm.call_stack.popStackFrame();
                 break;

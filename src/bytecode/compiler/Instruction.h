@@ -34,6 +34,7 @@ namespace Bytecode {
             Not,
             Call,
             CallLambda,
+            TailCall,
             CondJumpIfNot,
             Jump,
             StoreGlobal,

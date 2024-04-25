@@ -89,6 +89,9 @@ void print_instruction(const Bytecode::Instruction &instruction) {
         case Bytecode::Instruction::CallLambda:
             std::cout << "CallLambda :" << instruction.params.r_param.reg << '\n';
             break;
+        case Bytecode::Instruction::TailCall:
+            std::cout << "TailCall " << instruction.params.r_param.reg << '\n';
+            break;
         case Bytecode::Instruction::CondJumpIfNot:
             std::cout << "CondJumpIfNot :" << instruction.params.r_param.reg << '\n';
             break;
