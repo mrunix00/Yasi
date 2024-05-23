@@ -21,40 +21,20 @@ namespace Bytecode::BuiltinFunctions {
             return;
         }
 
-        if (args[1]->type == SyntaxTreeNode::TokenNode &&
-            ((TokenNode *) args[1])->getName() == "1") {
-            if (args[0]->type == SyntaxTreeNode::TokenNode &&
-                result->find_variable(((TokenNode *) args[0])->getName()) != -1) {
-                instructions.push_back(new (Instruction){
-                        Instruction::DecrementR,
-                        {.r_param = {result->find_variable(((TokenNode *) args[0])->getName())}},
-                });
-                return;
-            }
-            args[0]->compile(result, program, instructions);
-            instructions.push_back(new (Instruction){Instruction::Decrement});
-            return;
-        }
-
-        if (args[0]->type == SyntaxTreeNode::TokenNode &&
-            ((TokenNode *) args[0])->getName() == "1") {
-            args[1]->compile(result, program, instructions);
-            instructions.push_back(new (Instruction){Instruction::Decrement});
-            return;
-        }
-
-
         if (args[0]->type == SyntaxTreeNode::TokenNode &&
             args[1]->type == SyntaxTreeNode::TokenNode &&
-            result->find_variable(((TokenNode *) args[0])->getName()) != -1) {
-            if (((TokenNode *) args[0])->token.type == Token::Symbol &&
-                ((TokenNode *) args[1])->token.type == Token::Number) {
+            ((TokenNode *) args[1])->token.type == Token::Number) {
+            if (((TokenNode *) args[0])->token.type == Token::Symbol) {
                 instructions.push_back(new (Instruction){
                         Instruction::SubtractRI,
                         {.ri_params = {
                                  result->find_variable(((TokenNode *) args[0])->getName()),
                                  StackObject(((TokenNode *) args[1])->token)}},
                 });
+                return;
+            } else if (((TokenNode *) args[1])->getName() == "1"){
+                args[0]->compile(result, program, instructions);
+                instructions.push_back(new (Instruction){Instruction::Decrement});
                 return;
             }
         }

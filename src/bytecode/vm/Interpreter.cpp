@@ -113,13 +113,6 @@ void Bytecode::Interpreter::execute(const Program &program) {
             case Instruction::Decrement:
                 vm.program_stack.push(vm.program_stack.pop().data.number - 1);
                 break;
-            case Instruction::DecrementR: {
-                const auto number = vm.call_stack.getLocal(currentInstruction->params.r_param.reg);
-                if (number.type != ObjectType::Number) {
-                    throw SyntaxError("Invalid argument type for function \"-\", Expected number, got string");
-                }
-                vm.program_stack.push(number.data.number - 1);
-            } break;
             case Instruction::Divide: {
                 const auto object2 = vm.program_stack.pop();
                 const auto object1 = vm.program_stack.pop();

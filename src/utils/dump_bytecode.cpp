@@ -59,9 +59,6 @@ void print_instruction(const Bytecode::Instruction &instruction) {
         case Bytecode::Instruction::Decrement:
             std::cout << "Decrement\n";
             break;
-        case Bytecode::Instruction::DecrementR:
-            std::cout << "DecrementR $r" << instruction.params.r_param.reg << '\n';
-            break;
         case Bytecode::Instruction::Equals:
             std::cout << "Equals\n";
             break;

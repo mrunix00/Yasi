@@ -24,7 +24,6 @@ namespace Bytecode {
             DivideRR,
             Increment,
             Decrement,
-            DecrementR,
             Equals,
             EqualsRI,
             LessThan,
