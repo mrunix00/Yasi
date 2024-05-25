@@ -7,6 +7,7 @@
 #include "utils/break_lines.h"
 #include "utils/dump_bytecode.h"
 #include "utils/printTokens.h"
+#include <algorithm>
 #include <fstream>
 #include <getopt.h>
 #include <iostream>
@@ -41,6 +42,13 @@ void exec_program(const std::string &program, struct options opts) {
                 if (Bytecode::Optimizer::is_tail_recursive(*segment, i))
                     Bytecode::Optimizer::optimize_tail_calls(*segment);
             }
+
+        for (size_t i = 0; i < compiled_bytecode.segments.size(); i++) {
+            for (size_t j = 1; j < compiled_bytecode.segments.size(); j++) {
+                if (Bytecode::Optimizer::is_inlineable(*compiled_bytecode.segments[j], j))
+                    Bytecode::Optimizer::inline_function(*compiled_bytecode.segments[i], *compiled_bytecode.segments[j], j);
+            }
+        }
 
         if (opts.dumpBytecode)
             dump_bytecode(compiled_bytecode);
