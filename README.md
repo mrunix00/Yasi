@@ -13,7 +13,7 @@ You need to have the following installed on your system:
 ```shell
 git clone https://github.com/mrunix00/Yasi.git
 cd Yasi/
-git submodule init && git submodule update
+git submodule update --init
 ```
 
 ### Build
