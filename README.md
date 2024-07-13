@@ -2,7 +2,7 @@
 
 ## Build instructions
 
-### Perquisites
+### Prerequisites
 
 You need to have the following installed on your system:
 - CMake 3.25+
